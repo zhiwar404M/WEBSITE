@@ -1,0 +1,81 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+  margin: 0;
+  background: #fefefe;
+  color: #222;
+}
+
+header {
+  background: #111;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5em 2em;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #00d9ff;
+}
+
+nav a {
+  margin-left: 1em;
+  color: #ccc;
+  text-decoration: none;
+}
+
+.hero {
+  padding: 5em 2em;
+  background: linear-gradient(to right, #0077ff, #00d9ff);
+  text-align: center;
+  color: white;
+}
+
+.cta {
+  margin-top: 1em;
+  background: white;
+  color: #0077ff;
+  padding: 0.8em 1.5em;
+  border-radius: 8px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.programs {
+  padding: 3em 2em;
+  background: #f9f9f9;
+}
+
+.program-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2em;
+  margin-top: 1.5em;
+}
+
+.card {
+  background: white;
+  padding: 2em;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.card button {
+  background: #0077ff;
+  color: white;
+  border: none;
+  padding: 0.7em 1.2em;
+  border-radius: 5px;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+footer {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 2em;
+}
