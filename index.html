@@ -4,29 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ZHIWAR | Welcome</title>
-  <style>
-    /* CSS بۆ ریکلامەکان */
-    .ad-container {
-      margin: 20px auto;
-      text-align: center;
-      border: 1px dashed #ccc;
-      padding: 10px;
-      background: #f9f9f9;
-    }
-    .sidebar-ad {
-      position: fixed;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 300px;
-    }
-    @media (max-width: 768px) {
-      .sidebar-ad { display: none; }
-    }
-  </style>
-  
-  <!-- کۆدی Profitableratecpm لە سەرەوەی <head> -->
-  <script type='text/javascript' src='//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js'></script>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header>
@@ -36,66 +14,24 @@
       <a href="login.html">Login</a>
       <a href="signup.html">Signup</a>
     </nav>
-    
-    <!-- ریکلامی سەرەوە 728x90 -->
-    <div class="ad-container">
-      <script type="text/javascript">
-        atOptions = {
-          'key': 'cf58a4d8580fa85d5e5444368a65ce31',
-          'format': 'iframe',
-          'height': 90,
-          'width': 728,
-          'params': {}
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/cf58a4d8580fa85d5e5444368a65ce31/invoke.js"></script>
-    </div>
   </header>
 
   <section class="hero">
     <h1>بەخێربێیت بۆ ZHIWAR</h1>
-    <p>وێبسایتی تایبەتی بۆ داگرتنی بەرنامەکانی ZHIWAR YT</p>
+    <p>وێبسایتی تایبەتی بۆ داگرتنی بەرنامەکانی ZHIWAR YT </p>
     <a href="#downloads" class="cta">دابەزاندنی بەرنامەکان</a>
   </section>
-
-  <!-- ریکلامی لایەنی 300x250 (فەقەت بۆ شاشەی گەورە) -->
-  <aside class="sidebar-ad">
-    <script type="text/javascript">
-      atOptions = {
-        'key': 'YOUR_SIDEBAR_KEY',  <!-- 🔄 کلیکی Adsterra دابنێ -->
-        'format': 'iframe',
-        'height': 250,
-        'width': 300,
-        'params': {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/YOUR_SIDEBAR_KEY/invoke.js"></script>
-  </aside>
 
   <section id="downloads" class="programs">
     <h2>بەرنامەکان</h2>
     <div class="program-grid">
       <div class="card">
-        <h3>بەرنامە ئەندرۆید</h3>
+        <h3> بەرنامە ئەندرۆید</h3>
         <p>Apk فایلی</p>
         <button onclick="startDownload('https://zhiwar.vercel.app/files/myapp.apk')">داگرتن</button>
       </div>
-      
-      <!-- ریکلامی ناوەڕاست 300x600 -->
-      <div class="ad-container">
-        <script type="text/javascript">
-          atOptions = {
-            'key': 'YOUR_MIDDLE_KEY',
-            'height': 600,
-            'width': 300,
-            'params': {}
-          };
-        </script>
-        <script src="//www.highperformanceformat.com/YOUR_MIDDLE_KEY/invoke.js"></script>
-      </div>
-
       <div class="card">
-        <h3>بەرنامە وێندۆز</h3>
+        <h3> بەرنامە وێندۆز</h3>
         <p>EXE فایلی</p>
         <button onclick="startDownload('https://zhiwar.vercel.app/files/myapp.exe')">VIP داگرتن</button>
       </div>
@@ -106,8 +42,8 @@
       </div>
     </div>
 
-    <!-- ریکلامی خوارەوە 728x90 -->
-    <div class="ad-container">
+    <!-- 🔻 ریکلامی Adsterra Banner 728x90 لە ژێر بەرنامەکان -->
+    <div style="text-align: center; margin: 30px auto;">
       <script type="text/javascript">
         atOptions = {
           'key': 'cf58a4d8580fa85d5e5444368a65ce31',
@@ -119,9 +55,7 @@
       </script>
       <script type="text/javascript" src="//www.highperformanceformat.com/cf58a4d8580fa85d5e5444368a65ce31/invoke.js"></script>
     </div>
-    
-    <!-- کۆدی Profitableratecpm لە ژێرەوە -->
-    <script type='text/javascript' src='//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js'></script>
+    <!-- 🔺 کۆتایی ریکلام -->
   </section>
 
   <footer>
@@ -130,18 +64,16 @@
 
   <script>
     function startDownload(fileUrl) {
-      // پەنجەرەی ریکلامی یەکەم
-      let adWindow = window.open("https://bit.ly/ad1-zhiwar", "_blank", "width=600,height=400");
-      
-      // پاش 10 چرکە ریکلامی دووەم
-      setTimeout(() => {
-        if (!adWindow.closed) {
-          adWindow.location.href = "https://bit.ly/ad2-zhiwar";
-        }
+      // 📢 ریکلامی یەکەم
+      window.open("https://bit.ly/ad1-zhiwar", "_blank");
+
+      // ⏱ پاش 10 چرکە - ریکلامی دووەم
+      setTimeout(function () {
+        window.open("https://bit.ly/ad2-zhiwar", "_blank");
       }, 10000);
 
-      // پاش 20 چرکە داگرتن
-      setTimeout(() => {
+      // ⏱ پاش 20 چرکە - داگرتنی فایل
+      setTimeout(function () {
         window.location.href = fileUrl;
       }, 20000);
     }
