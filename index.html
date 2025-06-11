@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="google-adsense-account" content="ca-pub-2419305830519121">
   <title>ZHIWAR | Welcome</title>
   <link rel="stylesheet" href="style.css"/>
   
   <!-- کۆدی Profitableratecpm لە سەرەوەی <head> -->
   <script type='text/javascript' src='//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js'></script>
+  
+  <!-- کۆدی گووگڵ ئادسێنس -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
@@ -17,11 +21,22 @@
       <a href="login.html">Login</a>
       <a href="signup.html">Signup</a>
     </nav>
+    
+    <!-- ریکلامی سەرەوەی گووگڵ -->
+    <div style="text-align:center; margin:10px 0;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2419305830519121"
+           data-ad-slot="XXXXXXXXXX"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
   </header>
 
   <section class="hero">
     <h1>بەخێربێیت بۆ ZHIWAR</h1>
-    <p>وێبسایتی تایبەتی بۆ داگرتنی بەرنامەکانی ZHIWAR YT </p>
+    <p>وێبسایتی تایبەتی بۆ داگرتنی بەرنامەکانی ZHIWAR YT</p>
     <a href="#downloads" class="cta">دابەزاندنی بەرنامەکان</a>
   </section>
 
@@ -29,12 +44,24 @@
     <h2>بەرنامەکان</h2>
     <div class="program-grid">
       <div class="card">
-        <h3> بەرنامە ئەندرۆید</h3>
+        <h3>بەرنامە ئەندرۆید</h3>
         <p>Apk فایلی</p>
         <button onclick="startDownload('https://zhiwar.vercel.app/files/myapp.apk')">داگرتن</button>
       </div>
+      
+      <!-- ریکلامی ناوەڕاستی گووگڵ -->
+      <div class="card" style="text-align:center;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2419305830519121"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="rectangle"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
       <div class="card">
-        <h3> بەرنامە وێندۆز</h3>
+        <h3>بەرنامە وێندۆز</h3>
         <p>EXE فایلی</p>
         <button onclick="startDownload('https://zhiwar.vercel.app/files/myapp.exe')">VIP داگرتن</button>
       </div>
@@ -63,10 +90,10 @@
     <script type='text/javascript' src='//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js'></script>
   </section>
 
-      <footer>
-        <p>© 2023 ZHIWAR. هەموو مافەکان پارێزراوە.</p>
-        <p>پەیوەندی: zhiwarup@gmail.com</p>
-    </footer>
+  <footer>
+    <p>© 2023 ZHIWAR. هەموو مافەکان پارێزراوە.</p>
+    <p>پەیوەندی: zhiwarup@gmail.com</p>
+  </footer>
 
   <script>
     function startDownload(fileUrl) {
@@ -83,6 +110,13 @@
         window.location.href = fileUrl;
       }, 20000);
     }
+    
+    // چالاککردنی هەموو ریکلامەکانی گووگڵ
+    document.addEventListener('DOMContentLoaded', function() {
+      [].forEach.call(document.querySelectorAll('.adsbygoogle'), function() {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      });
+    });
   </script>
 </body>
 </html>
