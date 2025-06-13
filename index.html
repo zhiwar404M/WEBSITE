@@ -5,31 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ZHIWAR | Welcome</title>
   <link rel="stylesheet" href="style.css"/>
+  <!-- Font and Animate CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
-  <header>
+  <header class="animate__animated animate__fadeInDown">
     <div class="logo">ZHIWAR</div>
     <nav>
-      <a href="#downloads">Download</a>
-      <a href="login.html">Login</a>
-      <a href="signup.html">Signup</a>
+      <a href="#downloads">داگرتن</a>
+      <a href="login.html">چوونەژوورەوە</a>
+      <a href="signup.html">خۆتۆمارکردن</a>
     </nav>
   </header>
 
-  <section class="hero">
+  <section class="hero animate__animated animate__fadeInUp">
     <h1>بەخێربێیت بۆ ZHIWAR</h1>
     <p>وێبسایتی تایبەتی بۆ داگرتنی بەرنامەکانی ZHIWAR YT</p>
     <a href="#downloads" class="cta">دابەزاندنی بەرنامەکان</a>
   </section>
 
-  <section id="downloads" class="programs">
+  <section id="downloads" class="programs animate__animated animate__zoomIn">
     <h2>بەرنامەکان</h2>
     <div class="program-grid">
       <div class="card">
         <h3>بەرنامەی ئەندرۆید</h3>
-        <p>Apk فایلی</p>
+        <p>APK فایلی</p>
         <button onclick="startDownload('https://github.com/zhiwar404M/WEBSITE/raw/refs/heads/main/files/Kurdish%20Information%20MCPE_1.0%20V.apk')">داگرتن</button>
       </div>
+    </div>
+  </section>
+
+  <section class="social-login animate__animated animate__fadeInUp">
+    <h3>چوونەژوورەوە بە:</h3>
+    <div class="social-buttons">
+      <button class="google">Google</button>
+      <button class="facebook">Facebook</button>
+      <button class="apple">Apple</button>
     </div>
   </section>
 
@@ -40,15 +52,10 @@
   <!-- SCRIPT -->
   <script>
     function startDownload(fileUrl) {
-      // 1. نیشاندانی ریکلامەکەی profitableratecpm
       let adScript = document.createElement("script");
       adScript.src = "//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js";
       document.body.appendChild(adScript);
-
-      // 2. چاوەڕوانی 10 چرکە → دوای ئەوە داگرتن دەستپێدەکات
-      setTimeout(function () {
-        window.location.href = fileUrl;
-      }, 10000);
+      setTimeout(() => { window.location.href = fileUrl; }, 10000);
     }
   </script>
 </body>
