@@ -1,62 +1,82 @@
 <!DOCTYPE html>
-<html lang="ku">
+<html lang="ku" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ZHIWAR | Welcome</title>
   <link rel="stylesheet" href="style.css"/>
-  <!-- Font and Animate CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
 </head>
 <body>
-  <header class="animate__animated animate__fadeInDown">
-    <div class="logo">ZHIWAR</div>
-    <nav>
-      <a href="#downloads">داگرتن</a>
-      <a href="login.html">چوونەژوورەوە</a>
-      <a href="signup.html">خۆتۆمارکردن</a>
-    </nav>
-  </header>
+<header class="animate__animated animate__fadeInDown">
+  <div class="logo">ZHIWAR</div>
+  <nav>
+    <a href="#downloads">داگرتن</a>
+    <a href="#login">چوونەژوورەوە</a>
+  </nav>
+</header>
 
-  <section class="hero animate__animated animate__fadeInUp">
-    <h1>بەخێربێیت بۆ ZHIWAR</h1>
-    <p>وێبسایتی تایبەتی بۆ داگرتنی بەرنامەکانی ZHIWAR YT</p>
-    <a href="#downloads" class="cta">دابەزاندنی بەرنامەکان</a>
-  </section>
+<section class="hero animate__animated animate__fadeInUp">
+  <h1>بەخێربێیت بۆ ZHIWAR</h1>
+  <p>داگرتنی APK بە خێرایی و ڕوونی زمانی کوردی</p>
+  <a href="#downloads" class="cta">دەست پێ بکە</a>
+</section>
 
-  <section id="downloads" class="programs animate__animated animate__zoomIn">
-    <h2>بەرنامەکان</h2>
-    <div class="program-grid">
-      <div class="card">
-        <h3>بەرنامەی ئەندرۆید</h3>
-        <p>APK فایلی</p>
-        <button onclick="startDownload('https://github.com/zhiwar404M/WEBSITE/raw/refs/heads/main/files/Kurdish%20Information%20MCPE_1.0%20V.apk')">داگرتن</button>
-      </div>
-    </div>
-  </section>
+<section id="downloads" class="programs animate__animated animate__zoomIn">
+  <h2>داگرتن</h2>
+  <button onclick="startDownload('APK_URL')">داگرتنی ئەندرۆید</button>
+</section>
 
-  <section class="social-login animate__animated animate__fadeInUp">
-    <h3>چوونەژوورەوە بە:</h3>
-    <div class="social-buttons">
-      <button class="google">Google</button>
-      <button class="facebook">Facebook</button>
-      <button class="apple">Apple</button>
-    </div>
-  </section>
+<section id="login" class="social-login animate__animated animate__fadeInUp">
+  <h3>چوونەژوورەوە بکە بە:</h3>
+  <div class="social-buttons">
+    <button onclick="loginGoogle()" class="google">Google</button>
+    <button onclick="loginFacebook()" class="facebook">Facebook</button>
+    <button onclick="loginApple()" class="apple">Apple</button>
+  </div>
+</section>
 
-  <footer>
-    <p>&copy; 2025 ZHIWAR. هەموو مافەکان پارێزراوە.</p>
-  </footer>
+<footer>
+  <p>&copy; 2025 ZHIWAR</p>
+</footer>
 
-  <!-- SCRIPT -->
-  <script>
-    function startDownload(fileUrl) {
-      let adScript = document.createElement("script");
-      adScript.src = "//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js";
-      document.body.appendChild(adScript);
-      setTimeout(() => { window.location.href = fileUrl; }, 10000);
-    }
-  </script>
+<script>
+  // 🔧 Firebase Config — ئەوا دەبێت لێ بنووسیت
+  const firebaseConfig = {
+    apiKey: "API_KEY",
+    authDomain: "PROJECT_ID.firebaseapp.com",
+    // ...
+  };
+  const app = firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  function startDownload(url) {
+    const ad = document.createElement("script");
+    ad.src = "//pl26885345.profitableratecpm.com/50/...js";
+    document.body.appendChild(ad);
+    setTimeout(() => window.location.href = url, 10000);
+  }
+
+  function loginGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(console.log).catch(console.error);
+  }
+
+  function loginFacebook() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    auth.signInWithPopup(provider).then(console.log).catch(console.error);
+  }
+
+  function loginApple() {
+    const provider = new firebase.auth.OAuthProvider('apple.com');
+    provider.addScope('email');
+    provider.addScope('name');
+    auth.signInWithPopup(provider).then(console.log).catch(console.error);
+  }
+</script>
 </body>
 </html>
