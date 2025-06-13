@@ -1,17 +1,128 @@
-* { margin:0;padding:0;box-sizing:border-box;font-family:'Cairo'; }
-body { background:#eef2f3; color:#333; }
-header {
-  display:flex;justify-content:space-between;align-items:center;
-  background:#1e1e2f;color:#fff;padding:16px 24px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Cairo', sans-serif;
 }
-.logo{font-size:1.5rem;font-weight:700;}
-nav a{color:#fff;margin-left:16px;text-decoration:none;font-weight:500;}
-.hero{text-align:center;padding:80px 20px;background:linear-gradient(135deg,#283e51,#485563);color:#fff;}
-.cta{padding:12px 24px;background:#ffd369;color:#000;border-radius:4px;display:inline-block;margin-top:16px;font-weight:700;}
-.programs{text-align:center;padding:40px 20px;}
-.social-login{text-align:center;padding:40px 20px;}
-.social-buttons button{margin:8px;padding:10px 20px;border:none;border-radius:4px;color:#fff;font-weight:500;cursor:pointer;}
-.social-buttons .google {background:#db4437;}
-.social-buttons .facebook {background:#3b5998;}
-.social-buttons .apple {background:#000;}
-footer{text-align:center;padding:16px;color:#333;}
+
+body {
+  background: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+header {
+  background: #1e1e2f;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+nav a {
+  color: #fff;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #ffd369;
+}
+
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(to right, #283e51, #485563);
+  color: #fff;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #ffd369;
+  color: #000;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.cta:hover {
+  background: #ffb347;
+}
+
+.programs {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.program-grid {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 300px;
+}
+
+button {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  margin-top: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #555;
+}
+
+.social-login {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.social-buttons button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.social-buttons .google {
+  background: #db4437;
+}
+.social-buttons .facebook {
+  background: #3b5998;
+}
+.social-buttons .apple {
+  background: #000;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #1e1e2f;
+  color: #fff;
+}
