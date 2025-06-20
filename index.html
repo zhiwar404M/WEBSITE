@@ -583,18 +583,21 @@
       }
       
       // نمایش پیغام بۆ بەکارهێنەر
-      const confirmed = confirm(`بەرنامەکە دەست دەکات بە داگرتن... تکایە چاوەڕوان بە!`);
-      
+   <script>
+    function startDownload(fileUrl) {
+      const confirmed = confirm("بەرنامەکە دەست دەکات بە داگرتن... تکایە چاوەڕوان بە!");
+
       if (confirmed) {
-        // نمایش ئەدباکس (دەتوانیت بیسڕیتەوە یان بگۆڕیت)
-        let adScript = document.createElement("script");
-        adScript.src = "//example.com/ads.js";
+        // 1. زیادکردنی ریکلامی Adsterra
+        const adScript = document.createElement("script");
+        adScript.src = "https://www.profitabledisplaynetwork.com/a/display.js"; // ⚠️ لینکەکە پێویستە گۆڕدرابێت بەپێی Adsterra ID ـەکەت
+        adScript.async = true;
         document.body.appendChild(adScript);
-        
-        // داگرتن دوای 5 چرکە
-        setTimeout(function() {
-          window.location.href = downloadUrl;
-        }, 5000);
+
+        // 2. چاوەڕوانی ١٠ چرکە، پاشان داگرتن دەستی پێدەکات
+        setTimeout(function () {
+          window.location.href = fileUrl;
+        }, 10000); // ١٠ چرکە
       }
     }
     
