@@ -1,14 +1,31 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ZHIWAR YT بەخێرهاتی بۆ | وێبسایتی فەرمی</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    #adblock-message {
+      display: none;
+      background: #ffefef;
+      color: #b00020;
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 9999;
+    }
+  </style>
 </head>
 <body>
+
+  <div id="adblock-message">تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس ❤️</div>
+
   <header>
     <div class="header-container">
       <a href="#" class="logo">
@@ -37,7 +54,7 @@
   <section id="apps" class="apps-section">
     <h2 class="section-title">بەرنامەکان</h2>
     <p class="section-subtitle">ئەمەش بەرنامەکانانە بۆ هەردوو سیستەمی ئەندرۆید و ئایفۆن</p>
-    
+
     <div class="apps-grid">
       <div class="app-card">
         <div class="app-icon"><span class="material-icons">android</span></div>
@@ -60,6 +77,13 @@
       </div>
     </div>
   </section>
+
+  <!-- 🔻 Adsterra Native Banner 🔻 -->
+  <section class="native-banner" style="margin: 2rem auto; text-align: center;">
+    <script async="async" data-cfasync="false" src="//pl26961895.profitableratecpm.com/c32f714533f09a451473b337f2bab3d0/invoke.js"></script>
+    <div id="container-c32f714533f09a451473b337f2bab3d0"></div>
+  </section>
+  <!-- 🔺 End Native Banner 🔺 -->
 
   <section id="features" class="features">
     <h2 class="section-title">تایبەتمەندییەکان</h2>
@@ -87,9 +111,7 @@
     <div class="footer-content">
       <div class="footer-column">
         <h3>دەربارەی ئێمە</h3>
-        <p style="color: #CBD5E0; line-height: 1.7; text-align: right;">
-          ❤️💎 ناوەکەم {ژیوار}، پەرەپێدەری بەرنامە کوردییەکانم، وە دەست پێدەکەم بە کارێکی باڵا بۆ خزمەتتان.
-        </p>
+        <p>❤️💎 ناوەکەم ژیوار، پەرەپێدەری بەرنامە کوردییەکانم، وە دەست پێدەکەم بە کارێکی باڵا بۆ خزمەتتان.</p>
       </div>
       <div class="footer-column">
         <h3>پەیوەندی</h3>
@@ -111,27 +133,39 @@
     </div>
   </footer>
 
-  <!-- 🔻 Script: داگرتن + ریکلام DirectLink 🔻 -->
+  <!-- 🔻 ریکلامی popup 🔻 -->
+  <script type='text/javascript' src='//pl26893601.profitableratecpm.com/ca/7d/e7/ca7de7addc12c0c856275b95aeddab87.js'></script>
+
+  <!-- 🔻 Script: داگرتن + ریکلام 🔻 -->
   <script>
     function startDownload(fileUrl) {
       const confirmed = confirm("بەرنامەکە دەست دەکات بە داگرتن... تکایە چاوەڕوان بە!");
-
       if (confirmed) {
-        // بڵاوکردنەوەی ریکلامی direct link لە پەنجەرەی نوێ
         window.open("https://www.profitableratecpm.com/d308a094us?key=b65617fea9640bf82634de6109d1ede6", "_blank");
-
-        // چاوەڕوانی ٧ چرکە پاشان گەڕانەوە بۆ فایلەکە
         setTimeout(function () {
           window.location.href = fileUrl;
         }, 10000);
       }
     }
   </script>
-  <!-- 🔺 کۆتایی Script 🔺 -->
 
-  <!-- 🔻 Popup Adsterra Script (باشی داواکراو) 🔻 -->
-  <script type='text/javascript' src='//pl26893601.profitableratecpm.com/ca/7d/e7/ca7de7addc12c0c856275b95aeddab87.js'></script>
-  <!-- 🔺 کۆتایی Popup Script 🔺 -->
-
+  <!-- 🔻 Script: AdBlock Detection 🔻 -->
+  <script>
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        let ad = document.createElement('div');
+        ad.innerHTML = '&nbsp;';
+        ad.className = 'adsbox';
+        ad.style.height = '1px';
+        document.body.appendChild(ad);
+        window.setTimeout(function () {
+          if (ad.offsetHeight === 0) {
+            document.getElementById("adblock-message").style.display = "block";
+          }
+          ad.remove();
+        }, 100);
+      }, 1000);
+    });
+  </script>
 </body>
 </html>
