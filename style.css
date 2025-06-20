@@ -10,7 +10,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Noto Sans Arabic', sans-serif;
+  font-family: 'Noto Sans Arabic ', sans-serif;
 }
 
 body {
@@ -20,7 +20,7 @@ body {
   min-height: 100vh;
 }
 
-/* header */
+/* سەرپەڕ */
 header {
   background: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -74,12 +74,12 @@ nav a:hover {
   background: rgba(108, 99, 255, 0.1);
 }
 
-/* hero */
+/* بەشی سەرەکی */
 .hero {
   min-height: 80vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, rgba(108, 99, 255, 0.8), rgba(77, 139, 255, 0.8));
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.8) 0%, rgba(77, 139, 255, 0.8) 100%);
   color: white;
   text-align: center;
   padding: 4rem 2rem;
@@ -109,6 +109,7 @@ nav a:hover {
 .hero h1 {
   font-size: 3.2rem;
   margin-bottom: 1.5rem;
+  line-height: 1.2;
 }
 
 .hero p {
@@ -117,7 +118,7 @@ nav a:hover {
   opacity: 0.9;
 }
 
-/* apps section */
+/* بەرنامەکان */
 .apps-section {
   padding: 6rem 2rem;
   max-width: 1200px;
@@ -215,7 +216,7 @@ nav a:hover {
   margin-bottom: 1.5rem;
 }
 
-/* buttons */
+/* دووگمەکان */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -253,7 +254,7 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-/* features */
+/* تایبەتمەندییەکان */
 .features {
   padding: 6rem 2rem;
   background: white;
@@ -290,7 +291,7 @@ nav a:hover {
   line-height: 1.7;
 }
 
-/* footer */
+/* پاشەوە */
 footer {
   background: var(--dark);
   color: white;
@@ -354,7 +355,7 @@ footer {
   font-size: 0.9rem;
 }
 
-/* responsive */
+/* بۆ مۆبایل */
 @media (max-width: 500px) {
   .header-container {
     flex-direction: column;
