@@ -118,23 +118,22 @@
     </div>
   </footer>
 
+  <!-- 🔻 Script: داگرتن + ریکلام DirectLink 🔻 -->
   <script>
     function startDownload(fileUrl) {
       const confirmed = confirm("بەرنامەکە دەست دەکات بە داگرتن... تکایە چاوەڕوان بە!");
 
       if (confirmed) {
-        // زیادکردنی Adsterra داواکراو پێش داگرتن
-        const adScript = document.createElement("script");
-        adScript.src = "//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js";
-        adScript.async = true;
-        document.body.appendChild(adScript);
+        // بڵاوکردنەوەی ریکلامی direct link لە پەنجەرەی نوێ
+        window.open("https://www.profitableratecpm.com/d308a094us?key=b65617fea9640bf82634de6109d1ede6", "_blank");
 
-        // چاوەڕوانی ١٠ چرکە پاشان داگرتن دەستی پێدەکات
+        // چاوەڕوانی ٧ چرکە پاشان گەڕانەوە بۆ فایلەکە
         setTimeout(function () {
           window.location.href = fileUrl;
-        }, 10000);
+        }, 7000);
       }
     }
   </script>
+  <!-- 🔺 کۆتایی Script 🔺 -->
 </body>
 </html>
