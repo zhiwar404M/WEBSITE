@@ -3,409 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> ZHIWAR YT بەخێرهاتی بۆ | وێبسایتی فەرمی</title>
+  <title>ZHIWAR YT بەخێرهاتی بۆ | وێبسایتی فەرمی</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    /* ڕێسای بنەڕەتی */
-    :root {
-      --primary: #6C63FF;
-      --secondary: #4D8BFF;
-      --dark: #2D3748;
-      --light: #F7FAFC;
-      --accent: #FF6B6B;
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Noto Sans Arabic', sans-serif;
-    }
-    
-    body {
-      background-color: var(--light);
-      color: var(--dark);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-    
-    /* سەرپەڕ */
-    header {
-      background: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.5rem 2rem;
-    }
-    
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .logo-icon {
-      color: var(--accent);
-    }
-    
-    nav {
-      display: flex;
-      gap: 1.5rem;
-    }
-    
-    nav a {
-      color: var(--dark);
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    nav a:hover {
-      color: var(--primary);
-      background: rgba(108, 99, 255, 0.1);
-    }
-    
-    /* بەشی سەرەکی */
-    .hero {
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      background: linear-gradient(135deg, rgba(108, 99, 255, 0.8) 0%, rgba(77, 139, 255, 0.8) 100%);
-      color: white;
-      text-align: center;
-      padding: 4rem 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-      opacity: 0.15;
-      z-index: 0;
-    }
-    
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    
-    .hero h1 {
-      font-size: 3.2rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-    }
-    
-    .hero p {
-      font-size: 1.25rem;
-      margin-bottom: 2.5rem;
-      opacity: 0.9;
-    }
-    
-    /* بەرنامەکان */
-    .apps-section {
-      padding: 6rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: var(--dark);
-      position: relative;
-      display: inline-block;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: var(--primary);
-      border-radius: 2px;
-    }
-    
-    .section-subtitle {
-      text-align: center;
-      font-size: 1.1rem;
-      color: #666;
-      margin-bottom: 4rem;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    .apps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2.5rem;
-    }
-    
-    .app-card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
-      text-align: center;
-      padding: 2.5rem 2rem;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-    
-    .app-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    }
-    
-    .app-icon {
-      font-size: 3.5rem;
-      margin-bottom: 1.5rem;
-      color: var(--primary);
-      background: rgba(108, 99, 255, 0.1);
-      width: 80px;
-      height: 80px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-    }
-    
-    .app-title {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-      color: var(--dark);
-    }
-    
-    .app-description {
-      margin-bottom: 2rem;
-      color: #666;
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
-    
-    .app-version {
-      display: inline-block;
-      background: rgba(108, 99, 255, 0.1);
-      color: var(--primary);
-      padding: 0.3rem 1rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-    
-    /* دووگمەکان */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.9rem 2.2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-    
-    .btn-primary:hover {
-      background: #5a52e0;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
-    }
-    
-    .btn-outline {
-      background: transparent;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-    }
-    
-    .btn-outline:hover {
-      background: rgba(108, 99, 255, 0.1);
-      transform: translateY(-2px);
-    }
-    
-    /* بەشی تایبەتمەندییەکان */
-    .features {
-      padding: 6rem 2rem;
-      background: white;
-    }
-    
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 3rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .feature-card {
-      text-align: center;
-      padding: 2rem;
-    }
-    
-    .feature-icon {
-      font-size: 2.5rem;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-    }
-    
-    .feature-title {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      color: var(--dark);
-    }
-    
-    .feature-description {
-      color: #666;
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
-    
-    /* پاشەپێ */
-    footer {
-      background: var(--dark);
-      color: white;
-      padding: 4rem 2rem 2rem;
-      text-align: center;
-    }
-    
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 3rem;
-      text-align: right;
-    }
-    
-    .footer-column h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1.5rem;
-      color: white;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .footer-column h3::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      right: 0;
-      width: 50%;
-      height: 2px;
-      background: var(--primary);
-    }
-    
-    .footer-links {
-      list-style: none;
-    }
-    
-    .footer-links li {
-      margin-bottom: 0.8rem;
-    }
-    
-    .footer-links a {
-      color: #CBD5E0;
-      text-decoration: none;
-      transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .footer-links a:hover {
-      color: var(--primary);
-    }
-    
-    .copyright {
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: #A0AEC0;
-      font-size: 0.9rem;
-    }
-    
-    /* بۆ مۆبایل */
-    @media (max-width: 500px) {
-      .header-container {
-        flex-direction: column;
-        gap: 1.5rem;
-        padding: 1.5rem;
-      }
-      
-      nav {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      
-      .hero h1 {
-        font-size: 2.4rem;
-      }
-      
-      .hero p {
-        font-size: 1.1rem;
-      }
-      
-      .apps-section, .features {
-        padding: 4rem 1.5rem;
-      }
-      
-      .section-title {
-        font-size: 2rem;
-      }
-      
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      
-      .footer-column h3::after {
-        right: 50%;
-        transform: translateX(50%);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
@@ -415,18 +16,9 @@
         <span> بەخێرهاتی بۆ | وێبسایتی فەرمی ZHIWAR YT</span>
       </a>
       <nav>
-        <a href="#apps">
-          <span class="material-icons">download</span>
-         بەشی بەرنامەکان
-        </a>
-        <a href="#features">
-          <span class="material-icons">star</span>
-          تایبەتمەندییەکان
-        </a>
-        <a href="#contact">
-          <span class="material-icons">contact_support</span>
-          پەیوەندی
-        </a>
+        <a href="#apps"><span class="material-icons">download</span> بەشی بەرنامەکان</a>
+        <a href="#features"><span class="material-icons">star</span> تایبەتمەندییەکان</a>
+        <a href="#contact"><span class="material-icons">contact_support</span> پەیوەندی</a>
       </nav>
     </div>
   </header>
@@ -436,80 +28,57 @@
       <h1>بەرنامەکانی ZHIWAR YT</h1>
       <p>بەرنامەکان بە تەواوی دارێژراوە بە زمانی کوردی بۆ ئەندرۆید و iOS</p>
       <div style="display: flex; gap: 1rem; justify-content: center;">
-        <a href="#apps" class="btn btn-primary">
-          <span class="material-icons">download</span>
-          داگرتن
-        </a>
-        <a href="#features" class="btn btn-outline">
-          <span class="material-icons">info</span>
-          زانیاری زیاتر
-        </a>
+        <a href="#apps" class="btn btn-primary"><span class="material-icons">download</span> داگرتن</a>
+        <a href="#features" class="btn btn-outline"><span class="material-icons">info</span> زانیاری زیاتر</a>
       </div>
     </div>
   </section>
 
   <section id="apps" class="apps-section">
     <h2 class="section-title">بەرنامەکان</h2>
-    <p class="section-subtitle">ئەمەش بەرنامەکانانە بۆ هەردوو سیستەمی ئەندرێد و ئایفۆن</p>
+    <p class="section-subtitle">ئەمەش بەرنامەکانانە بۆ هەردوو سیستەمی ئەندرۆید و ئایفۆن</p>
     
     <div class="apps-grid">
-      <!-- پەرنامەی یەکەم -->
       <div class="app-card">
-        <div class="app-icon">
-          <span class="material-icons">android</span>
-        </div>
-        <h3 class="app-title">Minefo Kr </h3>
+        <div class="app-icon"><span class="material-icons">android</span></div>
+        <h3 class="app-title">Minefo Kr</h3>
         <span class="app-version">وەشانی 1.0</span>
-        <p class="app-description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی </p>
-        <button class="btn btn-primary" onclick="startDownload('https://example.com/download/app1.apk')">
-          <span class="material-icons">download</span>
-          داگرتن بۆ ئەندرۆید
+        <p class="app-description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
+        <button class="btn btn-primary" onclick="startDownload('https://example.com/app1.apk')">
+          <span class="material-icons">download</span> داگرتن بۆ ئەندرۆید
         </button>
       </div>
-      
-      <!-- پەرنامەی دووەم -->
+
       <div class="app-card">
-        <div class="app-icon">
-          <span class="material-icons">phone_iphone</span>
-        </div>
-        <h3 class="app-title">Minefo kr</h3>
+        <div class="app-icon"><span class="material-icons">phone_iphone</span></div>
+        <h3 class="app-title">Minefo Kr</h3>
         <span class="app-version">وەشانی 1.0</span>
-        <p class="app-description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی </p>
-        <button class="btn btn-primary" onclick="downloadApp('app2')">
-          <span class="material-icons">download</span>
-          داگرتن بۆ iOS
+        <p class="app-description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
+        <button class="btn btn-primary" onclick="startDownload('https://example.com/app2.ipa')">
+          <span class="material-icons">download</span> داگرتن بۆ iOS
         </button>
       </div>
-      
-      
+    </div>
+  </section>
 
   <section id="features" class="features">
     <h2 class="section-title">تایبەتمەندییەکان</h2>
     <p class="section-subtitle">چەند تایبەتمەندییەکی ناوازەی بەرنامەکەم</p>
-    
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">
-          <span class="material-icons">language</span>
-        </div>
+        <div class="feature-icon"><span class="material-icons">language</span></div>
         <h3 class="feature-title">زمانی کوردی</h3>
-        <p class="feature-description">هەموو بەرنامەکە بە زمانی کوردی و خاوەنی دیزاینێکی کوردین</p>
+        <p class="feature-description">هەموو بەرنامەکە بە زمانی کوردی و دیزاینێکی تایبەتی</p>
       </div>
-      
       <div class="feature-card">
-        <div class="feature-icon">
-          <span class="material-icons">speed</span>
-        </div>
+        <div class="feature-icon"><span class="material-icons">speed</span></div>
         <h3 class="feature-title">خێرایی</h3>
-        <p class="feature-description">بەرنامەکەمان زۆر خێرا و سووکن بۆ هەموو مۆبایلێک</p>
+        <p class="feature-description">زۆر خێرا و سووکنە بۆ هەموو مۆبایلێک</p>
       </div>
-      
       <div class="feature-card">
-        <div class="feature-icon">
-          <span class="material-icons">update</span>
-        </div>
+        <div class="feature-icon"><span class="material-icons">update</span></div>
         <h3 class="feature-title">نوێکردنەوە</h3>
-        <p class="feature-description">بەردەوام بەرنامەکانمان نوێ دەکەینەوە بۆ باشترکردنی کارایی</p>
+        <p class="feature-description">بەرنامەکان بەردەوام نوێ دەکرێنەوە</p>
       </div>
     </div>
   </section>
@@ -518,93 +87,45 @@
     <div class="footer-content">
       <div class="footer-column">
         <h3>دەربارەی ئێمە</h3>
-        <p style="color: #CBD5E0; line-height: 1.7; text-align: right;"> ❤️💎من ناوم{ژیوار} - پەرەپێدەری پەرنامە کوردییەکان بۆ هەموو پلاتفۆرمەکان هەوڵ دەدەم باشترین پێشکەش بکەم بۆ خزمەتی ئێوەی  خۆشەویست  </p>
+        <p style="color: #CBD5E0; line-height: 1.7; text-align: right;">
+          ❤️💎 ناوەکەم {ژیوار}، پەرەپێدەری بەرنامە کوردییەکانم، وە دەست پێدەکەم بە کارێکی باڵا بۆ خزمەتتان.
+        </p>
       </div>
-      
       <div class="footer-column">
         <h3>پەیوەندی</h3>
         <ul class="footer-links">
-          <li>
-            <a href="mailto:example@example.com">
-              <span class="material-icons">email</span>
-              ئیمەیڵ: zhiwarup@gmail.com
-            </a>
-          </li>
-          <li>
-            
+          <li><a href="mailto:zhiwarup@gmail.com"><span class="material-icons">email</span> ئیمەیڵ: zhiwarup@gmail.com</a></li>
+        </ul>
+      </div>
       <div class="footer-column">
         <h3>کەناڵەکان</h3>
         <ul class="footer-links">
-          <li>
-            <a href="https://youtube.com/@zhiwarxyt?si=6h-kI423IHl32W-9">
-              <span class="material-icons">play_circle</span>
-              یوتیوب
-            </a>
-          </li>
-          <li>
-            <a href="جار بەردەست نیە چاوەروان بە">
-              <span class="material-icons">tiktok</span>
-              فەیسبووک
-            </a>
-          </li>
-          <li>
-            <a href="https://snapchat.com/t/HktxQxsY">
-              <span class="material-icons">snapchat</span>
-              سناپچات
-            </a>
-          </li>
+          <li><a href="https://youtube.com/@zhiwarxyt"><span class="material-icons">play_circle</span> یوتیوب</a></li>
+          <li><a href="#"><span class="material-icons">tiktok</span> فەیسبووک</a></li>
+          <li><a href="https://snapchat.com/t/HktxQxsY"><span class="material-icons">snapchat</span> سناپچات</a></li>
         </ul>
       </div>
     </div>
-    
     <div class="copyright">
-      <p>© 2021 هەموو مافەکان پارێزراوە. ناوی کۆمپانیاکە</p>
+      <p>© 2025 هەموو مافەکان پارێزراون. بەرهەمهێنەر: ZHIWAR</p>
     </div>
   </footer>
 
   <script>
-    // فەنکشنی داگرتن بۆ پەرنامەکان
-    function downloadApp(appId) {
-      let downloadUrl;
-      
-      // دیاریکردنی لینکی داگرتن بەپێی پەرنامە
-      switch(appId) {
-        case 'app1':
-          downloadUrl = 'https://example.com/download/app1.apk';
-          break;
-        case 'app2':
-          downloadUrl = 'https://example.com/download/app2.ipa';
-          break;
-        case 'app3':
-          downloadUrl = 'https://example.com/download/app3.exe';
-          break;
-        default:
-          downloadUrl = '#';
-      }
-      
-      // نمایش پیغام بۆ بەکارهێنەر
-  function startDownload(fileUrl) {
-    const confirmed = confirm("بەرنامەکە دەست دەکات بە داگرتن... تکایە چاوەڕوان بە!");
+    function startDownload(fileUrl) {
+      const confirmed = confirm("بەرنامەکە دەست دەکات بە داگرتن... تکایە چاوەڕوان بە!");
 
-    if (confirmed) {
-      // ١. زیادکردنی ریکلامی Adsterra
-      const adScript = document.createElement("script");
-      adScript.src = "//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js";
-      adScript.async = true;
-      document.body.appendChild(adScript);
+      if (confirmed) {
+        // ١. زیادکردنی ریکلامی Adsterra
+        const adScript = document.createElement("script");
+        adScript.src = "//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js";
+        adScript.async = true;
+        document.body.appendChild(adScript);
 
-      // ٢. چاوەڕوانی ١٠ چرکە، پاشان داگرتن دەستی پێدەکات
-      setTimeout(function () {
-        window.location.href = fileUrl;
-      }, 10000); // ١٠ چرکە
-    }
-  }
-    
-    // فەنکشنی چوونەژوورەوە (دەتوانیت Firebase یان سیستەمێکی تر زیاد بکەیت)
-    function loginWithEmail() {
-      const email = prompt("تکایە ئیمەیڵەکەت بنووسە:");
-      if (email) {
-        alert(`ئیمەیڵەکەت ${email} نێردرا بۆ چوونەژوورەوە!`);
+        // ٢. چاوەڕوانی ١٠ چرکە، پاشان داگرتن دەستی پێدەکات
+        setTimeout(function () {
+          window.location.href = fileUrl;
+        }, 10000);
       }
     }
   </script>
