@@ -127,19 +127,31 @@
     </div>
   </footer>
   
-  <script>
-  window.addEventListener("load", function () {
-    const bait = document.createElement("div");
-    bait.className = "pub_300x250 adbanner";
-    bait.style = "width: 1px; height: 1px; position: absolute; left: -10000px;";
+<!-- HTML: نیشاندانی نامە بۆ AdBlock -->
+<div id="adblock-warning" style="display: none; background-color: #ffecec; color: #b00020; padding: 1rem; text-align: center; font-weight: bold; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;">
+  ⚠️ تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس بۆ هاوکارییەکەت. ❤️
+</div>
+
+<!-- JavaScript: ڕێگری و پیشاندانی نامەکە -->
+<script>
+  window.addEventListener('load', function () {
+    let bait = document.createElement('div');
+    bait.innerHTML = '&nbsp;';
+    bait.className = 'adsbox ad-banner ad-unit ad-zone ad-space';
+    bait.style.position = 'absolute';
+    bait.style.height = '1px';
+    bait.style.width = '1px';
+    bait.style.left = '-9999px';
     document.body.appendChild(bait);
 
-    setTimeout(() => {
-      if (bait.offsetHeight === 0) {
-        alert("تکایە AdBlock داخە! بۆ دەرچوونی ڕیکلامەکان و بەدەستهێنانی فایل.");
-        window.location.href = "https://zhiwarup.com/adblock-warning"; // یان رەوانەکردن بۆ پەیجی تر
+    setTimeout(function () {
+      if (bait.offsetHeight === 0 || bait.clientHeight === 0) {
+        document.getElementById("adblock-warning").style.display = "block";
+        // optionally block the rest of the site too
+        document.body.innerHTML = document.getElementById("adblock-warning").outerHTML;
       }
-    }, 100);
+      bait.remove();
+    }, 1000);
   });
 
   <!-- 🔻 ریکلامی popup 🔻 -->
@@ -156,7 +168,7 @@
         }, 10000);
       }
     }
-  </script>
+  
 
   <!-- 🔻 Script: AdBlock Detection 🔻 -->
   <script>
