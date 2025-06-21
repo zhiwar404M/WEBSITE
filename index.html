@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    #adblock-message {
+    #adblock-warning {
       display: none;
       background: #ffefef;
       color: #b00020;
@@ -21,10 +21,14 @@
       z-index: 9999;
     }
   </style>
+
+  <!-- AdSense Script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx"
+          crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <div id="adblock-message">تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس ❤️</div>
+  <div id="adblock-warning">⚠️ تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس ❤️</div>
 
   <header>
     <div class="header-container">
@@ -61,45 +65,21 @@
         <h3 class="app-title">Minefo Kr</h3>
         <span class="app-version">وەشانی 1.0</span>
         <p class="app-description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
-        <button class="btn btn-primary" onclick="startDownload('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk')">
+        <button class="btn btn-primary" onclick="startDownloadWithAds('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk')">
           <span class="material-icons">download</span> داگرتن بۆ ئەندرۆید
         </button>
       </div>
-
-      <div class="app-card">
-        <div class="app-icon"><span class="material-icons">phone_iphone</span></div>
-        <h3 class="app-title">Minefo Kr</h3>
-        <span class="app-version">وەشانی 1.0</span>
-        <p class="app-description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
-        <button class="btn btn-primary" onclick="startDownload('https://example.com/app2.ipa')">
-          <span class="material-icons">download</span> داگرتن بۆ iOS
-        </button>
-      </div>
     </div>
   </section>
 
-
-  <section id="features" class="features">
-    <h2 class="section-title">تایبەتمەندییەکان</h2>
-    <p class="section-subtitle">چەند تایبەتمەندییەکی ناوازەی بەرنامەکەم</p>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-icons">language</span></div>
-        <h3 class="feature-title">زمانی کوردی</h3>
-        <p class="feature-description">هەموو بەرنامەکە بە زمانی کوردی و دیزاینێکی تایبەتی</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-icons">speed</span></div>
-        <h3 class="feature-title">خێرایی</h3>
-        <p class="feature-description">زۆر خێرا و سووکنە بۆ هەموو مۆبایلێک</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><span class="material-icons">update</span></div>
-        <h3 class="feature-title">نوێکردنەوە</h3>
-        <p class="feature-description">بەرنامەکان بەردەوام نوێ دەکرێنەوە</p>
-      </div>
-    </div>
-  </section>
+  <div id="adsense-ad" style="display: none; margin: 20px auto; text-align: center;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
 
   <footer id="contact">
     <div class="footer-content">
@@ -126,65 +106,44 @@
       <p>© 2025 هەموو مافەکان پارێزراون. بەرهەمهێنەر: ZHIWAR</p>
     </div>
   </footer>
-  
-<!-- HTML: نیشاندانی نامە بۆ AdBlock -->
-<div id="adblock-warning" style="display: none; background-color: #ffecec; color: #b00020; padding: 1rem; text-align: center; font-weight: bold; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;">
-  ⚠️ تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس بۆ هاوکارییەکەت. ❤️
-</div>
 
-<!-- JavaScript: ڕێگری و پیشاندانی نامەکە -->
-<script>
-  window.addEventListener('load', function () {
-    let bait = document.createElement('div');
-    bait.innerHTML = '&nbsp;';
-    bait.className = 'adsbox ad-banner ad-unit ad-zone ad-space';
-    bait.style.position = 'absolute';
-    bait.style.height = '1px';
-    bait.style.width = '1px';
-    bait.style.left = '-9999px';
-    document.body.appendChild(bait);
+  <!-- 🔻 Popup Adsterra Script 🔻 -->
+  <script type="text/javascript" src="//pl26893601.profitableratecpm.com/ca/7d/e7/ca7de7addc12c0c856275b95aeddab87.js"></script>
 
-    setTimeout(function () {
-      if (bait.offsetHeight === 0 || bait.clientHeight === 0) {
-        document.getElementById("adblock-warning").style.display = "block";
-        // optionally block the rest of the site too
-        document.body.innerHTML = document.getElementById("adblock-warning").outerHTML;
-      }
-      bait.remove();
-    }, 1000);
-  });
-
-  <!-- 🔻 ریکلامی popup 🔻 -->
-  <script type='text/javascript' src='//pl26893601.profitableratecpm.com/ca/7d/e7/ca7de7addc12c0c856275b95aeddab87.js'></script>
-
-  <!-- 🔻 Script: داگرتن + ریکلام 🔻 -->
+  <!-- 🔻 JavaScript: داگرتن + AdSense ➤ Adsterra ➤ Download 🔻 -->
   <script>
-    function startDownload(fileUrl) {
-      const confirmed = confirm("بەرنامەکە دەست دەکات بە داگرتن... تکایە چاوەڕوان بە!");
-      if (confirmed) {
+    function startDownloadWithAds(fileUrl) {
+      const adsenseAd = document.getElementById("adsense-ad");
+      adsenseAd.style.display = "block";
+      (adsbygoogle = window.adsbygoogle || []).push({});
+
+      setTimeout(function () {
         window.open("https://www.profitableratecpm.com/d308a094us?key=b65617fea9640bf82634de6109d1ede6", "_blank");
+
         setTimeout(function () {
           window.location.href = fileUrl;
-        }, 10000);
-      }
+        }, 3000);
+      }, 5000);
     }
-  
+  </script>
 
-  <!-- 🔻 Script: AdBlock Detection 🔻 -->
+  <!-- 🔻 AdBlock Detection 🔻 -->
   <script>
     window.addEventListener('load', function () {
+      let bait = document.createElement('div');
+      bait.innerHTML = '&nbsp;';
+      bait.className = 'adsbox ad-banner ad-unit ad-zone ad-space';
+      bait.style.position = 'absolute';
+      bait.style.height = '1px';
+      bait.style.width = '1px';
+      bait.style.left = '-9999px';
+      document.body.appendChild(bait);
+
       setTimeout(function () {
-        let ad = document.createElement('div');
-        ad.innerHTML = '&nbsp;';
-        ad.className = 'adsbox';
-        ad.style.height = '1px';
-        document.body.appendChild(ad);
-        window.setTimeout(function () {
-          if (ad.offsetHeight === 0) {
-            document.getElementById("adblock-message").style.display = "block";
-          }
-          ad.remove();
-        }, 100);
+        if (bait.offsetHeight === 0 || bait.clientHeight === 0) {
+          document.getElementById("adblock-warning").style.display = "block";
+        }
+        bait.remove();
       }, 1000);
     });
   </script>
