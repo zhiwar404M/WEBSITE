@@ -126,6 +126,21 @@
       <p>© 2025 هەموو مافەکان پارێزراون. بەرهەمهێنەر: ZHIWAR</p>
     </div>
   </footer>
+  
+  <script>
+  window.addEventListener("load", function () {
+    const bait = document.createElement("div");
+    bait.className = "pub_300x250 adbanner";
+    bait.style = "width: 1px; height: 1px; position: absolute; left: -10000px;";
+    document.body.appendChild(bait);
+
+    setTimeout(() => {
+      if (bait.offsetHeight === 0) {
+        alert("تکایە AdBlock داخە! بۆ دەرچوونی ڕیکلامەکان و بەدەستهێنانی فایل.");
+        window.location.href = "https://zhiwarup.com/adblock-warning"; // یان رەوانەکردن بۆ پەیجی تر
+      }
+    }, 100);
+  });
 
   <!-- 🔻 ریکلامی popup 🔻 -->
   <script type='text/javascript' src='//pl26893601.profitableratecpm.com/ca/7d/e7/ca7de7addc12c0c856275b95aeddab87.js'></script>
