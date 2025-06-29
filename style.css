@@ -233,3 +233,178 @@ footer {
   color: #64748b;
   font-size: 0.85rem;
 }
+
+    /* Privacy Policy Section */
+    .privacy-section {
+      background-color: #0f172a;
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .privacy-container {
+      background-color: #1e293b;
+      border-radius: 0.75rem;
+      padding: 2.5rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    
+    .privacy-header {
+      border-bottom: 2px solid #38bdf8;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    .privacy-title {
+      color: #38bdf8;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .privacy-date {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+    
+    .privacy-content {
+      color: #e2e8f0;
+      line-height: 1.8;
+    }
+    
+    .privacy-section h3 {
+      color: #38bdf8;
+      margin: 1.8rem 0 1rem;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    
+    .privacy-section p {
+      margin-bottom: 1.2rem;
+    }
+    
+    .privacy-section ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .privacy-section li {
+      margin-bottom: 0.7rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    
+    .privacy-section li::before {
+      content: "•";
+      color: #0ea5e9;
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
+    }
+    
+    .privacy-contact {
+      background-color: rgba(14, 165, 233, 0.1);
+      border-left: 4px solid #0ea5e9;
+      padding: 1.2rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      margin: 2rem 0;
+    }
+    
+    /* دوگمەی سیاسەتی پاراستن */
+    .privacy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(14, 165, 233, 0.15);
+      color: #0ea5e9;
+      padding: 0.7rem 1.5rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      margin-top: 1rem;
+    }
+    
+    .privacy-btn:hover {
+      background: rgba(14, 165, 233, 0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(14, 165, 233, 0.2);
+    }
+    
+    /* Footer */
+    footer {
+      background-color: #0f172a;
+      padding: 2rem;
+      color: #cbd5e1;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    
+    .footer-column h3 {
+      color: #38bdf8;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-links a {
+      text-decoration: none;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .footer-links a:hover {
+      color: #0ea5e9;
+    }
+    
+    /* وەشاندن */
+    @media (max-width: 768px) {
+      .privacy-container {
+        padding: 1.5rem;
+      }
+      
+      .privacy-title {
+        font-size: 1.7rem;
+      }
+      
+      nav {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .footer-column {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
