@@ -406,6 +406,33 @@ footer {
         width: 100%;
       }
     }
+    
+    /* ستایل بۆ دوگمەکانی زمان */
+.language-switcher {
+  display: flex;
+  gap: 8px;
+  margin-left: 20px;
+}
+
+.lang-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.lang-btn.active {
+  background: #fff;
+  color: #333;
+  font-weight: bold;
+}
   </style>
 </head>
 <body>
