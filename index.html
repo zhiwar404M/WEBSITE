@@ -155,6 +155,59 @@
         bait.remove();
       }, 1000);
     });
+
+  // فەنکشنی گۆرینی زمان
+  function changeLanguage(lang) {
+    // گۆڕینی هەڵبژاردەی ئێستا
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    
+    // گۆڕینی زمان لە سیستەم
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : lang === 'ku' ? 'rtl' : 'ltr';
+    
+    // گۆڕینی ناوەڕۆک بەپێی زمان
+    const elements = document.querySelectorAll('[data-translate]');
+    elements.forEach(el => {
+      const key = el.getAttribute('data-translate');
+      if (translations[key] && translations[key][lang]) {
+        el.innerHTML = translations[key][lang];
+      }
+    });
+    
+    // تۆمارکردنی هەڵبژاردن لە کۆکی
+    document.cookie = `user_lang=${lang}; path=/; max-age=${365 * 24 * 60 * 60}`;
+  }
+
+  // زانیارییەکانی وەرگێڕان
+  const translations = {
+    "welcome": {
+      "ku": "بەخێرهاتی بۆ | وێبسایتی فەرمی ZHIWAR",
+      "ar": "مرحبًا بكم | الموقع الرسمي ZHIWAR",
+      "en": "Welcome | Official ZHIWAR Website"
+    },
+    "apps_section": {
+      "ku": "بەرنامەکان",
+      "ar": "التطبيقات",
+      "en": "Applications"
+    },
+    // زیادکردنی هەموو دەقەکان لێرە...
+  };
+
+  // کارپێکردنی کلیک لەسەر دوگمەکانی زمان
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      changeLanguage(btn.dataset.lang);
+    });
+  });
+
+  // وەرگرتنی زمان لە کۆکی لەسەر بارگاویبوونەوەی پەڕە
+  document.addEventListener('DOMContentLoaded', () => {
+    const langFromCookie = document.cookie.match(/user_lang=([^;]+)/)?.[1];
+    const userLang = langFromCookie || 'ku';
+    changeLanguage(userLang);
+  });
   </script>
 </body>
 </html>
