@@ -20,6 +20,33 @@
       width: 100%;
       z-index: 9999;
     }
+
+    /* ستایل بۆ دوگمەکانی زمان */
+    .language-switcher {
+      display: flex;
+      gap: 8px;
+      margin-left: 20px;
+    }
+
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .lang-btn.active {
+      background: #fff;
+      color: #333;
+      font-weight: bold;
+    }
   </style>
 
   <!-- AdSense Script -->
@@ -41,13 +68,12 @@
         <a href="#features"><span class="material-icons">star</span> تایبەتمەندییەکان</a>
         <a href="#contact"><span class="material-icons">contact_support</span> پەیوەندی</a>
         
-       <!-- ... کۆدی ئێستا ... -->
-    
-    <!-- زیادکردنی دوگمەکانی زمان -->
-    <div class="language-switcher">
-      <button class="lang-btn active" data-lang="ku">کوردی</button>
-      <button class="lang-btn" data-lang="ar">العربية</button>
-      <button class="lang-btn" data-lang="en">English</button>
+        <!-- زیادکردنی دوگمەکانی زمان لە سەرەوە -->
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="ku">کوردی</button>
+          <button class="lang-btn" data-lang="ar">العربية</button>
+          <button class="lang-btn" data-lang="en">English</button>
+        </div>
       </nav>
     </div>
   </header>
@@ -88,6 +114,65 @@
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
   </div>
+
+  <!-- Privacy Policy Section -->
+  <section class="privacy-section">
+    <div class="privacy-container">
+      <div class="privacy-header">
+        <h2 class="privacy-title">
+          <span class="material-icons">privacy_tip</span>
+          سیاسەتی پاراستنی زانیاری
+        </h2>
+        <p class="privacy-date">دوایین نوێکردنەوە: ٢٥ی تشرینی یەکەمی ٢٠٢٥</p>
+      </div>
+      
+      <div class="privacy-content">
+        <p>لە ZHIWAR YT، پاراستنی زانیاری کەسییەکانت بۆمان زۆر گرنگە. ئەم سیاسەتە ڕوون دەکاتەوە کە چۆن زانیارییە کەسییەکانت کۆدەکەینەوە، بەکاریان دەهێنین و پارەیان دەکەین.</p>
+        
+        <h3>
+          <span class="material-icons">collections_bookmark</span>
+          چ جۆرە زانیارییەک کۆدەکەینەوە؟
+        </h3>
+        <p>ئێمە زانیارییەکانی خوارەوە کۆدەکەینەوە:</p>
+        <ul>
+          <li>زانیاری کەسی: ناو، ئیمەیڵ، ناونیشان</li>
+          <li>زانیاری ئامێر: جۆری ئامێر، سیستەمی کارپێکەری</li>
+          <li>زانیاری بەکارهێنان: داگرتنەکان، وێبگەڕی بەکارهێنەر</li>
+          <li>زانیاری ریکلام: کلیکەکان لەسەر ریکلام</li>
+        </ul>
+        
+        <h3>
+          <span class="material-icons">how_to_reg</span>
+          چۆن زانیاریەکانت بەکاردەهێنین؟
+        </h3>
+        <p>زانیاریەکانت بۆ ئەم مەبەستانە بەکاردەهێنین:</p>
+        <ul>
+          <li>پێشکەشکردنی خزمەتگوزارییەکانمان</li>
+          <li>پەرەپێدانی بەرنامە نوێیەکان</li>
+          <li>باشترکردنی وێبسایت و بەرنامەکانمان</li>
+          <li>ناردنی زانیاری و ڕیکلامی پەیوەندیدار</li>
+        </ul>
+        
+        <h3>
+          <span class="material-icons">lock</span>
+          چۆن زانیاریەکانت پارێز دەکەین
+        </h3>
+        <p>ئێمە هەوڵی زۆر دەدەین بۆ پاراستنی زانیاریەکانت:</p>
+        <ul>
+          <li>تەکنەلۆژیای پاراستنی پێشکەوتوو بەکاردەهێنین</li>
+          <li>تەنها کارمەندە مۆڵەتدارەکان دەسترسیان هەیە</li>
+          <li>پشکنینی بەردەوام بۆ سیستەمەکانی پاراستن</li>
+        </ul>
+      </div>
+      
+      <!-- زیادکردنی دوگمەکانی زمان لە خوارەوە -->
+      <div class="language-switcher" style="margin-top: 30px; justify-content: center;">
+        <button class="lang-btn active" data-lang="ku">کوردی</button>
+        <button class="lang-btn" data-lang="ar">العربية</button>
+        <button class="lang-btn" data-lang="en">English</button>
+      </div>
+    </div>
+  </section>
 
   <footer id="contact">
     <div class="footer-content">
@@ -155,10 +240,10 @@
         bait.remove();
       }, 1000);
     });
-<!-- ... کۆدی پێشوو ... -->
+  </script>
 
-  <!-- 🔻 کۆدی نوێ بۆ گۆرینی زمان: لە دوای کۆدی پشکنینی AdBlock و پێش کۆتای <body> -->
-
+  <!-- کۆدی نوێ بۆ گۆرینی زمان: لە کۆتایی فایل -->
+  <script>
     // فەنکشنی گۆرینی زمان
     function changeLanguage(lang) {
       // گۆڕینی هەڵبژاردەی ئێستا
@@ -170,38 +255,12 @@
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : lang === 'ku' ? 'rtl' : 'ltr';
       
-      // گۆڕینی ناوەڕۆک بەپێی زمان
-      const elements = document.querySelectorAll('[data-translate]');
-      elements.forEach(el => {
-        const key = el.getAttribute('data-translate');
-        if (translations[key] && translations[key][lang]) {
-          el.innerHTML = translations[key][lang];
-        }
-      });
-      
       // تۆمارکردنی هەڵبژاردن لە کۆکی
       document.cookie = `user_lang=${lang}; path=/; max-age=${365 * 24 * 60 * 60}`;
+      
+      // نوێکردنەوەی پەڕە بۆ گۆرینی زمان
+      location.reload();
     }
-
-    // زانیارییەکانی وەرگێڕان
-    const translations = {
-      "welcome_title": {
-        "ku": "بەخێرهاتی بۆ | وێبسایتی فەرمی ZHIWAR",
-        "ar": "مرحبًا بكم | الموقع الرسمي ZHIWAR",
-        "en": "Welcome | Official ZHIWAR Website"
-      },
-      "welcome_text": {
-        "ku": "بەرنامەکان بە تەواوی دارێژراوە بە زمانی کوردی",
-        "ar": "التطبيقات مبرمجة بالكامل باللغة الكردية",
-        "en": "Apps fully programmed in Kurdish language"
-      },
-      "apps_section": {
-        "ku": "بەرنامەکان",
-        "ar": "التطبيقات",
-        "en": "Applications"
-      },
-      // ... زیادکردنی هەموو دەقەکانی تر لێرە ...
-    };
 
     // کارپێکردنی کلیک لەسەر دوگمەکانی زمان
     document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -213,58 +272,11 @@
     // وەرگرتنی زمان لە کۆکی لەسەر بارگاویبوونەوەی پەڕە
     document.addEventListener('DOMContentLoaded', () => {
       const langFromCookie = document.cookie.match(/user_lang=([^;]+)/)?.[1];
-      const userLang = langFromCookie || 'ku';
-      changeLanguage(userLang);
+      if (langFromCookie) {
+        document.documentElement.lang = langFromCookie;
+        document.documentElement.dir = langFromCookie === 'ar' ? 'rtl' : langFromCookie === 'ku' ? 'rtl' : 'ltr';
+      }
     });
   </script>
 </body>
 </html>
-
-  <!-- Privacy Policy Section -->
-  <section class="privacy-section">
-    <div class="privacy-container">
-      <div class="privacy-header">
-        <h2 class="privacy-title">
-          <span class="material-icons">privacy_tip</span>
-          سیاسەتی پاراستنی زانیاری
-        </h2>
-        <p class="privacy-date">دوایین نوێکردنەوە: ٢٥ی تشرینی یەکەمی ٢٠٢٥</p>
-      </div>
-      
-      <div class="privacy-content">
-        <p>لە ZHIWAR YT، پاراستنی زانیاری کەسییەکانت بۆمان زۆر گرنگە. ئەم سیاسەتە ڕوون دەکاتەوە کە چۆن زانیارییە کەسییەکانت کۆدەکەینەوە، بەکاریان دەهێنین و پارەیان دەکەین.</p>
-        
-        <h3>
-          <span class="material-icons">collections_bookmark</span>
-          چ جۆرە زانیارییەک کۆدەکەینەوە؟
-        </h3>
-        <p>ئێمە زانیارییەکانی خوارەوە کۆدەکەینەوە:</p>
-        <ul>
-          <li>زانیاری کەسی: ناو، ئیمەیڵ، ناونیشان</li>
-          <li>زانیاری ئامێر: جۆری ئامێر، سیستەمی کارپێکەری</li>
-          <li>زانیاری بەکارهێنان: داگرتنەکان، وێبگەڕی بەکارهێنەر</li>
-          <li>زانیاری ریکلام: کلیکەکان لەسەر ریکلام</li>
-        </ul>
-        
-        <h3>
-          <span class="material-icons">how_to_reg</span>
-          چۆن زانیاریەکانت بەکاردەهێنین؟
-        </h3>
-        <p>زانیاریەکانت بۆ ئەم مەبەستانە بەکاردەهێنین:</p>
-        <ul>
-          <li>پێشکەشکردنی خزمەتگوزارییەکانمان</li>
-          <li>پەرەپێدانی بەرنامە نوێیەکان</li>
-          <li>باشترکردنی وێبسایت و بەرنامەکانمان</li>
-          <li>ناردنی زانیاری و ڕیکلامی پەیوەندیدار</li>
-        </ul>
-        
-        <h3>
-          <span class="material-icons">lock</span>
-          چۆن زانیاریەکانت پارێز دەکەین
-        </h3>
-        <p>ئێمە هەوڵی زۆر دەدەین بۆ پاراستنی زانیاریەکانت:</p>
-        <ul>
-          <li>تەکنەلۆژیای پاراستنی پێشکەوتوو بەکاردەهێنین</li>
-          <li>تەنها کارمەندە مۆڵەتدارەکان دەسترسیان هەیە</li>
-          <li>پشکنینی بەردەوام بۆ سیستەمەکانی پاراستن</li>
-        </ul>
