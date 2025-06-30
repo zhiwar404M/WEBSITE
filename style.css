@@ -433,6 +433,72 @@ footer {
   color: #333;
   font-weight: bold;
 }
+
+    #adblock-warning {
+      display: none;
+      background: #ffefef;
+      color: #b00020;
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 9999;
+    }
+
+    .language-switcher {
+      display: flex;
+      gap: 8px;
+      margin-left: 20px;
+    }
+
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .lang-btn.active {
+      background: #fff;
+      color: #333;
+      font-weight: bold;
+    }
+
+    /* ستایلی نوێ بۆ دووگمەی سیاسەتی پاراستن */
+    .privacy-toggle {
+      background: #4a6fa5;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .privacy-toggle:hover {
+      background: #3a5a80;
+    }
+
+    /* ستایلی خاوێنکەرەوە بۆ بەشی سیاسەتی پاراستن */
+    .privacy-section {
+      display: none;
+    }
+
+
   </style>
 </head>
 <body>
