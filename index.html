@@ -21,7 +21,6 @@
       z-index: 9999;
     }
 
-    /* ستایل بۆ دوگمەکانی زمان */
     .language-switcher {
       display: flex;
       gap: 8px;
@@ -47,6 +46,31 @@
       color: #333;
       font-weight: bold;
     }
+
+    /* ستایلی نوێ بۆ دووگمەی سیاسەتی پاراستن */
+    .privacy-toggle {
+      background: #4a6fa5;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .privacy-toggle:hover {
+      background: #3a5a80;
+    }
+
+    /* ستایلی خاوێنکەرەوە بۆ بەشی سیاسەتی پاراستن */
+    .privacy-section {
+      display: none;
+    }
   </style>
 
   <!-- AdSense Script -->
@@ -68,7 +92,6 @@
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">تایبەتمەندییەکان</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">پەیوەندی</span></a>
         
-        <!-- زیادکردنی دوگمەکانی زمان لە سەرەوە -->
         <div class="language-switcher">
           <button class="lang-btn active" data-lang="ku">کوردی</button>
           <button class="lang-btn" data-lang="ar">العربية</button>
@@ -164,13 +187,6 @@
           <li data-translate="privacy_protect_item3">پشکنینی بەردەوام بۆ سیستەمەکانی پاراستن</li>
         </ul>
       </div>
-      
-      <!-- زیادکردنی دوگمەکانی زمان لە خوارەوە -->
-      <div class="language-switcher" style="margin-top: 30px; justify-content: center;">
-        <button class="lang-btn active" data-lang="ku">کوردی</button>
-        <button class="lang-btn" data-lang="ar">العربية</button>
-        <button class="lang-btn" data-lang="en">English</button>
-      </div>
     </div>
   </section>
 
@@ -197,6 +213,12 @@
     </div>
     <div class="copyright">
       <p data-translate="copyright_text">© 2021-2025 هەموو مافەکان پارێزراون. بەرهەمهێنەر: ZHIWAR</p>
+      
+      <!-- دووگمەی نوێ بۆ سیاسەتی پاراستن -->
+      <button class="privacy-toggle" id="privacyToggle">
+        <span class="material-icons">privacy_tip</span>
+        <span data-translate="privacy_toggle">سیاسەتی پاراستنی زانیاری</span>
+      </button>
     </div>
   </footer>
 
@@ -484,6 +506,11 @@
         "ku": "© 2021-2025 هەموو مافەکان پارێزراون. بەرهەمهێنەر: ZHIWAR",
         "ar": "© 2021-2025 جميع الحقوق محفوظة. المنتج: ZHIWAR",
         "en": "© 2021-2025 All rights reserved. Producer: ZHIWAR"
+      },
+      "privacy_toggle": {
+        "ku": "سیاسەتی پاراستنی زانیاری",
+        "ar": "سياسة الخصوصية",
+        "en": "Privacy Policy"
       }
     };
 
@@ -503,6 +530,17 @@
     btn.addEventListener('click', () => {
       changeLanguage(btn.dataset.lang);
     });
+  });
+
+  // فەنکشنی نوێ بۆ پیشاندانی/شاردنەوەی سیاسەتی پاراستن
+  document.getElementById('privacyToggle').addEventListener('click', function() {
+    const privacySection = document.querySelector('.privacy-section');
+    if (privacySection.style.display === 'none' || !privacySection.style.display) {
+      privacySection.style.display = 'block';
+      privacySection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      privacySection.style.display = 'none';
+    }
   });
 
   // وەرگرتنی زمان لە کۆکی لەسەر بارگاویبوونەوەی پەڕە
