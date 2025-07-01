@@ -497,7 +497,9 @@ footer {
     .privacy-section {
       display: none;
     }
-
+.adBanner {
+  /* پێویستە بەتاڵ بێت یان پێوانەییەکانی پشکنین تێدا بن */
+}
 
   </style>
 </head>
