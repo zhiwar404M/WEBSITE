@@ -180,26 +180,60 @@
   </script>
   
 
-  <!-- 🔻 AdBlock Detection 🔻 -->
-  <script>
-    window.addEventListener('load', function () {
-      let bait = document.createElement('div');
-      bait.innerHTML = '&nbsp;';
-      bait.className = 'adsbox ad-banner ad-unit ad-zone ad-space';
-      bait.style.position = 'absolute';
-      bait.style.height = '1px';
-      bait.style.width = '1px';
-      bait.style.left = '-9999px';
-      document.body.appendChild(bait);
+  
+  <!-- ... کۆدی پێشووی head ... -->
+</head>
+<body>
 
-      setTimeout(function () {
-        if (bait.offsetHeight === 0 || bait.clientHeight === 0) {
-          document.getElementById("adblock-warning").style.display = "block";
+  <!-- ... کۆدی پێشووی جەستە ... -->
+
+  <!-- 🔻 JavaScript: داگرتن + پشکنینی AdBlock 🔻 -->
+  <script>
+    function startDownloadWithAds(fileUrl) {
+      // پشکنینی AdBlock
+      let adBlockActive = false;
+      
+      // دروستکردنی پشکنەرێکی تایبەتی بۆ AdBlock
+      let adBlockDetector = document.createElement('div');
+      adBlockDetector.innerHTML = '&nbsp;';
+      adBlockDetector.className = 'adBanner';
+      adBlockDetector.style.position = 'absolute';
+      adBlockDetector.style.height = '1px';
+      adBlockDetector.style.width = '1px';
+      adBlockDetector.style.left = '-9999px';
+      document.body.appendChild(adBlockDetector);
+
+      // پشکنین بۆ ئەوەی ئایا AdBlock چالاکە
+      setTimeout(() => {
+        if (adBlockDetector.offsetHeight === 0) {
+          adBlockActive = true;
         }
-        bait.remove();
-      }, 1000);
-    });
+        adBlockDetector.remove();
+
+        if (adBlockActive) {
+          // ئەگەر AdBlock چالاک بوو، پەیام پیشان بدە
+          alert('تکایە AdBlock ـەکەت ناچالاک بکە بۆ داگرتنی بەرنامەکە!');
+          return; // ڕێگری لە داگرتن بکە
+        }
+
+        // ئەگەر AdBlock ناچالاک بوو، داگرتن دەست پێبکە
+        const adsenseAd = document.getElementById("adsense-ad");
+        adsenseAd.style.display = "block";
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        setTimeout(() => {
+          window.open("https://www.profitableratecpm.com/a3gtt34y9g?key=71b91dd8d81442ad90006313d784b31d", "_blank");
+          
+          setTimeout(() => {
+            window.location.href = fileUrl;
+          }, 3000);
+        }, 5000);
+      }, 100);
+    }
   </script>
+
+
+  
 
   <script>
   // فەنکشنی گۆرینی زمان
