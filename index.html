@@ -57,20 +57,17 @@
         <h3 class="app-title" data-translate="app1_title">Minefo Kr</h3>
         <span class="app-version" data-translate="app1_version">وەشانی 1.0</span>
         <p class="app-description" data-translate="app1_description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
-        <button class="btn btn-primary" onclick="startDownloadWithAds('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk')">
+        <button class="btn btn-primary" id="downloadBtn">
           <span class="material-icons">download</span> <span data-translate="app1_button">داگرتن بۆ ئەندرۆید</span>
         </button>
       </div>
     </div>
-    
-         
-
   </section>
 
   <div id="adsense-ad" style="display: none; margin: 20px auto; text-align: center;">
     <ins class="adsbygoogle"
          style="display:block"
-         data-ad-client="pub-2419305830519121"
+         data-ad-client="ca-pub-2419305830519121"
          data-ad-slot="f08c47fec0942fa0"
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
@@ -150,8 +147,6 @@
     </div>
     <div class="copyright">
       <p data-translate="copyright_text">© 2021-2025 هەموو مافەکان پارێزراون. بەرهەمهێنەر: ZHIWAR</p>
-      
-      <!-- دووگمەی نوێ بۆ سیاسەتی پاراستن -->
       <button class="privacy-toggle" id="privacyToggle">
         <span class="material-icons">privacy_tip</span>
         <span data-translate="privacy_toggle">سیاسەتی پاراستنی زانیاری</span>
@@ -162,325 +157,367 @@
   <!-- 🔻 Popup Adsterra Script 🔻 -->
   <script type="text/javascript" src="//pl26885345.profitableratecpm.com/50/c1/0a/50c10a5810034923515743695968da04.js"></script>
 
-  <!-- 🔻 JavaScript: داگرتن + AdSense ➤ Adsterra ➤ Download 🔻 -->
+  <!-- 🔻 پشکنینی تایبەتی Adblock بۆ Brave و هەموو وێبگەڕەکان 🔻 -->
   <script>
-    function startDownloadWithAds(fileUrl) {
+    // فەنکشنی پشکنینی توندی Adblock
+    function isAdBlockActive() {
+      return new Promise((resolve) => {
+        // پشکنینی یەکەم: بەکارهێنانی خشتەی ناسراو
+        let testAd = document.createElement('div');
+        testAd.innerHTML = '&nbsp;';
+        testAd.className = 'adsbox ad-banner ad-unit ad-zone ad-space';
+        testAd.style.position = 'absolute';
+        testAd.style.height = '1px';
+        testAd.style.width = '1px';
+        testAd.style.left = '-9999px';
+        document.body.appendChild(testAd);
+
+        setTimeout(() => {
+          if (testAd.offsetHeight === 0) {
+            testAd.remove();
+            resolve(true);
+            return;
+          }
+          testAd.remove();
+
+          // پشکنینی دووەم: هێنانەکایەی فایلێکی ریکلام
+          fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
+            method: 'HEAD',
+            mode: 'no-cors'
+          }).catch(() => {
+            resolve(true);
+          }).then(() => {
+            resolve(false);
+          });
+        }, 100);
+      });
+    }
+
+    // فەنکشنی داگرتن کە پشکنینی AdBlock دەکات
+    async function startDownloadWithAds(fileUrl) {
+      const adBlockActive = await isAdBlockActive();
+
+      if (adBlockActive) {
+        alert('تکایە AdBlock ـەکەت ناچالاک بکە بۆ داگرتنی بەرنامەکە!');
+        return;
+      }
+
+      // پێش نمایشی ریکلامەکان، دڵنیا بین لەوەی کە ریکلامەکان چالاکن
+      // ئەگەر ریکلامی AdSense بار نەکرابێت، ئەوا پەنجەرەی Adsterra دەکەینەوە
       const adsenseAd = document.getElementById("adsense-ad");
       adsenseAd.style.display = "block";
-      (adsbygoogle = window.adsbygoogle || []).push({});
-
-      setTimeout(function () {
-        window.open("https://www.profitableratecpm.com/a3gtt34y9g?key=71b91dd8d81442ad90006313d784b31d", "_blank");
-
-        setTimeout(function () {
+      
+      // هەوڵدان بۆ بارکردنی ریکلامی AdSense
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error("هەڵە لە بارکردنی ریکلامی AdSense:", e);
+      }
+      
+      // چاوەڕوانی 5 چرکە بۆ پیشاندانی ریکلام
+      setTimeout(() => {
+        // پشکنین بۆ ئەوەی ئایا ریکلامی AdSense بارکراوە
+        if (adsenseAd.innerHTML.trim() === '') {
+          // ئەگەر ریکلامی AdSense بارنەکرابێت، پەنجەرەی Adsterra دەکەینەوە
+          window.open("https://www.profitableratecpm.com/a3gtt34y9g?key=71b91dd8d81442ad90006313d784b31d", "_blank");
+        }
+        
+        // چاوەڕوانی 3 چرکەی تر بۆ داگرتن
+        setTimeout(() => {
           window.location.href = fileUrl;
         }, 3000);
       }, 5000);
     }
-  </script>
-  
 
-  <!-- 🔻 AdBlock Detection 🔻 -->
-  <script>
-    window.addEventListener('load', function () {
-      let bait = document.createElement('div');
-      bait.innerHTML = '&nbsp;';
-      bait.className = 'adsbox ad-banner ad-unit ad-zone ad-space';
-      bait.style.position = 'absolute';
-      bait.style.height = '1px';
-      bait.style.width = '1px';
-      bait.style.left = '-9999px';
-      document.body.appendChild(bait);
-
-      setTimeout(function () {
-        if (bait.offsetHeight === 0 || bait.clientHeight === 0) {
-          document.getElementById("adblock-warning").style.display = "block";
-        }
-        bait.remove();
-      }, 1000);
+    // بەستنەوەی فەنکشن بە دوگمەی داگرتن
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+      startDownloadWithAds('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk');
     });
   </script>
 
+  <!-- 🔻 پشکنینی AdBlock بۆ پیشاندانی ئاگاداری لە سەرەوە 🔻 -->
   <script>
-  // فەنکشنی گۆرینی زمان
-  function changeLanguage(lang) {
-    // گۆڕینی هەڵبژاردەی ئێستا
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === lang);
-    });
-    
-    // گۆڕینی زمان لە سیستەم
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : lang === 'ku' ? 'rtl' : 'ltr';
-    
-    // گۆڕینی هەموو دەقەکان بەپێی زمان
-    translatePage(lang);
-    
-    // تۆمارکردنی هەڵبژاردن لە کۆکی
-    document.cookie = `user_lang=${lang}; path=/; max-age=${365 * 24 * 60 * 60}`;
-  }
-
-  // فەنکشنی وەرگێڕانی پەڕە
-  function translatePage(lang) {
-    // زانیارییەکانی وەرگێڕان
-    const translations = {
-      "welcome_title": {
-        "ku": "بەخێرهاتی بۆ | وێبسایتی فەرمی ZHIWAR",
-        "ar": "مرحبًا بكم | الموقع الرسمي ZHIWAR",
-        "en": "Welcome | Official ZHIWAR Website"
-      },
-      "adblock_warning": {
-        "ku": "⚠️ تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس ❤️",
-        "ar": "⚠️ يرجى تعطيل AdBlock لعرض المحتوى. شكرًا ❤️",
-        "en": "⚠️ Please disable AdBlock to view the content. Thank you ❤️"
-      },
-      "nav_apps": {
-        "ku": "بەشی بەرنامەکان",
-        "ar": "قسم التطبيقات",
-        "en": "Apps Section"
-      },
-      "nav_features": {
-        "ku": "تایبەتمەندییەکان",
-        "ar": "الميزات",
-        "en": "Features"
-      },
-      "nav_contact": {
-        "ku": "پەیوەندی",
-        "ar": "اتصل بنا",
-        "en": "Contact"
-      },
-      "hero_title": {
-        "ku": "بەرنامەکانی ZHIWAR",
-        "ar": "تطبيقات ZHIWAR",
-        "en": "ZHIWAR Apps"
-      },
-      "hero_subtitle": {
-        "ku": "بەرنامەکان بە تەواوی دارێژراوە بە زمانی کوردی بۆ ئەندرۆید و iOS",
-        "ar": "تطبيقات مبرمجة بالكامل باللغة الكردية لنظامي Android و iOS",
-        "en": "Apps fully programmed in Kurdish language for Android and iOS"
-      },
-      "hero_download": {
-        "ku": "داگرتن",
-        "ar": "تحميل",
-        "en": "Download"
-      },
-      "hero_more": {
-        "ku": "زانیاری زیاتر",
-        "ar": "المزيد",
-        "en": "More Info"
-      },
-      "apps_section_title": {
-        "ku": "بەرنامەکان",
-        "ar": "التطبيقات",
-        "en": "Applications"
-      },
-      "apps_section_subtitle": {
-        "ku": "ئەمەش بەرنامەکانانە بۆ هەردوو سیستەمی ئەندرۆید و ئایفۆن",
-        "ar": "هذه هي التطبيقات لنظامي Android و iPhone",
-        "en": "These are the apps for both Android and iPhone"
-      },
-      "app1_title": {
-        "ku": "Minefo Kr",
-        "ar": "Minefo Kr",
-        "en": "Minefo Kr"
-      },
-      "app1_version": {
-        "ku": "وەشانی 1.0",
-        "ar": "الإصدار 1.0",
-        "en": "Version 1.0"
-      },
-      "app1_description": {
-        "ku": "تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی",
-        "ar": "جميع معلومات ماينكرافت باللغة الكردية",
-        "en": "All Minecraft information in Kurdish"
-      },
-      "app1_button": {
-        "ku": "داگرتن بۆ ئەندرۆید",
-        "ar": "تحميل للأندرويد",
-        "en": "Download for Android"
-      },
-      "privacy_title": {
-        "ku": "سیاسەتی پاراستنی زانیاری",
-        "ar": "سياسة الخصوصية",
-        "en": "Privacy Policy"
-      },
-      "privacy_date": {
-        "ku": "دوایین نوێکردنەوە: ٢٥ی تشرینی یەکەمی ٢٠٢٥",
-        "ar": "آخر تحديث: ٢٥ أكتوبر ٢٠٢٥",
-        "en": "Last updated: October 25, 2025"
-      },
-      "privacy_intro": {
-        "ku": "لە وێبسایتی ZHIWAR ، پاراستنی زانیاریە کەسییەکانت بۆمان زۆر گرنگە. ئەم سیاسەتە ڕوونی دەکاتەوە کە چۆن زانیارییە کەسییەکانت کۆدەکەینەوە، بەکاریان دەهێنین.",
-        "ar": "في ZHIWAR، نولي أهمية بالغة لحماية معلوماتكم الشخصية. توضح هذه السياسة كيفية جمعنا واستخدامنا لمعلوماتكم الشخصية.",
-        "en": "At ZHIWAR , protecting your personal information is very important to us. This policy explains how we collect, use, and protect your personal information."
-      },
-      "privacy_collect_title": {
-        "ku": "چ جۆرە زانیارییەک کۆدەکەینەوە؟",
-        "ar": "ما نوع المعلومات التي نجمعها؟",
-        "en": "What information do we collect?"
-      },
-      "privacy_collect_list": {
-        "ku": "ئێمە زانیارییەکانی خوارەوە کۆدەکەینەوە:",
-        "ar": "نقوم بجمع المعلومات التالية:",
-        "en": "We collect the following information:"
-      },
-      "privacy_collect_item1": {
-        "ku": "زانیاری کەسی: ناو، ئیمەیڵ ",
-        "ar": "معلومات شخصية: الاسم، البريد الإلكتروني ",
-        "en": "Personal information: name, email"
-      },
-      "privacy_collect_item2": {
-        "ku": "زانیاری ئامێر: جۆری ئامێر، سیستەمی کارپێکەری",
-        "ar": "معلومات الجهاز: نوع الجهاز، نظام التشغيل",
-        "en": "Device information: device type, operating system"
-      },
-      "privacy_collect_item3": {
-        "ku": "زانیاری بەکارهێنان: داگرتنەکان، وێبگەڕی بەکارهێنەر",
-        "ar": "معلومات الاستخدام: التحميلات، متصفح المستخدم",
-        "en": "Usage information: downloads, user browser"
-      },
-      "privacy_collect_item4": {
-        "ku": "زانیاری ریکلام: کلیکەکان لەسەر ریکلام",
-        "ar": "معلومات الإعلانات: النقرات على الإعلانات",
-        "en": "Ad information: clicks on ads"
-      },
-      "privacy_use_title": {
-        "ku": "چۆن زانیاریەکانت بەکاردەهێنین؟",
-        "ar": "كيف نستخدم معلوماتك؟",
-        "en": "How do we use your information?"
-      },
-      "privacy_use_list": {
-        "ku": "زانیاریەکانت بۆ ئەم مەبەستانە بەکاردەهێنین:",
-        "ar": "نستخدم معلوماتك للأغراض التالية:",
-        "en": "We use your information for the following purposes:"
-      },
-      "privacy_use_item1": {
-        "ku": "پێشکەشکردنی خزمەتگوزارییەکانمان",
-        "ar": "تقديم خدماتنا",
-        "en": "Providing our services"
-      },
-      "privacy_use_item2": {
-        "ku": "پەرەپێدانی بەرنامە نوێیەکان",
-        "ar": "تطوير تطبيقات جديدة",
-        "en": "Developing new applications"
-      },
-      "privacy_use_item3": {
-        "ku": "باشترکردنی وێبسایت و بەرنامەکانمان",
-        "ar": "تحسين موقعنا وتطبيقاتنا",
-        "en": "Improving our website and applications"
-      },
-      "privacy_use_item4": {
-        "ku": "ناردنی زانیاری و ڕیکلامی پەیوەندیدار",
-        "ar": "إرسال معلومات وإعلانات ذات صلة",
-        "en": "Sending relevant information and ads"
-      },
-      "privacy_protect_title": {
-        "ku": "چۆن زانیاریەکانت دەپارێزین ئێمە",
-        "ar": "كيف نحمي معلوماتك",
-        "en": "How we protect your information"
-      },
-      "privacy_protect_list": {
-        "ku": "ئێمە هەوڵی زۆر دەدەین بۆ پاراستنی زانیاریەکانت:",
-        "ar": "نبذل جهدًا كبيرًا لحماية معلوماتك:",
-        "en": "We make great efforts to protect your information:"
-      },
-      "privacy_protect_item1": {
-        "ku": "تەکنەلۆژیای پاراستنی پێشکەوتوو بەکاردەهێنین",
-        "ar": "نستخدم تكنولوجيا حماية متقدمة",
-        "en": "We use advanced protection technology"
-      },
-      "privacy_protect_item2": {
-        "ku": "پشکنینی بەردەوام بۆ سیستەمەکانی پاراستن",
-        "ar": "مراقبة مستمرة لأنظمة الحماية",
-        "en": "Continuous monitoring of protection systems"
-      },
-      "about_title": {
-        "ku": "دەربارەی ئێمە",
-        "ar": "معلومات عنا",
-        "en": "About Us"
-      },
-      "about_text": {
-        "ku": "من ناوم ژیوارە، پەرەپێدەری بەرنامە کوردییەکانم، وە هەوڵدەدەم باشترین پێشکەشبکەم بۆ خزمەت ئێوەی خۆشەویست 💎❤️.",
-        "ar": "اسمي جيفار، مطور تطبيقات كردية، وأسعى لتقديم الأفضل لخدمتكم 💎❤️.",
-        "en": "My name is Zhiwar, developer of Kurdish apps, and I strive to provide the best for your service 💎❤️."
-      },
-      "contact_title": {
-        "ku": "پەیوەندی",
-        "ar": "اتصل بنا",
-        "en": "Contact"
-      },
-      "email_label": {
-        "ku": "ئیمەیڵ: zhiwarup@gmail.com",
-        "ar": "البريد الإلكتروني: zhiwarup@gmail.com",
-        "en": "Email: zhiwarup@gmail.com"
-      },
-      "channels_title": {
-        "ku": "کەناڵەکان",
-        "ar": "القنوات",
-        "en": "Channels"
-      },
-      "youtube_label": {
-        "ku": "یوتیوب",
-        "ar": "يوتيوب",
-        "en": "YouTube"
-      },
-      "facebook_label": {
-        "ku": "فەیسبووک",
-        "ar": "فيسبوك",
-        "en": "Facebook"
-      },
-      "snapchat_label": {
-        "ku": "سناپچات",
-        "ar": "سناب شات",
-        "en": "Snapchat"
-      },
-      "copyright_text": {
-        "ku": "© 2021-2025 هەموو مافەکان پارێزراون. بەرهەمهێنەر: ZHIWAR",
-        "ar": "© 2021-2025 جميع الحقوق محفوظة. المنتج: ZHIWAR",
-        "en": "© 2021-2025 All rights reserved. Producer: ZHIWAR"
-      },
-      "privacy_toggle": {
-        "ku": "سیاسەتی پاراستنی زانیاری",
-        "ar": "سياسة الخصوصية",
-        "en": "Privacy Policy"
-      }
-    };
-
-    // گۆڕینی هەموو دەقەکان
-    Object.keys(translations).forEach(key => {
-      const elements = document.querySelectorAll(`[data-translate="${key}"]`);
-      if (elements.length > 0 && translations[key][lang]) {
-        elements.forEach(el => {
-          el.textContent = translations[key][lang];
-        });
+    window.addEventListener('load', async function () {
+      const adBlockActive = await isAdBlockActive();
+      if (adBlockActive) {
+        document.getElementById("adblock-warning").style.display = "block";
       }
     });
-  }
+  </script>
 
-  // کارپێکردنی کلیک لەسەر دوگمەکانی زمان
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      changeLanguage(btn.dataset.lang);
-    });
-  });
-
-  // فەنکشنی نوێ بۆ پیشاندانی/شاردنەوەی سیاسەتی پاراستن
-  document.getElementById('privacyToggle').addEventListener('click', function() {
-    const privacySection = document.querySelector('.privacy-section');
-    if (privacySection.style.display === 'none' || !privacySection.style.display) {
-      privacySection.style.display = 'block';
-      privacySection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      privacySection.style.display = 'none';
+  <!-- فەنکشنی گۆڕینی زمان و پشکنینی کۆکی -->
+  <script>
+    // فەنکشنی گۆڕینی زمان
+    function changeLanguage(lang) {
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : lang === 'ku' ? 'rtl' : 'ltr';
+      translatePage(lang);
+      document.cookie = `user_lang=${lang}; path=/; max-age=${365 * 24 * 60 * 60}`;
     }
-  });
 
-  // وەرگرتنی زمان لە کۆکی لەسەر بارگاویبوونەوەی پەڕە
-  document.addEventListener('DOMContentLoaded', () => {
-    const langFromCookie = document.cookie.match(/user_lang=([^;]+)/)?.[1];
-    const userLang = langFromCookie || 'ku';
-    changeLanguage(userLang);
-  });
-</script>
+    // فەنکشنی وەرگێڕانی پەڕە
+    function translatePage(lang) {
+      const translations = {
+        "welcome_title": {
+          "ku": "بەخێرهاتی بۆ | وێبسایتی فەرمی ZHIWAR",
+          "ar": "مرحبًا بكم | الموقع الرسمي ZHIWAR",
+          "en": "Welcome | Official ZHIWAR Website"
+        },
+        "adblock_warning": {
+          "ku": "⚠️ تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس ❤️",
+          "ar": "⚠️ يرجى تعطيل AdBlock لعرض المحتوى. شكرًا ❤️",
+          "en": "⚠️ Please disable AdBlock to view the content. Thank you ❤️"
+        },
+        "nav_apps": {
+          "ku": "بەشی بەرنامەکان",
+          "ar": "قسم التطبيقات",
+          "en": "Apps Section"
+        },
+        "nav_features": {
+          "ku": "تایبەتمەندییەکان",
+          "ar": "الميزات",
+          "en": "Features"
+        },
+        "nav_contact": {
+          "ku": "پەیوەندی",
+          "ar": "اتصل بنا",
+          "en": "Contact"
+        },
+        "hero_title": {
+          "ku": "بەرنامەکانی ZHIWAR",
+          "ar": "تطبيقات ZHIWAR",
+          "en": "ZHIWAR Apps"
+        },
+        "hero_subtitle": {
+          "ku": "بەرنامەکان بە تەواوی دارێژراوە بە زمانی کوردی بۆ ئەندرۆید و iOS",
+          "ar": "تطبيقات مبرمجة بالكامل باللغة الكردية لنظامي Android و iOS",
+          "en": "Apps fully programmed in Kurdish language for Android and iOS"
+        },
+        "hero_download": {
+          "ku": "داگرتن",
+          "ar": "تحميل",
+          "en": "Download"
+        },
+        "hero_more": {
+          "ku": "زانیاری زیاتر",
+          "ar": "المزيد",
+          "en": "More Info"
+        },
+        "apps_section_title": {
+          "ku": "بەرنامەکان",
+          "ar": "التطبيقات",
+          "en": "Applications"
+        },
+        "apps_section_subtitle": {
+          "ku": "ئەمەش بەرنامەکانانە بۆ هەردوو سیستەمی ئەندرۆید و ئایفۆن",
+          "ar": "هذه هي التطبيقات لنظامي Android و iPhone",
+          "en": "These are the apps for both Android and iPhone"
+        },
+        "app1_title": {
+          "ku": "Minefo Kr",
+          "ar": "Minefo Kr",
+          "en": "Minefo Kr"
+        },
+        "app1_version": {
+          "ku": "وەشانی 1.0",
+          "ar": "الإصدار 1.0",
+          "en": "Version 1.0"
+        },
+        "app1_description": {
+          "ku": "تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی",
+          "ar": "جميع معلومات ماينكرافت باللغة الكردية",
+          "en": "All Minecraft information in Kurdish"
+        },
+        "app1_button": {
+          "ku": "داگرتن بۆ ئەندرۆید",
+          "ar": "تحميل للأندرويد",
+          "en": "Download for Android"
+        },
+        "privacy_title": {
+          "ku": "سیاسەتی پاراستنی زانیاری",
+          "ar": "سياسة الخصوصية",
+          "en": "Privacy Policy"
+        },
+        "privacy_date": {
+          "ku": "دوایین نوێکردنەوە: ٢٥ی تشرینی یەکەمی ٢٠٢٥",
+          "ar": "آخر تحديث: ٢٥ أكتوبر ٢٠٢٥",
+          "en": "Last updated: October 25, 2025"
+        },
+        "privacy_intro": {
+          "ku": "لە وێبسایتی ZHIWAR ، پاراستنی زانیاریە کەسییەکانت بۆمان زۆر گرنگە. ئەم سیاسەتە ڕوونی دەکاتەوە کە چۆن زانیارییە کەسییەکانت کۆدەکەینەوە، بەکاریان دەهێنین.",
+          "ar": "في ZHIWAR، نولي أهمية بالغة لحماية معلوماتكم الشخصية. توضح هذه السياسة كيفية جمعنا واستخدامنا لمعلوماتكم الشخصية.",
+          "en": "At ZHIWAR , protecting your personal information is very important to us. This policy explains how we collect, use, and protect your personal information."
+        },
+        "privacy_collect_title": {
+          "ku": "چ جۆرە زانیارییەک کۆدەکەینەوە؟",
+          "ar": "ما نوع المعلومات التي نجمعها؟",
+          "en": "What information do we collect?"
+        },
+        "privacy_collect_list": {
+          "ku": "ئێمە زانیارییەکانی خوارەوە کۆدەکەینەوە:",
+          "ar": "نقوم بجمع المعلومات التالية:",
+          "en": "We collect the following information:"
+        },
+        "privacy_collect_item1": {
+          "ku": "زانیاری کەسی: ناو، ئیمەیڵ ",
+          "ar": "معلومات شخصية: الاسم، البريد الإلكتروني ",
+          "en": "Personal information: name, email"
+        },
+        "privacy_collect_item2": {
+          "ku": "زانیاری ئامێر: جۆری ئامێر، سیستەمی کارپێکەری",
+          "ar": "معلومات الجهاز: نوع الجهاز، نظام التشغيل",
+          "en": "Device information: device type, operating system"
+        },
+        "privacy_collect_item3": {
+          "ku": "زانیاری بەکارهێنان: داگرتنەکان، وێبگەڕی بەکارهێنەر",
+          "ar": "معلومات الاستخدام: التحميلات، متصفح المستخدم",
+          "en": "Usage information: downloads, user browser"
+        },
+        "privacy_collect_item4": {
+          "ku": "زانیاری ریکلام: کلیکەکان لەسەر ریکلام",
+          "ar": "معلومات الإعلانات: النقرات على الإعلانات",
+          "en": "Ad information: clicks on ads"
+        },
+        "privacy_use_title": {
+          "ku": "چۆن زانیاریەکانت بەکاردەهێنین؟",
+          "ar": "كيف نستخدم معلوماتك؟",
+          "en": "How do we use your information?"
+        },
+        "privacy_use_list": {
+          "ku": "زانیاریەکانت بۆ ئەم مەبەستانە بەکاردەهێنین:",
+          "ar": "نستخدم معلوماتك للأغراض التالية:",
+          "en": "We use your information for the following purposes:"
+        },
+        "privacy_use_item1": {
+          "ku": "پێشکەشکردنی خزمەتگوزارییەکانمان",
+          "ar": "تقديم خدماتنا",
+          "en": "Providing our services"
+        },
+        "privacy_use_item2": {
+          "ku": "پەرەپێدانی بەرنامە نوێیەکان",
+          "ar": "تطوير تطبيقات جديدة",
+          "en": "Developing new applications"
+        },
+        "privacy_use_item3": {
+          "ku": "باشترکردنی وێبسایت و بەرنامەکانمان",
+          "ar": "تحسين موقعنا وتطبيقاتنا",
+          "en": "Improving our website and applications"
+        },
+        "privacy_use_item4": {
+          "ku": "ناردنی زانیاری و ڕیکلامی پەیوەندیدار",
+          "ar": "إرسال معلومات وإعلانات ذات صلة",
+          "en": "Sending relevant information and ads"
+        },
+        "privacy_protect_title": {
+          "ku": "چۆن زانیاریەکانت دەپارێزین ئێمە",
+          "ar": "كيف نحمي معلوماتك",
+          "en": "How we protect your information"
+        },
+        "privacy_protect_list": {
+          "ku": "ئێمە هەوڵی زۆر دەدەین بۆ پاراستنی زانیاریەکانت:",
+          "ar": "نبذل جهدًا كبيرًا لحماية معلوماتك:",
+          "en": "We make great efforts to protect your information:"
+        },
+        "privacy_protect_item1": {
+          "ku": "تەکنەلۆژیای پاراستنی پێشکەوتوو بەکاردەهێنین",
+          "ar": "نستخدم تكنولوجيا حماية متقدمة",
+          "en": "We use advanced protection technology"
+        },
+        "privacy_protect_item2": {
+          "ku": "پشکنینی بەردەوام بۆ سیستەمەکانی پاراستن",
+          "ar": "مراقبة مستمرة لأنظمة الحماية",
+          "en": "Continuous monitoring of protection systems"
+        },
+        "about_title": {
+          "ku": "دەربارەی ئێمە",
+          "ar": "معلومات عنا",
+          "en": "About Us"
+        },
+        "about_text": {
+          "ku": "من ناوم ژیوارە، پەرەپێدەری بەرنامە کوردییەکانم، وە هەوڵدەدەم باشترین پێشکەشبکەم بۆ خزمەت ئێوەی خۆشەویست 💎❤️.",
+          "ar": "اسمي جيفار، مطور تطبيقات كردية، وأسعى لتقديم الأفضل لخدمتكم 💎❤️.",
+          "en": "My name is Zhiwar, developer of Kurdish apps, and I strive to provide the best for your service 💎❤️."
+        },
+        "contact_title": {
+          "ku": "پەیوەندی",
+          "ar": "اتصل بنا",
+          "en": "Contact"
+        },
+        "email_label": {
+          "ku": "ئیمەیڵ: zhiwarup@gmail.com",
+          "ar": "البريد الإلكتروني: zhiwarup@gmail.com",
+          "en": "Email: zhiwarup@gmail.com"
+        },
+        "channels_title": {
+          "ku": "کەناڵەکان",
+          "ar": "القنوات",
+          "en": "Channels"
+        },
+        "youtube_label": {
+          "ku": "یوتیوب",
+          "ar": "يوتيوب",
+          "en": "YouTube"
+        },
+        "facebook_label": {
+          "ku": "فەیسبووک",
+          "ar": "فيسبوك",
+          "en": "Facebook"
+        },
+        "snapchat_label": {
+          "ku": "سناپچات",
+          "ar": "سناب شات",
+          "en": "Snapchat"
+        },
+        "copyright_text": {
+          "ku": "© 2021-2025 هەموو مافەکان پارێزراون. بەرهەمهێنەر: ZHIWAR",
+          "ar": "© 2021-2025 جميع الحقوق محفوظة. المنتج: ZHIWAR",
+          "en": "© 2021-2025 All rights reserved. Producer: ZHIWAR"
+        },
+        "privacy_toggle": {
+          "ku": "سیاسەتی پاراستنی زانیاری",
+          "ar": "سياسة الخصوصية",
+          "en": "Privacy Policy"
+        }
+      };
+
+      Object.keys(translations).forEach(key => {
+        const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+        if (elements.length > 0 && translations[key][lang]) {
+          elements.forEach(el => {
+            el.textContent = translations[key][lang];
+          });
+        }
+      });
+    }
+
+    // کارپێکردنی کلیک لەسەر دوگمەکانی زمان
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        changeLanguage(btn.dataset.lang);
+      });
+    });
+
+    // فەنکشنی نوێ بۆ پیشاندانی/شاردنەوەی سیاسەتی پاراستن
+    document.getElementById('privacyToggle').addEventListener('click', function() {
+      const privacySection = document.querySelector('.privacy-section');
+      if (privacySection.style.display === 'none' || !privacySection.style.display) {
+        privacySection.style.display = 'block';
+        privacySection.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        privacySection.style.display = 'none';
+      }
+    });
+
+    // وەرگرتنی زمان لە کۆکی لەسەر بارگاویبوونەوەی پەڕە
+    document.addEventListener('DOMContentLoaded', () => {
+      const langFromCookie = document.cookie.match(/user_lang=([^;]+)/)?.[1];
+      const userLang = langFromCookie || 'ku';
+      changeLanguage(userLang);
+    });
+  </script>
 </body>
-</html>   
+</html>
