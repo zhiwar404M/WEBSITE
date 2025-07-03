@@ -8,11 +8,65 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
-  <!-- AdSense Script -->
+  
+  <!-- کۆدی گشتی AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"
           crossorigin="anonymous"></script>
-</head>
-<body>
+  
+
+
+  <!-- ... ناوەڕۆکی وێبسایت ... -->
+
+  <!-- خاڵی ریکلامی 1: سەرەوەی پەڕە -->
+  <div class="ad-container">
+    <span class="ad-label">ریکلام</span>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"
+            crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2419305830519121"
+         data-ad-slot="فەرامۆشکراوی خاڵی ریکلامی 1"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <!-- ... بەشی بەرنامەکان ... -->
+
+  <!-- خاڵی ریکلامی 2: ناوەڕاستی پەڕە -->
+  <div class="ad-container">
+    <span class="ad-label">ریکلام</span>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"
+            crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2419305830519121"
+         data-ad-slot="فەرامۆشکراوی خاڵی ریکلامی 2"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <!-- ... پێنووس ... -->
+
+  <script>
+    // فەرمانی پشکنینی باربوونی ریکلام
+    function checkAdLoad() {
+      const adContainers = document.querySelectorAll('.adsbygoogle');
+      adContainers.forEach(ad => {
+        if(ad.innerHTML.trim() === '') {
+          console.log('ریکلام بارنەکراوە');
+          // جێگرەوە پیشان بدە ئەگەر ریکلام بارنەکرابێت
+        }
+      });
+    }
+    
+    // پشکنین لە هەموو 5 چرکە جارێک
+    setInterval(checkAdLoad, 5000);
 
   <div id="adblock-warning" data-translate="adblock_warning">⚠️ تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس ❤️</div>
 
@@ -481,6 +535,8 @@
     const userLang = langFromCookie || 'ku';
     changeLanguage(userLang);
   });
+  
+ 
 </script>
 </body>
 </html>   
