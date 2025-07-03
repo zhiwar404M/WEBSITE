@@ -22,24 +22,6 @@
   <!-- ... بەشی بەرنامەکان ... -->
 
 
-  <!-- ... پێنووس ... -->
-
-  <script>
-    // فەرمانی پشکنینی باربوونی ریکلام
-    function checkAdLoad() {
-      const adContainers = document.querySelectorAll('.adsbygoogle');
-      adContainers.forEach(ad => {
-        if(ad.innerHTML.trim() === '') {
-          console.log('ریکلام بارنەکراوە');
-          // جێگرەوە پیشان بدە ئەگەر ریکلام بارنەکرابێت
-        }
-      });
-    }
-    
-    // پشکنین لە هەموو 5 چرکە جارێک
-    setInterval(checkAdLoad, 5000);
-
-</script>
 
   <div id="adblock-warning" data-translate="adblock_warning">⚠️ تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس ❤️</div>
 
@@ -107,6 +89,25 @@
     </script>
   </div>
          
+
+  <!-- ... پێنووس ... -->
+
+  <script>
+    // فەرمانی پشکنینی باربوونی ریکلام
+    function checkAdLoad() {
+      const adContainers = document.querySelectorAll('.adsbygoogle');
+      adContainers.forEach(ad => {
+        if(ad.innerHTML.trim() === '') {
+          console.log('ریکلام بارنەکراوە');
+          // جێگرەوە پیشان بدە ئەگەر ریکلام بارنەکرابێت
+        }
+      });
+    }
+    
+    // پشکنین لە هەموو 5 چرکە جارێک
+    setInterval(checkAdLoad, 5000);
+
+</script>
 
   </section>
 
