@@ -138,8 +138,72 @@
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
   </div>
+  <!-- Short ad  -->
+    <div class="ad-container">
+        <div class="ad-header">
+            <div class="ad-label">ریکلام</div>
+            <h1>زبائر دمستکبهشتن به ناوهرژک</h1>
+            <p>کراریک بکه پو پدردوامیوون له دمستکبهشتن به ناوهرژکی شم مالپهره</p>
+        </div>
+        
+        <div class="video-container">
+            <!-- Adsterra Video Ad - Auto Play -->
+            <iframe id="adsterra-video" 
+                    src="https://www.profitableratecpm.com/a3gtt34y9g?key=71b91dd8d81442ad90006313d784b31d&autoplay=1" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+        </div>
+        
+        <div class="timer-container">
+            <div>کلیک بکه پو دستپیگردنی ریکلام</div>
+            <div class="timer" id="timer">15</div>
+            <div>چرکه</div>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+        
+        <div class="redirect-message" id="redirectMessage">
+            پاش تەواوبوونی ریکلام، بە شێوەیەکی خۆکار دەچیتە ناو ماڵپەڕەکە
+        </div>
+        
+        <div class="ad-footer">
+            <p>به کرته کردن اساس دوگمهکه، تو رازی دیبیت به مهجهکان و رپساکان</p>
+        </div>
+    </div>
 
-
+    <script>
+        // Timer and redirect functionality
+        const timerElement = document.getElementById('timer');
+        const progressElement = document.getElementById('progress');
+        const redirectMessage = document.getElementById('redirectMessage');
+        let timeLeft = 15;
+        const totalTime = 15;
+        
+        // Start the countdown timer
+        const timer = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            
+            // Update progress bar
+            const progressPercent = 100 - (timeLeft / totalTime * 100);
+            progressElement.style.width = `${progressPercent}%`;
+            
+            // When timer reaches 0
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                
+                // Show redirect message
+                redirectMessage.classList.add('show');
+                
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = "https://zhiwaryt.vercel.app/"; // گۆڕینی بۆ لینکی وێبسایتەکەت
+                }, 2000);
+            }
+        }, 1000);
 
   <!-- Privacy Policy Section -->
   <section class="privacy-section">
