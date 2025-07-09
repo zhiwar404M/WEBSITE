@@ -679,6 +679,15 @@ footer {
     }
 }
 
+background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f0f0f0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
         .ad-container {
             background: #1e1e2d;
             border-radius: 16px;
