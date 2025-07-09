@@ -155,6 +155,126 @@
   </script>
 </div>
 
+<!-- Main Content (Blurred/Blocked) -->
+    <div class="content">
+        <h1>Premium Content</h1>
+        <p>This content is locked. Watch the ad to unlock access.</p>
+    </div>
+    
+    <!-- Ad Modal -->
+    <div class="blur-overlay">
+        <div class="ad-modal">
+            <div class="modal-header">
+                <div class="lock-icon">🔒</div>
+                <h2>Unlock More Content</h2>
+                <p>Take action to continue accessing the content on this site</p>
+            </div>
+            
+            <div class="modal-content">
+                <div class="benefits">
+                    <div class="benefit">
+                        <div class="benefit-icon">🎁</div>
+                        <h3>Full Access</h3>
+                        <p>All premium features</p>
+                    </div>
+                    <div class="benefit">
+                        <div class="benefit-icon">⏱️</div>
+                        <h3>24 Hours</h3>
+                        <p>Site-wide access</p>
+                    </div>
+                </div>
+                
+                <h3 style="text-align: center; margin-bottom: 15px; color: #8f94fb;">View a short ad</h3>
+                
+                <div class="video-container">
+                    <div class="ad-label">AD</div>
+                    <div class="video-placeholder">
+                        <div class="play-icon">▶️</div>
+                        <p>Watch this short video to unlock content</p>
+                        <div class="timer">Ad: 0:30</div>
+                    </div>
+                </div>
+                
+                <div class="countdown">Ad starts in: <span id="countdown">5</span> seconds</div>
+                
+                <button class="unlock-btn" id="unlockBtn">
+                    WATCH AD TO CONTINUE
+                </button>
+                
+                <div class="skip-option">
+                    <span id="skipText">Or skip ad after </span>
+                    <span id="skipTimer">30</span> seconds
+                </div>
+                
+                <div class="terms">
+                    By proceeding, you agree to our <a href="#">Terms of Service</a> and acknowledge our <a href="#">Privacy Policy</a>.
+                </div>
+            </div>
+            
+            <div class="ad-footer">
+                This ad helps support our free service. Thank you!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulating ad functionality
+        const unlockBtn = document.getElementById('unlockBtn');
+        const countdownEl = document.getElementById('countdown');
+        const skipTimerEl = document.getElementById('skipTimer');
+        const skipText = document.getElementById('skipText');
+        let countdown = 5;
+        let skipCountdown = 30;
+        let canSkip = false;
+        
+        // Initial countdown before showing ad
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            countdownEl.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                startAd();
+            }
+        }, 1000);
+        
+        function startAd() {
+            unlockBtn.textContent = "PLAYING AD...";
+            unlockBtn.style.background = "linear-gradient(90deg, #2c3e50, #4a235a)";
+            
+            // Simulate ad playback
+            const adInterval = setInterval(() => {
+                skipCountdown--;
+                skipTimerEl.textContent = skipCountdown;
+                
+                // Enable skip after 5 seconds
+                if (skipCountdown <= 25 && !canSkip) {
+                    canSkip = true;
+                    skipText.innerHTML = 'You can now <span class="skip-link" onclick="finishAd()">skip ad</span> or continue watching';
+                }
+                
+                // Finish ad after 30 seconds
+                if (skipCountdown <= 0) {
+                    clearInterval(adInterval);
+                    finishAd();
+                }
+            }, 1000);
+        }
+        
+        function finishAd() {
+            // Unlock content for 24 hours
+            alert("Thank you! Content unlocked for 24 hours.");
+            
+            // In a real implementation, you would:
+            // 1. Hide the modal
+            // 2. Unlock the content
+            // 3. Set a cookie/localStorage for 24-hour access
+            
+            // Example: localStorage.setItem('unlock_time', new Date().getTime());
+        }
+        
+        unlockBtn.addEventListener('click', startAd);
+  </script>
 
   <!-- Privacy Policy Section -->
   <section class="privacy-section">
@@ -315,6 +435,8 @@
     // Record selection in cookie
     document.cookie = `user_lang=${lang}; path=/; max-age=${365 * 24 * 60 * 60}`;
   }
+  
+  
 
   // Page translation function
   function translatePage(lang) {
