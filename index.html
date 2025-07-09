@@ -155,126 +155,122 @@
   </script>
 </div>
 
-<!-- Main Content (Blurred/Blocked) -->
-    <div class="content">
-        <h1>Premium Content</h1>
-        <p>This content is locked. Watch the ad to unlock access.</p>
-    </div>
-    
-    <!-- Ad Modal -->
+<body>
     <div class="blur-overlay">
         <div class="ad-modal">
             <div class="modal-header">
-                <div class="lock-icon">🔒</div>
-                <h2>Unlock More Content</h2>
-                <p>Take action to continue accessing the content on this site</p>
+                <div class="lock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h2>زیاتر دەستگەیشتن بە ناوەڕۆک</h2>
+                <p>کردارێک بکە بۆ بەردەوامبوون لە دەستگەیشتن بە ناوەڕۆکی ئەم ماڵپەڕە</p>
             </div>
             
             <div class="modal-content">
                 <div class="benefits">
                     <div class="benefit">
-                        <div class="benefit-icon">🎁</div>
-                        <h3>Full Access</h3>
-                        <p>All premium features</p>
-                    </div>
-                    <div class="benefit">
-                        <div class="benefit-icon">⏱️</div>
-                        <h3>24 Hours</h3>
-                        <p>Site-wide access</p>
+                        <div class="benefit-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <p>دەستگەیشتنی ماڵپەڕ بۆ ٢٤ کاتژمێر</p>
                     </div>
                 </div>
-                
-                <h3 style="text-align: center; margin-bottom: 15px; color: #8f94fb;">View a short ad</h3>
                 
                 <div class="video-container">
-                    <div class="ad-label">AD</div>
-                    <div class="video-placeholder">
-                        <div class="play-icon">▶️</div>
-                        <p>Watch this short video to unlock content</p>
-                        <div class="timer">Ad: 0:30</div>
+                    <div class="video-placeholder" id="video-placeholder">
+                        <div class="ad-label">ڕیکلام</div>
+                        <div class="play-icon" id="play-btn">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <p>کلیک بکە بۆ دەستپێکردنی ڕیکلام</p>
+                        <div class="timer">ماوە: ١٥ چرکە</div>
                     </div>
                 </div>
                 
-                <div class="countdown">Ad starts in: <span id="countdown">5</span> seconds</div>
-                
-                <button class="unlock-btn" id="unlockBtn">
-                    WATCH AD TO CONTINUE
-                </button>
-                
-                <div class="skip-option">
-                    <span id="skipText">Or skip ad after </span>
-                    <span id="skipTimer">30</span> seconds
+                <div class="countdown" id="countdown">
+                    پاش <span id="countdown-number">15</span> چرکە دەتوانیت بپەڕیتەوە
                 </div>
                 
-                <div class="terms">
-                    By proceeding, you agree to our <a href="#">Terms of Service</a> and acknowledge our <a href="#">Privacy Policy</a>.
+                <button class="unlock-btn" id="unlock-btn">
+                    ڕیکلامێکی کورت ببینە
+                </button>
+                
+                <div class="skip-option" id="skip-option" style="display: none;">
+                    <span class="skip-link" id="skip-link">پەڕینەوە</span>
                 </div>
             </div>
             
             <div class="ad-footer">
-                This ad helps support our free service. Thank you!
+                <div class="terms">
+                    بە کرتەکردن لەسەر دوگمەکە، تۆ ڕازی دەبیت بە <a href="#">مەرجەکان و ڕێساکان</a>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Simulating ad functionality
-        const unlockBtn = document.getElementById('unlockBtn');
-        const countdownEl = document.getElementById('countdown');
-        const skipTimerEl = document.getElementById('skipTimer');
-        const skipText = document.getElementById('skipText');
-        let countdown = 5;
-        let skipCountdown = 30;
-        let canSkip = false;
-        
-        // Initial countdown before showing ad
-        const countdownInterval = setInterval(() => {
-            countdown--;
-            countdownEl.textContent = countdown;
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoPlaceholder = document.getElementById('video-placeholder');
+            const playBtn = document.getElementById('play-btn');
+            const unlockBtn = document.getElementById('unlock-btn');
+            const skipOption = document.getElementById('skip-option');
+            const skipLink = document.getElementById('skip-link');
+            const countdown = document.getElementById('countdown');
+            const countdownNumber = document.getElementById('countdown-number');
             
-            if (countdown <= 0) {
-                clearInterval(countdownInterval);
-                startAd();
+            let count = 15;
+            let countdownInterval;
+            
+            function startCountdown() {
+                countdownInterval = setInterval(() => {
+                    count--;
+                    countdownNumber.textContent = count;
+                    
+                    if (count <= 0) {
+                        clearInterval(countdownInterval);
+                        countdown.style.display = 'none';
+                        skipOption.style.display = 'block';
+                    }
+                }, 1000);
             }
-        }, 1000);
-        
-        function startAd() {
-            unlockBtn.textContent = "PLAYING AD...";
-            unlockBtn.style.background = "linear-gradient(90deg, #2c3e50, #4a235a)";
             
-            // Simulate ad playback
-            const adInterval = setInterval(() => {
-                skipCountdown--;
-                skipTimerEl.textContent = skipCountdown;
+            startCountdown();
+            
+            playBtn.addEventListener('click', function() {
+                videoPlaceholder.innerHTML = `
+                    <video controls autoplay width="100%" height="100%">
+                        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                        وێبگەڕەکەت پاڵپشتی ڤیدیۆ ناکات.
+                    </video>
+                    <div class="ad-label">ڕیکلام</div>
+                `;
                 
-                // Enable skip after 5 seconds
-                if (skipCountdown <= 25 && !canSkip) {
-                    canSkip = true;
-                    skipText.innerHTML = 'You can now <span class="skip-link" onclick="finishAd()">skip ad</span> or continue watching';
-                }
-                
-                // Finish ad after 30 seconds
-                if (skipCountdown <= 0) {
-                    clearInterval(adInterval);
-                    finishAd();
-                }
-            }, 1000);
-        }
-        
-        function finishAd() {
-            // Unlock content for 24 hours
-            alert("Thank you! Content unlocked for 24 hours.");
+                const video = videoPlaceholder.querySelector('video');
+                video.onended = function() {
+                    videoPlaceholder.innerHTML = `
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                            <i class="fas fa-check-circle" style="font-size: 50px; color: #4CAF50; margin-bottom: 20px;"></i>
+                            <p>سوپاس بۆ بینینی ڕیکلامەکە!</p>
+                            <p>دەستگەیشتن بۆ ٢٤ کاتژمێر کرایەوە</p>
+                        </div>
+                    `;
+                    
+                    setTimeout(() => {
+                        document.querySelector('.blur-overlay').style.display = 'none';
+                    }, 3000);
+                };
+            });
             
-            // In a real implementation, you would:
-            // 1. Hide the modal
-            // 2. Unlock the content
-            // 3. Set a cookie/localStorage for 24-hour access
+            unlockBtn.addEventListener('click', function() {
+                playBtn.click();
+            });
             
-            // Example: localStorage.setItem('unlock_time', new Date().getTime());
-        }
-        
-        unlockBtn.addEventListener('click', startAd);
-  </script>
+            skipLink.addEventListener('click', function() {
+                document.querySelector('.blur-overlay').style.display = 'none';
+            });
+        });
+ 
+    </script>
 
   <!-- Privacy Policy Section -->
   <section class="privacy-section">
