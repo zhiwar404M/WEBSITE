@@ -157,130 +157,111 @@
         }
 
         /* ناوەڕۆکی وێبسایت */
-        header {
-            background-color: #1e293b;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+        /* Header */
+    header {
+      background-color: #1e293b;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
 
-        .logo {
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-icon {
-            font-size: 1.5rem;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
+ .logo {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
         nav a {
-            color: #cbd5e1;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #38bdf8;
-        }
+      color: #cbd5e1;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    
+    nav a:hover {
+      color: #38bdf8;
+    }
+    
 
         /* بەشی سەرەکی */
-        .hero {
-            background: linear-gradient(to left top, #0ea5e9, #1e40af);
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .hero-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+hero {
+      background: linear-gradient(to left top, #0ea5e9, #1e40af);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    
+    .hero-content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    
 
         /* دوگمەکان */
-        .btn {
-            padding: 0.7rem 1.5rem;
-            border: none;
-            cursor: pointer;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background-color: #0ea5e9;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #0284c7;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid white;
-            color: white;
-        }
-
-        .btn-outline:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+            .btn {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background-color: #0ea5e9;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #0284c7;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
 
         /* بەش */
-        .section-title {
-            font-size: 2rem;
-            color: #38bdf8;
-            text-align: center;
-            margin-top: 3rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .section-subtitle {
-            color: #94a3b8;
-            text-align: center;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 1rem;
-        }
+    .section-title {
+      font-size: 2rem;
+      color: #38bdf8;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    
+    .section-subtitle {
+      color: #94a3b8;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
         
         /* Privacy Policy Section */
     .privacy-section {
@@ -390,152 +371,173 @@
     
 
         /* تۆڕی بەرنامەکان */
-        .apps-grid {
-            display: grid;
-            gap: 2rem;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            padding: 2rem;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        .app-card {
-            background-color: #1e293b;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-        }
-
-        .app-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
-        }
-
-        .app-icon {
-            font-size: 3rem;
-            color: #0ea5e9;
-            margin-bottom: 1rem;
-        }
-
-        .app-title {
-            color: #38bdf8;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .app-description {
-            color: #e2e8f0;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            min-height: 80px;
-        }
-
-        .app-version {
-            display: inline-block;
-            margin-bottom: 0.5rem;
-            color: #94a3b8;
-            background: rgba(148, 163, 184, 0.1);
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-        }
+  .apps-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    
+    .app-card {
+      background-color: #1e293b;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    
+    .app-title {
+      color: #38bdf8;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .app-description {
+      color: #e2e8f0;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .app-icon span {
+      font-size: 3rem;
+      color: #0ea5e9;
+    }
+    
+    .app-version {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      color: #94a3b8;
+    }
+    
 
         /* پەڕەپێ */
-        footer {
-            background-color: #0f172a;
-            padding: 2rem;
-            color: #cbd5e1;
-            margin-top: 3rem;
-        }
+        features-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .feature-card {
+      background-color: #1e293b;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      width: 280px;
+      text-align: center;
+    }
+    
+    .feature-icon span {
+      font-size: 3rem;
+      color: #38bdf8;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-title {
+      color: #0ea5e9;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-description {
+      color: #e2e8f0;
+      font-size: 0.95rem;
+    }
+    /* Footer */
+    footer {
+      background-color: #0f172a;
+      padding: 2rem;
+      color: #cbd5e1;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    
+    .footer-column h3 {
+      color: #38bdf8;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-links a {
+      text-decoration: none;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .footer-links a:hover {
+      color: #0ea5e9;
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+    
+    /* وەشاندن */
+    @media (max-width: 768px) {
+      .privacy-container {
+        padding: 1.5rem;
+      }
+      
+      .privacy-title {
+        font-size: 1.7rem;
+      }
+      
+      nav {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .footer-column {
+        width: 100%;
+      }
+    }
+    /* ستایل بۆ دوگمەکانی زمان */
+.language-switcher {
+  display: flex;
+  gap: 8px;
+  margin-left: 20px;
+}
 
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+.lang-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
 
-        .footer-column {
-            flex: 1;
-            min-width: 250px;
-        }
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
 
-        .footer-column h3 {
-            color: #38bdf8;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links a {
-            text-decoration: none;
-            color: #cbd5e1;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #0ea5e9;
-            transform: translateX(5px);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 2rem;
-            color: #64748b;
-            font-size: 0.85rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(100, 116, 139, 0.3);
-            max-width: 1200px;
-            margin: 2rem auto 0;
-        }
-
-        /* وەشاندن */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            nav {
-                margin-top: 1rem;
-                width: 100%;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            
-            nav a {
-                margin-left: 0;
-                margin-right: 1rem;
-            }
-            
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-            
-            .pre-access-ad {
-                max-width: 95%;
-            }
-            
-            .pre-access-header h2 {
-                font-size: 22px;
-            }
-            
-            .video-container {
-                height: 220px;
-            }
-        }
+.lang-btn.active {
+  background: #fff;
+  color: #333;
+  font-weight: bold;
+}
