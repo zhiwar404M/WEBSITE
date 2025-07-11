@@ -421,40 +421,39 @@ nav a:hover {
     font-size: 1rem; /* Increased */
 }
 
-/* پەڕەپێ */
-.features-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2.5rem; /* Increased */
-    justify-content: center;
-    padding: 3rem 2rem; /* Increased */
-}
-
-.feature-card {
-    background-color: #1e293b;
-    padding: 2rem; /* Increased */
-    border-radius: 0.9rem; /* Increased */
-    width: 300px; /* Increased */
-    text-align: center;
-}
-
-.feature-icon span {
-    font-size: 3.5rem; /* Increased from 3rem */
-    color: #38bdf8;
-    margin-bottom: 1rem; /* Increased */
-}
-
-.feature-title {
-    color: #0ea5e9;
-    font-size: 1.6rem; /* Added */
-    margin-bottom: 1rem; /* Increased */
-}
-
-.feature-description {
-    color: #e2e8f0;
-    font-size: 1.1rem; /* Increased from 0.95rem */
-    line-height: 1.7; /* Added */
-}
+    
+    /* Features */
+    .features-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .feature-card {
+      background-color: #1e293b;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      width: 280px;
+      text-align: center;
+    }
+    
+    .feature-icon span {
+      font-size: 3rem;
+      color: #38bdf8;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-title {
+      color: #0ea5e9;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-description {
+      color: #e2e8f0;
+      font-size: 0.95rem;
+    }
 
 /* Footer */
 footer {
