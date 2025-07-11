@@ -138,73 +138,129 @@
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
   </div>
-  <!-- Short ad  -->
-    <div class="ad-container">
-        <div class="ad-header">
-            <div class="ad-label">ریکلام</div>
-            <h1>زبائر دمستکبهشتن به ناوهرژک</h1>
-            <p>کراریک بکه پو پدردوامیوون له دمستکبهشتن به ناوهرژکی شم مالپهره</p>
-        </div>
-        
-        <div class="video-container">
-            <!-- Adsterra Video Ad - Auto Play -->
-            <iframe id="adsterra-video" 
-                    src="https://www.profitableratecpm.com/a3gtt34y9g?key=71b91dd8d81442ad90006313d784b31d&autoplay=1" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-            </iframe>
-        </div>
-        
-        <div class="timer-container">
-            <div>کلیک بکه پو دستپیگردنی ریکلام</div>
-            <div class="timer" id="timer">15</div>
-            <div>چرکه</div>
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
+  
+      <!-- ڕیکلامی پێش چوونە ژوورەوە -->
+    <div id="pre-access-overlay" style="display: none;">
+        <div class="pre-access-ad">
+            <div class="pre-access-header">
+                <div class="ad-label">ریکلام</div>
+                <h2>سەیری ڕیکلامێک بکە بۆ چوونە ژوورەوە</h2>
+                <p>سەیری ڕیکلامێکی کورت بکە بۆ دەستگەیشتن بە ناوەڕۆکی وێبسایتەکە</p>
             </div>
-        </div>
-        
-        <div class="redirect-message" id="redirectMessage">
-            پاش تەواوبوونی ریکلام، بە شێوەیەکی خۆکار دەچیتە ناو ماڵپەڕەکە
-        </div>
-        
-        <div class="ad-footer">
-            <p>به کرته کردن اساس دوگمهکه، تو رازی دیبیت به مهجهکان و رپساکان</p>
+            
+            <div class="video-container">
+                <!-- سکریپتی AdTerra -->
+                <iframe class="adsterra-ad" src="https://www.adsterra.com/video-ads"></iframe>
+            </div>
+            
+            <div class="ad-controls">
+                <div class="countdown">کات: <span id="timer">30</span> چرکە</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress"></div>
+                </div>
+                <button class="continue-btn" id="continue-btn">چوونە ژوورەوە</button>
+                <p class="terms">بە چوونە ژوورەوە ڕازی دەبیت بە <a href="#">مەرج و ڕێساکان</a></p>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Timer and redirect functionality
-        const timerElement = document.getElementById('timer');
-        const progressElement = document.getElementById('progress');
-        const redirectMessage = document.getElementById('redirectMessage');
-        let timeLeft = 15;
-        const totalTime = 15;
-        
-        // Start the countdown timer
-        const timer = setInterval(() => {
-            timeLeft--;
-            timerElement.textContent = timeLeft;
+  
+  
+ <!--ریکلامی پێش شاشە --> 
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('pre-access-overlay');
+            const timerEl = document.getElementById('timer');
+            const progressBar = document.getElementById('progress');
+            const continueBtn = document.getElementById('continue-btn');
+            const adFrame = document.querySelector('.adsterra-ad');
             
-            // Update progress bar
-            const progressPercent = 100 - (timeLeft / totalTime * 100);
-            progressElement.style.width = `${progressPercent}%`;
-            
-            // When timer reaches 0
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                
-                // Show redirect message
-                redirectMessage.classList.add('show');
-                
-                // Redirect after 2 seconds
-                setTimeout(() => {
-                    window.location.href = "https://zhiwaryt.vercel.app/"; // گۆڕینی بۆ لینکی وێبسایتەکەت
-                }, 2000);
+            // کۆکی بۆ تۆمارکردنی کاتی کۆتایی هاتنی ڕیکلام
+            function setAdCookie() {
+                const now = new Date();
+                const expiration = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 کاتژمێر
+                document.cookie = `adShown=true; expires=${expiration.toUTCString()}; path=/`;
             }
-        }, 1000);
+            
+            function checkAdCookie() {
+                const cookies = document.cookie.split(';');
+                for (const cookie of cookies) {
+                    const [name, value] = cookie.trim().split('=');
+                    if (name === 'adShown' && value === 'true') {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+            // پشکنین بۆ دۆزینەوەی ئەگەری نیشاندانی ڕیکلام
+            if (!checkAdCookie()) {
+                overlay.style.display = 'flex';
+                startAdTimer();
+            }
+            
+            function startAdTimer() {
+                let timeLeft = 30;
+                
+                // دەستپێکردنی کاتژمێر
+                const timer = setInterval(() => {
+                    timeLeft--;
+                    timerEl.textContent = timeLeft;
+                    const progressPercent = 100 - (timeLeft / 30 * 100);
+                    progressBar.style.width = `${progressPercent}%`;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        continueBtn.classList.add('active');
+                    }
+                }, 1000);
+                
+                // کرتەکردن لەسەر دوگمەی چوونەژوورەوە
+                continueBtn.addEventListener('click', () => {
+                    overlay.style.display = 'none';
+                    setAdCookie(); // دانانی کۆکی کاتێک ڕیکلام تەواو دەبێت
+                    
+                    // دەستپێکردنی کاتژمێر بۆ 24 کاتژمێر دواتر
+                    setTimeout(() => {
+                        document.cookie = 'adShown=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    }, 24 * 60 * 60 * 1000);
+                });
+                
+                // چاودێری تەواوبوونی ڕیکلام
+                window.addEventListener('message', function(event) {
+                    // چاودێری ئەوەی کە ڕیکلام تەواو بووە
+                    if (event.data === 'adCompleted') {
+                        clearInterval(timer);
+                        continueBtn.classList.add('active');
+                        setAdCookie(); // دانانی کۆکی کاتێک ڕیکلام تەواو دەبێت
+                        
+                        // لۆگکردنی پارەقازان
+                        console.log('ڕیکلام تەواو بوو - پارە قازان کرا');
+                    }
+                });
+            }
+            
+            // لۆدکردنی سکریپتی AdTerra
+            function loadAdTerraScript() {
+                const script = document.createElement('script');
+                script.src = 'https://www.adsterra.com/adsterra.js';
+                script.async = true;
+                document.body.appendChild(script);
+            }
+            
+            // دەستپێکردنی ڕیکلام
+            loadAdTerraScript();
+            
+            // پشکنینی کۆکی هەموو 10 چرکە جارێک
+            setInterval(() => {
+                if (!checkAdCookie()) {
+                    overlay.style.display = 'flex';
+                    startAdTimer();
+                }
+            }, 10000); // 10 چرکە
+        });
     </script>
+    
     
   <!-- Privacy Policy Section -->
   <section class="privacy-section">
