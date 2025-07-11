@@ -1,144 +1,542 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Noto Sans Arabic', sans-serif;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans Arabic', sans-serif;
+        }
 
-body {
-    font-size: 1.1rem; /* گەورەکراو لە 1rem */
-    line-height: 1.7; /* گەورەکراو */
-}
+        body {
+            background-color: #0f172a;
+            color: #f1f5f9;
+            line-height: 1.6;
+        }
 
-/* سیستەمی ڕیکلام */
-.pre-access-header h2 {
-    font-size: 2rem; /* گەورەکراو لە 28px */
-}
+        /* سیستەمی ڕیکلامی پێش چوونە ژوورەوە */
+        #pre-access-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
 
-.pre-access-header p {
-    font-size: 1.1rem; /* گەورەکراو لە 16px */
-}
+        .pre-access-ad {
+            background: #1e293b;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(14, 165, 233, 0.5);
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+            border: 2px solid #0ea5e9;
+            animation: fadeIn 0.5s ease-out;
+        }
 
-.ad-label {
-    font-size: 1rem; /* گەورەکراو لە 14px */
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.countdown {
-    font-size: 1.8rem; /* گەورەکراو لە 24px */
-}
+        .pre-access-header {
+            background: linear-gradient(90deg, #0ea5e9, #1e40af);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
 
-.continue-btn {
-    font-size: 1.3rem; /* گەورەکراو لە 18px */
-    padding: 1.2rem 2.5rem; /* گەورەکراو */
-}
+        .pre-access-header h2 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
 
-.terms {
-    font-size: 1rem; /* گەورەکراو لە 13px */
-}
+        .pre-access-header p {
+            font-size: 16px;
+            opacity: 0.9;
+            max-width: 400px;
+            margin: 0 auto;
+        }
 
-/* سەرپەڕ */
-.logo {
-    font-size: 1.5rem; /* گەورەکراو لە 1.2rem */
-}
+        .ad-label {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 0, 0, 0.7);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
 
-nav a {
-    font-size: 1.2rem; /* گەورەکراو */
-}
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            background: #000;
+            overflow: hidden;
+        }
 
-/* بەشی سەرەکی */
-.hero-content h1 {
-    font-size: 3rem; /* گەورەکراو لە 2.5rem */
-}
+        .adsterra-ad {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
-.hero-content p {
-    font-size: 1.4rem; /* گەورەکراو لە 1.2rem */
-}
+        .ad-controls {
+            padding: 25px;
+            text-align: center;
+            background: #1a202e;
+        }
 
-/* دوگمەکان */
-.btn {
-    font-size: 1.2rem; /* گەورەکراو لە 1rem */
-    padding: 1rem 2rem; /* گەورەکراو */
-}
+        .countdown {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #0ea5e9;
+        }
 
-/* بەش */
-.section-title {
-    font-size: 2.5rem; /* گەورەکراو لە 2rem */
-}
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #2d3748;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
 
-.section-subtitle {
-    font-size: 1.3rem; /* گەورەکراو لە 1rem */
-}
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #0ea5e9, #1e40af);
+            width: 0%;
+            transition: width 0.5s linear;
+        }
 
-/* بەرنامەکان */
-.app-title {
-    font-size: 1.8rem; /* گەورەکراو لە 1.5rem */
-}
+        .continue-btn {
+            background: linear-gradient(90deg, #0ea5e9, #1e40af);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+            opacity: 0.7;
+            pointer-events: none;
+        }
 
-.app-description {
-    font-size: 1.2rem; /* گەورەکراو لە 1rem */
-}
+        .continue-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-.app-version {
-    font-size: 1rem; /* گەورەکراو لە 0.85rem */
-}
+        .continue-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6);
+        }
 
-/* سیاسەتی پاراستن */
-.privacy-title {
-    font-size: 2.5rem; /* گەورەکراو لە 2rem */
-}
+        .terms {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #94a3b8;
+        }
 
-.privacy-date {
-    font-size: 1.1rem; /* گەورەکراو لە 0.95rem */
-}
+        .terms a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
 
-.privacy-section h3 {
-    font-size: 1.6rem; /* گەورەکراو لە 1.4rem */
-}
+        /* ناوەڕۆکی وێبسایت */
+        /* Header */
+    header {
+      background-color: #1e293b;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-.privacy-section p, 
-.privacy-section li {
-    font-size: 1.1rem; /* گەورەکراو */
-}
 
-/* پەڕەپێ */
-.footer-column h3 {
-    font-size: 1.5rem; /* گەورەکراو لە 1.3rem */
-}
+ .logo {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-.footer-links a {
-    font-size: 1.1rem; /* گەورەکراو */
-}
+        nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    
+    nav a:hover {
+      color: #38bdf8;
+    }
+    
 
-.copyright {
-    font-size: 1rem; /* گەورەکراو لە 0.85rem */
-}
-
-/* دوگمەکانی زمان */
-.lang-btn {
-    font-size: 1.1rem; /* گەورەکراو لە 14px */
-    padding: 0.5rem 1rem; /* گەورەکراو */
-}
-
-/* وەشاندن بۆ مۆبایل */
-@media (max-width: 768px) {
-    body {
-        font-size: 1rem;
+        /* بەشی سەرەکی */
+hero {
+      background: linear-gradient(to left top, #0ea5e9, #1e40af);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
     }
     
     .hero-content h1 {
-        font-size: 2.2rem;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
     }
     
     .hero-content p {
-        font-size: 1.1rem;
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
     }
     
+
+        /* دوگمەکان */
+            .btn {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background-color: #0ea5e9;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #0284c7;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+        /* بەش */
     .section-title {
-        font-size: 2rem;
+      font-size: 2rem;
+      color: #38bdf8;
+      text-align: center;
+      margin-top: 3rem;
     }
     
-    .btn {
-        font-size: 1rem;
-        padding: 0.8rem 1.5rem;
+    .section-subtitle {
+      color: #94a3b8;
+      text-align: center;
+      margin-bottom: 2rem;
     }
+        
+        /* Privacy Policy Section */
+    .privacy-section {
+      background-color: #0f172a;
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .privacy-container {
+      background-color: #1e293b;
+      border-radius: 0.75rem;
+      padding: 2.5rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    
+    .privacy-header {
+      border-bottom: 2px solid #38bdf8;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    .privacy-title {
+      color: #38bdf8;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .privacy-date {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+    
+    .privacy-content {
+      color: #e2e8f0;
+      line-height: 1.8;
+    }
+    
+    .privacy-section h3 {
+      color: #38bdf8;
+      margin: 1.8rem 0 1rem;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    
+    .privacy-section p {
+      margin-bottom: 1.2rem;
+    }
+    
+    .privacy-section ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .privacy-section li {
+      margin-bottom: 0.7rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    
+    .privacy-section li::before {
+      content: "•";
+      color: #0ea5e9;
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
+    }
+    
+    .privacy-contact {
+      background-color: rgba(14, 165, 233, 0.1);
+      border-left: 4px solid #0ea5e9;
+      padding: 1.2rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      margin: 2rem 0;
+    }
+    
+    /* دوگمەی سیاسەتی پاراستن */
+    .privacy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(14, 165, 233, 0.15);
+      color: #0ea5e9;
+      padding: 0.7rem 1.5rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      margin-top: 1rem;
+    }
+    
+    .privacy-btn:hover {
+      background: rgba(14, 165, 233, 0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(14, 165, 233, 0.2);
+    }
+    
+
+        /* تۆڕی بەرنامەکان */
+  .apps-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    
+    .app-card {
+      background-color: #1e293b;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    
+    .app-title {
+      color: #38bdf8;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .app-description {
+      color: #e2e8f0;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .app-icon span {
+      font-size: 3rem;
+      color: #0ea5e9;
+    }
+    
+    .app-version {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      color: #94a3b8;
+    }
+    
+
+        /* پەڕەپێ */
+        features-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .feature-card {
+      background-color: #1e293b;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      width: 280px;
+      text-align: center;
+    }
+    
+    .feature-icon span {
+      font-size: 3rem;
+      color: #38bdf8;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-title {
+      color: #0ea5e9;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-description {
+      color: #e2e8f0;
+      font-size: 0.95rem;
+    }
+    /* Footer */
+    footer {
+      background-color: #0f172a;
+      padding: 2rem;
+      color: #cbd5e1;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    
+    .footer-column h3 {
+      color: #38bdf8;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-links a {
+      text-decoration: none;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .footer-links a:hover {
+      color: #0ea5e9;
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+    
+    /* وەشاندن */
+    @media (max-width: 768px) {
+      .privacy-container {
+        padding: 1.5rem;
+      }
+      
+      .privacy-title {
+        font-size: 1.7rem;
+      }
+      
+      nav {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .footer-column {
+        width: 100%;
+      }
+    }
+    /* ستایل بۆ دوگمەکانی زمان */
+.language-switcher {
+  display: flex;
+  gap: 8px;
+  margin-left: 20px;
+}
+
+.lang-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.lang-btn.active {
+  background: #fff;
+  color: #333;
+  font-weight: bold;
 }
