@@ -203,7 +203,7 @@
             
             function startAdTimer() {
                 let timeLeft = 30;
-                const totaltime =30;
+
                 // دەستپێکردنی کاتژمێر
                 const timer = setInterval(() => {
                     timeLeft--;
@@ -228,12 +228,6 @@
                     overlay.style.display = 'none';
                     setAdCookie(); // دانانی کۆکی کاتێک ڕیکلام تەواو دەبێت
                     
-                    // دەستپێکردنی کاتژمێر بۆ 24 کاتژمێر دواتر
-                    setTimeout(() => {
-                        document.cookie = 'adShown=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-                    }, 24 * 60 * 60 * 1000);
-                });
-                
                 // چاودێری تەواوبوونی ڕیکلام
                 window.addEventListener('message', function(event) {
                     // چاودێری ئەوەی کە ڕیکلام تەواو بووە
