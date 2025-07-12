@@ -152,14 +152,15 @@
             <div class="video-container">
                 <!-- سکریپتی AdTerra -->
                 <iframe class="adsterra-ad" src="https://oblivionplaysaltered.com/cc6r5tjm39?key=e41025d5f4aaac4dc160a8598cffd3f9"></iframe>
-            </div>
+          
+              </div>
             
             <div class="ad-controls">
                 <div class="countdown">کات: <span id="timer">30</span> چرکە</div>
                 <div class="progress-container">
                     <div class="progress-bar" id="progress"></div>
                 </div>
-                <button class="continue-btn" id="continue-btn">چوونە ژوورەوە</button>
+
                 <p class="terms">بە چوونە ژوورەوە ڕازی دەبیت بە <a href="#">مەرج و ڕێساکان</a></p>
             </div>
         </div>
@@ -207,14 +208,20 @@
                 const timer = setInterval(() => {
                     timeLeft--;
                     timerEl.textContent = timeLeft;
-                    const progressPercent = 100 - (timeLeft / 30 * 100);
+                    const progressPercent = 100 - (timeLeft / totalTime * 100);
                     progressBar.style.width = `${progressPercent}%`;
                     
                     if (timeLeft <= 0) {
                         clearInterval(timer);
-                        continueBtn.classList.add('active');
+
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = "https://zhiwaryt.vercel.app/"; // گۆڕینی بۆ لینکی وێبسایتەکەت
+                }, 2000);
                     }
                 }, 1000);
+                
+                
                 
                 // کرتەکردن لەسەر دوگمەی چوونەژوورەوە
                 continueBtn.addEventListener('click', () => {
