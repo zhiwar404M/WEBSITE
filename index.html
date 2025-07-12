@@ -221,7 +221,17 @@
                     }
                 }, 1000);
                 
+                            // پشکنین بکە ئایا 12 کاتژمێر تێپەڕیوە لە دوای بینینی پێشوو
+            const lastWatched = localStorage.getItem('lastAdWatched');
+            const now = new Date().getTime();
+            
+            if (!lastWatched || (now - lastWatched) >= 12 * 60 * 60 * 1000) {
+                // نمایشی ریکلام
+                videoAd.style.display = 'block';
                 
+                // کاتی بینین تۆمار بکە
+                localStorage.setItem('lastAdWatched', now.toString());
+            }
                 
                 // کرتەکردن لەسەر دوگمەی چوونەژوورەوە
                 continueBtn.addEventListener('click', () => {
