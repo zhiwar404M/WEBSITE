@@ -208,7 +208,7 @@
                 const timer = setInterval(() => {
                     timeLeft--;
                     timerEl.textContent = timeLeft;
-                    const progressPercent = 100 - (timeLeft / totalTime * 100);
+                    const progressPercent = 100 - (timeLeft / 30 * 100);
                     progressBar.style.width = `${progressPercent}%`;
                     
                     if (timeLeft <= 0) {
