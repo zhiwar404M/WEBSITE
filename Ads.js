@@ -1,31 +1,18 @@
 // == Adsterra Ad Manager ==
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. ڕێکخستنی ڕیکلامی پێش چوونە ژوورەوە
+    // 1. ڕیکلامی پێش چوونە ژوورەوە (Popunder)
     const overlay = document.getElementById('pre-access-overlay');
     if (overlay) {
-        // پشکنینی ئەدبڵۆک
-        const adBlockTest = document.createElement('div');
-        adBlockTest.className = 'adsbox';
-        document.body.appendChild(adBlockTest);
-        setTimeout(() => {
-            if (adBlockTest.offsetHeight === 0) {
-                console.warn('AdBlock چالاکە!');
-                return;
-            }
-            adBlockTest.remove();
-        }, 1000);
-
-        // پشکنینی کاتی 12 کاتژمێر
         const lastAdTime = localStorage.getItem('lastAdTime');
         const now = Date.now();
         
         if (!lastAdTime || (now - lastAdTime) > 43200000) { // 12 کاتژمێر
             overlay.style.display = 'flex';
             
-            // بارکردنی ڕیکلامی Adsterra (Popunder)
-            const script = document.createElement('script');
-            script.src = 'https://oblivionplaysaltered.com/50/c1/0a/50c10a5810034923515743695968da04.js';
-            document.body.appendChild(script);
+            // بارکردنی ڕیکلامی Popunder
+            const popunderScript = document.createElement('script');
+            popunderScript.src = 'https://oblivionplaysaltered.com/pu/50c10a5810034923515743695968da04';
+            document.body.appendChild(popunderScript);
 
             // کاتژمێری کۆنتاوداون
             let seconds = 30;
@@ -41,16 +28,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 2. ڕێکخستنی داگرتن + ڕیکلام
+    // 2. ڕێکخستنی داگرتن + ڕیکلام (DirectLink)
     document.querySelectorAll('[data-download-with-ads]').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             const url = this.getAttribute('data-download-url');
             
-            // بارکردنی ڕیکلامی جۆری DirectLink
-            const dlScript = document.createElement('script');
-            dlScript.src = 'https://oblivionplaysaltered.com/dl/e41025d5f4aaac4dc160a8598cffd3f9';
-            document.body.appendChild(dlScript);
+            // بارکردنی ڕیکلامی DirectLink
+            const directScript = document.createElement('script');
+            directScript.src = 'https://oblivionplaysaltered.com/dl/e41025d5f4aaac4dc160a8598cffd3f9';
+            document.body.appendChild(directScript);
 
             // داگرتن دوای 5 چرکە
             setTimeout(() => {
@@ -59,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 3. بارکردنی SocialBar لە کاتی سکرۆلکردن
+    // 3. SocialBar (کە کار دەکات)
     window.addEventListener('scroll', function() {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
             const sbScript = document.createElement('script');
