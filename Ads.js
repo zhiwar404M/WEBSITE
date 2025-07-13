@@ -1,5 +1,4 @@
-// == ڕێکخستنی ڕیکلامەکان ==
-document.addEventListener('DOMContentLoaded', function() {
+
   // 1. پشکنینی AdBlock
   const adBlockWarning = document.getElementById('adblock-warning');
   const testAd = document.createElement('div');
@@ -9,21 +8,41 @@ document.addEventListener('DOMContentLoaded', function() {
     if (testAd.offsetHeight === 0) adBlockWarning.style.display = 'block';
     testAd.remove();
   }, 1000);
+// ڕیکلامی پێش چوونە ژوورەوە
+function setupPreAccessAd() {
+    const overlay = document.getElementById('pre-access-overlay');
+    const timerEl = document.getElementById('timer');
+    const progressBar = document.getElementById('progress');
 
-  // 2. ڕیکلامی پێش چوونە ژوورەوە
-  const overlay = document.getElementById('pre-access-overlay');
-  if (overlay && (!localStorage.getItem('lastAdWatched') || Date.now() - localStorage.getItem('lastAdWatched') > 43200000)) {
-    overlay.style.display = 'flex';
-    let seconds = 30;
-    const timer = setInterval(() => {
-      document.getElementById('timer').textContent = --seconds;
-      if (seconds <= 0) {
-        clearInterval(timer);
-        overlay.style.display = 'none';
-        localStorage.setItem('lastAdWatched', Date.now());
-      }
-    }, 1000);
-  }
+    // پشکنین بکە ئایا 12 کاتژمێر تێپەڕیوە
+    const lastWatched = localStorage.getItem('lastAdWatched');
+    const now = Date.now();
+
+    if (!lastWatched || (now - lastWatched) >= 12 * 60 * 60 * 1000) {
+        overlay.style.display = 'flex';
+        startCountdown();
+    }
+
+    function startCountdown() {
+        let seconds = 30;
+        const timer = setInterval(() => {
+            seconds--;
+            timerEl.textContent = seconds;
+            progressBar.style.width = `${100 - (seconds / 30 * 100)}%`;
+
+            if (seconds <= 0) {
+                clearInterval(timer);
+                overlay.style.display = 'none';
+                localStorage.setItem('lastAdWatched', now.toString());
+            }
+        }, 1000);
+    }
+}
+
+// فەرمانی سەرەکی
+document.addEventListener('DOMContentLoaded', function() {
+    setupPreAccessAd();
+});
 
   // 3. داونلۆد + ڕیکلام
   document.querySelectorAll('[data-download-with-ads]').forEach(btn => {
