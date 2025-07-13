@@ -10,12 +10,7 @@
   <link rel="stylesheet" href="style.css">
     <script src="Ads.js"></script>
   
-  <!-- Global AdSense Code -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"
-          crossorigin="anonymous"></script>
-
-  <div id="adblock-warning" data-translate="adblock_warning">⚠️ Please disable AdBlock to view the content. Thank you ❤️</div>
-
+  
   <header>
     <div class="header-container">
       <a href="#" class="logo">
@@ -47,38 +42,6 @@
     </div>
   </section>
   
-  <!-- Inside <head> -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"
-     crossorigin="anonymous"></script>
-<script>
-  // Command to activate AdSense ads
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
-<!-- First ad position (inside #apps) -->
-<div class="ad-container">
-  <div id="adsterra-ad-1"></div>
-  <script type="text/javascript">
-    // Adsterra ad code for first position
-    var adsterraScript1 = document.createElement('script');
-    adsterraScript1.src = '//oblivionplaysaltered.com/50/c1/0a/50c10a5810034923515743695968da04.js';
-    document.getElementById('adsterra-ad-1').appendChild(adsterraScript1);
-  </script>
-</div>
-
-
-<!-- Third ad position (above footer) -->
-<div class="ad-container">
-  <div id="adsterra-ad-2"></div>
-  <script type="text/javascript">
-    // Adsterra ad code for second position
-    var adsterraScript2 = document.createElement('script');
-    adsterraScript2.src = '//oblivionplaysaltered.com/ca/7d/e7/ca7de7addc12c0c856275b95aeddab87.js';
-    document.getElementById('adsterra-ad-2').appendChild(adsterraScript2);
-  </script>
-</div>
-  
-
 
   <section id="apps" class="apps-section">
     <h2 class="section-title" data-translate="apps_section_title">Applications</h2>
@@ -96,189 +59,6 @@
       </div>
     </div>
     
-  <!-- ... Scripts ... -->
-
-  <script>
-    // Command to check ad loading
-    function checkAdLoad() {
-      const adContainers = document.querySelectorAll('.adsbygoogle');
-      adContainers.forEach(ad => {
-        if(ad.innerHTML.trim() === '') {
-          console.log('Ad not loaded');
-          // Show alternative if ad not loaded
-        }
-      });
-    }
-    
-    // Check every 5 seconds
-    setInterval(checkAdLoad, 5000);
-</script>
-
-  <!-- Ad point 2: Middle of page -->
-  <div class="ad-container">
-    <span class="ad-label"></span>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"></script>
-<!-- نموونەی ڕیکلام -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2419305830519121"
-     data-ad-slot="8995437977"
-     data-ad-format="auto"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </div>
-
-  </section>
-
-  <div id="adsense-ad" style="display: none; margin: 20px auto; text-align: center;">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="pub-2419305830519121"
-         data-ad-slot="f08c47fec0942fa0"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-  </div>
-  
-      <!-- ڕیکلامی پێش چوونە ژوورەوە -->
-    <div id="pre-access-overlay" style="display: none;">
-        <div class="pre-access-ad">
-            <div class="pre-access-header">
-                <div class="ad-label">ریکلام</div>
-                <h2>سەیری ڕیکلامێک بکە بۆ چوونە ژوورەوە</h2>
-                <p>سەیری ڕیکلامێکی کورت بکە بۆ دەستگەیشتن بە ناوەڕۆکی وێبسایتەکە</p>
-            </div>
-            
-            <div class="video-container">
-                <!-- سکریپتی AdTerra -->
-                <iframe class="adsterra-ad" src="https://oblivionplaysaltered.com/cc6r5tjm39?key=e41025d5f4aaac4dc160a8598cffd3f9"></iframe>
-          
-              </div>
-            
-            <div class="ad-controls">
-                <div class="countdown">کات: <span id="timer">30</span> چرکە</div>
-                <div class="progress-container">
-                    <div class="progress-bar" id="progress"></div>
-                </div>
-
-                <p class="terms">بە چوونە ژوورەوە ڕازی دەبیت بە <a href="#">مەرج و ڕێساکان</a></p>
-            </div>
-        </div>
-    </div>
-
-  
-  
- <!--ریکلامی پێش شاشە --> 
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const overlay = document.getElementById('pre-access-overlay');
-            const timerEl = document.getElementById('timer');
-            const progressBar = document.getElementById('progress');
-            const continueBtn = document.getElementById('continue-btn');
-            const adFrame = document.querySelector('.adsterra-ad');
-            
-            // کۆکی بۆ تۆمارکردنی کاتی کۆتایی هاتنی ڕیکلام
-            function setAdCookie() {
-                
-                    // پشکنین بکە ئایا 12 کاتژمێر تێپەڕیوە لە دوای بینینی پێشوو
-            const lastWatched = localStorage.getItem('lastAdWatched');
-            const now = new Date().getTime();
-            
-            if (!lastWatched || (now - lastWatched) >= 12 * 60 * 60 * 1000) {
-                // نمایشی ریکلام
-                videoAd.style.display = 'block';
-                
-                // کاتی بینین تۆمار بکە
-                localStorage.setItem('lastAdWatched', now.toString());
-            }
-            
-            function checkAdCookie() {
-                const cookies = document.cookie.split(';');
-                for (const cookie of cookies) {
-                    const [name, value] = cookie.trim().split('=');
-                    if (name === 'adShown' && value === 'true') {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            
-            // پشکنین بۆ دۆزینەوەی ئەگەری نیشاندانی ڕیکلام
-            if (!checkAdCookie()) {
-                overlay.style.display = 'flex';
-                startAdTimer();
-            }
-            
-            function startAdTimer() {
-                let timeLeft = 30;
-
-                // دەستپێکردنی کاتژمێر
-                const timer = setInterval(() => {
-                    timeLeft--;
-                    timerEl.textContent = timeLeft;
-                    const progressPercent = 100 - (timeLeft / 30 * 100);
-                    progressBar.style.width = `${progressPercent}%`;
-                    
-                    if (timeLeft <= 0) {
-                        clearInterval(timer);
-
-                // Redirect after 2 seconds
-                setTimeout(() => {
-                    window.location.href = "https://zhiwaryt.vercel.app/"; // گۆڕینی بۆ لینکی وێبسایتەکەت
-                }, 2000);
-                    }
-                }, 1000);
-               
-                
-                // کرتەکردن لەسەر دوگمەی چوونەژوورەوە
-                continueBtn.addEventListener('click', () => {
-                    overlay.style.display = 'none';
-                    setAdCookie(); // دانانی کۆکی کاتێک ڕیکلام تەواو دەبێت
-                    
-                // چاودێری تەواوبوونی ڕیکلام
-                window.addEventListener('message', function(event) {
-                    // چاودێری ئەوەی کە ڕیکلام تەواو بووە
-                    if (event.data === 'adCompleted') {
-                        clearInterval(timer);
-                        continueBtn.classList.add('active');
-                        setAdCookie(); // دانانی کۆکی کاتێک ڕیکلام تەواو دەبێت
-                        
-                        // لۆگکردنی پارەقازان
-                        console.log('ڕیکلام تەواو بوو - پارە قازان کرا');
-                    }
-                });
-            }
-            
-            // لۆدکردنی سکریپتی AdTerra
-            function loadAdTerraScript() {
-                const script = document.createElement('script');
-                script.src = 'https://www.adsterra.com/adsterra.js';
-                script.async = true;
-                document.body.appendChild(script);
-            }
-            
-            // دەستپێکردنی ڕیکلام
-            loadAdTerraScript();
-            
-            // پشکنینی کۆکی هەموو 10 چرکە جارێک
-            setInterval(() => {
-                if (!checkAdCookie()) {
-                    overlay.style.display = 'flex';
-                    startAdTimer();
-                }
-            }, 10000); // 10 چرکە
-        });
-    </script>
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"
-     crossorigin="anonymous"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-ef+6k-30-ac+ty"
-     data-ad-client="ca-pub-2419305830519121"
-     data-ad-slot="9127299919"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
   <!-- Privacy Policy Section -->
   <section class="privacy-section">
@@ -406,47 +186,7 @@
     </div>
   </footer>
 
-  <!-- 🔻 Popup Adsterra Script 🔻 -->
-<script type='text/javascript' src='//oblivionplaysaltered.com/ca/7d/e7/ca7de7addc12c0c856275b95aeddab87.js'></script>
 
-  <!-- 🔻 JavaScript: Download + AdSense ➤ Adsterra ➤ Download 🔻 -->
-  <script>
-    function startDownloadWithAds(fileUrl) {
-      const adsenseAd = document.getElementById("adsense-ad");
-      adsenseAd.style.display = "block";
-      (adsbygoogle = window.adsbygoogle || []).push({});
-
-      setTimeout(function () {
-        window.open("https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk", "_blank");
-
-        setTimeout(function () {
-          window.location.href = fileUrl;
-        }, 7000);
-      }, 10000);
-    }
-  </script>
-  
-
-  <!-- 🔻 AdBlock Detection 🔻 -->
-  <script>
-    window.addEventListener('load', function () {
-      let bait = document.createElement('div');
-      bait.innerHTML = '&nbsp;';
-      bait.className = 'adsbox ad-banner ad-unit ad-zone ad-space';
-      bait.style.position = 'absolute';
-      bait.style.height = '1px';
-      bait.style.width = '1px';
-      bait.style.left = '-9999px';
-      document.body.appendChild(bait);
-
-      setTimeout(function () {
-        if (bait.offsetHeight === 0 || bait.clientHeight === 0) {
-          document.getElementById("adblock-warning").style.display = "block";
-        }
-        bait.remove();
-      }, 1000);
-    });
-  </script>
 
   <script>
   // Language switching function
