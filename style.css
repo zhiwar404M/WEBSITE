@@ -534,6 +534,12 @@ footer {
     font-weight: bold;
 }
 
+/* پانێلی ریکلام بۆ موبایل */
+#pre-access-overlay {
+  width: 100vw;
+  height: 100vh;
+}
+
 /* وەشاندن */
 @media (max-width: 768px) {
     body {
