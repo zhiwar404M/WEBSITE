@@ -41,32 +41,48 @@ function loadBestAd() {
     loadAdsterraAd(bestAd[0]);
 }
 
-// 4. ڕێکخستنی ڕیکلامی پێش چوونە ژوورەوە (12 کاتژمێر جارێک)
-function setupPreAccessAd() {
+// لە فایلی ads.js
+document.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('pre-access-overlay');
     if (!overlay) return;
 
-    const lastWatched = localStorage.getItem('lastAdWatched');
-    const now = Date.now();
+    // پشکنینی ئەدبڵۆک
+    const testAd = document.createElement('div');
+    testAd.className = 'adsbox';
+    document.body.appendChild(testAd);
+    setTimeout(() => {
+        if (testAd.offsetHeight === 0) {
+            alert('تکایە ئەدبڵۆک ناچالاک بکە');
+            return;
+        }
+        testAd.remove();
+    }, 1000);
 
-    if (!lastWatched || (now - lastWatched) >= 12 * 60 * 60 * 1000) {
+    // پشکنینی 12 کاتژمێر
+    const lastAd = localStorage.getItem('lastAdTime');
+    const now = Date.now();
+    
+    if (!lastAd || (now - lastAd) > 43200000) { // 12 کاتژمێر
         overlay.style.display = 'flex';
-        loadBestAd(); // باشترین ڕیکلام بار دەکات
         
+        // کۆدی Adsterra
+        const script = document.createElement('script');
+        script.src = 'https://oblivionplaysaltered.com/cc6r5tjm39?key=e41025d5f4aaac4dc160a8598cffd3f9';
+        document.body.appendChild(script);
+
+        // کاتژمێر
         let seconds = 30;
         const timer = setInterval(() => {
             seconds--;
-            document.getElementById('timer').textContent = seconds;
-            document.getElementById('progress').style.width = `${100 - (seconds/30)*100}%`;
-            
+            document.getElementById('countdown').textContent = seconds;
             if (seconds <= 0) {
                 clearInterval(timer);
                 overlay.style.display = 'none';
-                localStorage.setItem('lastAdWatched', now.toString());
+                localStorage.setItem('lastAdTime', now);
             }
         }, 1000);
     }
-}
+});
 
 // 5. داگرتن + ڕیکلام (بۆ دوگمەکان)
 function setupDownloadAds() {
