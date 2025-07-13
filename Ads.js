@@ -4,17 +4,17 @@
 // 1. ڕێکخستنی ڕیکلامەکان بەپێی قازانج
 const adsterraAds = {
     popunder: {
-        script: '//oblivionplaysaltered.com/pu/50c10a5810034923515743695968da04',
+        script: '//oblivionplaysaltered.com/ca/7d/e7/ca7de7addc12c0c856275b95aeddab87',
         priority: 1, // زیادترین قازانج
         minClicks: 3 // پێویستی بە کلیک نیە (خۆکار)
     },
     socialbar: {
-        script: '//oblivionplaysaltered.com/sb/ca7de7addc12c0c856275b95aeddab87',
+        script: '//oblivionplaysaltered.com/50/c1/0a/50c10a5810034923515743695968da04',
         priority: 2,
         minClicks: 0 // پێویستی بە کلیک هەیە
     },
     directlink: {
-        script: '//oblivionplaysaltered.com/dl/e41025d5f4aaac4dc160a8598cffd3f9',
+        script: 'https://oblivionplaysaltered.com/a3gtt34y9g?key=71b91dd8d81442ad90006313d784b31d',
         priority: 3,
         minClicks: 0 // پێویستی بە کلیک هەیە
     }
