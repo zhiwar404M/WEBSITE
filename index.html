@@ -26,6 +26,507 @@
   s.src = 'https://oblivionplaysaltered.com/50/c1/0a/50c10a5810034923515743695968da04.js';
   document.getElementById('adsterra-ad-1').appendChild(s);
 </script>
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+body {
+    background-color: #0f172a;
+    color: #f1f5f9;
+    line-height: 1.7;
+    font-size: 1.1rem; /* Increased from default */
+}
+
+
+/* Header */
+header {
+    background-color: #1e293b;
+    padding: 1.2rem 2rem; /* Increased */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.4rem; /* Increased from 1.2rem */
+    display: flex;
+    align-items: center;
+    gap: 0.6rem; /* Increased */
+}
+
+nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    margin-left: 1.8rem; /* Increased */
+    font-weight: 500;
+    font-size: 1.1rem; /* Increased */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem; /* Increased */
+}
+
+nav a:hover {
+    color: #38bdf8;
+}
+
+/* بەشی سەرەکی */
+.hero {
+    background: linear-gradient(to left top, #0ea5e9, #1e40af);
+    color: white;
+    padding: 5rem 2rem; /* Increased */
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 2.8rem; /* Increased from 2.5rem */
+    margin-bottom: 1.5rem; /* Increased */
+}
+
+.hero-content p {
+    font-size: 1.4rem; /* Increased from 1.2rem */
+    margin-bottom: 2.5rem; /* Increased */
+    line-height: 1.8; /* Added */
+}
+
+/* دوگمەکان */
+.btn {
+    padding: 1rem 2rem; /* Increased */
+    border: none;
+    cursor: pointer;
+    border-radius: 0.6rem; /* Increased */
+    font-weight: bold;
+    font-size: 1.2rem; /* Increased */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem; /* Increased */
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #0ea5e9;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0284c7;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 0.9rem 1.9rem; /* Increased */
+}
+
+.btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* بەش */
+.section-title {
+    font-size: 2.4rem; /* Increased from 2rem */
+    color: #38bdf8;
+    text-align: center;
+    margin-top: 3.5rem; /* Increased */
+    margin-bottom: 1rem; /* Added */
+}
+
+.section-subtitle {
+    color: #94a3b8;
+    font-size: 1.2rem; /* Increased */
+    text-align: center;
+    margin-bottom: 2.5rem; /* Increased */
+    line-height: 1.7; /* Added */
+}
+
+/* Privacy Policy Section */
+.privacy-section {
+    background-color: #0f172a;
+    padding: 5rem 2rem; /* Increased */
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.privacy-container {
+    background-color: #1e293b;
+    border-radius: 0.8rem; /* Increased */
+    padding: 3rem; /* Increased */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.privacy-header {
+    border-bottom: 2px solid #38bdf8;
+    padding-bottom: 2rem; /* Increased */
+    margin-bottom: 2.5rem; /* Increased */
+    position: relative;
+}
+
+.privacy-title {
+    color: #38bdf8;
+    font-size: 2.4rem; /* Increased from 2rem */
+    margin-bottom: 1rem; /* Increased */
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Increased */
+}
+
+.privacy-date {
+    color: #94a3b8;
+    font-size: 1.1rem; /* Increased from 0.95rem */
+}
+
+.privacy-content {
+    color: #e2e8f0;
+    line-height: 1.9; /* Increased */
+    font-size: 1.1rem; /* Added */
+}
+
+.privacy-section h3 {
+    color: #38bdf8;
+    margin: 2rem 0 1.2rem; /* Increased */
+    font-size: 1.6rem; /* Increased from 1.4rem */
+    display: flex;
+    align-items: center;
+    gap: 0.8rem; /* Increased */
+}
+
+.privacy-section p {
+    margin-bottom: 1.5rem; /* Increased */
+    font-size: 1.1rem; /* Added */
+}
+
+.privacy-section ul {
+    padding-left: 2rem; /* Increased */
+    margin-bottom: 2rem; /* Increased */
+}
+
+.privacy-section li {
+    margin-bottom: 1rem; /* Increased */
+    position: relative;
+    padding-left: 2rem; /* Increased */
+    font-size: 1.1rem; /* Added */
+}
+
+.privacy-section li::before {
+    content: "•";
+    color: #0ea5e9;
+    position: absolute;
+    left: 0.5rem; /* Adjusted */
+    font-size: 1.4rem; /* Increased */
+}
+
+.privacy-contact {
+    background-color: rgba(14, 165, 233, 0.1);
+    border-left: 4px solid #0ea5e9;
+    padding: 1.5rem; /* Increased */
+    border-radius: 0 0.6rem 0.6rem 0; /* Increased */
+    margin: 2.5rem 0; /* Increased */
+}
+
+/* دوگمەی سیاسەتی پاراستن */
+.privacy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem; /* Increased */
+    background: rgba(14, 165, 233, 0.15);
+    color: #0ea5e9;
+    padding: 1rem 2rem; /* Increased */
+    border-radius: 0.6rem; /* Increased */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem; /* Added */
+    transition: all 0.3s ease;
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    margin-top: 1.5rem; /* Increased */
+}
+
+.privacy-btn:hover {
+    background: rgba(14, 165, 233, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.2);
+}
+
+/* تۆڕی بەرنامەکان */
+.apps-grid {
+    display: grid;
+    gap: 2.5rem; /* Increased */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Increased */
+    padding: 3rem 2rem; /* Increased */
+    max-width: 1100px; /* Increased */
+    margin: auto;
+}
+
+.app-card {
+    background-color: #1e293b;
+    padding: 2rem; /* Increased */
+    border-radius: 0.9rem; /* Increased */
+    box-shadow: 0 0 15px rgba(0,0,0,0.3); /* Increased */
+}
+
+.app-title {
+    color: #38bdf8;
+    font-size: 1.8rem; /* Increased from 1.5rem */
+    margin-bottom: 1rem; /* Increased */
+}
+
+.app-description {
+    color: #e2e8f0;
+    font-size: 1.2rem; /* Increased from 1rem */
+    margin-bottom: 1.5rem; /* Increased */
+    line-height: 1.7; /* Added */
+}
+
+.app-icon span {
+    font-size: 3.5rem; /* Increased from 3rem */
+    color: #0ea5e9;
+    margin-bottom: 1rem; /* Increased */
+}
+
+.app-version {
+    display: inline-block;
+    margin-bottom: 1rem; /* Increased */
+    color: #94a3b8;
+    font-size: 1rem; /* Increased */
+}
+
+    
+    /* Features */
+    .features-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .feature-card {
+      background-color: #1e293b;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      width: 280px;
+      text-align: center;
+    }
+    
+    .feature-icon span {
+      font-size: 3rem;
+      color: #38bdf8;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-title {
+      color: #0ea5e9;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-description {
+      color: #e2e8f0;
+      font-size: 0.95rem;
+    }
+
+/* Login & Feedback Sections */
+.login-section, .feedback-section {
+  padding: 5rem 2rem;
+  background-color: #0f172a;
+}
+
+.section-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #1e293b;
+  padding: 3rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #94a3b8;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 0.4rem;
+  color: #e2e8f0;
+}
+
+.login-help {
+  margin-top: 1rem;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.login-help a {
+  color: #0ea5e9;
+  text-decoration: none;
+}
+
+/* Footer */
+footer {
+    background-color: #0f172a;
+    padding: 3rem 2rem; /* Increased */
+    color: #cbd5e1;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem; /* Increased */
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column h3 {
+    color: #38bdf8;
+    font-size: 1.5rem; /* Increased */
+    margin-bottom: 1.5rem; /* Increased */
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 1rem; /* Increased */
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #cbd5e1;
+    font-size: 1.1rem; /* Increased */
+    display: flex;
+    align-items: center;
+    gap: 0.8rem; /* Increased */
+}
+
+.footer-links a:hover {
+    color: #0ea5e9;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 3rem; /* Increased */
+    color: #64748b;
+    font-size: 1rem; /* Increased from 0.85rem */
+    padding-top: 2rem; /* Increased */
+    border-top: 1px solid rgba(100, 116, 139, 0.3);
+}
+
+/* ستایل بۆ دوگمەکانی زمان */
+.language-switcher {
+    display: flex;
+    gap: 12px; /* Increased */
+    margin-left: 25px; /* Increased */
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 8px 16px; /* Increased */
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.1rem; /* Increased from 14px */
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lang-btn.active {
+    background: #fff;
+    color: #333;
+    font-weight: bold;
+}
+
+/* پانێلی ریکلام بۆ موبایل */
+#pre-access-overlay {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* وەشاندن */
+@media (max-width: 768px) {
+    body {
+        font-size: 1rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .btn {
+        font-size: 1.1rem;
+        padding: 0.9rem 1.7rem;
+    }
+    
+    .privacy-container {
+        padding: 2rem;
+    }
+    
+    .privacy-title {
+        font-size: 2rem;
+    }
+    
+    nav {
+        margin-top: 1.5rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .footer-column {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .language-switcher {
+        margin: 1.5rem 0;
+        justify-content: center;
+    }
+}
+
+</style>
+
   
   
   <header>
@@ -38,6 +539,7 @@
         <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
+        <a href="#login"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
         
         <div class="language-switcher">
           <button class="lang-btn" data-lang="ku">Kurdish</button>
@@ -152,10 +654,51 @@
   </div>
 </section>
 
+<!-- Login Section -->
+<section id="login" class="login-section">
+  <div class="section-container">
+    <h2 class="section-title" data-translate="login_title">Login to Your Account</h2>
+    <p class="section-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
+    
+    <div class="login-form">
+      <div class="form-group">
+        <label for="email" data-translate="login_email">Email</label>
+        <input type="email" id="email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label for="password" data-translate="login_password">Password</label>
+        <input type="password" id="password" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary" data-translate="login_button">Login</button>
+      <p class="login-help" data-translate="login_help">Don't have an account? <a href="#register" data-translate="login_register">Register here</a></p>
+    </div>
+  </div>
+</section>
 
+<!-- Feedback Section -->
+<section id="feedback" class="feedback-section">
+  <div class="section-container">
+    <h2 class="section-title" data-translate="feedback_title">Feedback & Suggestions</h2>
+    <p class="section-subtitle" data-translate="feedback_subtitle">We value your opinion to improve our apps</p>
+    
+    <div class="feedback-form">
+      <div class="form-group">
+        <label for="feedback-type" data-translate="feedback_type">Feedback Type</label>
+        <select id="feedback-type">
+          <option value="suggestion" data-translate="feedback_suggestion">Suggestion</option>
+          <option value="bug" data-translate="feedback_bug">Bug Report</option>
+          <option value="compliment" data-translate="feedback_compliment">Compliment</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="feedback-message" data-translate="feedback_message">Your Message</label>
+        <textarea id="feedback-message" rows="5" placeholder="Your feedback here..."></textarea>
+      </div>
+      <button class="btn btn-primary" data-translate="feedback_button">Submit Feedback</button>
+    </div>
+  </div>
+</section>
 
-  
-  
     <!-- Ad point 1: Middle of page --> 
   <div class="ad-container">
     <span class="ad-label"></span>
@@ -490,6 +1033,86 @@
         "ku": "سیاسەتی پاراستنی زانیاری",
         "ar": "سياسة الخصوصية",
         "en": "Privacy Policy"
+      },
+      "nav_login": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Login"
+      },
+      "login_title": {
+        "ku": "چوونەژوورەوە بۆ هەژمارەکەت",
+        "ar": "تسجيل الدخول إلى حسابك",
+        "en": "Login to Your Account"
+      },
+      "login_subtitle": {
+        "ku": "دەستکاری بەرنامەکان و ڕێکخستنەکانت بکە",
+        "ar": "الوصول إلى تطبيقاتك وإعداداتك",
+        "en": "Access your apps and settings"
+      },
+      "login_email": {
+        "ku": "ئیمەیڵ",
+        "ar": "البريد الإلكتروني",
+        "en": "Email"
+      },
+      "login_password": {
+        "ku": "وشەی نهێنی",
+        "ar": "كلمة المرور",
+        "en": "Password"
+      },
+      "login_button": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Login"
+      },
+      "login_help": {
+        "ku": "هەژمارت نییە؟",
+        "ar": "ليس لديك حساب؟",
+        "en": "Don't have an account?"
+      },
+      "login_register": {
+        "ku": "خۆت تۆمار بکە",
+        "ar": "سجل هنا",
+        "en": "Register here"
+      },
+      "feedback_title": {
+        "ku": "پێشنیار و رەخنە",
+        "ar": "الاقتراحات والملاحظات",
+        "en": "Feedback & Suggestions"
+      },
+      "feedback_subtitle": {
+        "ku": "ئێمە بەهای رای تۆ دەدەین بۆ باشترکردنی بەرنامەکانمان",
+        "ar": "نقدر رأيك لتحسين تطبيقاتنا",
+        "en": "We value your opinion to improve our apps"
+      },
+      "feedback_type": {
+        "ku": "جۆری رەخنە",
+        "ar": "نوع الملاحظة",
+        "en": "Feedback Type"
+      },
+      "feedback_suggestion": {
+        "ku": "پێشنیار",
+        "ar": "اقتراح",
+        "en": "Suggestion"
+      },
+      "feedback_bug": {
+        "ku": "ڕاپۆرتی کێشە",
+        "ar": "تقرير عن خطأ",
+        "en": "Bug Report"
+      },
+      "feedback_compliment": {
+        "ku": "پێزانین",
+        "ar": "إطراء",
+        "en": "Compliment"
+      },
+      "feedback_message": {
+        "ku": "پەیامەکەت",
+        "ar": "رسالتك",
+        "en": "Your Message"
+      },
+      "feedback_button": {
+        "ku": "ناردنی رەخنە",
+        "ar": "إرسال الملاحظات",
+        "en": "Submit Feedback"
       }
     };
 
