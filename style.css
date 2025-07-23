@@ -311,6 +311,53 @@ nav a:hover {
       font-size: 0.95rem;
     }
 
+/* Login & Feedback Sections */
+.login-section, .feedback-section {
+  padding: 5rem 2rem;
+  background-color: #0f172a;
+}
+
+.section-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #1e293b;
+  padding: 3rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #94a3b8;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 0.4rem;
+  color: #e2e8f0;
+}
+
+.login-help {
+  margin-top: 1rem;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.login-help a {
+  color: #0ea5e9;
+  text-decoration: none;
+}
+
 /* Footer */
 footer {
     background-color: #0f172a;
