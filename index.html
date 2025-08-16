@@ -265,7 +265,7 @@
 <!-- Login Modal -->
 <div id="loginModalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
   <div class="modal-card">
-    <div id="creeperExplosion" class="creeper-explosion"></div>
+    
     <button class="modal-close" id="loginModalClose" aria-label="Close">
       <span class="material-icons">close</span>
     </button>
@@ -274,47 +274,13 @@
       <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
     </div>
     <div class="modal-body">
-      <div class="mc-characters" aria-hidden="true">
-        <!-- Creeper full body -->
-        <svg class="mc-creeper-3d" width="220" height="220" viewBox="0 0 160 200">
-          <!-- Torso -->
-          <g id="creeperTorso" transform="translate(52,60)">
-            <rect x="0" y="0" width="56" height="72" fill="#6aaa64"/>
-            <rect x="6" y="10" width="10" height="10" fill="#2e6b2e"/>
-            <rect x="40" y="22" width="8" height="8" fill="#2e6b2e"/>
-          </g>
-          <!-- Head -->
-          <g id="creeperHead" transform="translate(52,20)">
-            <rect x="0" y="0" width="56" height="56" fill="#6aaa64"/>
-            <rect x="6" y="6" width="12" height="12" fill="#2e6b2e"/>
-            <rect x="38" y="10" width="10" height="10" fill="#2e6b2e"/>
-            <!-- Eyes -->
-            <rect x="12" y="18" width="12" height="12" fill="#0b0f12"/>
-            <rect x="32" y="18" width="12" height="12" fill="#0b0f12"/>
-            <!-- Mouth -->
-            <rect x="22" y="32" width="12" height="16" fill="#0b0f12"/>
-            <rect x="16" y="38" width="6" height="10" fill="#0b0f12"/>
-            <rect x="34" y="38" width="6" height="10" fill="#0b0f12"/>
-          </g>
-          <!-- Legs -->
-          <g id="creeperLegFL" transform="translate(52,132)">
-            <rect x="0" y="0" width="24" height="44" fill="#6aaa64"/>
-          </g>
-          <g id="creeperLegFR" transform="translate(84,132)">
-            <rect x="0" y="0" width="24" height="44" fill="#6aaa64"/>
-          </g>
-          <g id="creeperLegBL" transform="translate(52,132)">
-            <rect x="0" y="0" width="24" height="44" fill="#6aaa64" opacity="0.6"/>
-          </g>
-          <g id="creeperLegBR" transform="translate(84,132)">
-            <rect x="0" y="0" width="24" height="44" fill="#6aaa64" opacity="0.6"/>
-          </g>
-        </svg>
+      <div class="login-visual" aria-hidden="true">
+        <canvas id="loginCanvas"></canvas>
       </div>
       <div class="tilt-wrap">
         <div class="auth-tabs" role="tablist">
-          <button id="tabSignIn" class="auth-tab active" type="button" role="tab">Sign in</button>
-          <button id="tabRegister" class="auth-tab" type="button" role="tab">Register now</button>
+          <button id="tabSignIn" class="auth-tab active" type="button" role="tab" data-translate="tab_signin">Sign in</button>
+          <button id="tabRegister" class="auth-tab" type="button" role="tab" data-translate="tab_register">Register now</button>
         </div>
         <form id="loginForm" novalidate style="display: block;" aria-hidden="false">
           <div id="authError" class="auth-error" role="alert" style="display:none;"></div>
@@ -330,7 +296,7 @@
           <div class="oauth-divider"><span data-translate="oauth_or">OR</span></div>
           <button type="button" id="googleSignIn" class="btn btn-outline google-btn">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" width="20" height="20" style="filter: brightness(0) invert(1);"/>
-            <span>Google</span>
+            <span data-translate="google">Google</span>
           </button>
           <div class="login-help">
             <span data-translate="login_help">Don't have an account?</span>
@@ -351,10 +317,10 @@
             <label for="regPassword2">Confirm Password</label>
             <input id="regPassword2" type="password" required autocomplete="new-password" minlength="6">
           </div>
-          <button type="submit" class="btn btn-primary" id="registerBtn">Create account</button>
+          <button type="submit" class="btn btn-primary" id="registerBtn" data-translate="register_button">Create account</button>
           <div class="login-help">
-            <span>Already have an account?</span>
-            <a href="#" id="linkToSignIn">Sign in</a>
+            <span data-translate="already_have">Already have an account?</span>
+            <a href="#" id="linkToSignIn" data-translate="signin_link">Sign in</a>
           </div>
         </form>
       </div>
@@ -647,6 +613,36 @@
         "ar": "سياسة الخصوصية",
         "en": "Privacy Policy"
       },
+      "tab_signin": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Sign in"
+      },
+      "tab_register": {
+        "ku": "تۆمارکردن",
+        "ar": "إنشاء حساب",
+        "en": "Register now"
+      },
+      "register_button": {
+        "ku": "درووستکردنی هەژمار",
+        "ar": "إنشاء حساب",
+        "en": "Create account"
+      },
+      "already_have": {
+        "ku": "پێشتر هەژمارت هەیە؟",
+        "ar": "هل لديك حساب؟",
+        "en": "Already have an account?"
+      },
+      "signin_link": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Sign in"
+      },
+      "google": {
+        "ku": "گووگڵ",
+        "ar": "جوجل",
+        "en": "Google"
+      }
       "nav_login": {
         "ku": "چوونەژوورەوە",
         "ar": "تسجيل الدخول",
@@ -813,73 +809,33 @@
       }
     });
 
-    // Characters animation: eyes follow cursor, arm waves on input focus
-    const pupilL = document.getElementById('stevePupilL');
-    const pupilR = document.getElementById('stevePupilR');
-    const steveArm = document.getElementById('steveArm');
-    function movePupils(evt) {
-      const steve = document.querySelector('.mc-steve');
-      if (!steve || !pupilL || !pupilR) return;
-      const rect = steve.getBoundingClientRect();
-      const x = Math.max(0, Math.min(1, (evt.clientX - rect.left) / rect.width));
-      const y = Math.max(0, Math.min(1, (evt.clientY - rect.top) / rect.height));
-      const dx = (x - 0.5) * 6; // move range ~6 px
-      const dy = (y - 0.5) * 3;
-      pupilL.setAttribute('x', String(31 + dx));
-      pupilL.setAttribute('y', String(43 + dy));
-      pupilR.setAttribute('x', String(61 + dx));
-      pupilR.setAttribute('y', String(43 + dy));
-    }
-    document.addEventListener('mousemove', (e) => {
-      if (overlay && overlay.style.display === 'flex') movePupils(e);
-    });
+    // Login canvas visual
+    (function(){
+      const c = document.getElementById('loginCanvas');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      function resize(){ c.width = c.clientWidth; c.height = c.clientHeight; }
+      resize();
+      window.addEventListener('resize', resize);
+      let t=0; const dots = Array.from({length: 80}, (_,i)=>({a: Math.random()*Math.PI*2, r: 20+Math.random()*120, s: 0.01+Math.random()*0.02}));
+      function draw(){
+        t+=0.01; ctx.clearRect(0,0,c.width,c.height);
+        const cx=c.width/2, cy=c.height/2;
+        for(const d of dots){
+          d.a += d.s; const x=cx + Math.cos(d.a)*d.r + Math.sin(d.a*3)*5; const y=cy + Math.sin(d.a)*d.r + Math.cos(d.a*2)*5;
+          const g=ctx.createRadialGradient(x,y,0,x,y,10); g.addColorStop(0,'rgba(56,189,248,0.9)'); g.addColorStop(1,'rgba(56,189,248,0)');
+          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2); ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
 
-    // 3D tilt + creeper head follow + leg bob
-    const chars = document.querySelector('.mc-characters');
-    const head = document.getElementById('creeperHead');
-    const torso = document.getElementById('creeperTorso');
-    const legFL = document.getElementById('creeperLegFL');
-    const legFR = document.getElementById('creeperLegFR');
-    const legBL = document.getElementById('creeperLegBL');
-    const legBR = document.getElementById('creeperLegBR');
+         // Remove old creeper interactions
+     (function(){})();
 
-    let wobbleT = 0;
-    function applyWalk() {
-      wobbleT += 0.08;
-      const a = Math.sin(wobbleT) * 6;
-      if (legFL) legFL.setAttribute('transform', `translate(52,132) rotate(${a})`);
-      if (legBR) legBR.setAttribute('transform', `translate(84,132) rotate(${a})`);
-      if (legFR) legFR.setAttribute('transform', `translate(84,132) rotate(${-a})`);
-      if (legBL) legBL.setAttribute('transform', `translate(52,132) rotate(${-a})`);
-      requestAnimationFrame(applyWalk);
-    }
-    requestAnimationFrame(applyWalk);
-
-    if (chars) {
-      const updateTilt = (clientX, clientY) => {
-        const rect = chars.getBoundingClientRect();
-        const rx = ((clientY - rect.top) / rect.height - 0.5) * -8;
-        const ry = ((clientX - rect.left) / rect.width - 0.5) * 8;
-        chars.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
-        if (head) head.setAttribute('transform', `translate(52,20) rotate(${ry * 0.8})`);
-      };
-      chars.addEventListener('mousemove', (e) => updateTilt(e.clientX, e.clientY));
-      chars.addEventListener('mouseleave', () => {
-        chars.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        if (head) head.setAttribute('transform', 'translate(52,20)');
-      });
-      // touch support
-      chars.addEventListener('touchmove', (e) => {
-        if (e.touches && e.touches[0]) updateTilt(e.touches[0].clientX, e.touches[0].clientY);
-      }, { passive: true });
-      chars.addEventListener('touchend', () => {
-        chars.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        if (head) head.setAttribute('transform', 'translate(52,20)');
-      });
-    }
-
-    // Toggle forms (Sign in / Register)
-    const tabSignIn = document.getElementById('tabSignIn');
+     // Toggle forms (Sign in / Register)
+const tabSignIn = document.getElementById('tabSignIn');
     const tabRegister = document.getElementById('tabRegister');
     const formSignIn = document.getElementById('loginForm');
     const formRegister = document.getElementById('registerForm');
@@ -911,7 +867,8 @@
       window.firebaseAppsReady();
     }
 
-    function triggerCreeperExplosion() {
+         /* removed creeper explosion */
+     function triggerCreeperExplosion() {
       const container = document.getElementById('creeperExplosion');
       if (!container) return;
       container.innerHTML = '';
@@ -960,8 +917,7 @@
           const { auth } = window.firebaseExports;
           try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
           await signInWithEmailAndPassword(auth, email, password);
-          triggerCreeperExplosion();
-          setTimeout(() => closeLoginModal(), 900);
+          closeLoginModal();
         } catch (err) {
           errorEl.textContent = err?.message || 'Login failed';
           errorEl.style.display = 'block';
@@ -985,8 +941,7 @@
             await signInWithRedirect(auth, provider);
             await getRedirectResult(auth);
           }
-          triggerCreeperExplosion();
-          setTimeout(() => closeLoginModal(), 900);
+          closeLoginModal();
         } catch (err) {
           errorEl.textContent = err?.message || 'Google sign-in failed';
           errorEl.style.display = 'block';
@@ -1010,8 +965,7 @@
           const { auth } = window.firebaseExports;
           const userCred = await createUserWithEmailAndPassword(auth, email, p1);
           try { await sendEmailVerification(userCred.user); } catch {_=>{}};
-          triggerCreeperExplosion();
-          setTimeout(() => closeLoginModal(), 1000);
+          closeLoginModal();
         } catch (err) {
           errorEl.textContent = err?.message || 'Registration failed';
           errorEl.style.display = 'block';
