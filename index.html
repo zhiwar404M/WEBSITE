@@ -771,6 +771,15 @@
     changeLanguage(userLang);
   });
   
+  // Global helpers to open/close login modal
+  function openLoginModal() {
+    const el = document.getElementById('login-modal');
+    if (el) { el.style.display = 'flex'; el.setAttribute('aria-hidden', 'false'); }
+  }
+  function closeLoginModal() {
+    const el = document.getElementById('login-modal');
+    if (el) { el.style.display = 'none'; el.setAttribute('aria-hidden', 'true'); }
+  }
  
 </script>
 <script type="module">
@@ -842,20 +851,14 @@
    });
  
        // Open login modal
-    navLoginLink?.addEventListener('click', (e) => {
+         navLoginLink?.addEventListener('click', (e) => {
       e.preventDefault();
-      if (loginModal) {
-        loginModal.style.display = 'flex';
-        loginModal.setAttribute('aria-hidden', 'false');
-      }
+      openLoginModal();
     });
 
     // Close login modal
     loginModalClose?.addEventListener('click', () => {
-      if (loginModal) {
-        loginModal.style.display = 'none';
-        loginModal.setAttribute('aria-hidden', 'true');
-      }
+      closeLoginModal();
     });
 
     googleButton?.addEventListener('click', async (e) => {
