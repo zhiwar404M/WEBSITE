@@ -709,6 +709,10 @@
       <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
 
       <div class="auth-actions">
+        <div class="character-switch">
+          <button class="char-btn active" data-char="creeper">Creeper</button>
+          <button class="char-btn" data-char="steve">Steve</button>
+        </div>
         <button id="googleSignInBtn" class="btn btn-google" type="button">
           <span class="material-icons">g_translate</span>
           <span data-translate="login_google">Continue with Google</span>
@@ -908,6 +912,38 @@
 
     // 3D modal init (Creeper/Steve minimal)
     let modal3DState = null;
+    function buildCharacter(scene, which) {
+      function makeCreeperTex(head) {
+        const c = document.createElement('canvas'); c.width=128; c.height=128; const ctx=c.getContext('2d'); const cell=16;
+        for (let y=0;y<8;y++){ for(let x=0;x<8;x++){ const base=100+Math.floor(Math.random()*60); const g=base+Math.floor(Math.random()*40); ctx.fillStyle='rgb('+(base-20)+','+g+','+(base-30)+')'; ctx.fillRect(x*cell,y*cell,cell,cell);} }
+        if (head) { ctx.fillStyle = '#0a0a0a'; ctx.fillRect(2*cell,2*cell,2*cell,2*cell); ctx.fillRect(4*cell,2*cell,2*cell,2*cell); ctx.fillRect(2*cell,4*cell,4*cell,3*cell); ctx.clearRect(3*cell,5*cell,2*cell,1*cell); }
+        const tex = new THREE.CanvasTexture(c); tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; return tex;
+      }
+      function solid(color){ return new THREE.MeshStandardMaterial({ color }); }
+      function box(w,h,d,mat){ return new THREE.Mesh(new THREE.BoxGeometry(w,h,d), Array.isArray(mat)?mat:mat ); }
+      const group = new THREE.Group();
+      if (which === 'steve') {
+        const skin = solid(0x9bd6ff); // shirt
+        const pants = solid(0x2b4a6f);
+        const head = new THREE.Mesh(new THREE.BoxGeometry(0.9,0.9,0.9), solid(0xf1c27d)); head.position.set(0,0.65,0);
+        const body = new THREE.Mesh(new THREE.BoxGeometry(0.9,1.2,0.5), skin); body.position.set(0,-0.05,0);
+        const armL = new THREE.Mesh(new THREE.BoxGeometry(0.35,1.1,0.35), skin); armL.position.set(-0.65,0.05,0);
+        const armR = new THREE.Mesh(new THREE.BoxGeometry(0.35,1.1,0.35), skin); armR.position.set(0.65,0.05,0);
+        const legL = new THREE.Mesh(new THREE.BoxGeometry(0.35,1.1,0.35), pants); legL.position.set(-0.25,-0.85,0);
+        const legR = new THREE.Mesh(new THREE.BoxGeometry(0.35,1.1,0.35), pants); legR.position.set(0.25,-0.85,0);
+        group.add(head, body, armL, armR, legL, legR);
+        group.userData.headRef = head;
+      } else {
+        const head = new THREE.Mesh(new THREE.BoxGeometry(0.9,0.9,0.9), new THREE.MeshStandardMaterial({ map: makeCreeperTex(true) })); head.position.set(0,0.65,0);
+        const body = new THREE.Mesh(new THREE.BoxGeometry(0.8,1.1,0.5), new THREE.MeshStandardMaterial({ map: makeCreeperTex(false) })); body.position.set(0,-0.1,0);
+        const legL = new THREE.Mesh(new THREE.BoxGeometry(0.35,0.6,0.35), new THREE.MeshStandardMaterial({ map: makeCreeperTex(false) })); legL.position.set(-0.25,-0.6,0);
+        const legR = new THREE.Mesh(new THREE.BoxGeometry(0.35,0.6,0.35), new THREE.MeshStandardMaterial({ map: makeCreeperTex(false) })); legR.position.set(0.25,-0.6,0);
+        group.add(head, body, legL, legR);
+        group.userData.headRef = head;
+      }
+      scene.add(group);
+      return group;
+    }
     function initModal3D() {
       if (!modal3d || !window.THREE) return;
       if (modal3DState) return;
@@ -925,20 +961,7 @@
       dir.position.set(3, 5, 6);
       scene.add(hemi, dir);
 
-      function makeCreeperTex(head) {
-        const c = document.createElement('canvas'); c.width=128; c.height=128; const ctx = c.getContext('2d'); const cell=16;
-        for (let y=0;y<8;y++){ for(let x=0;x<8;x++){ const base=100+Math.floor(Math.random()*60); const g=base+Math.floor(Math.random()*40); ctx.fillStyle='rgb('+(base-20)+','+g+','+(base-30)+')'; ctx.fillRect(x*cell,y*cell,cell,cell);} }
-        if (head) { ctx.fillStyle = '#0a0a0a'; ctx.fillRect(2*cell,2*cell,2*cell,2*cell); ctx.fillRect(4*cell,2*cell,2*cell,2*cell); ctx.fillRect(2*cell,4*cell,4*cell,3*cell); ctx.clearRect(3*cell,5*cell,2*cell,1*cell); }
-        const tex = new THREE.CanvasTexture(c); tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; return tex;
-      }
-      function box(w,h,d,tex){ return new THREE.Mesh(new THREE.BoxGeometry(w,h,d), new THREE.MeshStandardMaterial({ map: tex })); }
-
-      const group = new THREE.Group();
-      const head = box(0.9,0.9,0.9, makeCreeperTex(true)); head.position.set(0,0.65,0);
-      const body = box(0.8,1.1,0.5, makeCreeperTex(false)); body.position.set(0,-0.1,0);
-      const legL = box(0.35,0.6,0.35, makeCreeperTex(false)); legL.position.set(-0.25,-0.6,0);
-      const legR = box(0.35,0.6,0.35, makeCreeperTex(false)); legR.position.set(0.25,-0.6,0);
-      group.add(head, body, legL, legR); scene.add(group);
+      const group = buildCharacter(scene, (modal3DState && modal3DState.char) || 'creeper');
 
       let t=0, targetRY=0, targetRX=0;
       function onResize(){
@@ -955,12 +978,30 @@
         if (!modal3DState) return; // disposed
         t+=0.016; const bob=Math.sin(t*3)*0.03; group.position.y=bob;
         group.rotation.y += (targetRY - group.rotation.y) * 0.12;
-        head.rotation.x += (targetRX - head.rotation.x) * 0.12;
+        (group.userData.headRef || group).rotation.x += (targetRX - (group.userData.headRef || group).rotation.x) * 0.12;
         renderer.render(scene,camera);
         requestAnimationFrame(anim);
       }
       onResize();
-      modal3DState = { renderer, scene, camera, container, dom: renderer.domElement };
+      modal3DState = { renderer, scene, camera, container, dom: renderer.domElement, char: (modal3DState && modal3DState.char) || 'creeper' };
+
+      // Character switch handlers
+      document.querySelectorAll('.char-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          const which = btn.dataset.char || 'creeper';
+          modal3DState.char = which;
+          document.querySelectorAll('.char-btn').forEach(function(b){ b.classList.toggle('active', b===btn); });
+          // Rebuild character: clear old meshes except lights
+          const toRemove = [];
+          modal3DState.scene.traverse(function(obj){ if(obj.isMesh){ toRemove.push(obj); } });
+          toRemove.forEach(function(m){ m.parent && m.parent.remove(m); if (m.geometry) m.geometry.dispose && m.geometry.dispose(); if (m.material) { if (Array.isArray(m.material)) { m.material.forEach(function(mm){ mm.dispose && mm.dispose(); }); } else { m.material.dispose && m.material.dispose(); } } });
+          // Build new one
+          const newGroup = buildCharacter(modal3DState.scene, which);
+          // Keep slight pose from previous
+          newGroup.rotation.y = group.rotation.y;
+        });
+      });
+
       anim();
     }
     function disposeModal3D(){
