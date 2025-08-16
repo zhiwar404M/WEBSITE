@@ -493,3 +493,200 @@ footer {
         justify-content: center;
     }
 }
+
+/* 3D hero background */
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-3d {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Login modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(2, 6, 23, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal {
+    width: 100%;
+    max-width: 480px;
+    background: #1e293b;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 0.9rem;
+    box-shadow: 0 20px 60px rgba(2, 6, 23, 0.6), 0 0 0 1px rgba(2, 132, 199, 0.15) inset;
+    padding: 2rem;
+    transform: translateY(10px) scale(0.98);
+    opacity: 0;
+    transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.modal-overlay.open .modal {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.modal-title {
+    font-size: 1.6rem;
+    color: #38bdf8;
+    margin-bottom: 0.5rem;
+}
+
+.modal-subtitle {
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: transparent;
+    border: none;
+    color: #cbd5e1;
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.modal-form .form-group + .form-group {
+    margin-top: 1rem;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Make modal compact on mobile */
+@media (max-width: 480px) {
+    .modal {
+        padding: 1.4rem;
+    }
+}
+
+/* Auth UI extras */
+.auth-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.btn-google {
+    background: #ffffff;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-google:hover {
+    background: #f8fafc;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    height: 1px;
+    background: rgba(148, 163, 184, 0.4);
+    flex: 1;
+}
+
+.form-error {
+    margin: 0.5rem 0 0.75rem;
+    color: #fecaca;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.4rem;
+}
+
+.form-success {
+    margin: 0.5rem 0 0.75rem;
+    color: #bbf7d0;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.4rem;
+}
+
+/* 3D inside modal */
+.modal {
+    position: relative;
+    overflow: hidden;
+}
+.modal-3d {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 140px;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.9;
+}
+.modal-title,
+.modal-subtitle,
+.modal-form,
+.auth-actions {
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 480px) {
+    .modal-3d { height: 120px; }
+}
+
+.character-switch {
+    display: flex;
+    gap: 0.5rem;
+}
+.char-btn {
+    background: rgba(255,255,255,0.12);
+    color: #e2e8f0;
+    border: 1px solid rgba(148,163,184,0.35);
+    border-radius: 9999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.char-btn.active {
+    background: #38bdf8;
+    color: #0b1220;
+    border-color: #38bdf8;
+}
+.char-btn:hover { filter: brightness(1.1); }
