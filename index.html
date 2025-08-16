@@ -582,6 +582,41 @@
   "ar": "سجل هنا",
   "en": "Register here"
 },
+"login_have_account": {
+  "ku": "هەژمارت هەیە؟",
+  "ar": "لديك حساب؟",
+  "en": "Have an account?"
+},
+"login_here": {
+  "ku": "چوونەژوورەوە لێرە",
+  "ar": "سجّل الدخول هنا",
+  "en": "Login here"
+},
+"register_title": {
+  "ku": "هەژمارێک دروست بکە",
+  "ar": "إنشاء حساب",
+  "en": "Create Account"
+},
+"register_button": {
+  "ku": "تۆماربوون",
+  "ar": "تسجيل",
+  "en": "Register"
+},
+"login_name": {
+  "ku": "ناو",
+  "ar": "الاسم",
+  "en": "Name"
+},
+"login_google": {
+  "ku": "بە گووگڵ داخڵ ببە",
+  "ar": "تابع باستخدام Google",
+  "en": "Continue with Google"
+},
+"nav_logout": {
+  "ku": "چوونەدەرەوە",
+  "ar": "تسجيل الخروج",
+  "en": "Logout"
+},
 "feedback_title": {
   "ku": "پێشنیار و رەخنە",
   "ar": "الاقتراحات والملاحظات",
@@ -671,7 +706,20 @@
       </button>
       <h3 id="loginTitle" class="modal-title" data-translate="login_title">Login to Your Account</h3>
       <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
+
+      <div class="auth-actions">
+        <button id="googleSignInBtn" class="btn btn-google" type="button">
+          <span class="material-icons">g_translate</span>
+          <span data-translate="login_google">Continue with Google</span>
+        </button>
+        <div class="auth-divider"><span>or</span></div>
+      </div>
+
       <form class="modal-form" onsubmit="event.preventDefault();">
+        <div id="nameGroup" class="form-group" style="display:none;">
+          <label for="login-name" data-translate="login_name">Name</label>
+          <input id="login-name" type="text" placeholder="Your name">
+        </div>
         <div class="form-group">
           <label for="login-email" data-translate="login_email">Email</label>
           <input id="login-email" type="email" placeholder="name@example.com" required>
@@ -680,11 +728,20 @@
           <label for="login-password" data-translate="login_password">Password</label>
           <input id="login-password" type="password" placeholder="••••••••" required>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%" data-translate="login_button">Login</button>
-        <p class="login-help"><span data-translate="login_help">Don't have an account?</span> <a href="#register" data-translate="login_register">Register here</a></p>
+        <div id="authError" class="form-error" style="display:none;"></div>
+        <div id="authSuccess" class="form-success" style="display:none;"></div>
+        <button id="authSubmit" type="submit" class="btn btn-primary" style="width:100%" data-translate="login_button">Login</button>
+        <p class="login-help">
+          <span id="authToggleText" data-translate="login_help">Don't have an account?</span>
+          <a href="#" id="authToggleLink" data-translate="login_register">Register here</a>
+        </p>
       </form>
     </div>
   </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 
   <!-- Three.js for 3D hero -->
   <script defer src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
@@ -693,58 +750,248 @@
     // Login modal handlers
     const modal = document.getElementById('loginModal');
     const closeBtn = modal ? modal.querySelector('.modal-close') : null;
+    const loginLinkEls = document.querySelectorAll('a[href="#login"]');
+    const formEl = modal ? modal.querySelector('.modal-form') : null;
+    const submitBtn = modal ? modal.querySelector('#authSubmit') : null;
+    const nameGroup = modal ? modal.querySelector('#nameGroup') : null;
+    const emailEl = modal ? modal.querySelector('#login-email') : null;
+    const passEl = modal ? modal.querySelector('#login-password') : null;
+    const nameEl = modal ? modal.querySelector('#login-name') : null;
+    const errEl = modal ? modal.querySelector('#authError') : null;
+    const okEl = modal ? modal.querySelector('#authSuccess') : null;
+    const toggleText = modal ? modal.querySelector('#authToggleText') : null;
+    const toggleLink = modal ? modal.querySelector('#authToggleLink') : null;
+    const googleBtn = document.getElementById('googleSignInBtn');
+    const navLoginTextEls = document.querySelectorAll('a[href="#login"] span[data-translate]');
+
+    let isUserLoggedIn = false;
+    let authMode = 'login'; // 'login' | 'register'
+
     function openLogin() {
       if (!modal) return;
       modal.classList.add('open');
       document.body.classList.add('modal-open');
+      hideMessages();
     }
     function closeLogin() {
       if (!modal) return;
       modal.classList.remove('open');
       document.body.classList.remove('modal-open');
     }
-    document.querySelectorAll('a[href="#login"]').forEach(function(a) {
-      a.addEventListener('click', function(e) { e.preventDefault(); openLogin(); });
+    function hideMessages() {
+      if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+      if (okEl) { okEl.style.display = 'none'; okEl.textContent = ''; }
+    }
+
+    function setMode(mode) {
+      authMode = mode;
+      if (!modal) return;
+      const lang = document.documentElement.lang || 'en';
+      const titleEl = modal.querySelector('#loginTitle');
+      const btnEl = submitBtn;
+      if (mode === 'register') {
+        if (nameGroup) nameGroup.style.display = '';
+        if (titleEl) { titleEl.setAttribute('data-translate', 'register_title'); }
+        if (btnEl) { btnEl.setAttribute('data-translate', 'register_button'); btnEl.textContent = 'Register'; }
+        if (toggleText) toggleText.setAttribute('data-translate', 'login_have_account');
+        if (toggleLink) toggleLink.setAttribute('data-translate', 'login_here');
+      } else {
+        if (nameGroup) nameGroup.style.display = 'none';
+        if (titleEl) { titleEl.setAttribute('data-translate', 'login_title'); }
+        if (btnEl) { btnEl.setAttribute('data-translate', 'login_button'); btnEl.textContent = 'Login'; }
+        if (toggleText) toggleText.setAttribute('data-translate', 'login_help');
+        if (toggleLink) toggleLink.setAttribute('data-translate', 'login_register');
+      }
+      if (typeof translatePage === 'function') {
+        translatePage(lang);
+      }
+      hideMessages();
+    }
+
+    loginLinkEls.forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (isUserLoggedIn) {
+          // Logout instead of open
+          if (window.firebase && firebase.auth) {
+            firebase.auth().signOut();
+          }
+        } else {
+          openLogin();
+        }
+      });
     });
     closeBtn && closeBtn.addEventListener('click', closeLogin);
     modal && modal.addEventListener('click', function(e) { if (e.target === modal) closeLogin(); });
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLogin(); });
+    toggleLink && toggleLink.addEventListener('click', function(e) { e.preventDefault(); setMode(authMode === 'login' ? 'register' : 'login'); });
 
-    // 3D hero init (uses THREE if available)
+    // Firebase init
+    const firebaseConfig = (window.FIREBASE_CONFIG) || {
+      apiKey: "",
+      authDomain: "",
+      projectId: "",
+      appId: ""
+    };
+    function hasValidConfig(cfg) {
+      return cfg && cfg.apiKey && cfg.authDomain && cfg.projectId && cfg.appId;
+    }
+    let firebaseReady = false;
+    if (window.firebase && !firebase.apps.length && hasValidConfig(firebaseConfig)) {
+      try { firebase.initializeApp(firebaseConfig); firebaseReady = true; } catch (e) { console.warn('Firebase init failed', e); }
+    } else if (window.firebase && firebase.apps.length) {
+      firebaseReady = true;
+    }
+
+    function showError(msg) { if (!errEl) return; errEl.textContent = msg; errEl.style.display = ''; okEl && (okEl.style.display = 'none'); }
+    function showOk(msg) { if (!okEl) return; okEl.textContent = msg; okEl.style.display = ''; errEl && (errEl.style.display = 'none'); }
+
+    // Auth submit
+    formEl && formEl.addEventListener('submit', async function() {
+      hideMessages();
+      if (!firebaseReady) { showError('Firebase is not configured.'); return; }
+      const email = (emailEl && emailEl.value || '').trim();
+      const pass = (passEl && passEl.value || '').trim();
+      const nameVal = (nameEl && nameEl.value || '').trim();
+      if (!email || !pass) { showError('Please enter email and password.'); return; }
+      try {
+        if (authMode === 'register') {
+          const res = await firebase.auth().createUserWithEmailAndPassword(email, pass);
+          if (res.user && nameVal) { await res.user.updateProfile({ displayName: nameVal }); }
+          showOk('Account created. You are logged in.');
+          closeLogin();
+        } else {
+          await firebase.auth().signInWithEmailAndPassword(email, pass);
+          showOk('Logged in successfully.');
+          closeLogin();
+        }
+      } catch (err) {
+        showError(err && err.message ? err.message : 'Authentication failed.');
+      }
+    });
+
+    // Google sign-in
+    googleBtn && googleBtn.addEventListener('click', async function() {
+      hideMessages();
+      if (!firebaseReady) { showError('Firebase is not configured.'); return; }
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+        showOk('Logged in with Google.');
+        closeLogin();
+      } catch (err) {
+        showError(err && err.message ? err.message : 'Google sign-in failed.');
+      }
+    });
+
+    // Reflect login state in nav
+    if (window.firebase && firebase.auth) {
+      firebase.auth().onAuthStateChanged(function(user) {
+        isUserLoggedIn = !!user;
+        navLoginTextEls.forEach(function(span) {
+          if (isUserLoggedIn) {
+            span.setAttribute('data-translate', 'nav_logout');
+            span.textContent = 'Logout';
+          } else {
+            span.setAttribute('data-translate', 'nav_login');
+            span.textContent = 'Login';
+          }
+        });
+        const lang = document.documentElement.lang || 'en';
+        if (typeof translatePage === 'function') translatePage(lang);
+      });
+    }
+
+    // 3D hero init (Creeper) with fallback
     function initHero3D() {
       var container = document.getElementById('hero-3d');
+      var heroEl = document.querySelector('.hero');
       if (!container || !window.THREE) return;
       var scene = new THREE.Scene();
       var camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
-      camera.position.set(0, 0, 3.8);
+      camera.position.set(0, 1.1, 6);
       var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
       renderer.setSize(container.clientWidth, container.clientHeight);
       container.appendChild(renderer.domElement);
-      var ambient = new THREE.AmbientLight(0xffffff, 0.6);
-      var dir = new THREE.DirectionalLight(0x64d2ff, 1.2);
-      dir.position.set(2, 2, 3);
-      scene.add(ambient, dir);
-      var geometry = new THREE.IcosahedronGeometry(1.2, 1);
-      var material = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.35, roughness: 0.2 });
-      var mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
-      var mouseX = 0, mouseY = 0;
+
+      var hemi = new THREE.HemisphereLight(0xd6ffe6, 0x082b33, 0.8);
+      var dir = new THREE.DirectionalLight(0xffffff, 1.0);
+      dir.position.set(4, 6, 8);
+      scene.add(hemi, dir);
+
+      function makeCreeperTexture(isHead) {
+        var c = document.createElement('canvas'); c.width = 128; c.height = 128; var ctx = c.getContext('2d');
+        var cell = 16; // 8x8 grid
+        for (var y=0; y<8; y++) {
+          for (var x=0; x<8; x++) {
+            var base = 100 + Math.floor(Math.random()*60);
+            var g = base + Math.floor(Math.random()*40);
+            ctx.fillStyle = 'rgb(' + (base-20) + ',' + g + ',' + (base-30) + ')';
+            ctx.fillRect(x*cell, y*cell, cell, cell);
+          }
+        }
+        if (isHead) {
+          ctx.fillStyle = '#0a0a0a';
+          // eyes (2x2 squares)
+          ctx.fillRect(2*cell, 2*cell, 2*cell, 2*cell);
+          ctx.fillRect(4*cell, 2*cell, 2*cell, 2*cell);
+          // mouth
+          ctx.fillRect(2*cell, 4*cell, 4*cell, 3*cell);
+          ctx.clearRect(3*cell, 5*cell, 2*cell, 1*cell); // split
+        }
+        var tex = new THREE.CanvasTexture(c); tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; return tex;
+      }
+
+      function makeBox(w, h, d, tex) {
+        var geo = new THREE.BoxGeometry(w, h, d);
+        var mat = new THREE.MeshStandardMaterial({ map: tex });
+        return new THREE.Mesh(geo, mat);
+      }
+
+      var group = new THREE.Group();
+      var head = makeBox(1.6, 1.6, 1.6, makeCreeperTexture(true)); head.position.set(0, 2.6, 0);
+      var body = makeBox(1.4, 2.0, 0.8, makeCreeperTexture(false)); body.position.set(0, 1.2, 0);
+      function leg(x) { var m = makeBox(0.6, 1.0, 0.6, makeCreeperTexture(false)); m.position.set(x, 0.3, 0); return m; }
+      var legL = leg(-0.45), legR = leg(0.45);
+      group.add(head, body, legL, legR);
+      scene.add(group);
+
+      var targetRX = 0, targetRY = 0, mouseX = 0, mouseY = 0, t = 0;
       function onResize() {
         var w = container.clientWidth; var h = container.clientHeight;
         renderer.setSize(w, h);
         camera.aspect = w / h; camera.updateProjectionMatrix();
       }
       window.addEventListener('resize', onResize);
-      container.addEventListener('mousemove', function(e) {
-        var rect = container.getBoundingClientRect();
-        mouseX = (e.clientX - rect.left) / rect.width - 0.5;
-        mouseY = (e.clientY - rect.top) / rect.height - 0.5;
-      });
+      function onPointer(xNorm, yNorm) { // -0.5..0.5
+        mouseX = xNorm; mouseY = yNorm;
+        targetRY = mouseX * 0.8; // left-right
+        targetRX = -mouseY * 0.5; // up-down
+      }
+      if (heroEl) {
+        heroEl.addEventListener('mousemove', function(e){ var r=heroEl.getBoundingClientRect(); onPointer((e.clientX-r.left)/r.width-0.5,(e.clientY-r.top)/r.height-0.5); });
+        heroEl.addEventListener('touchmove', function(e){ if(!e.touches||!e.touches[0])return; var t=e.touches[0]; var r=heroEl.getBoundingClientRect(); onPointer((t.clientX-r.left)/r.width-0.5,(t.clientY-r.top)/r.height-0.5); }, {passive:true});
+      }
+
+      var fallbackMesh = null;
+      try {
+        // ok
+      } catch(err) {
+        var geometry = new THREE.IcosahedronGeometry(1.2, 1);
+        var material = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.35, roughness: 0.2 });
+        fallbackMesh = new THREE.Mesh(geometry, material);
+        scene.add(fallbackMesh);
+      }
+
       function animate() {
         requestAnimationFrame(animate);
-        mesh.rotation.x += 0.003 + (mouseY * 0.02);
-        mesh.rotation.y += 0.004 + (mouseX * 0.02);
+        t += 0.016;
+        var bob = Math.sin(t*2) * 0.05;
+        group.position.y = bob;
+        group.rotation.y += (targetRY - group.rotation.y) * 0.08;
+        head.rotation.x += (targetRX - head.rotation.x) * 0.1;
+        if (fallbackMesh) { fallbackMesh.rotation.x += 0.003; fallbackMesh.rotation.y += 0.004; }
         renderer.render(scene, camera);
       }
       onResize();
@@ -754,9 +1001,9 @@
     if (document.readyState === 'complete') {
       initHero3D();
     } else {
-      // Ensure after defer script ran
       setTimeout(initHero3D, 0);
     }
+    setMode('login');
   });
   </script>
 </body>
