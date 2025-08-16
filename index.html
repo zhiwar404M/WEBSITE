@@ -9,7 +9,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
-  
+  </head>
+  <body>
+
   <!-- پێویستە ئەم div-انە بوونیان هەبێت -->
 <div id="pre-access-overlay" style="display: none;">
   <!-- ناوەڕۆکی ڕیکلام -->
@@ -51,6 +53,7 @@
   </header>
 
   <section class="hero">
+    <div class="hero-3d" id="hero-3d"></div>
     <div class="hero-content">
       <h1 data-translate="hero_title">ZHIWAR Apps</h1>
       <p data-translate="hero_subtitle">Apps fully programmed in Kurdish language for Android and iOS</p>
@@ -302,6 +305,11 @@
         "ar": "اتصل بنا",
         "en": "Contact"
       },
+      "nav_login": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Login"
+      },
       "hero_title": {
         "ku": "بەرنامەکانی ZHIWAR",
         "ar": "تطبيقات ZHIWAR",
@@ -537,6 +545,7 @@
         "ar": "سياسة الخصوصية",
         "en": "Privacy Policy"
       },
+      
 // Add these translations to your translations object
 "login_title": {
   "ku": "چوونەژوورەوە بۆ هەژمارەکەت",
@@ -653,5 +662,102 @@
   
  
 </script>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <button class="modal-close" aria-label="Close">
+        <span class="material-icons">close</span>
+      </button>
+      <h3 id="loginTitle" class="modal-title" data-translate="login_title">Login to Your Account</h3>
+      <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
+      <form class="modal-form" onsubmit="event.preventDefault();">
+        <div class="form-group">
+          <label for="login-email" data-translate="login_email">Email</label>
+          <input id="login-email" type="email" placeholder="name@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password" data-translate="login_password">Password</label>
+          <input id="login-password" type="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%" data-translate="login_button">Login</button>
+        <p class="login-help"><span data-translate="login_help">Don't have an account?</span> <a href="#register" data-translate="login_register">Register here</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Three.js for 3D hero -->
+  <script defer src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Login modal handlers
+    const modal = document.getElementById('loginModal');
+    const closeBtn = modal ? modal.querySelector('.modal-close') : null;
+    function openLogin() {
+      if (!modal) return;
+      modal.classList.add('open');
+      document.body.classList.add('modal-open');
+    }
+    function closeLogin() {
+      if (!modal) return;
+      modal.classList.remove('open');
+      document.body.classList.remove('modal-open');
+    }
+    document.querySelectorAll('a[href="#login"]').forEach(function(a) {
+      a.addEventListener('click', function(e) { e.preventDefault(); openLogin(); });
+    });
+    closeBtn && closeBtn.addEventListener('click', closeLogin);
+    modal && modal.addEventListener('click', function(e) { if (e.target === modal) closeLogin(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLogin(); });
+
+    // 3D hero init (uses THREE if available)
+    function initHero3D() {
+      var container = document.getElementById('hero-3d');
+      if (!container || !window.THREE) return;
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
+      camera.position.set(0, 0, 3.8);
+      var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      container.appendChild(renderer.domElement);
+      var ambient = new THREE.AmbientLight(0xffffff, 0.6);
+      var dir = new THREE.DirectionalLight(0x64d2ff, 1.2);
+      dir.position.set(2, 2, 3);
+      scene.add(ambient, dir);
+      var geometry = new THREE.IcosahedronGeometry(1.2, 1);
+      var material = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.35, roughness: 0.2 });
+      var mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+      var mouseX = 0, mouseY = 0;
+      function onResize() {
+        var w = container.clientWidth; var h = container.clientHeight;
+        renderer.setSize(w, h);
+        camera.aspect = w / h; camera.updateProjectionMatrix();
+      }
+      window.addEventListener('resize', onResize);
+      container.addEventListener('mousemove', function(e) {
+        var rect = container.getBoundingClientRect();
+        mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+        mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+      });
+      function animate() {
+        requestAnimationFrame(animate);
+        mesh.rotation.x += 0.003 + (mouseY * 0.02);
+        mesh.rotation.y += 0.004 + (mouseX * 0.02);
+        renderer.render(scene, camera);
+      }
+      onResize();
+      animate();
+    }
+
+    if (document.readyState === 'complete') {
+      initHero3D();
+    } else {
+      // Ensure after defer script ran
+      setTimeout(initHero3D, 0);
+    }
+  });
+  </script>
 </body>
 </html>
