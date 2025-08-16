@@ -515,6 +515,17 @@ nav a:hover {
   padding: 1.5rem;
 }
 
+/* Minecraft characters row */
+.mc-characters {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.mc-steve, .mc-creeper { filter: drop-shadow(0 6px 24px rgba(56,189,248,0.2)); }
+.steve-arm { transform-origin: -1px 0; }
+
 .modal-close {
   position: absolute;
   top: 10px;

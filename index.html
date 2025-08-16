@@ -279,6 +279,42 @@
       <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
     </div>
     <div class="modal-body">
+      <div class="mc-characters" aria-hidden="true">
+        <!-- Steve -->
+        <svg class="mc-steve" width="160" height="160" viewBox="0 0 96 96">
+          <rect x="0" y="0" width="96" height="96" fill="#8f6b4a"/>
+          <rect x="8" y="8" width="80" height="80" fill="#c58c85"/>
+          <!-- hair top -->
+          <rect x="8" y="8" width="80" height="20" fill="#5d3b24"/>
+          <!-- eyes whites -->
+          <rect x="26" y="40" width="14" height="10" fill="#ffffff"/>
+          <rect x="56" y="40" width="14" height="10" fill="#ffffff"/>
+          <!-- pupils -->
+          <rect id="stevePupilL" x="31" y="43" width="5" height="5" fill="#1f2937" rx="1"/>
+          <rect id="stevePupilR" x="61" y="43" width="5" height="5" fill="#1f2937" rx="1"/>
+          <!-- beard -->
+          <rect x="28" y="62" width="40" height="12" fill="#6b4a2f"/>
+          <!-- arm -->
+          <g id="steveArm" class="steve-arm" transform="translate(78,52)">
+            <rect x="-8" y="0" width="14" height="28" fill="#c58c85"/>
+          </g>
+        </svg>
+        <!-- Creeper -->
+        <svg class="mc-creeper" width="160" height="160" viewBox="0 0 96 96">
+          <rect x="0" y="0" width="96" height="96" fill="#3a7f3a"/>
+          <rect x="6" y="6" width="84" height="84" fill="#6aaa64"/>
+          <!-- noise blocks -->
+          <rect x="12" y="18" width="10" height="10" fill="#2e6b2e"/>
+          <rect x="70" y="22" width="12" height="12" fill="#2e6b2e"/>
+          <!-- eyes -->
+          <rect x="26" y="32" width="14" height="14" fill="#0b0f12"/>
+          <rect x="56" y="32" width="14" height="14" fill="#0b0f12"/>
+          <!-- mouth -->
+          <rect x="38" y="50" width="20" height="18" fill="#0b0f12"/>
+          <rect x="32" y="58" width="8" height="10" fill="#0b0f12"/>
+          <rect x="58" y="58" width="8" height="10" fill="#0b0f12"/>
+        </svg>
+      </div>
       <div class="tilt-wrap">
         <form id="loginForm" novalidate>
           <div id="authError" class="auth-error" role="alert" style="display:none;"></div>
@@ -756,6 +792,53 @@
         closeLoginModal();
       }
     });
+
+    // Characters animation: eyes follow cursor, arm waves on input focus
+    const pupilL = document.getElementById('stevePupilL');
+    const pupilR = document.getElementById('stevePupilR');
+    const steveArm = document.getElementById('steveArm');
+    function movePupils(evt) {
+      const steve = document.querySelector('.mc-steve');
+      if (!steve || !pupilL || !pupilR) return;
+      const rect = steve.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (evt.clientX - rect.left) / rect.width));
+      const y = Math.max(0, Math.min(1, (evt.clientY - rect.top) / rect.height));
+      const dx = (x - 0.5) * 6; // move range ~6 px
+      const dy = (y - 0.5) * 3;
+      pupilL.setAttribute('x', String(31 + dx));
+      pupilL.setAttribute('y', String(43 + dy));
+      pupilR.setAttribute('x', String(61 + dx));
+      pupilR.setAttribute('y', String(43 + dy));
+    }
+    document.addEventListener('mousemove', (e) => {
+      if (overlay && overlay.style.display === 'flex') movePupils(e);
+    });
+
+    let armWaveTimer;
+    function startArmWave() {
+      if (!steveArm) return;
+      let t = 0;
+      stopArmWave();
+      armWaveTimer = setInterval(() => {
+        t += 0.12;
+        const angle = Math.sin(t) * 18 + 6; // wave
+        steveArm.setAttribute('transform', `translate(78,52) rotate(${angle})`);
+      }, 30);
+    }
+    function stopArmWave() {
+      if (armWaveTimer) clearInterval(armWaveTimer);
+      if (steveArm) steveArm.setAttribute('transform', 'translate(78,52)');
+    }
+
+    if (emailInput) {
+      emailInput.addEventListener('focus', startArmWave);
+      emailInput.addEventListener('blur', stopArmWave);
+    }
+    const pwdInput = document.getElementById('loginPassword');
+    if (pwdInput) {
+      pwdInput.addEventListener('focus', startArmWave);
+      pwdInput.addEventListener('blur', stopArmWave);
+    }
 
     // Firebase auth init
     if (window.firebase && window.firebaseAppsReady) {
