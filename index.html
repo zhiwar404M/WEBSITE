@@ -39,7 +39,14 @@
         <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
-        <a href="#login"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
+        <a href="#login" id="loginNavLink"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
+        <div id="userChip" class="user-chip" style="display:none;">
+          <img id="userAvatar" class="user-avatar" alt="" />
+          <span id="userEmail" class="user-email"></span>
+          <button id="logoutBtn" class="logout-btn" type="button">
+            <span class="material-icons">logout</span>
+          </button>
+        </div>
         
         <div class="language-switcher">
           <button class="lang-btn" data-lang="ku">Kurdish</button>
@@ -272,21 +279,29 @@
       <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
     </div>
     <div class="modal-body">
-      <form id="loginForm" novalidate>
-        <div class="form-group">
-          <label for="loginEmail" data-translate="login_email">Email</label>
-          <input id="loginEmail" type="email" required autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label for="loginPassword" data-translate="login_password">Password</label>
-          <input id="loginPassword" type="password" required autocomplete="current-password">
-        </div>
-        <button type="submit" class="btn btn-primary" data-translate="login_button">Login</button>
-        <div class="login-help">
-          <span data-translate="login_help">Don't have an account?</span>
-          <a href="#" data-translate="login_register">Register here</a>
-        </div>
-      </form>
+      <div class="tilt-wrap">
+        <form id="loginForm" novalidate>
+          <div id="authError" class="auth-error" role="alert" style="display:none;"></div>
+          <div class="form-group">
+            <label for="loginEmail" data-translate="login_email">Email</label>
+            <input id="loginEmail" type="email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="loginPassword" data-translate="login_password">Password</label>
+            <input id="loginPassword" type="password" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn-primary" data-translate="login_button">Login</button>
+          <div class="oauth-divider"><span data-translate="oauth_or">OR</span></div>
+          <button type="button" id="googleSignIn" class="btn btn-outline google-btn">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" width="20" height="20" style="filter: brightness(0) invert(1);"/>
+            <span>Google</span>
+          </button>
+          <div class="login-help">
+            <span data-translate="login_help">Don't have an account?</span>
+            <a href="#" data-translate="login_register">Register here</a>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -576,6 +591,16 @@
         "ar": "سياسة الخصوصية",
         "en": "Privacy Policy"
       },
+      "nav_login": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Login"
+      },
+      "oauth_or": {
+        "ku": "یان",
+        "ar": "أو",
+        "en": "OR"
+      },
 // Add these translations to your translations object
 "login_title": {
   "ku": "چوونەژوورەوە بۆ هەژمارەکەت",
@@ -728,15 +753,114 @@
       }
     });
 
+    // Firebase auth init
+    if (window.firebase && window.firebaseAppsReady) {
+      window.firebaseAppsReady();
+    }
+
     if (loginForm) {
-      loginForm.addEventListener('submit', (e) => {
+      loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        // Demo: close modal after submit
-        closeLoginModal();
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const errorEl = document.getElementById('authError');
+        errorEl.style.display = 'none';
+        try {
+          const { signInWithEmailAndPassword } = window.firebaseAuth;
+          const { auth } = window.firebaseExports;
+          await signInWithEmailAndPassword(auth, email, password);
+          closeLoginModal();
+        } catch (err) {
+          errorEl.textContent = err?.message || 'Login failed';
+          errorEl.style.display = 'block';
+        }
+      });
+    }
+
+    const googleBtn = document.getElementById('googleSignIn');
+    if (googleBtn) {
+      googleBtn.addEventListener('click', async () => {
+        const errorEl = document.getElementById('authError');
+        errorEl.style.display = 'none';
+        try {
+          const { GoogleAuthProvider, signInWithPopup } = window.firebaseAuth;
+          const { auth } = window.firebaseExports;
+          const provider = new GoogleAuthProvider();
+          await signInWithPopup(auth, provider);
+          closeLoginModal();
+        } catch (err) {
+          errorEl.textContent = err?.message || 'Google sign-in failed';
+          errorEl.style.display = 'block';
+        }
       });
     }
   });
   
- </script>
-</body>
-</html>
+     // Simple tilt effect for the modal form wrapper
+    const tiltWrap = document.querySelector('.tilt-wrap');
+    if (tiltWrap) {
+      tiltWrap.addEventListener('mousemove', (e) => {
+        const rect = tiltWrap.getBoundingClientRect();
+        const relX = e.clientX - rect.left;
+        const relY = e.clientY - rect.top;
+        const rotateY = ((relX / rect.width) - 0.5) * 8;
+        const rotateX = ((relY / rect.height) - 0.5) * -8;
+        tiltWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      tiltWrap.addEventListener('mouseleave', () => {
+        tiltWrap.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+  });
+  </script>
+
+  <!-- Firebase SDK and app config -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
+    import config from './firebase-config.js';
+
+    const app = initializeApp(config);
+    const auth = getAuth(app);
+
+    // Expose to window for non-module script usage
+    window.firebaseAuth = { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut };
+    window.firebaseExports = { app, auth };
+    window.firebase = true;
+    window.firebaseAppsReady = function() {
+      const userChip = document.getElementById('userChip');
+      const loginLink = document.getElementById('loginNavLink');
+      const userEmail = document.getElementById('userEmail');
+      const userAvatar = document.getElementById('userAvatar');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          loginLink.style.display = 'none';
+          userChip.style.display = 'inline-flex';
+          userEmail.textContent = user.email || user.displayName || '';
+          userAvatar.src = user.photoURL || 'https://api.dicebear.com/7.x/identicon/svg?seed=' + encodeURIComponent(user.email || 'user');
+        } else {
+          loginLink.style.display = '';
+          userChip.style.display = 'none';
+          userEmail.textContent = '';
+          userAvatar.removeAttribute('src');
+        }
+      });
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+          try {
+            await window.firebaseAuth.signOut(auth);
+          } catch (e) {
+            console.error(e);
+          }
+        });
+      }
+    };
+
+    // ensure UI sync on first load
+    if (window.firebaseAppsReady) window.firebaseAppsReady();
+  </script>
+ </body>
+ </html>

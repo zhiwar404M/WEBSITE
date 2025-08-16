@@ -401,6 +401,40 @@ nav a:hover {
   text-decoration: none;
 }
 
+/* Small user chip in nav */
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 16px;
+  padding: 6px 10px;
+  border: 1px solid rgba(148,163,184,0.25);
+  border-radius: 999px;
+  background: rgba(15,23,42,0.5);
+}
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #0ea5e9;
+  object-fit: cover;
+}
+.user-email {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+}
+.logout-btn {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 8px;
+}
+.logout-btn:hover { background: rgba(148,163,184,0.15); }
+
 /* Modal (Login) */
 .modal-overlay {
   position: fixed;
@@ -422,6 +456,45 @@ nav a:hover {
   border-radius: 16px;
   box-shadow: 0 20px 80px rgba(0,0,0,0.6), inset 0 0 40px rgba(56,189,248,0.08);
   overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+/* subtle 3D tilt wrapper */
+.tilt-wrap {
+  background: linear-gradient(180deg, rgba(56,189,248,0.06), rgba(14,165,233,0.03));
+  border: 1px solid rgba(56,189,248,0.12);
+  border-radius: 12px;
+  padding: 1rem;
+  transform-style: preserve-3d;
+}
+
+.oauth-divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  color: #94a3b8;
+  margin: 1rem 0;
+}
+.oauth-divider::before,
+.oauth-divider::after {
+  content: "";
+  height: 1px;
+  background: rgba(148,163,184,0.3);
+}
+.google-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-error {
+  background: rgba(239,68,68,0.12);
+  border: 1px solid rgba(239,68,68,0.35);
+  color: #fecaca;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
 .modal-header {
