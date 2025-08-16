@@ -535,6 +535,17 @@ footer {
   font-size: 1.4rem;
 }
 
+/* Fullscreen modal variant */
+.modal-fullscreen {
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .modal-body {
-  padding: 1.25rem;
+  flex: 1;
+  overflow-y: auto;
 }

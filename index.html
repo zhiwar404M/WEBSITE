@@ -209,7 +209,7 @@
 
 <!-- Login Modal (hidden by default) -->
 <div id="login-modal" class="modal-backdrop" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true">
+  <div class="modal modal-fullscreen" role="dialog" aria-modal="true">
     <div class="modal-header">
       <div class="modal-title" data-translate="login_title">چوونەژوورەوە بۆ هەژمارەکەت</div>
       <button id="login-modal-close" class="modal-close" aria-label="Close" data-translate="close">
@@ -774,11 +774,19 @@
   // Global helpers to open/close login modal
   function openLoginModal() {
     const el = document.getElementById('login-modal');
-    if (el) { el.style.display = 'flex'; el.setAttribute('aria-hidden', 'false'); }
+    if (el) {
+      el.style.display = 'flex';
+      el.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
   }
   function closeLoginModal() {
     const el = document.getElementById('login-modal');
-    if (el) { el.style.display = 'none'; el.setAttribute('aria-hidden', 'true'); }
+    if (el) {
+      el.style.display = 'none';
+      el.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
   }
  
 </script>
