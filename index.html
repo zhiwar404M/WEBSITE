@@ -211,8 +211,9 @@
 <section id="login" class="login-section">
   <div class="section-container">
     <h2 class="section-title" data-translate="login_title">چوونەژوورەوە بۆ هەژمارەکەت</h2>
-    <p class="section-subtitle" data-translate="login_subtitle">دەستکاری بەرنامەکان و ڕێکخستنەکانت بکە</p>
+    <p class="section-subtitle" data-translate="login_subtitle">دەستکاری بەرنامەکان و ڕێكخستنەكانت بكە</p>
     
+    <!-- Email/Password Login -->
     <div class="login-form">
       <div class="form-group">
         <label for="email" data-translate="login_email">ئیمەیڵ</label>
@@ -226,6 +227,22 @@
       <button class="btn btn-outline" id="google-signin"><span class="material-icons">account_circle</span> <span data-translate="google_login">Continue with Google</span></button>
       <p class="login-help" data-translate="login_help">هەژمارت نییە؟ <a href="#register" data-translate="login_register">خۆت تۆمار بکە</a></p>
       <p id="auth-message" class="login-help" style="display:none"></p>
+    </div>
+
+    <!-- Phone Number Login (OTP) -->
+    <p class="section-subtitle" style="margin-top:1.5rem" data-translate="phone_login_title">Login with phone number</p>
+    <div class="login-form">
+      <div class="form-group">
+        <label for="phone-number" data-translate="phone_number_label">Phone Number</label>
+        <input type="tel" id="phone-number">
+      </div>
+      <div id="recaptcha-container" style="margin: 0.5rem 0;"></div>
+      <button class="btn btn-primary" id="send-code-button"><span class="material-icons">sms</span> <span data-translate="send_code_button">Send Code</span></button>
+      <div class="form-group" style="margin-top:1rem">
+        <label for="sms-code" data-translate="sms_code_label">Verification Code</label>
+        <input type="text" id="sms-code">
+      </div>
+      <button class="btn btn-outline" id="verify-code-button"><span class="material-icons">verified</span> <span data-translate="verify_code_button">Verify & Login</span></button>
     </div>
   </div>
 </section>
@@ -579,7 +596,7 @@
   "en": "Login to Your Account"
 },
 "login_subtitle": {
-  "ku": "دەستکاری بەرنامەکان و ڕێکخستنەکانت بکە",
+  "ku": "دەستکاری بەرنامەکان و ڕێكخستنەكانت بكە",
   "ar": "الوصول إلى تطبيقاتك وإعداداتك",
   "en": "Access your apps and settings"
 },
@@ -677,8 +694,34 @@
   "ku": "ناردنی رەخنە",
   "ar": "إرسال الملاحظات",
   "en": "Submit Feedback"
+},
+
+"phone_login_title": {
+  "ku": "چوونەژوورەوە بە ژمارەی مۆبایل",
+  "ar": "تسجيل الدخول برقم الهاتف",
+  "en": "Login with phone number"
+},
+"phone_number_label": {
+  "ku": "ژمارەی مۆبایل",
+  "ar": "رقم الهاتف",
+  "en": "Phone Number"
+},
+"send_code_button": {
+  "ku": "ناردنی کۆد",
+  "ar": "إرسال الرمز",
+  "en": "Send Code"
+},
+"sms_code_label": {
+  "ku": "کۆدی دڵنیابون",
+  "ar": "رمز التحقق",
+  "en": "Verification Code"
+},
+"verify_code_button": {
+  "ku": "دڵنیابون و چوونەژوورەوە",
+  "ar": "تأكيد وتسجيل الدخول",
+  "en": "Verify & Login"
 }
-    };
+     };
 
     // Change all texts
     Object.keys(translations).forEach(key => {
@@ -720,7 +763,7 @@
 </script>
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-  import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+  import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
   // Fill these with your Firebase project settings
   const firebaseConfig = {
@@ -728,83 +771,137 @@
     authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
     projectId: "YOUR_PROJECT_ID",
     appId: "YOUR_APP_ID"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
-
-  const loginButton = document.getElementById('login-button');
-  const registerButton = document.getElementById('register-button');
-  const googleButton = document.getElementById('google-signin');
-  const logoutLink = document.getElementById('logout-link');
-  const navLoginLink = document.getElementById('nav-login-link');
-  const authMessage = document.getElementById('auth-message');
-
-  function showMessage(text, isError = false) {
-    if (!authMessage) return;
-    authMessage.style.display = 'block';
-    authMessage.textContent = text;
-    authMessage.style.color = isError ? '#f87171' : '#10b981';
-    setTimeout(() => { authMessage.style.display = 'none'; }, 4000);
-  }
-
-  loginButton?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    try {
-      await signInWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value.trim());
-      showMessage('Logged in successfully');
-    } catch (err) {
-      showMessage(err.message, true);
+      };
+ 
+   const app = initializeApp(firebaseConfig);
+   const auth = getAuth(app);
+   const provider = new GoogleAuthProvider();
+ 
+   const loginButton = document.getElementById('login-button');
+   const registerButton = document.getElementById('register-button');
+   const googleButton = document.getElementById('google-signin');
+   const logoutLink = document.getElementById('logout-link');
+   const navLoginLink = document.getElementById('nav-login-link');
+   const authMessage = document.getElementById('auth-message');
+ 
+   // Phone auth elements
+   const sendCodeButton = document.getElementById('send-code-button');
+   const verifyCodeButton = document.getElementById('verify-code-button');
+   const phoneInput = document.getElementById('phone-number');
+   const smsCodeInput = document.getElementById('sms-code');
+   let confirmationResultGlobal = null;
+ 
+   function showMessage(text, isError = false) {
+     if (!authMessage) return;
+     authMessage.style.display = 'block';
+     authMessage.textContent = text;
+     authMessage.style.color = isError ? '#f87171' : '#10b981';
+     setTimeout(() => { authMessage.style.display = 'none';       }, 4000);
     }
-  });
 
-  registerButton?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const emailInput = document.getElementById('reg-email');
-    const passwordInput = document.getElementById('reg-password');
-    try {
-      await createUserWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value.trim());
-      showMessage('Account created');
-    } catch (err) {
-      showMessage(err.message, true);
+    function getCurrentLang() {
+      return document.documentElement.lang || 'en';
     }
-  });
-
-  googleButton?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithPopup(auth, provider);
-      showMessage('Logged in with Google');
-    } catch (err) {
-      showMessage(err.message, true);
+ 
+    loginButton?.addEventListener('click', async (e) => {
+     e.preventDefault();
+     const emailInput = document.getElementById('email');
+     const passwordInput = document.getElementById('password');
+     try {
+       await signInWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value.trim());
+       showMessage('Logged in successfully');
+     } catch (err) {
+       showMessage(err.message, true);
+     }
+   });
+ 
+   registerButton?.addEventListener('click', async (e) => {
+     e.preventDefault();
+     const emailInput = document.getElementById('reg-email');
+     const passwordInput = document.getElementById('reg-password');
+     try {
+       await createUserWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value.trim());
+       showMessage('Account created');
+     } catch (err) {
+       showMessage(err.message, true);
+     }
+   });
+ 
+   googleButton?.addEventListener('click', async (e) => {
+     e.preventDefault();
+     try {
+       await signInWithPopup(auth, provider);
+       showMessage('Logged in with Google');
+     } catch (err) {
+       showMessage(err.message, true);
+     }
+   });
+ 
+   // Phone number sign-in (OTP)
+       let recaptchaVerifier = null;
+    function ensureRecaptcha() {
+      if (!recaptchaVerifier) {
+        recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+      }
+      return recaptchaVerifier;
     }
-  });
-
-  logoutLink?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    try {
-      await signOut(auth);
-      showMessage('Logged out');
-    } catch (err) {
-      showMessage(err.message, true);
-    }
-  });
-
-  onAuthStateChanged(auth, (user) => {
+  
+    sendCodeButton?.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        ensureRecaptcha();
+        const phoneNumber = phoneInput.value.trim();
+        const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+        confirmationResultGlobal = confirmationResult;
+        showMessage('Code sent');
+      } catch (err) {
+        showMessage(err.message, true);
+      }
+    });
+ 
+   verifyCodeButton?.addEventListener('click', async (e) => {
+     e.preventDefault();
+     try {
+       if (!confirmationResultGlobal) {
+         showMessage('Please send the code first', true);
+         return;
+       }
+       await confirmationResultGlobal.confirm(smsCodeInput.value.trim());
+       showMessage('Logged in');
+     } catch (err) {
+       showMessage(err.message, true);
+     }
+   });
+ 
+   logoutLink?.addEventListener('click', async (e) => {
+     e.preventDefault();
+     try {
+       await signOut(auth);
+       showMessage('Logged out');
+     } catch (err) {
+       showMessage(err.message, true);
+     }
+   });
+ 
+     onAuthStateChanged(auth, (user) => {
     const loginSection = document.getElementById('login');
     if (user) {
       if (logoutLink) logoutLink.style.display = 'inline-flex';
       if (navLoginLink) navLoginLink.style.display = 'none';
       if (loginSection) loginSection.style.display = 'none';
+      // Clear inputs
+      document.getElementById('email')?.value = '';
+      document.getElementById('password')?.value = '';
+      document.getElementById('reg-email')?.value = '';
+      document.getElementById('reg-password')?.value = '';
+      document.getElementById('phone-number')?.value = '';
+      document.getElementById('sms-code')?.value = '';
     } else {
       if (logoutLink) logoutLink.style.display = 'none';
       if (navLoginLink) navLoginLink.style.display = 'inline-flex';
       if (loginSection) loginSection.style.display = '';
     }
   });
-</script>
+ </script>
 </body>
 </html>
