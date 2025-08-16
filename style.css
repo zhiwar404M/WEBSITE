@@ -55,12 +55,14 @@ nav a:hover {
 }
 
 /* بەشی سەرەکی */
-.hero {
-    background: linear-gradient(to left top, #0ea5e9, #1e40af);
-    color: white;
-    padding: 5rem 2rem; /* Increased */
-    text-align: center;
-}
+ .hero {
+     background: linear-gradient(to left top, #0ea5e9, #1e40af);
+     color: white;
+     padding: 5rem 2rem; /* Increased */
+     text-align: center;
+     position: relative;
+     overflow: hidden;
+ }
 
 .hero-content h1 {
     font-size: 2.8rem; /* Increased from 2.5rem */
@@ -548,4 +550,25 @@ footer {
 .modal-body {
   flex: 1;
   overflow-y: auto;
+}
+
+/* 3D Canvas in hero */
+.hero-3d-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+/* Tilt effect */
+.app-card {
+  transform-style: preserve-3d;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.app-card:hover {
+  transform: perspective(800px) rotateX(3deg) rotateY(-3deg) translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
 }

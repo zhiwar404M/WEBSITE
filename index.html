@@ -38,6 +38,8 @@
       <nav>
         <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
+        <a href="#apps"><span class="material-icons">apps</span> <span data-translate="nav_apps">Apps Section</span></a>
+        <a href="#" id="nav-dashboard-link"><span class="material-icons">dashboard</span> <span data-translate="nav_dashboard">Dashboard</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
         <a href="#" id="nav-login-link"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
         <a href="#" id="logout-link" style="display:none"><span class="material-icons">logout</span> <span data-translate="nav_logout">Logout</span></a>
@@ -52,6 +54,7 @@
   </header>
 
   <section class="hero">
+    <canvas id="hero-canvas" class="hero-3d-canvas"></canvas>
     <div class="hero-content">
       <h1 data-translate="hero_title">ZHIWAR Apps</h1>
       <p data-translate="hero_subtitle">Apps fully programmed in Kurdish language for Android and iOS</p>
@@ -67,19 +70,17 @@
     <h2 class="section-title" data-translate="apps_section_title">Applications</h2>
     <p class="section-subtitle" data-translate="apps_section_subtitle">These are the apps for both Android and iPhone</p>
 
-    <div class="apps-grid">
-      <div class="app-card">
-        <div class="app-icon"><span class="material-icons">android</span></div>
-        <h3 class="app-title" data-translate="app1_title">Minefo Kr</h3>
-        <span class="app-version" data-translate="app1_version">وەشانی 1.0</span>
-        <p class="app-description" data-translate="app1_description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
-        <button class="btn btn-primary" data-download-with-ads data-download-url="https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk">
-          <span class="material-icons">download</span> <span data-translate="app1_button">داگرتن بۆ ئەندرۆید</span>
-        </button>
-      </div>
-    </div>
+    <div id="apps-grid" class="apps-grid"></div>
   </section>
   
+  <!-- Admin Dashboard (hidden until login) -->
+  <section id="dashboard" class="login-section" style="display:none">
+    <div class="section-container">
+      <h2 class="section-title" data-translate="dashboard_title">Dashboard</h2>
+      <p class="section-subtitle" data-translate="dashboard_subtitle">Manage your apps content from Firestore</p>
+      <div id="dashboard-content" class="apps-grid"></div>
+    </div>
+  </section>
   
   
   <!-- Features Section -->
@@ -346,11 +347,16 @@
         "ar": "الميزات",
         "en": "Features"
       },
-      "nav_contact": {
-        "ku": "پەیوەندی",
-        "ar": "اتصل بنا",
-        "en": "Contact"
-      },
+             "nav_contact": {
+         "ku": "پەیوەندی",
+         "ar": "اتصل بنا",
+         "en": "Contact"
+       },
+       "nav_dashboard": {
+         "ku": "داشبۆرد",
+         "ar": "لوحة التحكم",
+         "en": "Dashboard"
+       },
       "nav_login": {
   "ku": "چوونەژوورەوە",
   "ar": "تسجيل الدخول",
@@ -790,9 +796,11 @@
   }
  
 </script>
+<script src="https://unpkg.com/three@0.159.0/build/three.min.js"></script>
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
   import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+  import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
   // Fill these with your Firebase project settings
   const firebaseConfig = {
@@ -802,9 +810,10 @@
     appId: "YOUR_APP_ID"
       };
  
-   const app = initializeApp(firebaseConfig);
-   const auth = getAuth(app);
-   const provider = new GoogleAuthProvider();
+     const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const provider = new GoogleAuthProvider();
  
    const loginButton = document.getElementById('login-button');
    const registerButton = document.getElementById('register-button');
@@ -830,12 +839,78 @@
      setTimeout(() => { authMessage.style.display = 'none';       }, 4000);
     }
 
-    function getCurrentLang() {
+      function getCurrentLang() {
       return document.documentElement.lang || 'en';
     }
+
+    // Populate apps from Firestore (collection: apps)
+    async function loadApps() {
+      const grid = document.getElementById('apps-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      try {
+        const snap = await getDocs(collection(db, 'apps'));
+        snap.forEach(doc => {
+          const app = doc.data();
+          const card = document.createElement('div');
+          card.className = 'app-card';
+          card.innerHTML = `
+            <div class="app-icon"><span class="material-icons">${app.icon || 'android'}</span></div>
+            <h3 class="app-title">${app.title || 'App'}</h3>
+            <span class="app-version">${app.version || ''}</span>
+            <p class="app-description">${app.description || ''}</p>
+            <button class="btn btn-primary" data-download-with-ads data-download-url="${app.downloadUrl || '#'}">
+              <span class="material-icons">download</span> ${app.buttonText || 'Download'}
+            </button>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Failed to load apps', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+    loadApps();
+    try {
+      const canvas = document.getElementById('hero-canvas');
+      if (canvas && window.THREE) {
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+        camera.position.set(0, 0, 6);
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(3, 5, 4);
+        scene.add(light);
+        const geometry = new THREE.TorusKnotGeometry(1, 0.35, 120, 16);
+        const material = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.6, roughness: 0.25 });
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+        function onResize() {
+          const w = canvas.clientWidth;
+          const h = canvas.clientHeight;
+          renderer.setSize(w, h, false);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        }
+        window.addEventListener('resize', onResize);
+        onResize();
+        function animate() {
+          requestAnimationFrame(animate);
+          mesh.rotation.x += 0.004;
+          mesh.rotation.y += 0.006;
+          renderer.render(scene, camera);
+        }
+        animate();
+      }
+    } catch (e) {
+      console.warn('3D hero disabled', e);
+    }
+  });
  
-    loginButton?.addEventListener('click', async (e) => {
-     e.preventDefault();
+           loginButton?.addEventListener('click', async (e) => {
+      e.preventDefault();
      const emailInput = document.getElementById('email');
      const passwordInput = document.getElementById('password');
      try {
@@ -926,24 +1001,26 @@
    });
  
      onAuthStateChanged(auth, (user) => {
-    const loginSection = document.getElementById('login');
-    if (user) {
-      if (logoutLink) logoutLink.style.display = 'inline-flex';
-      if (navLoginLink) navLoginLink.style.display = 'none';
-      const loginModal = document.getElementById('login-modal');
-      if (loginModal) { loginModal.style.display = 'none'; loginModal.setAttribute('aria-hidden', 'true'); }
-      // Clear inputs
+    const dashboard = document.getElementById('dashboard');
+         if (user) {
+       if (logoutLink) logoutLink.style.display = 'inline-flex';
+       if (navLoginLink) navLoginLink.style.display = 'none';
+       const loginModal = document.getElementById('login-modal');
+       if (loginModal) { loginModal.style.display = 'none'; loginModal.setAttribute('aria-hidden', 'true'); }
+       if (dashboard) dashboard.style.display = '';
+       // Clear inputs
       document.getElementById('email')?.value = '';
       document.getElementById('password')?.value = '';
       document.getElementById('reg-email')?.value = '';
       document.getElementById('reg-password')?.value = '';
       document.getElementById('phone-number')?.value = '';
       document.getElementById('sms-code')?.value = '';
-    } else {
-      if (logoutLink) logoutLink.style.display = 'none';
-      if (navLoginLink) navLoginLink.style.display = 'inline-flex';
-      // Do not auto-open modal on logged out
-    }
+         } else {
+       if (logoutLink) logoutLink.style.display = 'none';
+       if (navLoginLink) navLoginLink.style.display = 'inline-flex';
+       if (dashboard) dashboard.style.display = 'none';
+       // Do not auto-open modal on logged out
+     }
   });
  </script>
 </body>
