@@ -60,6 +60,49 @@ nav a:hover {
     color: white;
     padding: 5rem 2rem; /* Increased */
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 3D cube decorative background */
+.hero-3d {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  perspective: 800px;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+.cube {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  transform-style: preserve-3d;
+  animation: cube-rotate 18s linear infinite;
+}
+
+.cube .face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(56,189,248,0.9), rgba(14,165,233,0.5));
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 40px rgba(56,189,248,0.4), inset 0 0 30px rgba(14,165,233,0.3);
+}
+
+.face-front  { transform: translateZ(90px); }
+.face-back   { transform: rotateY(180deg) translateZ(90px); }
+.face-right  { transform: rotateY(90deg) translateZ(90px); }
+.face-left   { transform: rotateY(-90deg) translateZ(90px); }
+.face-top    { transform: rotateX(90deg) translateZ(90px); }
+.face-bottom { transform: rotateX(-90deg) translateZ(90px); }
+
+@keyframes cube-rotate {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  50% { transform: rotateX(180deg) rotateY(180deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
 }
 
 .hero-content h1 {
@@ -356,6 +399,63 @@ nav a:hover {
 .login-help a {
   color: #0ea5e9;
   text-decoration: none;
+}
+
+/* Modal (Login) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 999;
+}
+
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: #0b1220;
+  border: 1px solid rgba(56,189,248,0.35);
+  border-radius: 16px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.6), inset 0 0 40px rgba(56,189,248,0.08);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.modal-header h2 {
+  color: #38bdf8;
+  font-size: 1.6rem;
+}
+
+.modal-subtitle {
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.modal-close:hover {
+  background: rgba(148, 163, 184, 0.15);
 }
 
 /* Footer */
