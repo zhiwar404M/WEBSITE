@@ -645,3 +645,28 @@ body.modal-open {
     padding: 0.6rem 0.8rem;
     border-radius: 0.4rem;
 }
+
+/* 3D inside modal */
+.modal {
+    position: relative;
+    overflow: hidden;
+}
+.modal-3d {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 140px;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.9;
+}
+.modal-title,
+.modal-subtitle,
+.modal-form,
+.auth-actions {
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 480px) {
+    .modal-3d { height: 120px; }
+}

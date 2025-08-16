@@ -704,6 +704,7 @@
       <button class="modal-close" aria-label="Close">
         <span class="material-icons">close</span>
       </button>
+      <div class="modal-3d" id="modal-3d"></div>
       <h3 id="loginTitle" class="modal-title" data-translate="login_title">Login to Your Account</h3>
       <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
 
@@ -750,6 +751,7 @@
     // Login modal handlers
     const modal = document.getElementById('loginModal');
     const closeBtn = modal ? modal.querySelector('.modal-close') : null;
+    const modal3d = document.getElementById('modal-3d');
     const loginLinkEls = document.querySelectorAll('a[href="#login"]');
     const formEl = modal ? modal.querySelector('.modal-form') : null;
     const submitBtn = modal ? modal.querySelector('#authSubmit') : null;
@@ -772,11 +774,13 @@
       modal.classList.add('open');
       document.body.classList.add('modal-open');
       hideMessages();
+      initModal3D();
     }
     function closeLogin() {
       if (!modal) return;
       modal.classList.remove('open');
       document.body.classList.remove('modal-open');
+      disposeModal3D();
     }
     function hideMessages() {
       if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
@@ -900,6 +904,73 @@
         const lang = document.documentElement.lang || 'en';
         if (typeof translatePage === 'function') translatePage(lang);
       });
+    }
+
+    // 3D modal init (Creeper/Steve minimal)
+    let modal3DState = null;
+    function initModal3D() {
+      if (!modal3d || !window.THREE) return;
+      if (modal3DState) return;
+      const container = modal3d;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(55, container.clientWidth / Math.max(container.clientHeight, 1), 0.1, 100);
+      camera.position.set(0.3, 0.9, 4);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      container.appendChild(renderer.domElement);
+
+      const hemi = new THREE.HemisphereLight(0xd6ffe6, 0x082b33, 0.9);
+      const dir = new THREE.DirectionalLight(0xffffff, 1.1);
+      dir.position.set(3, 5, 6);
+      scene.add(hemi, dir);
+
+      function makeCreeperTex(head) {
+        const c = document.createElement('canvas'); c.width=128; c.height=128; const ctx = c.getContext('2d'); const cell=16;
+        for (let y=0;y<8;y++){ for(let x=0;x<8;x++){ const base=100+Math.floor(Math.random()*60); const g=base+Math.floor(Math.random()*40); ctx.fillStyle='rgb('+(base-20)+','+g+','+(base-30)+')'; ctx.fillRect(x*cell,y*cell,cell,cell);} }
+        if (head) { ctx.fillStyle = '#0a0a0a'; ctx.fillRect(2*cell,2*cell,2*cell,2*cell); ctx.fillRect(4*cell,2*cell,2*cell,2*cell); ctx.fillRect(2*cell,4*cell,4*cell,3*cell); ctx.clearRect(3*cell,5*cell,2*cell,1*cell); }
+        const tex = new THREE.CanvasTexture(c); tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; return tex;
+      }
+      function box(w,h,d,tex){ return new THREE.Mesh(new THREE.BoxGeometry(w,h,d), new THREE.MeshStandardMaterial({ map: tex })); }
+
+      const group = new THREE.Group();
+      const head = box(0.9,0.9,0.9, makeCreeperTex(true)); head.position.set(0,0.65,0);
+      const body = box(0.8,1.1,0.5, makeCreeperTex(false)); body.position.set(0,-0.1,0);
+      const legL = box(0.35,0.6,0.35, makeCreeperTex(false)); legL.position.set(-0.25,-0.6,0);
+      const legR = box(0.35,0.6,0.35, makeCreeperTex(false)); legR.position.set(0.25,-0.6,0);
+      group.add(head, body, legL, legR); scene.add(group);
+
+      let t=0, targetRY=0, targetRX=0;
+      function onResize(){
+        const w=container.clientWidth, h=Math.max(container.clientHeight,1);
+        renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix();
+      }
+      window.addEventListener('resize', onResize);
+      if (modal) {
+        modal.addEventListener('mousemove', function(e){ const r=container.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width-0.5; const y=(e.clientY-r.top)/r.height-0.5; targetRY=x*0.6; targetRX=-y*0.4; });
+        modal.addEventListener('touchmove', function(e){ if(!e.touches||!e.touches[0])return; const tt=e.touches[0]; const r=container.getBoundingClientRect(); const x=(tt.clientX-r.left)/r.width-0.5; const y=(tt.clientY-r.top)/r.height-0.5; targetRY=x*0.6; targetRX=-y*0.4; }, {passive:true});
+      }
+
+      function anim(){
+        if (!modal3DState) return; // disposed
+        t+=0.016; const bob=Math.sin(t*3)*0.03; group.position.y=bob;
+        group.rotation.y += (targetRY - group.rotation.y) * 0.12;
+        head.rotation.x += (targetRX - head.rotation.x) * 0.12;
+        renderer.render(scene,camera);
+        requestAnimationFrame(anim);
+      }
+      onResize();
+      modal3DState = { renderer, scene, camera, container, dom: renderer.domElement };
+      anim();
+    }
+    function disposeModal3D(){
+      if (!modal3DState) return;
+      const { renderer, dom, scene } = modal3DState;
+      try { renderer.dispose(); } catch(_){ }
+      if (dom && dom.parentNode) dom.parentNode.removeChild(dom);
+      // Traverse to dispose materials/geometries
+      try { scene.traverse(function(obj){ if(obj.geometry) obj.geometry.dispose && obj.geometry.dispose(); if(obj.material){ if(Array.isArray(obj.material)){ obj.material.forEach(m=>m.dispose&&m.dispose()); } else { obj.material.dispose && obj.material.dispose(); } } }); } catch(_){ }
+      modal3DState = null;
     }
 
     // 3D hero init (Creeper) with fallback
