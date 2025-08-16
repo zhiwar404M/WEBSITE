@@ -39,7 +39,14 @@
         <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
-        <a href="#login"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
+                  <a href="#login" id="loginNavLink" onclick="var o=document.getElementById('loginModalOverlay'); if(o){o.style.display='flex'; document.body.style.overflow='hidden';} return false;"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
+        <div id="userChip" class="user-chip" style="display:none;">
+          <img id="userAvatar" class="user-avatar" alt="" />
+          <span id="userEmail" class="user-email"></span>
+          <button id="logoutBtn" class="logout-btn" type="button">
+            <span class="material-icons">logout</span>
+          </button>
+        </div>
         
         <div class="language-switcher">
           <button class="lang-btn" data-lang="ku">Kurdish</button>
@@ -51,6 +58,10 @@
   </header>
 
   <section class="hero">
+    <div class="hero-3d" aria-hidden="true">
+      <canvas id="orbCanvas" class="orb-canvas"></canvas>
+      <div class="orb-core"></div>
+    </div>
     <div class="hero-content">
       <h1 data-translate="hero_title">ZHIWAR Apps</h1>
       <p data-translate="hero_subtitle">Apps fully programmed in Kurdish language for Android and iOS</p>
@@ -251,6 +262,71 @@
   </div>
 </section>
 
+<!-- Login Modal -->
+<div id="loginModalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
+  <div class="modal-card">
+    
+    <button class="modal-close" id="loginModalClose" aria-label="Close">
+      <span class="material-icons">close</span>
+    </button>
+    <div class="modal-header">
+      <h2 id="loginModalTitle" data-translate="login_title">Login to Your Account</h2>
+      <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
+    </div>
+    <div class="modal-body">
+      <div class="login-visual" aria-hidden="true">
+        <canvas id="loginCanvas"></canvas>
+      </div>
+      <div class="tilt-wrap">
+        <div class="auth-tabs" role="tablist">
+          <button id="tabSignIn" class="auth-tab active" type="button" role="tab" data-translate="tab_signin">Sign in</button>
+          <button id="tabRegister" class="auth-tab" type="button" role="tab" data-translate="tab_register">Register now</button>
+        </div>
+        <form id="loginForm" novalidate style="display: block;" aria-hidden="false">
+          <div id="authError" class="auth-error" role="alert" style="display:none;"></div>
+          <div class="form-group">
+            <label for="loginEmail" data-translate="login_email">Email</label>
+            <input id="loginEmail" type="email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="loginPassword" data-translate="login_password">Password</label>
+            <input id="loginPassword" type="password" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn-primary" data-translate="login_button">Login</button>
+          <div class="oauth-divider"><span data-translate="oauth_or">OR</span></div>
+          <button type="button" id="googleSignIn" class="btn btn-outline google-btn">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" width="20" height="20" style="filter: brightness(0) invert(1);"/>
+            <span data-translate="google">Google</span>
+          </button>
+          <div class="login-help">
+            <span data-translate="login_help">Don't have an account?</span>
+            <a href="#" id="linkToRegister" data-translate="login_register">Register here</a>
+          </div>
+        </form>
+        <form id="registerForm" novalidate style="display: none;" aria-hidden="true">
+          <div id="regError" class="auth-error" role="alert" style="display:none;"></div>
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input id="regEmail" type="email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <input id="regPassword" type="password" required autocomplete="new-password" minlength="6">
+          </div>
+          <div class="form-group">
+            <label for="regPassword2">Confirm Password</label>
+            <input id="regPassword2" type="password" required autocomplete="new-password" minlength="6">
+          </div>
+          <button type="submit" class="btn btn-primary" id="registerBtn" data-translate="register_button">Create account</button>
+          <div class="login-help">
+            <span data-translate="already_have">Already have an account?</span>
+            <a href="#" id="linkToSignIn" data-translate="signin_link">Sign in</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
   <script>
   // Language switching function
@@ -537,6 +613,46 @@
         "ar": "سياسة الخصوصية",
         "en": "Privacy Policy"
       },
+      "tab_signin": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Sign in"
+      },
+      "tab_register": {
+        "ku": "تۆمارکردن",
+        "ar": "إنشاء حساب",
+        "en": "Register now"
+      },
+      "register_button": {
+        "ku": "درووستکردنی هەژمار",
+        "ar": "إنشاء حساب",
+        "en": "Create account"
+      },
+      "already_have": {
+        "ku": "پێشتر هەژمارت هەیە؟",
+        "ar": "هل لديك حساب؟",
+        "en": "Already have an account?"
+      },
+      "signin_link": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Sign in"
+      },
+      "google": {
+        "ku": "گووگڵ",
+        "ar": "جوجل",
+        "en": "Google"
+      }
+      "nav_login": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Login"
+      },
+      "oauth_or": {
+        "ku": "یان",
+        "ar": "أو",
+        "en": "OR"
+      },
 // Add these translations to your translations object
 "login_title": {
   "ku": "چوونەژوورەوە بۆ هەژمارەکەت",
@@ -644,14 +760,328 @@
     }
   });
 
-  // Get language from cookie on page load
+  // Get language from cookie on page load and wire login modal
   document.addEventListener('DOMContentLoaded', () => {
     const langFromCookie = document.cookie.match(/user_lang=([^;]+)/)?.[1];
     const userLang = langFromCookie || 'en';
     changeLanguage(userLang);
+
+    // Login modal
+    const loginLink = document.getElementById('loginNavLink');
+    const overlay = document.getElementById('loginModalOverlay');
+    const closeBtn = document.getElementById('loginModalClose');
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('loginEmail');
+
+    function openLoginModal() {
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => emailInput && emailInput.focus(), 0);
+    }
+
+    function closeLoginModal() {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    // expose for fallback bindings
+    window._openLoginModal = openLoginModal;
+    window._closeLoginModal = closeLoginModal;
+
+    if (loginLink) {
+      loginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        openLoginModal();
+      });
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeLoginModal);
+
+    if (overlay) {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeLoginModal();
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay && overlay.style.display === 'flex') {
+        closeLoginModal();
+      }
+    });
+
+    // Login canvas visual
+    (function(){
+      const c = document.getElementById('loginCanvas');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      function resize(){ c.width = c.clientWidth; c.height = c.clientHeight; }
+      resize();
+      window.addEventListener('resize', resize);
+      let t=0; const dots = Array.from({length: 80}, (_,i)=>({a: Math.random()*Math.PI*2, r: 20+Math.random()*120, s: 0.01+Math.random()*0.02}));
+      function draw(){
+        t+=0.01; ctx.clearRect(0,0,c.width,c.height);
+        const cx=c.width/2, cy=c.height/2;
+        for(const d of dots){
+          d.a += d.s; const x=cx + Math.cos(d.a)*d.r + Math.sin(d.a*3)*5; const y=cy + Math.sin(d.a)*d.r + Math.cos(d.a*2)*5;
+          const g=ctx.createRadialGradient(x,y,0,x,y,10); g.addColorStop(0,'rgba(56,189,248,0.9)'); g.addColorStop(1,'rgba(56,189,248,0)');
+          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2); ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+         // Remove old creeper interactions
+     (function(){})();
+
+     // Toggle forms (Sign in / Register)
+const tabSignIn = document.getElementById('tabSignIn');
+    const tabRegister = document.getElementById('tabRegister');
+    const formSignIn = document.getElementById('loginForm');
+    const formRegister = document.getElementById('registerForm');
+    const linkToRegister = document.getElementById('linkToRegister');
+    const linkToSignIn = document.getElementById('linkToSignIn');
+    function showSignIn(){
+      tabSignIn.classList.add('active');
+      tabRegister.classList.remove('active');
+      formSignIn.style.display = 'block';
+      formSignIn.setAttribute('aria-hidden', 'false');
+      formRegister.style.display = 'none';
+      formRegister.setAttribute('aria-hidden', 'true');
+    }
+    function showRegister(){
+      tabRegister.classList.add('active');
+      tabSignIn.classList.remove('active');
+      formRegister.style.display = 'block';
+      formRegister.setAttribute('aria-hidden', 'false');
+      formSignIn.style.display = 'none';
+      formSignIn.setAttribute('aria-hidden', 'true');
+    }
+    if (tabSignIn) tabSignIn.addEventListener('click', showSignIn);
+    if (tabRegister) tabRegister.addEventListener('click', showRegister);
+    if (linkToRegister) linkToRegister.addEventListener('click', (e)=>{ e.preventDefault(); showRegister(); });
+    if (linkToSignIn) linkToSignIn.addEventListener('click', (e)=>{ e.preventDefault(); showSignIn(); });
+
+    // Firebase auth init
+    if (window.firebase && window.firebaseAppsReady) {
+      window.firebaseAppsReady();
+    }
+
+         /* removed creeper explosion */
+     function triggerCreeperExplosion() {
+      const container = document.getElementById('creeperExplosion');
+      if (!container) return;
+      container.innerHTML = '';
+      container.style.display = 'flex';
+      const rect = container.getBoundingClientRect();
+      const particles = 60;
+      for (let i = 0; i < particles; i++) {
+        const p = document.createElement('div');
+        p.className = 'creeper-particle';
+        p.style.left = (rect.width / 2) + 'px';
+        p.style.top = (rect.height / 2) + 'px';
+        container.appendChild(p);
+        const angle = (Math.PI * 2) * (i / particles);
+        const speed = 3 + Math.random() * 4;
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+        let x = rect.width / 2;
+        let y = rect.height / 2;
+        let life = 0;
+        const maxLife = 28 + Math.random() * 12;
+        const tick = () => {
+          life++;
+          x += vx * 2;
+          y += vy * 2;
+          p.style.transform = `translate(${x - rect.width/2}px, ${y - rect.height/2}px) rotate(${life*20}deg)`;
+          p.style.opacity = String(1 - life / (maxLife + 5));
+          if (life < maxLife) requestAnimationFrame(tick);
+          else p.remove();
+        };
+        requestAnimationFrame(tick);
+      }
+      setTimeout(() => {
+        container.style.display = 'none';
+      }, 1000);
+    }
+
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const errorEl = document.getElementById('authError');
+        errorEl.style.display = 'none';
+        try {
+          const { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } = window.firebaseAuth;
+          const { auth } = window.firebaseExports;
+          try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
+          await signInWithEmailAndPassword(auth, email, password);
+          closeLoginModal();
+        } catch (err) {
+          errorEl.textContent = err?.message || 'Login failed';
+          errorEl.style.display = 'block';
+        }
+      });
+    }
+
+    const googleBtn = document.getElementById('googleSignIn');
+    if (googleBtn) {
+      googleBtn.addEventListener('click', async () => {
+        const errorEl = document.getElementById('authError');
+        errorEl.style.display = 'none';
+        try {
+          const { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, setPersistence, browserLocalPersistence } = window.firebaseAuth;
+          const { auth } = window.firebaseExports;
+          const provider = new GoogleAuthProvider();
+          try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
+          try {
+            await signInWithPopup(auth, provider);
+          } catch (e) {
+            await signInWithRedirect(auth, provider);
+            await getRedirectResult(auth);
+          }
+          closeLoginModal();
+        } catch (err) {
+          errorEl.textContent = err?.message || 'Google sign-in failed';
+          errorEl.style.display = 'block';
+        }
+      });
+    }
+
+    // Register flow
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('regEmail').value.trim();
+        const p1 = document.getElementById('regPassword').value;
+        const p2 = document.getElementById('regPassword2').value;
+        const errorEl = document.getElementById('regError');
+        errorEl.style.display = 'none';
+        if (p1 !== p2) { errorEl.textContent = 'Passwords do not match'; errorEl.style.display='block'; return; }
+        try {
+          const { createUserWithEmailAndPassword, sendEmailVerification } = window.firebaseAuth;
+          const { auth } = window.firebaseExports;
+          const userCred = await createUserWithEmailAndPassword(auth, email, p1);
+          try { await sendEmailVerification(userCred.user); } catch {_=>{}};
+          closeLoginModal();
+        } catch (err) {
+          errorEl.textContent = err?.message || 'Registration failed';
+          errorEl.style.display = 'block';
+        }
+      });
+    }
   });
   
+     // Simple tilt effect for the modal form wrapper
+    const tiltWrap = document.querySelector('.tilt-wrap');
+    if (tiltWrap) {
+      tiltWrap.addEventListener('mousemove', (e) => {
+        const rect = tiltWrap.getBoundingClientRect();
+        const relX = e.clientX - rect.left;
+        const relY = e.clientY - rect.top;
+        const rotateY = ((relX / rect.width) - 0.5) * 8;
+        const rotateX = ((relY / rect.height) - 0.5) * -8;
+        tiltWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      tiltWrap.addEventListener('mouseleave', () => {
+        tiltWrap.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+  });
+     </script>
  
-</script>
-</body>
-</html>
+   <script>
+   // Dynamic neon particle orb in hero
+   (function(){
+     const canvas = document.getElementById('orbCanvas');
+     if (!canvas) return;
+     const ctx = canvas.getContext('2d');
+     function resize(){ canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; }
+     resize();
+     window.addEventListener('resize', resize);
+
+     const center = () => ({ x: canvas.width/2, y: canvas.height/2 });
+     const particles = Array.from({length: 140}, ()=>({
+       angle: Math.random()*Math.PI*2,
+       radius: 80 + Math.random()*220,
+       speed: 0.002 + Math.random()*0.006,
+       size: 1 + Math.random()*2,
+       hue: 185 + Math.random()*40
+     }));
+
+     let t = 0;
+     function draw(){
+       t += 0.003;
+       ctx.clearRect(0,0,canvas.width,canvas.height);
+       const c = center();
+       for (const p of particles){
+         p.angle += p.speed;
+         const wobble = Math.sin(t*6 + p.radius)*4;
+         const x = c.x + Math.cos(p.angle)*p.radius + Math.sin(p.angle*3)*wobble;
+         const y = c.y + Math.sin(p.angle)*p.radius + Math.cos(p.angle*2)*wobble;
+         const grad = ctx.createRadialGradient(x,y,0,x,y,14);
+         grad.addColorStop(0, `hsla(${p.hue}, 95%, 62%, 0.9)`);
+         grad.addColorStop(1, `hsla(${p.hue}, 95%, 62%, 0)`);
+         ctx.fillStyle = grad;
+         ctx.beginPath();
+         ctx.arc(x,y, 14, 0, Math.PI*2);
+         ctx.fill();
+       }
+       requestAnimationFrame(draw);
+     }
+     draw();
+   })();
+   </script>
+ 
+   <!-- Firebase SDK and app config -->
+   <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
+         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
+    import config from './firebase-config.js';
+
+    const app = initializeApp(config);
+    const auth = getAuth(app);
+
+    // Expose to window for non-module script usage
+         window.firebaseAuth = { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification };
+     window.firebaseExports = { app, auth };
+    window.firebase = true;
+    window.firebaseAppsReady = function() {
+      const userChip = document.getElementById('userChip');
+      const loginLink = document.getElementById('loginNavLink');
+      const userEmail = document.getElementById('userEmail');
+      const userAvatar = document.getElementById('userAvatar');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          loginLink.style.display = 'none';
+          userChip.style.display = 'inline-flex';
+          userEmail.textContent = user.email || user.displayName || '';
+          userAvatar.src = user.photoURL || 'https://api.dicebear.com/7.x/identicon/svg?seed=' + encodeURIComponent(user.email || 'user');
+        } else {
+          loginLink.style.display = '';
+          userChip.style.display = 'none';
+          userEmail.textContent = '';
+          userAvatar.removeAttribute('src');
+        }
+      });
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+          try {
+            await window.firebaseAuth.signOut(auth);
+          } catch (e) {
+            console.error(e);
+          }
+        });
+      }
+    };
+
+    // ensure UI sync on first load
+    if (window.firebaseAppsReady) window.firebaseAppsReady();
+  </script>
+ </body>
+ </html>
