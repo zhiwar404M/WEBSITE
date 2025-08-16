@@ -39,7 +39,8 @@
         <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
-        <a href="#login"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
+        <a href="#login" id="nav-login-link"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
+        <a href="#" id="logout-link" style="display:none"><span class="material-icons">logout</span> <span data-translate="nav_logout">Logout</span></a>
         
         <div class="language-switcher">
           <button class="lang-btn" data-lang="ku">Kurdish</button>
@@ -61,28 +62,7 @@
     </div>
   </section>
   
-  
-  
-  <!-- Features Section -->
-<section id="features" class="features">
-  <!-- ... existing features content ... -->
-</section>
-
-<!-- Login Section -->
-<section id="login" class="login-section">
-  <!-- ... login form ... -->
-</section>
-
-<!-- Feedback Section -->
-<section id="feedback" class="feedback-section">
-  <!-- ... feedback form ... -->
-</section>
-
-<!-- Privacy Policy Section -->
-<section class="privacy-section">
-  <!-- ... privacy policy ... -->
-</section>
-
+  <!-- Apps Section -->
   <section id="apps" class="apps-section">
     <h2 class="section-title" data-translate="apps_section_title">Applications</h2>
     <p class="section-subtitle" data-translate="apps_section_subtitle">These are the apps for both Android and iPhone</p>
@@ -93,14 +73,55 @@
         <h3 class="app-title" data-translate="app1_title">Minefo Kr</h3>
         <span class="app-version" data-translate="app1_version">وەشانی 1.0</span>
         <p class="app-description" data-translate="app1_description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
-        <button class="btn btn-primary" onclick="startDownloadWithAds('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk')">
+        <button class="btn btn-primary" data-download-with-ads data-download-url="https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk">
           <span class="material-icons">download</span> <span data-translate="app1_button">داگرتن بۆ ئەندرۆید</span>
         </button>
       </div>
     </div>
-    
+  </section>
+  
+  
+  
+  <!-- Features Section -->
+<section id="features" class="features">
+  <h2 class="section-title" data-translate="features_title">Features</h2>
+  <p class="section-subtitle" data-translate="features_subtitle">Some unique features of my app</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon"><span class="material-icons">language</span></div>
+      <h3 class="feature-title" data-translate="feature1_title">Kurdish Language</h3>
+      <p class="feature-description" data-translate="feature1_desc">The entire app in Kurdish with special design</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><span class="material-icons">speed</span></div>
+      <h3 class="feature-title" data-translate="feature2_title">Speed</h3>
+      <p class="feature-description" data-translate="feature2_desc">Very fast and lightweight for any mobile</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><span class="material-icons">update</span></div>
+      <h3 class="feature-title" data-translate="feature3_title">Updates</h3>
+      <p class="feature-description" data-translate="feature3_desc">Apps are constantly updated</p>
+    </div>
+  </div>
+</section>
 
 
+    <!-- Ad point 1: Middle of page --> 
+  <div class="ad-container">
+    <span class="ad-label"></span>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"
+            crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2419305830519121"
+         data-ad-slot="Forgotten ad point 1"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+ 
   <!-- Privacy Policy Section -->
   <section class="privacy-section">
     <div class="privacy-container">
@@ -152,46 +173,7 @@
     </div>
   </section>
   
-  <!-- Features Section -->
-<section id="features" class="features">
-  <h2 class="section-title" data-translate="features_title">Features</h2>
-  <p class="section-subtitle" data-translate="features_subtitle">Some unique features of my app</p>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon"><span class="material-icons">language</span></div>
-      <h3 class="feature-title" data-translate="feature1_title">Kurdish Language</h3>
-      <p class="feature-description" data-translate="feature1_desc">The entire app in Kurdish with special design</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><span class="material-icons">speed</span></div>
-      <h3 class="feature-title" data-translate="feature2_title">Speed</h3>
-      <p class="feature-description" data-translate="feature2_desc">Very fast and lightweight for any mobile</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><span class="material-icons">update</span></div>
-      <h3 class="feature-title" data-translate="feature3_title">Updates</h3>
-      <p class="feature-description" data-translate="feature3_desc">Apps are constantly updated</p>
-    </div>
-  </div>
-</section>
-
-
-    <!-- Ad point 1: Middle of page --> 
-  <div class="ad-container">
-    <span class="ad-label"></span>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"
-            crossorigin="anonymous"></script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-2419305830519121"
-         data-ad-slot="Forgotten ad point 1"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
-
+  
   <footer id="contact">
     <div class="footer-content">
       <div class="footer-column">
@@ -240,8 +222,30 @@
         <label for="password" data-translate="login_password">وشەی نهێنی</label>
         <input type="password" id="password" placeholder="••••••••">
       </div>
-      <button class="btn btn-primary" data-translate="login_button">چوونەژوورەوە</button>
+      <button class="btn btn-primary" id="login-button" data-translate="login_button">چوونەژوورەوە</button>
+      <button class="btn btn-outline" id="google-signin"><span class="material-icons">account_circle</span> <span data-translate="google_login">Continue with Google</span></button>
       <p class="login-help" data-translate="login_help">هەژمارت نییە؟ <a href="#register" data-translate="login_register">خۆت تۆمار بکە</a></p>
+      <p id="auth-message" class="login-help" style="display:none"></p>
+    </div>
+  </div>
+</section>
+
+<!-- Register Section -->
+<section id="register" class="login-section">
+  <div class="section-container">
+    <h2 class="section-title" data-translate="register_title">خۆت تۆمار بکە</h2>
+    <p class="section-subtitle" data-translate="register_subtitle">هەژمارێک دروست بکە بۆ بەکارهێنانی تایبەتمەندییە تایبەتەکان</p>
+    
+    <div class="login-form">
+      <div class="form-group">
+        <label for="reg-email" data-translate="register_email">ئیمەیڵ</label>
+        <input type="email" id="reg-email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label for="reg-password" data-translate="register_password">وشەی نهێنی</label>
+        <input type="password" id="reg-password" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary" id="register-button" data-translate="register_button">دروستکردنی هەژمار</button>
     </div>
   </div>
 </section>
@@ -271,7 +275,9 @@
 </section>
 
 
-  <script>
+  <script src="Ads.js"></script>
+ 
+   <script>
   // Language switching function
   function changeLanguage(lang) {
     // Change current selection
@@ -320,6 +326,16 @@
         "ku": "پەیوەندی",
         "ar": "اتصل بنا",
         "en": "Contact"
+      },
+      "nav_login": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Login"
+      },
+      "nav_logout": {
+        "ku": "چوونەدەرەوە",
+        "ar": "تسجيل الخروج",
+        "en": "Logout"
       },
       "hero_title": {
         "ku": "بەرنامەکانی ZHIWAR",
@@ -582,6 +598,11 @@
   "ar": "تسجيل الدخول",
   "en": "Login"
 },
+"google_login": {
+  "ku": "چوونەژوورەوە بە گووگڵ",
+  "ar": "تسجيل الدخول بواسطة Google",
+  "en": "Continue with Google"
+},
 "login_help": {
   "ku": "هەژمارت نییە؟",
   "ar": "ليس لديك حساب؟",
@@ -591,6 +612,31 @@
   "ku": "خۆت تۆمار بکە",
   "ar": "سجل هنا",
   "en": "Register here"
+},
+"register_title": {
+  "ku": "خۆت تۆمار بکە",
+  "ar": "إنشاء حساب",
+  "en": "Create an Account"
+},
+"register_subtitle": {
+  "ku": "هەژمارێک دروست بکە بۆ بەکارهێنانی تایبەتمەندییە تایبەتەکان",
+  "ar": "أنشئ حسابًا للوصول إلى الميزات الخاصة",
+  "en": "Create an account to access special features"
+},
+"register_email": {
+  "ku": "ئیمەیڵ",
+  "ar": "البريد الإلكتروني",
+  "en": "Email"
+},
+"register_password": {
+  "ku": "وشەی نهێنی",
+  "ar": "كلمة المرور",
+  "en": "Password"
+},
+"register_button": {
+  "ku": "دروستکردنی هەژمار",
+  "ar": "إنشاء حساب",
+  "en": "Create Account"
 },
 "feedback_title": {
   "ku": "پێشنیار و رەخنە",
@@ -671,6 +717,94 @@
   });
   
  
+</script>
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+  // Fill these with your Firebase project settings
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const loginButton = document.getElementById('login-button');
+  const registerButton = document.getElementById('register-button');
+  const googleButton = document.getElementById('google-signin');
+  const logoutLink = document.getElementById('logout-link');
+  const navLoginLink = document.getElementById('nav-login-link');
+  const authMessage = document.getElementById('auth-message');
+
+  function showMessage(text, isError = false) {
+    if (!authMessage) return;
+    authMessage.style.display = 'block';
+    authMessage.textContent = text;
+    authMessage.style.color = isError ? '#f87171' : '#10b981';
+    setTimeout(() => { authMessage.style.display = 'none'; }, 4000);
+  }
+
+  loginButton?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    try {
+      await signInWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value.trim());
+      showMessage('Logged in successfully');
+    } catch (err) {
+      showMessage(err.message, true);
+    }
+  });
+
+  registerButton?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const emailInput = document.getElementById('reg-email');
+    const passwordInput = document.getElementById('reg-password');
+    try {
+      await createUserWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value.trim());
+      showMessage('Account created');
+    } catch (err) {
+      showMessage(err.message, true);
+    }
+  });
+
+  googleButton?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithPopup(auth, provider);
+      showMessage('Logged in with Google');
+    } catch (err) {
+      showMessage(err.message, true);
+    }
+  });
+
+  logoutLink?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      await signOut(auth);
+      showMessage('Logged out');
+    } catch (err) {
+      showMessage(err.message, true);
+    }
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    const loginSection = document.getElementById('login');
+    if (user) {
+      if (logoutLink) logoutLink.style.display = 'inline-flex';
+      if (navLoginLink) navLoginLink.style.display = 'none';
+      if (loginSection) loginSection.style.display = 'none';
+    } else {
+      if (logoutLink) logoutLink.style.display = 'none';
+      if (navLoginLink) navLoginLink.style.display = 'inline-flex';
+      if (loginSection) loginSection.style.display = '';
+    }
+  });
 </script>
 </body>
 </html>
