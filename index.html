@@ -39,7 +39,7 @@
         <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
-        <a href="#login" id="nav-login-link"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
+        <a href="#" id="nav-login-link"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
         <a href="#" id="logout-link" style="display:none"><span class="material-icons">logout</span> <span data-translate="nav_logout">Logout</span></a>
         
         <div class="language-switcher">
@@ -207,45 +207,52 @@
   </footer>
 
 
-<!-- Login Section -->
-<section id="login" class="login-section">
-  <div class="section-container">
-    <h2 class="section-title" data-translate="login_title">چوونەژوورەوە بۆ هەژمارەکەت</h2>
-    <p class="section-subtitle" data-translate="login_subtitle">دەستکاری بەرنامەکان و ڕێكخستنەكانت بكە</p>
-    
-    <!-- Email/Password Login -->
-    <div class="login-form">
-      <div class="form-group">
-        <label for="email" data-translate="login_email">ئیمەیڵ</label>
-        <input type="email" id="email" placeholder="your@email.com">
-      </div>
-      <div class="form-group">
-        <label for="password" data-translate="login_password">وشەی نهێنی</label>
-        <input type="password" id="password" placeholder="••••••••">
-      </div>
-      <button class="btn btn-primary" id="login-button" data-translate="login_button">چوونەژوورەوە</button>
-      <button class="btn btn-outline" id="google-signin"><span class="material-icons">account_circle</span> <span data-translate="google_login">Continue with Google</span></button>
-      <p class="login-help" data-translate="login_help">هەژمارت نییە؟ <a href="#register" data-translate="login_register">خۆت تۆمار بکە</a></p>
-      <p id="auth-message" class="login-help" style="display:none"></p>
+<!-- Login Modal (hidden by default) -->
+<div id="login-modal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div class="modal-title" data-translate="login_title">چوونەژوورەوە بۆ هەژمارەکەت</div>
+      <button id="login-modal-close" class="modal-close" aria-label="Close" data-translate="close">
+        <span class="material-icons">close</span>
+      </button>
     </div>
+    <div class="modal-body">
+      <p class="section-subtitle" data-translate="login_subtitle">دەستکاری بەرنامەکان و ڕێكخستنەكانت بكە</p>
 
-    <!-- Phone Number Login (OTP) -->
-    <p class="section-subtitle" style="margin-top:1.5rem" data-translate="phone_login_title">Login with phone number</p>
-    <div class="login-form">
-      <div class="form-group">
-        <label for="phone-number" data-translate="phone_number_label">Phone Number</label>
-        <input type="tel" id="phone-number">
+      <!-- Email/Password Login -->
+      <div class="login-form">
+        <div class="form-group">
+          <label for="email" data-translate="login_email">ئیمەیڵ</label>
+          <input type="email" id="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label for="password" data-translate="login_password">وشەی نهێنی</label>
+          <input type="password" id="password" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary" id="login-button" data-translate="login_button">چوونەژوورەوە</button>
+        <button class="btn btn-outline" id="google-signin"><span class="material-icons">account_circle</span> <span data-translate="google_login">Continue with Google</span></button>
+        <p class="login-help" data-translate="login_help">هەژمارت نییە؟ <a href="#register" data-translate="login_register">خۆت تۆمار بکە</a></p>
+        <p id="auth-message" class="login-help" style="display:none"></p>
       </div>
-      <div id="recaptcha-container" style="margin: 0.5rem 0;"></div>
-      <button class="btn btn-primary" id="send-code-button"><span class="material-icons">sms</span> <span data-translate="send_code_button">Send Code</span></button>
-      <div class="form-group" style="margin-top:1rem">
-        <label for="sms-code" data-translate="sms_code_label">Verification Code</label>
-        <input type="text" id="sms-code">
+
+      <!-- Phone Number Login (OTP) -->
+      <p class="section-subtitle" style="margin-top:1.5rem" data-translate="phone_login_title">Login with phone number</p>
+      <div class="login-form">
+        <div class="form-group">
+          <label for="phone-number" data-translate="phone_number_label">Phone Number</label>
+          <input type="tel" id="phone-number">
+        </div>
+        <div id="recaptcha-container" style="margin: 0.5rem 0;"></div>
+        <button class="btn btn-primary" id="send-code-button"><span class="material-icons">sms</span> <span data-translate="send_code_button">Send Code</span></button>
+        <div class="form-group" style="margin-top:1rem">
+          <label for="sms-code" data-translate="sms_code_label">Verification Code</label>
+          <input type="text" id="sms-code">
+        </div>
+        <button class="btn btn-outline" id="verify-code-button"><span class="material-icons">verified</span> <span data-translate="verify_code_button">Verify & Login</span></button>
       </div>
-      <button class="btn btn-outline" id="verify-code-button"><span class="material-icons">verified</span> <span data-translate="verify_code_button">Verify & Login</span></button>
     </div>
   </div>
-</section>
+</div>
 
 <!-- Register Section -->
 <section id="register" class="login-section">
@@ -345,10 +352,15 @@
         "en": "Contact"
       },
       "nav_login": {
-        "ku": "چوونەژوورەوە",
-        "ar": "تسجيل الدخول",
-        "en": "Login"
-      },
+  "ku": "چوونەژوورەوە",
+  "ar": "تسجيل الدخول",
+  "en": "Login"
+},
+"close": {
+  "ku": "داخستن",
+  "ar": "إغلاق",
+  "en": "Close"
+},
       "nav_logout": {
         "ku": "چوونەدەرەوە",
         "ar": "تسجيل الخروج",
@@ -781,8 +793,10 @@
    const registerButton = document.getElementById('register-button');
    const googleButton = document.getElementById('google-signin');
    const logoutLink = document.getElementById('logout-link');
-   const navLoginLink = document.getElementById('nav-login-link');
-   const authMessage = document.getElementById('auth-message');
+     const navLoginLink = document.getElementById('nav-login-link');
+  const authMessage = document.getElementById('auth-message');
+  const loginModal = document.getElementById('login-modal');
+  const loginModalClose = document.getElementById('login-modal-close');
  
    // Phone auth elements
    const sendCodeButton = document.getElementById('send-code-button');
@@ -827,15 +841,32 @@
      }
    });
  
-   googleButton?.addEventListener('click', async (e) => {
-     e.preventDefault();
-     try {
-       await signInWithPopup(auth, provider);
-       showMessage('Logged in with Google');
-     } catch (err) {
-       showMessage(err.message, true);
-     }
-   });
+       // Open login modal
+    navLoginLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (loginModal) {
+        loginModal.style.display = 'flex';
+        loginModal.setAttribute('aria-hidden', 'false');
+      }
+    });
+
+    // Close login modal
+    loginModalClose?.addEventListener('click', () => {
+      if (loginModal) {
+        loginModal.style.display = 'none';
+        loginModal.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    googleButton?.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await signInWithPopup(auth, provider);
+        showMessage('Logged in with Google');
+      } catch (err) {
+        showMessage(err.message, true);
+      }
+    });
  
    // Phone number sign-in (OTP)
        let recaptchaVerifier = null;
@@ -888,7 +919,8 @@
     if (user) {
       if (logoutLink) logoutLink.style.display = 'inline-flex';
       if (navLoginLink) navLoginLink.style.display = 'none';
-      if (loginSection) loginSection.style.display = 'none';
+      const loginModal = document.getElementById('login-modal');
+      if (loginModal) { loginModal.style.display = 'none'; loginModal.setAttribute('aria-hidden', 'true'); }
       // Clear inputs
       document.getElementById('email')?.value = '';
       document.getElementById('password')?.value = '';
@@ -899,7 +931,7 @@
     } else {
       if (logoutLink) logoutLink.style.display = 'none';
       if (navLoginLink) navLoginLink.style.display = 'inline-flex';
-      if (loginSection) loginSection.style.display = '';
+      // Do not auto-open modal on logged out
     }
   });
  </script>
