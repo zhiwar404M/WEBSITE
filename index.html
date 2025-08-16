@@ -39,7 +39,7 @@
         <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
-        <a href="#login" id="loginNavLink"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
+                  <a href="#login" id="loginNavLink" onclick="var o=document.getElementById('loginModalOverlay'); if(o){o.style.display='flex'; document.body.style.overflow='hidden';} return false;"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
         <div id="userChip" class="user-chip" style="display:none;">
           <img id="userAvatar" class="user-avatar" alt="" />
           <span id="userEmail" class="user-email"></span>
@@ -715,7 +715,7 @@
     changeLanguage(userLang);
 
     // Login modal
-    const loginLink = document.querySelector('nav a[href="#login"]');
+    const loginLink = document.getElementById('loginNavLink');
     const overlay = document.getElementById('loginModalOverlay');
     const closeBtn = document.getElementById('loginModalClose');
     const loginForm = document.getElementById('loginForm');
@@ -731,6 +731,10 @@
       overlay.style.display = 'none';
       document.body.style.overflow = '';
     }
+
+    // expose for fallback bindings
+    window._openLoginModal = openLoginModal;
+    window._closeLoginModal = closeLoginModal;
 
     if (loginLink) {
       loginLink.addEventListener('click', (e) => {
