@@ -59,14 +59,8 @@
 
   <section class="hero">
     <div class="hero-3d" aria-hidden="true">
-      <div class="cube">
-        <div class="face face-front"></div>
-        <div class="face face-back"></div>
-        <div class="face face-left"></div>
-        <div class="face face-right"></div>
-        <div class="face face-top"></div>
-        <div class="face face-bottom"></div>
-      </div>
+      <canvas id="orbCanvas" class="orb-canvas"></canvas>
+      <div class="orb-core"></div>
     </div>
     <div class="hero-content">
       <h1 data-translate="hero_title">ZHIWAR Apps</h1>
@@ -1042,10 +1036,53 @@
       });
     }
   });
-  </script>
+     </script>
+ 
+   <script>
+   // Dynamic neon particle orb in hero
+   (function(){
+     const canvas = document.getElementById('orbCanvas');
+     if (!canvas) return;
+     const ctx = canvas.getContext('2d');
+     function resize(){ canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; }
+     resize();
+     window.addEventListener('resize', resize);
 
-  <!-- Firebase SDK and app config -->
-  <script type="module">
+     const center = () => ({ x: canvas.width/2, y: canvas.height/2 });
+     const particles = Array.from({length: 140}, ()=>({
+       angle: Math.random()*Math.PI*2,
+       radius: 80 + Math.random()*220,
+       speed: 0.002 + Math.random()*0.006,
+       size: 1 + Math.random()*2,
+       hue: 185 + Math.random()*40
+     }));
+
+     let t = 0;
+     function draw(){
+       t += 0.003;
+       ctx.clearRect(0,0,canvas.width,canvas.height);
+       const c = center();
+       for (const p of particles){
+         p.angle += p.speed;
+         const wobble = Math.sin(t*6 + p.radius)*4;
+         const x = c.x + Math.cos(p.angle)*p.radius + Math.sin(p.angle*3)*wobble;
+         const y = c.y + Math.sin(p.angle)*p.radius + Math.cos(p.angle*2)*wobble;
+         const grad = ctx.createRadialGradient(x,y,0,x,y,14);
+         grad.addColorStop(0, `hsla(${p.hue}, 95%, 62%, 0.9)`);
+         grad.addColorStop(1, `hsla(${p.hue}, 95%, 62%, 0)`);
+         ctx.fillStyle = grad;
+         ctx.beginPath();
+         ctx.arc(x,y, 14, 0, Math.PI*2);
+         ctx.fill();
+       }
+       requestAnimationFrame(draw);
+     }
+     draw();
+   })();
+   </script>
+ 
+   <!-- Firebase SDK and app config -->
+   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
          import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
     import config from './firebase-config.js';
