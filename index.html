@@ -281,43 +281,48 @@
     </div>
     <div class="modal-body">
       <div class="mc-characters" aria-hidden="true">
-        <!-- Steve -->
-        <svg class="mc-steve" width="160" height="160" viewBox="0 0 96 96">
-          <rect x="0" y="0" width="96" height="96" fill="#8f6b4a"/>
-          <rect x="8" y="8" width="80" height="80" fill="#c58c85"/>
-          <!-- hair top -->
-          <rect x="8" y="8" width="80" height="20" fill="#5d3b24"/>
-          <!-- eyes whites -->
-          <rect x="26" y="40" width="14" height="10" fill="#ffffff"/>
-          <rect x="56" y="40" width="14" height="10" fill="#ffffff"/>
-          <!-- pupils -->
-          <rect id="stevePupilL" x="31" y="43" width="5" height="5" fill="#1f2937" rx="1"/>
-          <rect id="stevePupilR" x="61" y="43" width="5" height="5" fill="#1f2937" rx="1"/>
-          <!-- beard -->
-          <rect x="28" y="62" width="40" height="12" fill="#6b4a2f"/>
-          <!-- arm -->
-          <g id="steveArm" class="steve-arm" transform="translate(78,52)">
-            <rect x="-8" y="0" width="14" height="28" fill="#c58c85"/>
+        <!-- Creeper full body -->
+        <svg class="mc-creeper-3d" width="220" height="220" viewBox="0 0 160 200">
+          <!-- Torso -->
+          <g id="creeperTorso" transform="translate(52,60)">
+            <rect x="0" y="0" width="56" height="72" fill="#6aaa64"/>
+            <rect x="6" y="10" width="10" height="10" fill="#2e6b2e"/>
+            <rect x="40" y="22" width="8" height="8" fill="#2e6b2e"/>
           </g>
-        </svg>
-        <!-- Creeper -->
-        <svg class="mc-creeper" width="160" height="160" viewBox="0 0 96 96">
-          <rect x="0" y="0" width="96" height="96" fill="#3a7f3a"/>
-          <rect x="6" y="6" width="84" height="84" fill="#6aaa64"/>
-          <!-- noise blocks -->
-          <rect x="12" y="18" width="10" height="10" fill="#2e6b2e"/>
-          <rect x="70" y="22" width="12" height="12" fill="#2e6b2e"/>
-          <!-- eyes -->
-          <rect x="26" y="32" width="14" height="14" fill="#0b0f12"/>
-          <rect x="56" y="32" width="14" height="14" fill="#0b0f12"/>
-          <!-- mouth -->
-          <rect x="38" y="50" width="20" height="18" fill="#0b0f12"/>
-          <rect x="32" y="58" width="8" height="10" fill="#0b0f12"/>
-          <rect x="58" y="58" width="8" height="10" fill="#0b0f12"/>
+          <!-- Head -->
+          <g id="creeperHead" transform="translate(52,20)">
+            <rect x="0" y="0" width="56" height="56" fill="#6aaa64"/>
+            <rect x="6" y="6" width="12" height="12" fill="#2e6b2e"/>
+            <rect x="38" y="10" width="10" height="10" fill="#2e6b2e"/>
+            <!-- Eyes -->
+            <rect x="12" y="18" width="12" height="12" fill="#0b0f12"/>
+            <rect x="32" y="18" width="12" height="12" fill="#0b0f12"/>
+            <!-- Mouth -->
+            <rect x="22" y="32" width="12" height="16" fill="#0b0f12"/>
+            <rect x="16" y="38" width="6" height="10" fill="#0b0f12"/>
+            <rect x="34" y="38" width="6" height="10" fill="#0b0f12"/>
+          </g>
+          <!-- Legs -->
+          <g id="creeperLegFL" transform="translate(52,132)">
+            <rect x="0" y="0" width="24" height="44" fill="#6aaa64"/>
+          </g>
+          <g id="creeperLegFR" transform="translate(84,132)">
+            <rect x="0" y="0" width="24" height="44" fill="#6aaa64"/>
+          </g>
+          <g id="creeperLegBL" transform="translate(52,132)">
+            <rect x="0" y="0" width="24" height="44" fill="#6aaa64" opacity="0.6"/>
+          </g>
+          <g id="creeperLegBR" transform="translate(84,132)">
+            <rect x="0" y="0" width="24" height="44" fill="#6aaa64" opacity="0.6"/>
+          </g>
         </svg>
       </div>
       <div class="tilt-wrap">
-        <form id="loginForm" novalidate>
+        <div class="auth-tabs" role="tablist">
+          <button id="tabSignIn" class="auth-tab active" type="button" role="tab">Sign in</button>
+          <button id="tabRegister" class="auth-tab" type="button" role="tab">Register now</button>
+        </div>
+        <form id="loginForm" novalidate style="display: block;" aria-hidden="false">
           <div id="authError" class="auth-error" role="alert" style="display:none;"></div>
           <div class="form-group">
             <label for="loginEmail" data-translate="login_email">Email</label>
@@ -335,7 +340,27 @@
           </button>
           <div class="login-help">
             <span data-translate="login_help">Don't have an account?</span>
-            <a href="#" data-translate="login_register">Register here</a>
+            <a href="#" id="linkToRegister" data-translate="login_register">Register here</a>
+          </div>
+        </form>
+        <form id="registerForm" novalidate style="display: none;" aria-hidden="true">
+          <div id="regError" class="auth-error" role="alert" style="display:none;"></div>
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input id="regEmail" type="email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <input id="regPassword" type="password" required autocomplete="new-password" minlength="6">
+          </div>
+          <div class="form-group">
+            <label for="regPassword2">Confirm Password</label>
+            <input id="regPassword2" type="password" required autocomplete="new-password" minlength="6">
+          </div>
+          <button type="submit" class="btn btn-primary" id="registerBtn">Create account</button>
+          <div class="login-help">
+            <span>Already have an account?</span>
+            <a href="#" id="linkToSignIn">Sign in</a>
           </div>
         </form>
       </div>
@@ -815,45 +840,77 @@
       if (overlay && overlay.style.display === 'flex') movePupils(e);
     });
 
-    // 3D bob/tilt on characters
+    // 3D tilt + creeper head follow + leg bob
     const chars = document.querySelector('.mc-characters');
+    const head = document.getElementById('creeperHead');
+    const torso = document.getElementById('creeperTorso');
+    const legFL = document.getElementById('creeperLegFL');
+    const legFR = document.getElementById('creeperLegFR');
+    const legBL = document.getElementById('creeperLegBL');
+    const legBR = document.getElementById('creeperLegBR');
+
+    let wobbleT = 0;
+    function applyWalk() {
+      wobbleT += 0.08;
+      const a = Math.sin(wobbleT) * 6;
+      if (legFL) legFL.setAttribute('transform', `translate(52,132) rotate(${a})`);
+      if (legBR) legBR.setAttribute('transform', `translate(84,132) rotate(${a})`);
+      if (legFR) legFR.setAttribute('transform', `translate(84,132) rotate(${-a})`);
+      if (legBL) legBL.setAttribute('transform', `translate(52,132) rotate(${-a})`);
+      requestAnimationFrame(applyWalk);
+    }
+    requestAnimationFrame(applyWalk);
+
     if (chars) {
-      chars.addEventListener('mousemove', (e) => {
+      const updateTilt = (clientX, clientY) => {
         const rect = chars.getBoundingClientRect();
-        const rx = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
-        const ry = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
+        const rx = ((clientY - rect.top) / rect.height - 0.5) * -8;
+        const ry = ((clientX - rect.left) / rect.width - 0.5) * 8;
         chars.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
-      });
+        if (head) head.setAttribute('transform', `translate(52,20) rotate(${ry * 0.8})`);
+      };
+      chars.addEventListener('mousemove', (e) => updateTilt(e.clientX, e.clientY));
       chars.addEventListener('mouseleave', () => {
         chars.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        if (head) head.setAttribute('transform', 'translate(52,20)');
+      });
+      // touch support
+      chars.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches[0]) updateTilt(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      chars.addEventListener('touchend', () => {
+        chars.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        if (head) head.setAttribute('transform', 'translate(52,20)');
       });
     }
 
-    let armWaveTimer;
-    function startArmWave() {
-      if (!steveArm) return;
-      let t = 0;
-      stopArmWave();
-      armWaveTimer = setInterval(() => {
-        t += 0.12;
-        const angle = Math.sin(t) * 18 + 6; // wave
-        steveArm.setAttribute('transform', `translate(78,52) rotate(${angle})`);
-      }, 30);
+    // Toggle forms (Sign in / Register)
+    const tabSignIn = document.getElementById('tabSignIn');
+    const tabRegister = document.getElementById('tabRegister');
+    const formSignIn = document.getElementById('loginForm');
+    const formRegister = document.getElementById('registerForm');
+    const linkToRegister = document.getElementById('linkToRegister');
+    const linkToSignIn = document.getElementById('linkToSignIn');
+    function showSignIn(){
+      tabSignIn.classList.add('active');
+      tabRegister.classList.remove('active');
+      formSignIn.style.display = 'block';
+      formSignIn.setAttribute('aria-hidden', 'false');
+      formRegister.style.display = 'none';
+      formRegister.setAttribute('aria-hidden', 'true');
     }
-    function stopArmWave() {
-      if (armWaveTimer) clearInterval(armWaveTimer);
-      if (steveArm) steveArm.setAttribute('transform', 'translate(78,52)');
+    function showRegister(){
+      tabRegister.classList.add('active');
+      tabSignIn.classList.remove('active');
+      formRegister.style.display = 'block';
+      formRegister.setAttribute('aria-hidden', 'false');
+      formSignIn.style.display = 'none';
+      formSignIn.setAttribute('aria-hidden', 'true');
     }
-
-    if (emailInput) {
-      emailInput.addEventListener('focus', startArmWave);
-      emailInput.addEventListener('blur', stopArmWave);
-    }
-    const pwdInput = document.getElementById('loginPassword');
-    if (pwdInput) {
-      pwdInput.addEventListener('focus', startArmWave);
-      pwdInput.addEventListener('blur', stopArmWave);
-    }
+    if (tabSignIn) tabSignIn.addEventListener('click', showSignIn);
+    if (tabRegister) tabRegister.addEventListener('click', showRegister);
+    if (linkToRegister) linkToRegister.addEventListener('click', (e)=>{ e.preventDefault(); showRegister(); });
+    if (linkToSignIn) linkToSignIn.addEventListener('click', (e)=>{ e.preventDefault(); showSignIn(); });
 
     // Firebase auth init
     if (window.firebase && window.firebaseAppsReady) {
@@ -905,8 +962,9 @@
         const errorEl = document.getElementById('authError');
         errorEl.style.display = 'none';
         try {
-          const { signInWithEmailAndPassword } = window.firebaseAuth;
+          const { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } = window.firebaseAuth;
           const { auth } = window.firebaseExports;
+          try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
           await signInWithEmailAndPassword(auth, email, password);
           triggerCreeperExplosion();
           setTimeout(() => closeLoginModal(), 900);
@@ -923,14 +981,45 @@
         const errorEl = document.getElementById('authError');
         errorEl.style.display = 'none';
         try {
-          const { GoogleAuthProvider, signInWithPopup } = window.firebaseAuth;
+          const { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, setPersistence, browserLocalPersistence } = window.firebaseAuth;
           const { auth } = window.firebaseExports;
           const provider = new GoogleAuthProvider();
-          await signInWithPopup(auth, provider);
+          try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
+          try {
+            await signInWithPopup(auth, provider);
+          } catch (e) {
+            await signInWithRedirect(auth, provider);
+            await getRedirectResult(auth);
+          }
           triggerCreeperExplosion();
           setTimeout(() => closeLoginModal(), 900);
         } catch (err) {
           errorEl.textContent = err?.message || 'Google sign-in failed';
+          errorEl.style.display = 'block';
+        }
+      });
+    }
+
+    // Register flow
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('regEmail').value.trim();
+        const p1 = document.getElementById('regPassword').value;
+        const p2 = document.getElementById('regPassword2').value;
+        const errorEl = document.getElementById('regError');
+        errorEl.style.display = 'none';
+        if (p1 !== p2) { errorEl.textContent = 'Passwords do not match'; errorEl.style.display='block'; return; }
+        try {
+          const { createUserWithEmailAndPassword, sendEmailVerification } = window.firebaseAuth;
+          const { auth } = window.firebaseExports;
+          const userCred = await createUserWithEmailAndPassword(auth, email, p1);
+          try { await sendEmailVerification(userCred.user); } catch {_=>{}};
+          triggerCreeperExplosion();
+          setTimeout(() => closeLoginModal(), 1000);
+        } catch (err) {
+          errorEl.textContent = err?.message || 'Registration failed';
           errorEl.style.display = 'block';
         }
       });
@@ -958,15 +1047,15 @@
   <!-- Firebase SDK and app config -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
-    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
+         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
     import config from './firebase-config.js';
 
     const app = initializeApp(config);
     const auth = getAuth(app);
 
     // Expose to window for non-module script usage
-    window.firebaseAuth = { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut };
-    window.firebaseExports = { app, auth };
+         window.firebaseAuth = { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification };
+     window.firebaseExports = { app, auth };
     window.firebase = true;
     window.firebaseAppsReady = function() {
       const userChip = document.getElementById('userChip');

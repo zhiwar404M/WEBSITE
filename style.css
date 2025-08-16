@@ -549,8 +549,13 @@ nav a:hover {
   justify-content: center;
   margin-bottom: 14px;
 }
-.mc-steve, .mc-creeper { filter: drop-shadow(0 6px 24px rgba(56,189,248,0.2)); }
+.mc-steve, .mc-creeper, .mc-creeper-3d { filter: drop-shadow(0 6px 24px rgba(56,189,248,0.2)); }
 .steve-arm { transform-origin: -1px 0; }
+
+/* Auth tabs */
+.auth-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+.auth-tab { background: rgba(148,163,184,0.15); color: #e2e8f0; border: 1px solid rgba(148,163,184,0.25); padding: 8px 12px; border-radius: 999px; cursor: pointer; }
+.auth-tab.active { background: rgba(56,189,248,0.2); border-color: rgba(56,189,248,0.5); }
 
 .modal-close {
   position: absolute;
