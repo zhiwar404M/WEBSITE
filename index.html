@@ -257,7 +257,8 @@
         <label for="feedback-message" data-translate="feedback_message">پەیامەکەت</label>
         <textarea id="feedback-message" rows="5" placeholder="پێشنیارەکەت لێرە بنووسە..."></textarea>
       </div>
-      <button class="btn btn-primary" data-translate="feedback_button">ناردنی رەخنە</button>
+      <button id="feedbackSubmit" class="btn btn-primary" data-translate="feedback_button">ناردنی رەخنە</button>
+      <div id="feedbackStatus" class="auth-error" role="alert" style="display:none;"></div>
     </div>
   </div>
 </section>
@@ -278,51 +279,15 @@
         <canvas id="loginCanvas"></canvas>
       </div>
       <div class="tilt-wrap">
-        <div class="auth-tabs" role="tablist">
-          <button id="tabSignIn" class="auth-tab active" type="button" role="tab" data-translate="tab_signin">Sign in</button>
-          <button id="tabRegister" class="auth-tab" type="button" role="tab" data-translate="tab_register">Register now</button>
-        </div>
+        <div class="auth-tabs" role="tablist" style="display:none;"></div>
         <form id="loginForm" novalidate style="display: block;" aria-hidden="false">
           <div id="authError" class="auth-error" role="alert" style="display:none;"></div>
-          <div class="form-group">
-            <label for="loginEmail" data-translate="login_email">Email</label>
-            <input id="loginEmail" type="email" required autocomplete="email">
-          </div>
-          <div class="form-group">
-            <label for="loginPassword" data-translate="login_password">Password</label>
-            <input id="loginPassword" type="password" required autocomplete="current-password">
-          </div>
-          <button type="submit" class="btn btn-primary" data-translate="login_button">Login</button>
-          <div class="oauth-divider"><span data-translate="oauth_or">OR</span></div>
           <button type="button" id="googleSignIn" class="btn btn-outline google-btn">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" width="20" height="20" style="filter: brightness(0) invert(1);"/>
             <span data-translate="google">Google</span>
           </button>
-          <div class="login-help">
-            <span data-translate="login_help">Don't have an account?</span>
-            <a href="#" id="linkToRegister" data-translate="login_register">Register here</a>
-          </div>
         </form>
-        <form id="registerForm" novalidate style="display: none;" aria-hidden="true">
-          <div id="regError" class="auth-error" role="alert" style="display:none;"></div>
-          <div class="form-group">
-            <label for="regEmail">Email</label>
-            <input id="regEmail" type="email" required autocomplete="email">
-          </div>
-          <div class="form-group">
-            <label for="regPassword">Password</label>
-            <input id="regPassword" type="password" required autocomplete="new-password" minlength="6">
-          </div>
-          <div class="form-group">
-            <label for="regPassword2">Confirm Password</label>
-            <input id="regPassword2" type="password" required autocomplete="new-password" minlength="6">
-          </div>
-          <button type="submit" class="btn btn-primary" id="registerBtn" data-translate="register_button">Create account</button>
-          <div class="login-help">
-            <span data-translate="already_have">Already have an account?</span>
-            <a href="#" id="linkToSignIn" data-translate="signin_link">Sign in</a>
-          </div>
-        </form>
+        <form id="registerForm" novalidate style="display: none;" aria-hidden="true"></form>
       </div>
     </div>
   </div>
@@ -595,7 +560,7 @@
       },
       "facebook_label": {
         "ku": "فەیسبووک",
-        "ar": "فيسبوك",
+        "ar": "تيك توك",
         "en": "Facebook"
       },
       "snapchat_label": {
@@ -642,7 +607,7 @@
         "ku": "گووگڵ",
         "ar": "جوجل",
         "en": "Google"
-      }
+      },
       "nav_login": {
         "ku": "چوونەژوورەوە",
         "ar": "تسجيل الدخول",
@@ -729,6 +694,32 @@
   "ar": "إرسال الملاحظات",
   "en": "Submit Feedback"
 }
+    ,
+      "please_login_first": {
+        "ku": "تکایە سەرەتا بە گووگڵ بچۆ ژوورەوە",
+        "ar": "يرجى تسجيل الدخول عبر جوجل أولاً",
+        "en": "Please sign in with Google first"
+      },
+      "message_required": {
+        "ku": "پەیام پێویستە",
+        "ar": "الرسالة مطلوبة",
+        "en": "Message is required"
+      },
+      "feedback_thanks": {
+        "ku": "سوپاس بۆ فیدباکەکەت!",
+        "ar": "شكرًا على ملاحظتك!",
+        "en": "Thanks for your feedback!"
+      },
+      "feedback_failed": {
+        "ku": "ناردنی فیدباک سەرکەوتوو نەبوو. تکایە دووبارە هەوڵبدە.",
+        "ar": "فشل إرسال الملاحظة. الرجاء المحاولة لاحقًا.",
+        "en": "Failed to submit feedback. Please try again later."
+      },
+      "login_disabled": {
+        "ku": "چوونەژوورەوە و تۆمارکردن ناچالاک کراوە.",
+        "ar": "تم تعطيل تسجيل الدخول والتسجيل.",
+        "en": "Login and registration are disabled."
+      }
     };
 
     // Change all texts
@@ -809,6 +800,50 @@
       }
     });
 
+    // Feedback submission handler
+    const feedbackBtn = document.getElementById('feedbackSubmit');
+    const feedbackStatus = document.getElementById('feedbackStatus');
+    if (feedbackBtn) {
+      feedbackBtn.addEventListener('click', async () => {
+        const typeEl = document.getElementById('feedback-type');
+        const msgEl = document.getElementById('feedback-message');
+        const type = (typeEl && typeEl.value) || '';
+        const message = (msgEl && msgEl.value.trim()) || '';
+        feedbackStatus.style.display = 'none';
+
+                  const auth = window.firebaseExports && window.firebaseExports.auth;
+          const user = auth && auth.currentUser;
+          // allow guest feedback; tag as guest if not signed in
+          const currentEmail = user && (user.email || user.displayName);
+
+        if (!message) {
+            feedbackStatus.textContent = (translations['message_required'] && translations['message_required'][document.documentElement.lang]) || 'Message is required';
+            feedbackStatus.style.display = 'block';
+            return;
+          }
+
+        const finalMessage = `[from: ${currentEmail || 'guest'}]\\n${message}`;
+
+        try {
+          feedbackBtn.disabled = true;
+          const res = await fetch('PHP%20Code/feedback.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+            body: new URLSearchParams({ 'feedback-type': type, 'feedback-message': finalMessage }).toString()
+          });
+          const text = await res.text();
+          feedbackStatus.textContent = text || ((translations['feedback_thanks'] && translations['feedback_thanks'][document.documentElement.lang]) || 'Thanks for your feedback!');
+          feedbackStatus.style.display = 'block';
+          if (msgEl) msgEl.value = '';
+        } catch (e) {
+          feedbackStatus.textContent = (translations['feedback_failed'] && translations['feedback_failed'][document.documentElement.lang]) || 'Failed to submit feedback. Please try again later.';
+          feedbackStatus.style.display = 'block';
+        } finally {
+          feedbackBtn.disabled = false;
+        }
+      });
+    }
+
     // Login canvas visual
     (function(){
       const c = document.getElementById('loginCanvas');
@@ -835,32 +870,22 @@
      (function(){})();
 
      // Toggle forms (Sign in / Register)
-const tabSignIn = document.getElementById('tabSignIn');
+    const tabSignIn = document.getElementById('tabSignIn');
     const tabRegister = document.getElementById('tabRegister');
     const formSignIn = document.getElementById('loginForm');
     const formRegister = document.getElementById('registerForm');
-    const linkToRegister = document.getElementById('linkToRegister');
-    const linkToSignIn = document.getElementById('linkToSignIn');
     function showSignIn(){
-      tabSignIn.classList.add('active');
-      tabRegister.classList.remove('active');
-      formSignIn.style.display = 'block';
-      formSignIn.setAttribute('aria-hidden', 'false');
-      formRegister.style.display = 'none';
-      formRegister.setAttribute('aria-hidden', 'true');
+      /* login disabled */
+      if (formSignIn) { formSignIn.style.display = 'none'; formSignIn.setAttribute('aria-hidden', 'true'); }
+      if (formRegister) { formRegister.style.display = 'none'; formRegister.setAttribute('aria-hidden', 'true'); }
     }
     function showRegister(){
-      tabRegister.classList.add('active');
-      tabSignIn.classList.remove('active');
-      formRegister.style.display = 'block';
-      formRegister.setAttribute('aria-hidden', 'false');
-      formSignIn.style.display = 'none';
-      formSignIn.setAttribute('aria-hidden', 'true');
+      /* registration disabled */
+      if (formSignIn) { formSignIn.style.display = 'none'; formSignIn.setAttribute('aria-hidden', 'true'); }
+      if (formRegister) { formRegister.style.display = 'none'; formRegister.setAttribute('aria-hidden', 'true'); }
     }
     if (tabSignIn) tabSignIn.addEventListener('click', showSignIn);
     if (tabRegister) tabRegister.addEventListener('click', showRegister);
-    if (linkToRegister) linkToRegister.addEventListener('click', (e)=>{ e.preventDefault(); showRegister(); });
-    if (linkToSignIn) linkToSignIn.addEventListener('click', (e)=>{ e.preventDefault(); showSignIn(); });
 
     // Firebase auth init
     if (window.firebase && window.firebaseAppsReady) {
@@ -908,67 +933,49 @@ const tabSignIn = document.getElementById('tabSignIn');
     if (loginForm) {
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
         const errorEl = document.getElementById('authError');
-        errorEl.style.display = 'none';
-        try {
-          const { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } = window.firebaseAuth;
-          const { auth } = window.firebaseExports;
-          try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
-          await signInWithEmailAndPassword(auth, email, password);
-          closeLoginModal();
-        } catch (err) {
-          errorEl.textContent = err?.message || 'Login failed';
-          errorEl.style.display = 'block';
-        }
+        errorEl.style.display = 'block';
+        errorEl.textContent = (typeof translatePage === 'function' && 'login_disabled') ? 'Login is disabled' : 'Login is disabled';
       });
     }
 
-    const googleBtn = document.getElementById('googleSignIn');
-    if (googleBtn) {
-      googleBtn.addEventListener('click', async () => {
-        const errorEl = document.getElementById('authError');
-        errorEl.style.display = 'none';
-        try {
-          const { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, setPersistence, browserLocalPersistence } = window.firebaseAuth;
-          const { auth } = window.firebaseExports;
-          const provider = new GoogleAuthProvider();
-          try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
+         const googleBtn = document.getElementById('googleSignIn');
+           if (googleBtn) {
+        googleBtn.addEventListener('click', async () => {
+          const errorEl = document.getElementById('authError');
+          errorEl.style.display = 'none';
           try {
-            await signInWithPopup(auth, provider);
-          } catch (e) {
-            await signInWithRedirect(auth, provider);
-            await getRedirectResult(auth);
+            const { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, setPersistence, browserLocalPersistence } = window.firebaseAuth || {};
+            const { auth } = window.firebaseExports || {};
+            if (!auth || !GoogleAuthProvider) {
+              throw new Error('Auth not configured');
+            }
+            const provider = new GoogleAuthProvider();
+            try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
+            try {
+              await signInWithPopup(auth, provider);
+            } catch (e) {
+              await signInWithRedirect(auth, provider);
+              await getRedirectResult(auth);
+            }
+            closeLoginModal();
+          } catch (err) {
+            const msg = (err && err.message) ? err.message : ((translations['login_disabled'] && translations['login_disabled'][document.documentElement.lang]) || 'Login and registration are disabled.');
+            errorEl.textContent = msg;
+            errorEl.style.display = 'block';
           }
-          closeLoginModal();
-        } catch (err) {
-          errorEl.textContent = err?.message || 'Google sign-in failed';
-          errorEl.style.display = 'block';
-        }
-      });
-    }
+        });
+      }
 
     // Register flow
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
       registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('regEmail').value.trim();
-        const p1 = document.getElementById('regPassword').value;
-        const p2 = document.getElementById('regPassword2').value;
         const errorEl = document.getElementById('regError');
-        errorEl.style.display = 'none';
-        if (p1 !== p2) { errorEl.textContent = 'Passwords do not match'; errorEl.style.display='block'; return; }
-        try {
-          const { createUserWithEmailAndPassword, sendEmailVerification } = window.firebaseAuth;
-          const { auth } = window.firebaseExports;
-          const userCred = await createUserWithEmailAndPassword(auth, email, p1);
-          try { await sendEmailVerification(userCred.user); } catch {_=>{}};
-          closeLoginModal();
-        } catch (err) {
-          errorEl.textContent = err?.message || 'Registration failed';
+        if (errorEl) {
           errorEl.style.display = 'block';
+          errorEl.textContent = (translations['login_disabled'] && translations['login_disabled'][document.documentElement.lang]) || 'Login and registration are disabled.';
         }
       });
     }
