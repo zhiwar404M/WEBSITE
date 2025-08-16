@@ -10,7 +10,7 @@ $users = [
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
-if (empty($email) {
+if (empty($email)) {
     die("تکایە ئیمەیڵ بنووسە!");
 }
 
@@ -19,7 +19,7 @@ if (empty($password)) {
 }
 
 // پشکنینی ئیمەیڵ و وشەی نهێنی
-if (isset($users[$email]) {
+if (isset($users[$email])) {
     if (password_verify($password, $users[$email])) {
         $_SESSION['user_email'] = $email;
         header("Location: dashboard.php");  // بڕۆ بۆ پەڕەی داشبۆرد

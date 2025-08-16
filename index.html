@@ -257,7 +257,8 @@
         <label for="feedback-message" data-translate="feedback_message">پەیامەکەت</label>
         <textarea id="feedback-message" rows="5" placeholder="پێشنیارەکەت لێرە بنووسە..."></textarea>
       </div>
-      <button class="btn btn-primary" data-translate="feedback_button">ناردنی رەخنە</button>
+      <button id="feedbackSubmit" class="btn btn-primary" data-translate="feedback_button">ناردنی رەخنە</button>
+      <div id="feedbackStatus" class="auth-error" role="alert" style="display:none;"></div>
     </div>
   </div>
 </section>
@@ -595,7 +596,7 @@
       },
       "facebook_label": {
         "ku": "فەیسبووک",
-        "ar": "فيسبوك",
+        "ar": "تيك توك",
         "en": "Facebook"
       },
       "snapchat_label": {
@@ -642,7 +643,7 @@
         "ku": "گووگڵ",
         "ar": "جوجل",
         "en": "Google"
-      }
+      },
       "nav_login": {
         "ku": "چوونەژوورەوە",
         "ar": "تسجيل الدخول",
@@ -729,6 +730,27 @@
   "ar": "إرسال الملاحظات",
   "en": "Submit Feedback"
 }
+    ,
+      "please_login_first": {
+        "ku": "تکایە سەرەتا بە گووگڵ بچۆ ژوورەوە",
+        "ar": "يرجى تسجيل الدخول عبر جوجل أولاً",
+        "en": "Please sign in with Google first"
+      },
+      "message_required": {
+        "ku": "پەیام پێویستە",
+        "ar": "الرسالة مطلوبة",
+        "en": "Message is required"
+      },
+      "feedback_thanks": {
+        "ku": "سوپاس بۆ فیدباکەکەت!",
+        "ar": "شكرًا على ملاحظتك!",
+        "en": "Thanks for your feedback!"
+      },
+      "feedback_failed": {
+        "ku": "ناردنی فیدباک سەرکەوتوو نەبوو. تکایە دووبارە هەوڵبدە.",
+        "ar": "فشل إرسال الملاحظة. الرجاء المحاولة لاحقًا.",
+        "en": "Failed to submit feedback. Please try again later."
+      }
     };
 
     // Change all texts
@@ -808,6 +830,54 @@
         closeLoginModal();
       }
     });
+
+    // Feedback submission handler
+    const feedbackBtn = document.getElementById('feedbackSubmit');
+    const feedbackStatus = document.getElementById('feedbackStatus');
+    if (feedbackBtn) {
+      feedbackBtn.addEventListener('click', async () => {
+        const typeEl = document.getElementById('feedback-type');
+        const msgEl = document.getElementById('feedback-message');
+        const type = (typeEl && typeEl.value) || '';
+        const message = (msgEl && msgEl.value.trim()) || '';
+        feedbackStatus.style.display = 'none';
+
+        const auth = window.firebaseExports && window.firebaseExports.auth;
+        const user = auth && auth.currentUser;
+        if (!user) {
+            feedbackStatus.textContent = (translations['please_login_first'] && translations['please_login_first'][document.documentElement.lang]) || 'Please sign in with Google first';
+            feedbackStatus.style.display = 'block';
+            if (typeof window._openLoginModal === 'function') window._openLoginModal();
+            return;
+          }
+
+        if (!message) {
+            feedbackStatus.textContent = (translations['message_required'] && translations['message_required'][document.documentElement.lang]) || 'Message is required';
+            feedbackStatus.style.display = 'block';
+            return;
+          }
+
+        const finalMessage = `[from: ${user.email || user.displayName || 'anonymous'}]\\n${message}`;
+
+        try {
+          feedbackBtn.disabled = true;
+          const res = await fetch('PHP%20Code/feedback.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+            body: new URLSearchParams({ 'feedback-type': type, 'feedback-message': finalMessage }).toString()
+          });
+          const text = await res.text();
+          feedbackStatus.textContent = text || ((translations['feedback_thanks'] && translations['feedback_thanks'][document.documentElement.lang]) || 'Thanks for your feedback!');
+          feedbackStatus.style.display = 'block';
+          if (msgEl) msgEl.value = '';
+        } catch (e) {
+          feedbackStatus.textContent = (translations['feedback_failed'] && translations['feedback_failed'][document.documentElement.lang]) || 'Failed to submit feedback. Please try again later.';
+          feedbackStatus.style.display = 'block';
+        } finally {
+          feedbackBtn.disabled = false;
+        }
+      });
+    }
 
     // Login canvas visual
     (function(){
