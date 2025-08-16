@@ -447,6 +447,23 @@ nav a:hover {
   z-index: 999;
 }
 
+/* Explosion overlay inside modal */
+.creeper-explosion {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.creeper-particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #6aaa64;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
 .modal-card {
   position: relative;
   width: 100%;
@@ -466,6 +483,15 @@ nav a:hover {
   border-radius: 12px;
   padding: 1rem;
   transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* 3D stage for characters */
+.mc-characters {
+  perspective: 800px;
+}
+.mc-steve, .mc-creeper {
+  transform: translateZ(0);
 }
 
 .oauth-divider {

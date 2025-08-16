@@ -271,6 +271,7 @@
 <!-- Login Modal -->
 <div id="loginModalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
   <div class="modal-card">
+    <div id="creeperExplosion" class="creeper-explosion"></div>
     <button class="modal-close" id="loginModalClose" aria-label="Close">
       <span class="material-icons">close</span>
     </button>
@@ -814,6 +815,20 @@
       if (overlay && overlay.style.display === 'flex') movePupils(e);
     });
 
+    // 3D bob/tilt on characters
+    const chars = document.querySelector('.mc-characters');
+    if (chars) {
+      chars.addEventListener('mousemove', (e) => {
+        const rect = chars.getBoundingClientRect();
+        const rx = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
+        const ry = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
+        chars.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+      chars.addEventListener('mouseleave', () => {
+        chars.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
     let armWaveTimer;
     function startArmWave() {
       if (!steveArm) return;
@@ -845,6 +860,43 @@
       window.firebaseAppsReady();
     }
 
+    function triggerCreeperExplosion() {
+      const container = document.getElementById('creeperExplosion');
+      if (!container) return;
+      container.innerHTML = '';
+      container.style.display = 'flex';
+      const rect = container.getBoundingClientRect();
+      const particles = 60;
+      for (let i = 0; i < particles; i++) {
+        const p = document.createElement('div');
+        p.className = 'creeper-particle';
+        p.style.left = (rect.width / 2) + 'px';
+        p.style.top = (rect.height / 2) + 'px';
+        container.appendChild(p);
+        const angle = (Math.PI * 2) * (i / particles);
+        const speed = 3 + Math.random() * 4;
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+        let x = rect.width / 2;
+        let y = rect.height / 2;
+        let life = 0;
+        const maxLife = 28 + Math.random() * 12;
+        const tick = () => {
+          life++;
+          x += vx * 2;
+          y += vy * 2;
+          p.style.transform = `translate(${x - rect.width/2}px, ${y - rect.height/2}px) rotate(${life*20}deg)`;
+          p.style.opacity = String(1 - life / (maxLife + 5));
+          if (life < maxLife) requestAnimationFrame(tick);
+          else p.remove();
+        };
+        requestAnimationFrame(tick);
+      }
+      setTimeout(() => {
+        container.style.display = 'none';
+      }, 1000);
+    }
+
     if (loginForm) {
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -856,7 +908,8 @@
           const { signInWithEmailAndPassword } = window.firebaseAuth;
           const { auth } = window.firebaseExports;
           await signInWithEmailAndPassword(auth, email, password);
-          closeLoginModal();
+          triggerCreeperExplosion();
+          setTimeout(() => closeLoginModal(), 900);
         } catch (err) {
           errorEl.textContent = err?.message || 'Login failed';
           errorEl.style.display = 'block';
@@ -874,7 +927,8 @@
           const { auth } = window.firebaseExports;
           const provider = new GoogleAuthProvider();
           await signInWithPopup(auth, provider);
-          closeLoginModal();
+          triggerCreeperExplosion();
+          setTimeout(() => closeLoginModal(), 900);
         } catch (err) {
           errorEl.textContent = err?.message || 'Google sign-in failed';
           errorEl.style.display = 'block';
