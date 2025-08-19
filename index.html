@@ -284,13 +284,26 @@
         </div>
         <form id="loginForm" novalidate style="display: block;" aria-hidden="false">
           <div id="authError" class="auth-error" role="alert" style="display:none;"></div>
+          <div id="authSuccess" class="auth-success" role="status" style="display:none;"></div>
           <div class="form-group">
             <label for="loginEmail" data-translate="login_email">Email</label>
             <input id="loginEmail" type="email" required autocomplete="email">
           </div>
           <div class="form-group">
             <label for="loginPassword" data-translate="login_password">Password</label>
-            <input id="loginPassword" type="password" required autocomplete="current-password">
+            <div class="input-with-toggle">
+              <input id="loginPassword" type="password" required autocomplete="current-password">
+              <button type="button" class="password-toggle" aria-label="Toggle password visibility" data-target="loginPassword">
+                <span class="material-icons" aria-hidden="true">visibility</span>
+              </button>
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="checkbox">
+              <input id="rememberMe" type="checkbox" checked>
+              <span data-translate="remember_me">Remember me</span>
+            </label>
+            <a href="#" id="forgotPassword" class="link" data-translate="forgot_password">Forgot password?</a>
           </div>
           <button type="submit" class="btn btn-primary" data-translate="login_button">Login</button>
           <div class="oauth-divider"><span data-translate="oauth_or">OR</span></div>
@@ -305,17 +318,42 @@
         </form>
         <form id="registerForm" novalidate style="display: none;" aria-hidden="true">
           <div id="regError" class="auth-error" role="alert" style="display:none;"></div>
+          <div id="regSuccess" class="auth-success" role="status" style="display:none;"></div>
+          <div class="form-group">
+            <label for="regName" data-translate="name_label">Name (optional)</label>
+            <input id="regName" type="text" autocomplete="name">
+          </div>
           <div class="form-group">
             <label for="regEmail">Email</label>
             <input id="regEmail" type="email" required autocomplete="email">
           </div>
           <div class="form-group">
             <label for="regPassword">Password</label>
-            <input id="regPassword" type="password" required autocomplete="new-password" minlength="6">
+            <div class="input-with-toggle">
+              <input id="regPassword" type="password" required autocomplete="new-password" minlength="6">
+              <button type="button" class="password-toggle" aria-label="Toggle password visibility" data-target="regPassword">
+                <span class="material-icons" aria-hidden="true">visibility</span>
+              </button>
+            </div>
+            <div class="password-strength" aria-hidden="true">
+              <div class="strength-bar" id="strengthBar"></div>
+              <span class="strength-label" id="strengthLabel"></span>
+            </div>
           </div>
           <div class="form-group">
             <label for="regPassword2">Confirm Password</label>
-            <input id="regPassword2" type="password" required autocomplete="new-password" minlength="6">
+            <div class="input-with-toggle">
+              <input id="regPassword2" type="password" required autocomplete="new-password" minlength="6">
+              <button type="button" class="password-toggle" aria-label="Toggle password visibility" data-target="regPassword2">
+                <span class="material-icons" aria-hidden="true">visibility</span>
+              </button>
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="checkbox">
+              <input id="agreeTerms" type="checkbox" required>
+              <span data-translate="agree_terms">I agree to the Privacy Policy</span>
+            </label>
           </div>
           <button type="submit" class="btn btn-primary" id="registerBtn" data-translate="register_button">Create account</button>
           <div class="login-help">
@@ -642,6 +680,26 @@
         "ku": "گووگڵ",
         "ar": "جوجل",
         "en": "Google"
+      },
+      "remember_me": {
+        "ku": "بیرهەڵگرەوە",
+        "ar": "تذكرني",
+        "en": "Remember me"
+      },
+      "forgot_password": {
+        "ku": "وشەی نهێنیت لەبیرچوە؟",
+        "ar": "هل نسيت كلمة المرور؟",
+        "en": "Forgot password?"
+      },
+      "name_label": {
+        "ku": "ناو (ئارەزوومەندانە)",
+        "ar": "الاسم (اختياري)",
+        "en": "Name (optional)"
+      },
+      "agree_terms": {
+        "ku": "من ڕازیەم بە سیاسەتی پاراستنی زانیاری",
+        "ar": "أوافق على سياسة الخصوصية",
+        "en": "I agree to the Privacy Policy"
       }
       "nav_login": {
         "ku": "چوونەژوورەوە",
@@ -809,6 +867,43 @@
       }
     });
 
+    // Password visibility toggles
+    document.querySelectorAll('.password-toggle').forEach((btn)=>{
+      btn.addEventListener('click', ()=>{
+        const targetId = btn.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        btn.querySelector('.material-icons').textContent = isPassword ? 'visibility_off' : 'visibility';
+      });
+    });
+
+    // Password strength meter
+    const strengthInput = document.getElementById('regPassword');
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthLabel = document.getElementById('strengthLabel');
+    function scorePassword(pw){
+      let s = 0;
+      if (!pw) return 0;
+      if (pw.length >= 6) s += 1;
+      if (pw.length >= 10) s += 1;
+      if (/[A-Z]/.test(pw)) s += 1;
+      if (/[0-9]/.test(pw)) s += 1;
+      if (/[^A-Za-z0-9]/.test(pw)) s += 1;
+      return Math.min(s, 5);
+    }
+    function updateStrength(){
+      if (!strengthInput || !strengthBar || !strengthLabel) return;
+      const score = scorePassword(strengthInput.value);
+      const pct = (score/5)*100;
+      strengthBar.style.width = pct + '%';
+      const labels = ['Very weak','Weak','Okay','Good','Strong'];
+      strengthLabel.textContent = score === 0 ? '' : labels[score-1];
+    }
+    if (strengthInput) strengthInput.addEventListener('input', updateStrength);
+    updateStrength();
+
     // Login canvas visual
     (function(){
       const c = document.getElementById('loginCanvas');
@@ -911,13 +1006,18 @@ const tabSignIn = document.getElementById('tabSignIn');
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
         const errorEl = document.getElementById('authError');
+        const successEl = document.getElementById('authSuccess');
         errorEl.style.display = 'none';
+        successEl.style.display = 'none';
         try {
           const { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } = window.firebaseAuth;
           const { auth } = window.firebaseExports;
-          try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
+          const remember = document.getElementById('rememberMe')?.checked;
+          try { await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence); } catch {_=>{}};
           await signInWithEmailAndPassword(auth, email, password);
-          closeLoginModal();
+          successEl.textContent = 'Logged in successfully';
+          successEl.style.display = 'block';
+          setTimeout(()=>{ closeLoginModal(); }, 700);
         } catch (err) {
           errorEl.textContent = err?.message || 'Login failed';
           errorEl.style.display = 'block';
@@ -949,6 +1049,30 @@ const tabSignIn = document.getElementById('tabSignIn');
       });
     }
 
+    // Forgot password flow
+    const forgotLink = document.getElementById('forgotPassword');
+    if (forgotLink) {
+      forgotLink.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const errorEl = document.getElementById('authError');
+        const successEl = document.getElementById('authSuccess');
+        errorEl.style.display = 'none';
+        successEl.style.display = 'none';
+        try {
+          if (!email) { throw new Error('Please enter your email first'); }
+          const { sendPasswordResetEmail } = window.firebaseAuth;
+          const { auth } = window.firebaseExports;
+          await sendPasswordResetEmail(auth, email);
+          successEl.textContent = 'Password reset email sent';
+          successEl.style.display = 'block';
+        } catch (err) {
+          errorEl.textContent = err?.message || 'Failed to send reset email';
+          errorEl.style.display = 'block';
+        }
+      });
+    }
+
     // Register flow
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
@@ -957,15 +1081,22 @@ const tabSignIn = document.getElementById('tabSignIn');
         const email = document.getElementById('regEmail').value.trim();
         const p1 = document.getElementById('regPassword').value;
         const p2 = document.getElementById('regPassword2').value;
+        const displayName = document.getElementById('regName').value.trim();
         const errorEl = document.getElementById('regError');
+        const successEl = document.getElementById('regSuccess');
         errorEl.style.display = 'none';
+        successEl.style.display = 'none';
+        if (!document.getElementById('agreeTerms').checked) { errorEl.textContent = 'Please agree to the Privacy Policy'; errorEl.style.display='block'; return; }
         if (p1 !== p2) { errorEl.textContent = 'Passwords do not match'; errorEl.style.display='block'; return; }
         try {
-          const { createUserWithEmailAndPassword, sendEmailVerification } = window.firebaseAuth;
+          const { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } = window.firebaseAuth;
           const { auth } = window.firebaseExports;
           const userCred = await createUserWithEmailAndPassword(auth, email, p1);
-          try { await sendEmailVerification(userCred.user); } catch {_=>{}};
-          closeLoginModal();
+          try { if (displayName) await updateProfile(userCred.user, { displayName }); } catch (_=>{})
+          try { await sendEmailVerification(userCred.user); } catch (_=>{});
+          successEl.textContent = 'Account created! Please verify your email.';
+          successEl.style.display = 'block';
+          setTimeout(()=>{ closeLoginModal(); }, 1200);
         } catch (err) {
           errorEl.textContent = err?.message || 'Registration failed';
           errorEl.style.display = 'block';
@@ -1038,14 +1169,14 @@ const tabSignIn = document.getElementById('tabSignIn');
    <!-- Firebase SDK and app config -->
    <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
-         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
+         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
     import config from './firebase-config.js';
 
     const app = initializeApp(config);
     const auth = getAuth(app);
 
     // Expose to window for non-module script usage
-         window.firebaseAuth = { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification };
+         window.firebaseAuth = { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile };
      window.firebaseExports = { app, auth };
     window.firebase = true;
     window.firebaseAppsReady = function() {
