@@ -386,6 +386,19 @@ nav a:hover {
   text-decoration: none;
 }
 
+/* Auth extras */
+.form-row.between { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 1rem; }
+.checkbox { display: inline-flex; align-items: center; gap: 8px; color: #94a3b8; cursor: pointer; }
+.link { color: #0ea5e9; text-decoration: none; }
+.password-field { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; }
+.password-field .toggle-visibility { background: transparent; border: none; color: #cbd5e1; cursor: pointer; padding: 6px; }
+.password-field .toggle-visibility:hover { color: #e2e8f0; }
+.password-field input { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.strength { margin-top: 8px; }
+.strength-bar { width: 100%; height: 6px; background: rgba(148,163,184,0.25); border-radius: 999px; overflow: hidden; }
+#passwordStrengthFill { height: 100%; width: 0%; background: #ef4444; transition: width 0.2s ease, background 0.2s ease; }
+.strength-text { display: inline-block; margin-top: 6px; color: #94a3b8; }
+
 /* Small user chip in nav */
 .user-chip {
   display: inline-flex;
