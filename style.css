@@ -239,28 +239,68 @@ nav a:hover {
     margin: 2.5rem 0; /* Increased */
 }
 
-/* دوگمەی سیاسەتی پاراستن */
+/* دوگمەی سیاسەتی پاراستن (ناوازە و جوان) */
 .privacy-btn {
+    --c1: #0ea5e9; /* cyan */
+    --c2: #22c55e; /* green */
+    --c3: #a78bfa; /* purple */
+    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.8rem; /* Increased */
-    background: rgba(14, 165, 233, 0.15);
-    color: #0ea5e9;
-    padding: 1rem 2rem; /* Increased */
-    border-radius: 0.6rem; /* Increased */
+    gap: 0.65rem;
+    padding: 0.85rem 1.4rem;
+    color: #e2e8f0;
+    background: radial-gradient(120% 140% at 0% 0%, rgba(34,197,94,0.12), transparent),
+                radial-gradient(120% 140% at 100% 100%, rgba(14,165,233,0.12), transparent),
+                rgba(14,23,42,0.6);
+    border: 1px solid rgba(56,189,248,0.35);
+    border-radius: 999px;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 1.1rem; /* Added */
-    transition: all 0.3s ease;
-    border: 1px solid rgba(14, 165, 233, 0.3);
-    margin-top: 1.5rem; /* Increased */
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.2px;
+    box-shadow: inset 0 0 16px rgba(56,189,248,0.15), 0 6px 22px rgba(0,0,0,0.35);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    overflow: hidden;
+}
+
+.privacy-btn .material-icons { font-size: 1.2rem; color: #93c5fd; }
+
+.privacy-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(from 0deg,
+      rgba(34,197,94,0.0), rgba(34,197,94,0.4), rgba(14,165,233,0.0),
+      rgba(14,165,233,0.35), rgba(167,139,250,0.0), rgba(167,139,250,0.35), rgba(34,197,94,0.0));
+    filter: blur(14px);
+    opacity: 0.0;
+    transition: opacity .3s ease;
+    pointer-events: none;
+}
+
+.privacy-btn::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(120deg, rgba(14,165,233,0.6), rgba(167,139,250,0.25), rgba(34,197,94,0.45));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0.35;
+    transition: opacity .2s ease;
 }
 
 .privacy-btn:hover {
-    background: rgba(14, 165, 233, 0.25);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.2);
+    transform: translateY(-2px);
+    box-shadow: inset 0 0 22px rgba(56,189,248,0.2), 0 10px 28px rgba(0,0,0,0.45);
+    border-color: rgba(56,189,248,0.6);
 }
+
+.privacy-btn:hover::before { opacity: 0.9; }
+.privacy-btn:hover::after { opacity: 0.6; }
 
 /* تۆڕی بەرنامەکان */
 .apps-grid {
@@ -385,6 +425,19 @@ nav a:hover {
   color: #0ea5e9;
   text-decoration: none;
 }
+
+/* Auth extras */
+.form-row.between { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 1rem; }
+.checkbox { display: inline-flex; align-items: center; gap: 8px; color: #94a3b8; cursor: pointer; }
+.link { color: #0ea5e9; text-decoration: none; }
+.password-field { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; }
+.password-field .toggle-visibility { background: transparent; border: none; color: #cbd5e1; cursor: pointer; padding: 6px; }
+.password-field .toggle-visibility:hover { color: #e2e8f0; }
+.password-field input { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.strength { margin-top: 8px; }
+.strength-bar { width: 100%; height: 6px; background: rgba(148,163,184,0.25); border-radius: 999px; overflow: hidden; }
+#passwordStrengthFill { height: 100%; width: 0%; background: #ef4444; transition: width 0.2s ease, background 0.2s ease; }
+.strength-text { display: inline-block; margin-top: 6px; color: #94a3b8; }
 
 /* Small user chip in nav */
 .user-chip {
