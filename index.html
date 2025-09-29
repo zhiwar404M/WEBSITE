@@ -255,7 +255,7 @@
       </div>
       <div class="form-group">
         <label for="feedback-message" data-translate="feedback_message">پەیامەکەت</label>
-        <textarea id="feedback-message" rows="5" placeholder="پێشنیارەکەت لێرە بنووسە..."></textarea>
+        <textarea id="feedback-message" rows="5" data-translate-placeholder="feedback_placeholder" placeholder="..."></textarea>
       </div>
       <button class="btn btn-primary" data-translate="feedback_button">ناردنی رەخنە</button>
     </div>
@@ -306,15 +306,15 @@
         <form id="registerForm" novalidate style="display: none;" aria-hidden="true">
           <div id="regError" class="auth-error" role="alert" style="display:none;"></div>
           <div class="form-group">
-            <label for="regEmail">Email</label>
+            <label for="regEmail" data-translate="reg_email_label">Email</label>
             <input id="regEmail" type="email" required autocomplete="email">
           </div>
           <div class="form-group">
-            <label for="regPassword">Password</label>
+            <label for="regPassword" data-translate="reg_password_label">Password</label>
             <input id="regPassword" type="password" required autocomplete="new-password" minlength="6">
           </div>
           <div class="form-group">
-            <label for="regPassword2">Confirm Password</label>
+            <label for="regPassword2" data-translate="reg_confirm_label">Confirm Password</label>
             <input id="regPassword2" type="password" required autocomplete="new-password" minlength="6">
           </div>
           <button type="submit" class="btn btn-primary" id="registerBtn" data-translate="register_button">Create account</button>
@@ -642,7 +642,7 @@
         "ku": "گووگڵ",
         "ar": "جوجل",
         "en": "Google"
-      }
+      },
       "nav_login": {
         "ku": "چوونەژوورەوە",
         "ar": "تسجيل الدخول",
@@ -653,91 +653,118 @@
         "ar": "أو",
         "en": "OR"
       },
-// Add these translations to your translations object
-"login_title": {
-  "ku": "چوونەژوورەوە بۆ هەژمارەکەت",
-  "ar": "تسجيل الدخول إلى حسابك",
-  "en": "Login to Your Account"
-},
-"login_subtitle": {
-  "ku": "دەستکاری بەرنامەکان و ڕێکخستنەکانت بکە",
-  "ar": "الوصول إلى تطبيقاتك وإعداداتك",
-  "en": "Access your apps and settings"
-},
-"login_email": {
-  "ku": "ئیمەیڵ",
-  "ar": "البريد الإلكتروني",
-  "en": "Email"
-},
-"login_password": {
-  "ku": "وشەی نهێنی",
-  "ar": "كلمة المرور",
-  "en": "Password"
-},
-"login_button": {
-  "ku": "چوونەژوورەوە",
-  "ar": "تسجيل الدخول",
-  "en": "Login"
-},
-"login_help": {
-  "ku": "هەژمارت نییە؟",
-  "ar": "ليس لديك حساب؟",
-  "en": "Don't have an account?"
-},
-"login_register": {
-  "ku": "خۆت تۆمار بکە",
-  "ar": "سجل هنا",
-  "en": "Register here"
-},
-"feedback_title": {
-  "ku": "پێشنیار و رەخنە",
-  "ar": "الاقتراحات والملاحظات",
-  "en": "Feedback & Suggestions"
-},
-"feedback_subtitle": {
-  "ku": "ئێمە بەهای رای تۆ دەدەین بۆ باشترکردنی بەرنامەکانمان",
-  "ar": "نقدر رأيك لتحسين تطبيقاتنا",
-  "en": "We value your opinion to improve our apps"
-},
-"feedback_type": {
-  "ku": "جۆری رەخنە",
-  "ar": "نوع الملاحظة",
-  "en": "Feedback Type"
-},
-"feedback_suggestion": {
-  "ku": "پێشنیار",
-  "ar": "اقتراح",
-  "en": "Suggestion"
-},
-"feedback_bug": {
-  "ku": "ڕاپۆرتی کێشە",
-  "ar": "تقرير عن خطأ",
-  "en": "Bug Report"
-},
-"feedback_compliment": {
-  "ku": "پێزانین",
-  "ar": "إطراء",
-  "en": "Compliment"
-},
-"feedback_message": {
-  "ku": "پەیامەکەت",
-  "ar": "رسالتك",
-  "en": "Your Message"
-},
-"feedback_button": {
-  "ku": "ناردنی رەخنە",
-  "ar": "إرسال الملاحظات",
-  "en": "Submit Feedback"
-}
+      "login_title": {
+        "ku": "چوونەژوورەوە بۆ هەژمارەکەت",
+        "ar": "تسجيل الدخول إلى حسابك",
+        "en": "Login to Your Account"
+      },
+      "login_subtitle": {
+        "ku": "دەستکاری بەرنامەکان و ڕێکخستنەکانت بکە",
+        "ar": "الوصول إلى تطبيقاتك وإعداداتك",
+        "en": "Access your apps and settings"
+      },
+      "login_email": {
+        "ku": "ئیمەیڵ",
+        "ar": "البريد الإلكتروني",
+        "en": "Email"
+      },
+      "login_password": {
+        "ku": "وشەی نهێنی",
+        "ar": "كلمة المرور",
+        "en": "Password"
+      },
+      "login_button": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Login"
+      },
+      "login_help": {
+        "ku": "هەژمارت نییە؟",
+        "ar": "ليس لديك حساب؟",
+        "en": "Don't have an account?"
+      },
+      "login_register": {
+        "ku": "خۆت تۆمار بکە",
+        "ar": "سجل هنا",
+        "en": "Register here"
+      },
+      "feedback_title": {
+        "ku": "پێشنیار و رەخنە",
+        "ar": "الاقتراحات والملاحظات",
+        "en": "Feedback & Suggestions"
+      },
+      "feedback_subtitle": {
+        "ku": "ئێمە بەهای رای تۆ دەدەین بۆ باشترکردنی بەرنامەکانمان",
+        "ar": "نقدر رأيك لتحسين تطبيقاتنا",
+        "en": "We value your opinion to improve our apps"
+      },
+      "feedback_type": {
+        "ku": "جۆری رەخنە",
+        "ar": "نوع الملاحظة",
+        "en": "Feedback Type"
+      },
+      "feedback_suggestion": {
+        "ku": "پێشنیار",
+        "ar": "اقتراح",
+        "en": "Suggestion"
+      },
+      "feedback_bug": {
+        "ku": "ڕاپۆرتی کێشە",
+        "ar": "تقرير عن خطأ",
+        "en": "Bug Report"
+      },
+      "feedback_compliment": {
+        "ku": "پێزانین",
+        "ar": "إطراء",
+        "en": "Compliment"
+      },
+      "feedback_message": {
+        "ku": "پەیامەکەت",
+        "ar": "رسالتك",
+        "en": "Your Message"
+      },
+      "feedback_button": {
+        "ku": "ناردنی رەخنە",
+        "ar": "إرسال الملاحظات",
+        "en": "Submit Feedback"
+      },
+      "reg_email_label": {
+        "ku": "ئیمەیڵ",
+        "ar": "البريد الإلكتروني",
+        "en": "Email"
+      },
+      "reg_password_label": {
+        "ku": "وشەی نهێنی",
+        "ar": "كلمة المرور",
+        "en": "Password"
+      },
+      "reg_confirm_label": {
+        "ku": "دڵنیاکردنەوەی وشەی نهێنی",
+        "ar": "تأكيد كلمة المرور",
+        "en": "Confirm Password"
+      },
+      "feedback_placeholder": {
+        "ku": "پێشنیارەکەت لێرە بنووسە...",
+        "ar": "اكتب اقتراحك هنا...",
+        "en": "Write your suggestion here..."
+      }
     };
 
     // Change all texts
     Object.keys(translations).forEach(key => {
       const elements = document.querySelectorAll(`[data-translate="${key}"]`);
-      if (elements.length > 0 && translations[key][lang]) {
+      if (elements.length > 0 && translations[key] && translations[key][lang]) {
         elements.forEach(el => {
           el.textContent = translations[key][lang];
         });
+      }
+    });
+
+    // Change placeholders
+    document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+      const phKey = el.getAttribute('data-translate-placeholder');
+      if (translations[phKey] && translations[phKey][lang]) {
+        el.setAttribute('placeholder', translations[phKey][lang]);
       }
     });
   }
