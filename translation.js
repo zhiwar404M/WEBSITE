@@ -187,8 +187,13 @@ const translations = {
     }
 };
 
+// translations.js
+
+
 // فەنکشنی گۆڕینی زمان
 function changeLanguage(lang) {
+    console.log('Changing language to:', lang); // بۆ دیاریکردنی کێشە
+    
     // نوێکردنەوەی دۆخی چالاکی
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
@@ -201,12 +206,14 @@ function changeLanguage(lang) {
     // جێبەجێکردنی وەرگێڕانەکان
     translatePage(lang);
 
-    // پاشەکەوتکردنی هەڵبژاردن لە کۆکی
-    document.cookie = `preferredLanguage=${lang}; path=/; max-age=${365 * 24 * 60 * 60}`;
+    // پاشەکەوتکردنی هەڵبژاردن
+    localStorage.setItem('preferredLanguage', lang);
 }
 
 // فەنکشنی وەرگێڕانی پەڕە
 function translatePage(lang) {
+    console.log('Translating page to:', lang); // بۆ دیاریکردنی کێشە
+    
     Object.keys(translations).forEach(key => {
         const elements = document.querySelectorAll(`[data-translate="${key}"]`);
         if (elements.length > 0 && translations[key] && translations[key][lang]) {
@@ -215,34 +222,34 @@ function translatePage(lang) {
             });
         }
     });
-
-    // وەرگێڕانی placeholder
-    document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
-        const phKey = el.getAttribute('data-translate-placeholder');
-        if (translations[phKey] && translations[phKey][lang]) {
-            el.setAttribute('placeholder', translations[phKey][lang]);
-        }
-    });
 }
 
-// فەنکشنی وەرگرتنی زمان لە کۆکی
+// فەنکشنی وەرگرتنی زمان
 function getPreferredLanguage() {
-    const match = document.cookie.match(/preferredLanguage=([^;]+)/);
-    return match ? match[1] : 'en';
+    return localStorage.getItem('preferredLanguage') || 'en';
 }
 
 // فەنکشنی دەستپێکردنی زمان
 function initLanguageSystem() {
+    console.log('Initializing language system...'); // بۆ دیاریکردنی کێشە
+    
     const savedLang = getPreferredLanguage();
     changeLanguage(savedLang);
     
     // زیادکردنی event listeners بۆ دوگمەکانی زمان
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            changeLanguage(btn.dataset.lang);
+        btn.addEventListener('click', function() {
+            console.log('Language button clicked:', this.dataset.lang); // بۆ دیاریکردنی کێشە
+            changeLanguage(this.dataset.lang);
         });
     });
 }
+
+// چاوەروانی کردنی DOM
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing language system...');
+    initLanguageSystem();
+});
 
 // ئامادەکردن بۆ بەکارهێنانی لە دەرەوە
 window.LanguageManager = {
