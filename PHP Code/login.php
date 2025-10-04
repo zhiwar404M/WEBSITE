@@ -1,33 +1,49 @@
 <?php
-session_start();
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type');
 
-// نموونەی بەکارهێنەران (لە ڕاستیدا پێویستە لە بنکەدراوە وەربگیرێت)
-$users = [
-    "admin@example.com" => password_hash("password123", PASSWORD_BCRYPT),
-    "user@example.com" => password_hash("userpass", PASSWORD_BCRYPT)
-];
+// Database configuration
+$host = 'localhost';
+$dbname = 'zhiwar_apps';
+$username = 'root';
+$password = '';
 
-$email = $_POST['email'] ?? '';
-$password = $_POST['password'] ?? '';
-
-if (empty($email) {
-    die("تکایە ئیمەیڵ بنووسە!");
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+    exit;
 }
 
-if (empty($password)) {
-    die("تکایە وشەی نهێنی بنووسە!");
+// Get POST data
+$input = json_decode(file_get_contents('php://input'), true);
+$email = $input['email'] ?? '';
+$password = $input['password'] ?? '';
+
+if (empty($email) || empty($password)) {
+    echo json_encode(['success' => false, 'message' => 'Email and password are required']);
+    exit;
 }
 
-// پشکنینی ئیمەیڵ و وشەی نهێنی
-if (isset($users[$email]) {
-    if (password_verify($password, $users[$email])) {
-        $_SESSION['user_email'] = $email;
-        header("Location: dashboard.php");  // بڕۆ بۆ پەڕەی داشبۆرد
-        exit();
-    } else {
-        die("وشەی نهێنی هەڵەیە!");
-    }
+// Check user in database
+$stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+$stmt->execute([$email]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($user && password_verify($password, $user['password'])) {
+    // Login successful
+    echo json_encode([
+        'success' => true,
+        'user' => [
+            'id' => $user['id'],
+            'email' => $user['email'],
+            'name' => $user['name']
+        ]
+    ]);
 } else {
-    die("ئیمەیڵەکە بوونی نییە!");
+    echo json_encode(['success' => false, 'message' => 'Invalid email or password']);
 }
 ?>
