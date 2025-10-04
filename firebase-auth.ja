@@ -1,0 +1,84 @@
+// firebase-auth.js
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
+import { 
+    getAuth, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut,
+    onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
+
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyC6Lv4L3pQa8q2Q2b6qX9bQ8wM5bK8jF9d",
+    authDomain: "zhiwar-apps.firebaseapp.com",
+    projectId: "zhiwar-apps",
+    storageBucket: "zhiwar-apps.firebasestorage.app",
+    messagingSenderId: "123456789012",
+    appId: "1:123456789012:web:abcdef123456"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+// Firebase authentication functions
+export async function loginWithFirebase(email, password) {
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        return { success: true, user: userCredential.user };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+}
+
+export async function registerWithFirebase(email, password) {
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        return { success: true, user: userCredential.user };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+}
+
+export async function loginWithGoogle() {
+    try {
+        const result = await signInWithPopup(auth, googleProvider);
+        return { success: true, user: result.user };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+}
+
+export async function logoutUser() {
+    try {
+        await signOut(auth);
+        return { success: true };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+}
+
+// Auth state listener
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        updateUserUI({
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL
+        });
+    } else {
+        handleLogout();
+    }
+});
+
+// Make functions available globally
+window.firebaseAuth = {
+    loginWithFirebase,
+    registerWithFirebase,
+    loginWithGoogle,
+    logoutUser
+};
