@@ -85,26 +85,6 @@ const translations = {
         "ar": "قريباً! ⏳", 
         "en": "Coming Soon! ⏳"
     },
-    "coming_soon_message": {
-        "ku": "بەرنامەکەمان بە خێرایی دادەمەزرێت! بەشداربە بۆ وەرگرتنی ئاگادارکردنەوە کاتێ بەردەست دەبێت",
-        "ar": "تطبيقنا قيد التطوير! اشترك لتلقي الإشعار عند التوفر",
-        "en": "Our app is under development! Subscribe to get notified when it's available"
-    },
-    "development_status": {
-        "ku": "لە ژێر پەرەپێداندا",
-        "ar": "قيد التطوير",
-        "en": "Under Development"
-    },
-    "notify_me": {
-        "ku": "ئاگادارم بکەرەوە",
-        "ar": "أخطرني",
-        "en": "Notify Me"
-    },
-    "share_news": {
-        "ku": "هاوبەشی بکە",
-        "ar": "شارك الخبر", 
-        "en": "Share News"
-    },
     "features_title": {
         "ku": "تایبەتمەندییە پێشکەوتووەکان",
         "ar": "الميزات المتقدمة",
@@ -121,9 +101,9 @@ const translations = {
         "en": "Native Kurdish"
     },
     "feature1_desc": {
-        "ku": "بەرنامە تەواو وەرگێڕدراوەکان بە پشتگیری زمانی کوردی و دیزاینی UI/UX ڕەسەن",
-        "ar": "تطبيقات مترجمة بالكامل مع دعم اللغة الكردية وأنماط التصميم الأصلية",
-        "en": "Fully localized applications with native Kurdish language support and culturally relevant design patterns"
+        "ku": "بەرنامە تەواو وەرگێڕدراوەکان بە پشتگیری زمانی کوردی و دیزاینی ڕەسەن",
+        "ar": "تطبيقات مترجمة بالكامل مع دعم اللغة الكردية وتصميم أصلي",
+        "en": "Fully localized applications with native Kurdish language support"
     },
     "feature2_title": {
         "ku": "کارپێکردنی بەرز",
@@ -131,9 +111,9 @@ const translations = {
         "en": "High Performance"
     },
     "feature2_desc": {
-        "ku": "باشکراو بۆ خێرایی و کارایی بە شێوازە تەلارسازییە مۆدێرنەکان و ڕێسای باشترین کارپێکردن",
-        "ar": "محسنة للسرعة والكفاءة بأنماط الهندسة المعمارية الحديثة وأفضل الممارسات",
-        "en": "Optimized for speed and efficiency with modern architecture patterns and performance best practices"
+        "ku": "باشکراو بۆ خێرایی و کارایی بە تەکنەلۆژیای مۆدێرن",
+        "ar": "محسنة للسرعة والكفاءة بتقنيات حديثة",
+        "en": "Optimized for speed and efficiency with modern technology"
     },
     "feature3_title": {
         "ku": "پاراستنی سەرهەڵدەر",
@@ -141,9 +121,9 @@ const translations = {
         "en": "Security First"
     },
     "feature3_desc": {
-        "ku": "پاراستنی پیشەگەری ئەنجومەن بە شێوانکردن، دەستنیشانکردنی پارێزگاری، و تایبەتمەندی پاراستنی تایبەتی",
-        "ar": "حماية على مستوى المؤسسات مع التشفير، المصادقة الآمنة، وميزات حماية الخصوصية",
-        "en": "Enterprise-grade security with encryption, secure authentication, and privacy protection features"
+        "ku": "پاراستنی پیشەگەری بە شێوانکردن و دەستنیشانکردنی پارێزگاری",
+        "ar": "حماية احترافية مع التشفير والمصادقة الآمنة",
+        "en": "Professional security with encryption and secure authentication"
     },
     "about_title": {
         "ku": "دەربارەی ژیوار",
@@ -151,9 +131,9 @@ const translations = {
         "en": "About ZHIWAR"
     },
     "about_text": {
-        "ku": "پەرەپێدەری کوردی پیشەگەر کە بەرنامەی مۆبایلی نوێ دروست دەکات بە تێکەڵکردنی بە ئەزموونی بەکارهێنەر و تەکنەلۆژیای مۆدێرن",
-        "ar": "مطور كردي محترف يخلق تطبيقات جوال مبتكرة مع التركيز على تجربة المستخدم وتقنيات حديثة",
-        "en": "Professional Kurdish developer creating innovative mobile applications with focus on user experience and modern technology stack"
+        "ku": "پەرەپێدەری کوردی پیشەگەر کە بەرنامەی مۆبایلی نوێ دروست دەکات",
+        "ar": "مطور كردي محترف يخلق تطبيقات جوال مبتكرة",
+        "en": "Professional Kurdish developer creating innovative mobile applications"
     },
     "contact_title": {
         "ku": "پەیوەندی",
@@ -184,15 +164,97 @@ const translations = {
         "ku": "© ٢٠٢١-٢٠٢٤ ژیوار دیڤ. هەموو مافەکان پارێزراون.",
         "ar": "© ٢٠٢١-٢٠٢٤ زيهار ديف. جميع الحقوق محفوظة.",
         "en": "© 2021-2024 ZHIWAR DEV. All rights reserved."
+    },
+    "login_title": {
+        "ku": "بەخێربێیت",
+        "ar": "مرحباً",
+        "en": "Welcome Back"
+    },
+    "login_subtitle": {
+        "ku": "بچۆرە ژوورەوە بۆ هەژمارەکەت",
+        "ar": "سجل الدخول إلى حسابك",
+        "en": "Sign in to your account"
+    },
+    "tab_signin": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Sign In"
+    },
+    "tab_register": {
+        "ku": "دروستکردنی هەژمار",
+        "ar": "إنشاء حساب",
+        "en": "Create Account"
+    },
+    "login_email": {
+        "ku": "ئیمەیڵ",
+        "ar": "البريد الإلكتروني",
+        "en": "Email"
+    },
+    "login_password": {
+        "ku": "وشەی نهێنی",
+        "ar": "كلمة المرور",
+        "en": "Password"
+    },
+    "login_button": {
+        "ku": "چوونەژوورەوە",
+        "ar": "تسجيل الدخول",
+        "en": "Sign In"
+    },
+    "oauth_or": {
+        "ku": "یان",
+        "ar": "أو",
+        "en": "OR"
+    },
+    "google_signin": {
+        "ku": "گووگڵ",
+        "ar": "جوجل",
+        "en": "Google"
+    },
+    "login_help": {
+        "ku": "هەژمارت نییە؟",
+        "ar": "ليس لديك حساب؟",
+        "en": "Don't have an account?"
+    },
+    "login_register": {
+        "ku": "خۆت تۆمار بکە",
+        "ar": "سجل هنا",
+        "en": "Register here"
+    },
+    "reg_email": {
+        "ku": "ئیمەیڵ",
+        "ar": "البريد الإلكتروني",
+        "en": "Email"
+    },
+    "reg_password": {
+        "ku": "وشەی نهێنی",
+        "ar": "كلمة المرور",
+        "en": "Password"
+    },
+    "reg_confirm": {
+        "ku": "دڵنیاکردنەوەی وشەی نهێنی",
+        "ar": "تأكيد كلمة المرور",
+        "en": "Confirm Password"
+    },
+    "register_button": {
+        "ku": "دروستکردنی هەژمار",
+        "ar": "إنشاء حساب",
+        "en": "Create Account"
+    },
+    "already_have": {
+        "ku": "پێشتر هەژمارت هەیە؟",
+        "ar": "هل لديك حساب؟",
+        "en": "Already have an account?"
+    },
+    "signin_link": {
+        "ku": "چوونەژوورەوە",
+        "ar": "سجل الدخول",
+        "en": "Sign in"
     }
 };
 
-// translations.js
-
-
 // فەنکشنی گۆڕینی زمان
 function changeLanguage(lang) {
-    console.log('Changing language to:', lang); // بۆ دیاریکردنی کێشە
+    console.log('Changing language to:', lang);
     
     // نوێکردنەوەی دۆخی چالاکی
     document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -212,7 +274,7 @@ function changeLanguage(lang) {
 
 // فەنکشنی وەرگێڕانی پەڕە
 function translatePage(lang) {
-    console.log('Translating page to:', lang); // بۆ دیاریکردنی کێشە
+    console.log('Translating page to:', lang);
     
     Object.keys(translations).forEach(key => {
         const elements = document.querySelectorAll(`[data-translate="${key}"]`);
@@ -231,7 +293,7 @@ function getPreferredLanguage() {
 
 // فەنکشنی دەستپێکردنی زمان
 function initLanguageSystem() {
-    console.log('Initializing language system...'); // بۆ دیاریکردنی کێشە
+    console.log('Initializing language system...');
     
     const savedLang = getPreferredLanguage();
     changeLanguage(savedLang);
@@ -239,7 +301,7 @@ function initLanguageSystem() {
     // زیادکردنی event listeners بۆ دوگمەکانی زمان
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            console.log('Language button clicked:', this.dataset.lang); // بۆ دیاریکردنی کێشە
+            console.log('Language button clicked:', this.dataset.lang);
             changeLanguage(this.dataset.lang);
         });
     });
