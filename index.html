@@ -65,13 +65,22 @@
           </button>
         </div>
         
-        <div class="language-switcher">
-          <button class="lang-btn" data-lang="ku">Kurdish</button>
-          <button class="lang-btn" data-lang="ar">العربية</button>
-          <button class="lang-btn active" data-lang="en">English</button>
-        </div>
-      </nav>
+    <!-- دوگمەی زمان -->
+    <div class="language-switcher">
+        <button class="lang-btn" data-lang="ku">کوردی</button>
+        <button class="lang-btn" data-lang="ar">العربية</button>
+        <button class="lang-btn active" data-lang="en">English</button>
     </div>
+
+    <!-- AOS لە کۆتاییدا -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+    </script>
   </header>
 
   <section class="hero">
