@@ -249,6 +249,26 @@ const translations = {
         "ku": "چوونەژوورەوە",
         "ar": "سجل الدخول",
         "en": "Sign in"
+    },
+    "nav_minecraft": {
+        "ku": "ماینکرافت",
+        "ar": "ماين كرافت",
+        "en": "Minecraft"
+    },
+    "minecraft_section_title": {
+        "ku": "داگرتنی ماینکرافت",
+        "ar": "تحميل ماين كرافت",
+        "en": "Minecraft download"
+    },
+    "minecraft_section_subtitle": {
+        "ku": "دواوەشانی بەرنامەی ماینکرافت بە کوردی",
+        "ar": "أحدث إصدار لتطبيق ماين كرافت بالكردية",
+        "en": "Latest Minecraft app in Kurdish"
+    },
+    "minecraft_download_button": {
+        "ku": "داگرتن",
+        "ar": "تحميل",
+        "en": "Download"
     }
 };
 
