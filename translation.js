@@ -250,6 +250,26 @@ const translations = {
         "ar": "سجل الدخول",
         "en": "Sign in"
     },
+    "nav_whois": {
+        "ku": "ژیوار کێیە؟",
+        "ar": "من هو ژيوار؟",
+        "en": "Who is Zhiwar?"
+    },
+    "whois_title": {
+        "ku": "ژیوار کێیە؟",
+        "ar": "من هو ژيوار؟",
+        "en": "Who is Zhiwar?"
+    },
+    "whois_subtitle": {
+        "ku": "ناسینەوەیەکی کورت لەسەر پەرەپێدەری وێبسایت",
+        "ar": "نبذة قصيرة عن المطور",
+        "en": "Brief introduction about the developer"
+    },
+    "whois_body": {
+        "ku": "ژیوار پەرەپێدەری کوردییەکی پیشەگەرە کە سەرنجی دەدات بە دروستکردنی بەرنامەکانی مۆبایل بە تەجڕەیەکی تەواو بە زمانی کوردی.",
+        "ar": "ژيوار مطور كردي محترف يركز على بناء تطبيقات جوال عالية الجودة بتجربة كردية كاملة.",
+        "en": "Zhiwar is a professional Kurdish developer focused on building high-quality mobile apps with a complete Kurdish experience."
+    },
     "nav_minecraft": {
         "ku": "ماینکرافت",
         "ar": "ماين كرافت",
