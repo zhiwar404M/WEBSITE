@@ -249,6 +249,71 @@ const translations = {
         "ku": "چوونەژوورەوە",
         "ar": "سجل الدخول",
         "en": "Sign in"
+    },
+    "nav_whois": {
+        "ku": "ژیوار کێیە؟",
+        "ar": "من هو ژيوار؟",
+        "en": "Who is Zhiwar?"
+    },
+    "whois_title": {
+        "ku": "ژیوار کێیە؟",
+        "ar": "من هو ژيوار؟",
+        "en": "Who is Zhiwar?"
+    },
+    "whois_subtitle": {
+        "ku": "ناسینەوەیەکی کورت لەسەر پەرەپێدەری وێبسایت",
+        "ar": "نبذة قصيرة عن المطور",
+        "en": "Brief introduction about the developer"
+    },
+    "whois_body": {
+        "ku": "ژیوار پەرەپێدەری کوردییەکی پیشەگەرە کە سەرنجی دەدات بە دروستکردنی بەرنامەکانی مۆبایل بە تەجڕەیەکی تەواو بە زمانی کوردی.",
+        "ar": "ژيوار مطور كردي محترف يركز على بناء تطبيقات جوال عالية الجودة بتجربة كردية كاملة.",
+        "en": "Zhiwar is a professional Kurdish developer focused on building high-quality mobile apps with a complete Kurdish experience."
+    },
+    "nav_minecraft": {
+        "ku": "ماینکرافت",
+        "ar": "ماين كرافت",
+        "en": "Minecraft"
+    },
+    "minecraft_section_title": {
+        "ku": "داگرتنی ماینکرافت",
+        "ar": "تحميل ماين كرافت",
+        "en": "Minecraft download"
+    },
+    "minecraft_section_subtitle": {
+        "ku": "دواوەشانی بەرنامەی ماینکرافت بە کوردی",
+        "ar": "أحدث إصدار لتطبيق ماين كرافت بالكردية",
+        "en": "Latest Minecraft app in Kurdish"
+    },
+    "minecraft_download_button": {
+        "ku": "داگرتن",
+        "ar": "تحميل",
+        "en": "Download"
+    },
+    "spotlight_title": {
+        "ku": "بەرنامە هێڵکراوەکان",
+        "ar": "تطبيقات مميزة",
+        "en": "Featured apps"
+    },
+    "spotlight_subtitle": {
+        "ku": "هەڵبژاردەیەکی تایبەتی لە کارەکانمان",
+        "ar": "مختارات مميزة من تطبيقاتنا",
+        "en": "Hand-picked highlights from our apps"
+    },
+    "spotlight_card_title": {
+        "ku": "تجارەتی پەروەردە",
+        "ar": "تجربة مميزة",
+        "en": "Premium Experience"
+    },
+    "spotlight_card_desc": {
+        "ku": "بەرنامەکان بە وردەکاری و کارایی دروستکراون",
+        "ar": "تطبيقات مصممة بعناية للجودة والأداء",
+        "en": "Carefully crafted apps with quality and performance"
+    },
+    "spotlight_cta": {
+        "ku": "سەیرکردنی بەرنامەکان",
+        "ar": "استكشاف التطبيقات",
+        "en": "Explore Apps"
     }
 };
 

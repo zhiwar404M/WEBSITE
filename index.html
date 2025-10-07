@@ -53,8 +53,9 @@
         <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
+        <a href="#whois"><span class="material-icons">person</span> <span data-translate="nav_whois">Who is Zhiwar?</span></a>
 
-        <a href="#Minecraft.html"><span class="material-icons">blocks</span> <span data-translate="nav_apps">Minecraft download</span></a>
+        <a href="Minecraft.html#download"><span class="material-icons">blocks</span> <span data-translate="nav_minecraft">Minecraft</span></a>
 
                   <a href="#login" id="loginNavLink" onclick="var o=document.getElementById('loginModalOverlay'); if(o){o.style.display='flex'; document.body.style.overflow='hidden';} return false;"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
         <div id="userChip" class="user-chip" style="display:none;">
@@ -100,10 +101,32 @@
   
   
   
-  <!-- Features Section -->
-<section id="features" class="features">
-  <!-- ... existing features content ... -->
-</section>
+  <!-- Who is Zhiwar Section -->
+  <section id="whois" class="login-section">
+    <div class="section-container">
+      <h2 class="section-title" data-translate="whois_title">Who is Zhiwar?</h2>
+      <p class="section-subtitle" data-translate="whois_subtitle">Brief introduction about the developer</p>
+      <div>
+        <p data-translate="whois_body">Zhiwar is a professional Kurdish developer focused on building high-quality mobile apps with a complete Kurdish experience.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spotlight Section -->
+  <section id="spotlight" class="login-section">
+    <div class="section-container">
+      <h2 class="section-title" data-translate="spotlight_title">Featured apps</h2>
+      <p class="section-subtitle" data-translate="spotlight_subtitle">Hand-picked highlights from our apps</p>
+      <div class="apps-grid">
+        <div class="app-card">
+          <div class="app-icon"><span class="material-icons">workspace_premium</span></div>
+          <h3 class="app-title" data-translate="spotlight_card_title">Premium Experience</h3>
+          <p class="app-description" data-translate="spotlight_card_desc">Carefully crafted apps with quality and performance</p>
+          <a href="#apps" class="btn btn-outline"><span class="material-icons">apps</span> <span data-translate="spotlight_cta">Explore Apps</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
 
 <!-- Login Section -->
 <section id="login" class="login-section">
@@ -130,13 +153,12 @@
         <h3 class="app-title" data-translate="app1_title">Minefo Kr</h3>
         <span class="app-version" data-translate="app1_version">وەشانی 1.0</span>
         <p class="app-description" data-translate="app1_description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
-        <button class="btn btn-primary" onclick="startDownloadWithAds('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk')">
+        <a href="Minecraft.html#download" class="btn btn-primary">
           <span class="material-icons">download</span> <span data-translate="app1_button">داگرتن بۆ ئەندرۆید</span>
-        </button>
+        </a>
       </div>
     </div>
-    
-
+  </section>
 
   <!-- Privacy Policy Section -->
   <section class="privacy-section">
@@ -404,6 +426,16 @@
         "ar": "اتصل بنا",
         "en": "Contact"
       },
+      "nav_whois": {
+        "ku": "ژیوار کێیە؟",
+        "ar": "من هو ژيوار؟",
+        "en": "Who is Zhiwar?"
+      },
+      "nav_minecraft": {
+        "ku": "ماینکرافت",
+        "ar": "ماين كرافت",
+        "en": "Minecraft"
+      },
       "hero_title": {
         "ku": "بەرنامەکانی ZHIWAR",
         "ar": "تطبيقات ZHIWAR",
@@ -454,10 +486,65 @@
         "ar": "تحميل للأندرويد",
         "en": "Download for Android"
       },
+      "minecraft_section_title": {
+        "ku": "داگرتنی ماینکرافت",
+        "ar": "تحميل ماين كرافت",
+        "en": "Minecraft download"
+      },
+      "minecraft_section_subtitle": {
+        "ku": "دواوەشانی بەرنامەی ماینکرافت بە کوردی",
+        "ar": "أحدث إصدار لتطبيق ماين كرافت بالكردية",
+        "en": "Latest Minecraft app in Kurdish"
+      },
+      "minecraft_download_button": {
+        "ku": "داگرتن",
+        "ar": "تحميل",
+        "en": "Download"
+      },
+      "spotlight_title": {
+        "ku": "بەرنامە هێڵکراوەکان",
+        "ar": "تطبيقات مميزة",
+        "en": "Featured apps"
+      },
+      "spotlight_subtitle": {
+        "ku": "هەڵبژاردەیەکی تایبەتی لە کارەکانمان",
+        "ar": "مختارات مميزة من تطبيقاتنا",
+        "en": "Hand-picked highlights from our apps"
+      },
+      "spotlight_card_title": {
+        "ku": "تجارەتی پەروەردە",
+        "ar": "تجربة مميزة",
+        "en": "Premium Experience"
+      },
+      "spotlight_card_desc": {
+        "ku": "بەرنامەکان بە وردەکاری و کارایی دروستکراون",
+        "ar": "تطبيقات مصممة بعناية للجودة والأداء",
+        "en": "Carefully crafted apps with quality and performance"
+      },
+      "spotlight_cta": {
+        "ku": "سەیرکردنی بەرنامەکان",
+        "ar": "استكشاف التطبيقات",
+        "en": "Explore Apps"
+      },
       "privacy_title": {
         "ku": "سیاسەتی پاراستنی زانیاری",
         "ar": "سياسة الخصوصية",
         "en": "Privacy Policy"
+      },
+      "whois_title": {
+        "ku": "ژیوار کێیە؟",
+        "ar": "من هو ژيوار؟",
+        "en": "Who is Zhiwar?"
+      },
+      "whois_subtitle": {
+        "ku": "ناسینەوەیەکی کورت لەسەر پەرەپێدەری وێبسایت",
+        "ar": "نبذة قصيرة عن المطور",
+        "en": "Brief introduction about the developer"
+      },
+      "whois_body": {
+        "ku": "ژیوار پەرەپێدەری کوردییەکی پیشەگەرە کە سەرنجی دەدات بە دروستکردنی بەرنامەکانی مۆبایل بە تەجڕەیەکی تەواو بە زمانی کوردی.",
+        "ar": "ژيوار مطور كردي محترف يركز على بناء تطبيقات جوال عالية الجودة بتجربة كردية كاملة.",
+        "en": "Zhiwar is a professional Kurdish developer focused on building high-quality mobile apps with a complete Kurdish experience."
       },
       "privacy_date": {
         "ku": "دوایین نوێکردنەوە: ٢٥ی تشرینی یەکەمی ٢٠٢٥",
