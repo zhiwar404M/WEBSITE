@@ -289,6 +289,31 @@ const translations = {
         "ku": "داگرتن",
         "ar": "تحميل",
         "en": "Download"
+    },
+    "spotlight_title": {
+        "ku": "بەرنامە هێڵکراوەکان",
+        "ar": "تطبيقات مميزة",
+        "en": "Featured apps"
+    },
+    "spotlight_subtitle": {
+        "ku": "هەڵبژاردەیەکی تایبەتی لە کارەکانمان",
+        "ar": "مختارات مميزة من تطبيقاتنا",
+        "en": "Hand-picked highlights from our apps"
+    },
+    "spotlight_card_title": {
+        "ku": "تجارەتی پەروەردە",
+        "ar": "تجربة مميزة",
+        "en": "Premium Experience"
+    },
+    "spotlight_card_desc": {
+        "ku": "بەرنامەکان بە وردەکاری و کارایی دروستکراون",
+        "ar": "تطبيقات مصممة بعناية للجودة والأداء",
+        "en": "Carefully crafted apps with quality and performance"
+    },
+    "spotlight_cta": {
+        "ku": "سەیرکردنی بەرنامەکان",
+        "ar": "استكشاف التطبيقات",
+        "en": "Explore Apps"
     }
 };
 
