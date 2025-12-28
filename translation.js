@@ -321,38 +321,3 @@ window.LanguageManager = {
     initLanguageSystem
 };
 
-<!-- باقی بەشەکان... -->
-
-  <!-- 🔥 گرنگە: JavaScript لە کۆتایی <body> پێش </body> -->
-  <script>
-    // Loading Screen Script
-    window.addEventListener('load', function() {
-      console.log('✅ Page loaded!');
-      const loadingScreen = document.getElementById('loading-screen');
-      
-      if (loadingScreen) {
-        // وەستە 1.5 چرکە پێش شاردنەوە
-        setTimeout(function() {
-          loadingScreen.classList.add('hidden');
-          console.log('✅ Loading screen hidden!');
-          
-          // لە DOM ـەوە لابەرە دوای 500ms
-          setTimeout(function() {
-            loadingScreen.style.display = 'none';
-          }, 500);
-        }, 1500);
-      } else {
-        console.error('❌ Loading screen not found!');
-      }
-    });
-    
-    // تاقیکردنەوە: ئەگەر نەکاری کرد، بە دەستی بیشارەوە دوای 3 چرکە
-    setTimeout(function() {
-      const ls = document.getElementById('loading-screen');
-      if (ls && ls.style.display !== 'none') {
-        console.log('⚠️ Forcing loading screen to hide...');
-        ls.classList.add('hidden');
-        setTimeout(function() { ls.style.display = 'none'; }, 500);
-      }
-    }, 3000);
-  </script>
