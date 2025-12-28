@@ -23,6 +23,19 @@
 </script>
 
 
+  <script>
+  setTimeout(function() {
+    const loading = document.getElementById('loading-screen');
+    if (loading) {
+      loading.style.opacity = '0';
+      setTimeout(function() {
+        loading.style.display = 'none';
+      }, 500);
+    }
+  }, 2000);
+</script>
+
+
   
 <!-- لە سەرەوەی <body> -->
 <div id="loading-screen">
