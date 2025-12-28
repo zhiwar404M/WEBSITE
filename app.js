@@ -336,3 +336,409 @@ window.AppManager = {
     openLoginModal,
     closeLoginModal
 };
+
+
+// ===============================================
+// animations.js - زیاد بکە بە script تازە یان لە app.js
+// ===============================================
+
+// ========================
+// 1. LOADING SCREEN
+// ========================
+window.addEventListener(‘load’, () => {
+const loadingScreen = document.getElementById(‘loading-screen’);
+if (loadingScreen) {
+setTimeout(() => {
+loadingScreen.classList.add(‘hidden’);
+// Remove from DOM after animation
+setTimeout(() => {
+loadingScreen.style.display = ‘none’;
+}, 500);
+}, 1500); // Show for 1.5 seconds
+}
+});
+
+// ========================
+// 2. SCROLL REVEAL ANIMATIONS
+// ========================
+const scrollReveal = () => {
+const elements = document.querySelectorAll(’.scroll-animate, .scroll-animate-left, .scroll-animate-right’);
+
+```
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Optional: unobserve after animation
+            observer.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -100px 0px'
+});
+
+elements.forEach(el => observer.observe(el));
+```
+
+};
+
+// Initialize on DOM ready
+if (document.readyState === ‘loading’) {
+document.addEventListener(‘DOMContentLoaded’, scrollReveal);
+} else {
+scrollReveal();
+}
+
+// ========================
+// 3. HEADER SCROLL EFFECT
+// ========================
+let lastScroll = 0;
+const header = document.querySelector(‘header’);
+
+window.addEventListener(‘scroll’, () => {
+const currentScroll = window.pageYOffset;
+
+```
+if (currentScroll > 100) {
+    header?.classList.add('scrolled');
+} else {
+    header?.classList.remove('scrolled');
+}
+
+lastScroll = currentScroll;
+```
+
+});
+
+// ========================
+// 4. SMOOTH SCROLL FOR ANCHOR LINKS
+// ========================
+document.querySelectorAll(‘a[href^=”#”]’).forEach(anchor => {
+anchor.addEventListener(‘click’, function (e) {
+const href = this.getAttribute(‘href’);
+
+```
+    // Skip if it's just "#" or modal triggers
+    if (href === '#' || href === '#login') return;
+    
+    e.preventDefault();
+    const target = document.querySelector(href);
+    
+    if (target) {
+        const headerHeight = header?.offsetHeight || 0;
+        const targetPosition = target.offsetTop - headerHeight - 20;
+        
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    }
+});
+```
+
+});
+
+// ========================
+// 5. BUTTON RIPPLE EFFECT
+// ========================
+const createRipple = (event) => {
+const button = event.currentTarget;
+const ripple = document.createElement(‘span’);
+
+```
+const diameter = Math.max(button.clientWidth, button.clientHeight);
+const radius = diameter / 2;
+
+const rect = button.getBoundingClientRect();
+ripple.style.width = ripple.style.height = `${diameter}px`;
+ripple.style.left = `${event.clientX - rect.left - radius}px`;
+ripple.style.top = `${event.clientY - rect.top - radius}px`;
+ripple.classList.add('ripple');
+
+// Remove old ripples
+const oldRipple = button.querySelector('.ripple');
+if (oldRipple) {
+    oldRipple.remove();
+}
+
+button.appendChild(ripple);
+
+// Remove ripple after animation
+setTimeout(() => {
+    ripple.remove();
+}, 600);
+```
+
+};
+
+// Add ripple to all buttons
+document.querySelectorAll(’.btn’).forEach(button => {
+button.addEventListener(‘click’, createRipple);
+});
+
+// Add ripple CSS dynamically
+const rippleStyle = document.createElement(‘style’);
+rippleStyle.textContent = `
+.ripple {
+position: absolute;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.6);
+transform: scale(0);
+animation: ripple-animation 0.6s ease-out;
+pointer-events: none;
+}
+
+```
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+```
+
+`;
+document.head.appendChild(rippleStyle);
+
+// ========================
+// 6. PARALLAX EFFECT FOR HERO
+// ========================
+const heroContent = document.querySelector(’.hero-content’);
+const hero3d = document.querySelector(’.hero-3d’);
+
+window.addEventListener(‘scroll’, () => {
+const scrolled = window.pageYOffset;
+const heroSection = document.querySelector(’.hero’);
+
+```
+if (heroSection && scrolled < heroSection.offsetHeight) {
+    if (heroContent) {
+        heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+        heroContent.style.opacity = 1 - (scrolled / heroSection.offsetHeight);
+    }
+    if (hero3d) {
+        hero3d.style.transform = `translateY(${scrolled * 0.3}px)`;
+    }
+}
+```
+
+});
+
+// ========================
+// 7. CARD STAGGER ANIMATION
+// ========================
+const observeCards = () => {
+const appCards = document.querySelectorAll(’.app-card’);
+const featureCards = document.querySelectorAll(’.feature-card’);
+
+```
+const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }, index * 100); // Stagger delay
+            cardObserver.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+// Initially hide cards
+[...appCards, ...featureCards].forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'all 0.6s ease';
+    cardObserver.observe(card);
+});
+```
+
+};
+
+// Initialize card animations
+if (document.readyState === ‘loading’) {
+document.addEventListener(‘DOMContentLoaded’, observeCards);
+} else {
+observeCards();
+}
+
+// ========================
+// 8. MOUSE FOLLOW EFFECT FOR CARDS
+// ========================
+document.querySelectorAll(’.app-card, .feature-card’).forEach(card => {
+card.addEventListener(‘mousemove’, (e) => {
+const rect = card.getBoundingClientRect();
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
+
+```
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (y - centerY) / 20;
+    const rotateY = (centerX - x) / 20;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px)`;
+});
+
+card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+});
+```
+
+});
+
+// ========================
+// 9. TYPING EFFECT FOR HERO TITLE (Optional)
+// ========================
+const typeWriter = (element, text, speed = 100) => {
+let i = 0;
+element.textContent = ‘’;
+
+```
+const type = () => {
+    if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+    }
+};
+
+type();
+```
+
+};
+
+// Uncomment to enable typing effect
+// const heroTitle = document.querySelector(’.hero-content h1’);
+// if (heroTitle) {
+//     const originalText = heroTitle.textContent;
+//     window.addEventListener(‘load’, () => {
+//         typeWriter(heroTitle, originalText, 80);
+//     });
+// }
+
+// ========================
+// 10. INTERSECTION OBSERVER FOR COUNTERS (if you add stats)
+// ========================
+const animateCounters = () => {
+const counters = document.querySelectorAll(’[data-count]’);
+
+```
+counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-count'));
+    const duration = 2000; // 2 seconds
+    const step = target / (duration / 16); // 60fps
+    let current = 0;
+    
+    const updateCounter = () => {
+        current += step;
+        if (current < target) {
+            counter.textContent = Math.floor(current);
+            requestAnimationFrame(updateCounter);
+        } else {
+            counter.textContent = target;
+        }
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                updateCounter();
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+    
+    observer.observe(counter);
+});
+```
+
+};
+
+// Initialize if counters exist
+if (document.querySelector(’[data-count]’)) {
+animateCounters();
+}
+
+// ========================
+// 11. MODAL ANIMATIONS
+// ========================
+const modalOverlay = document.getElementById(‘loginModalOverlay’);
+const modalCard = document.querySelector(’.modal-card’);
+
+if (modalOverlay) {
+// When modal opens
+const originalOpenModal = window._openLoginModal;
+window._openLoginModal = function() {
+if (originalOpenModal) originalOpenModal();
+modalOverlay.style.animation = ‘fadeIn 0.3s ease’;
+if (modalCard) {
+modalCard.style.animation = ‘slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)’;
+}
+};
+
+```
+// When modal closes
+const originalCloseModal = window._closeLoginModal;
+window._closeLoginModal = function() {
+    modalOverlay.style.animation = 'fadeOut 0.3s ease';
+    if (modalCard) {
+        modalCard.style.animation = 'slideDown 0.3s ease';
+    }
+    setTimeout(() => {
+        if (originalCloseModal) originalCloseModal();
+    }, 300);
+};
+```
+
+}
+
+// Add modal animation styles
+const modalAnimStyle = document.createElement(‘style’);
+modalAnimStyle.textContent = `
+@keyframes fadeOut {
+from { opacity: 1; }
+to { opacity: 0; }
+}
+
+```
+@keyframes slideDown {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(50px); opacity: 0; }
+}
+```
+
+`;
+document.head.appendChild(modalAnimStyle);
+
+// ========================
+// 12. CONSOLE MESSAGE (Fun easter egg)
+// ========================
+console.log(’%c🎮 ZHIWAR Apps ‘, ‘color: #38bdf8; font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);’);
+console.log(’%cMade with ❤️ by ZHIWAR’, ‘color: #0ea5e9; font-size: 14px;’);
+console.log(’%c💎 Website Enhanced with Modern Animations’, ‘color: #a855f7; font-size: 12px;’);
+
+// ========================
+// 13. PERFORMANCE OPTIMIZATION
+// ========================
+// Debounce scroll events
+let scrollTimeout;
+const debounce = (func, wait) => {
+return function executedFunction(…args) {
+const later = () => {
+clearTimeout(scrollTimeout);
+func(…args);
+};
+clearTimeout(scrollTimeout);
+scrollTimeout = setTimeout(later, wait);
+};
+};
+
+// Apply debounce to scroll handlers if needed
+// window.addEventListener(‘scroll’, debounce(yourScrollFunction, 10));
+
+console.log(‘✅ All animations loaded successfully!’);
