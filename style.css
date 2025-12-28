@@ -782,3 +782,472 @@ footer {
         justify-content: center;
     }
 }
+
+
+/* ===============================================
+زیادکراوە بۆ style.css ـەکەت
+تکایە ئەمانە لە کۆتایی style.css ـەکەت زیاد بکە
+=============================================== */
+
+/* ========================
+
+1. ENHANCED CARD HOVER EFFECTS
+   ======================== */
+
+.app-card {
+position: relative;
+overflow: hidden;
+transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+border: 1px solid rgba(56, 189, 248, 0.1);
+}
+
+/* Gradient overlay on hover */
+.app-card::before {
+content: ‘’;
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 60%);
+opacity: 0;
+transition: opacity 0.5s, transform 10s linear;
+pointer-events: none;
+}
+
+.app-card:hover::before {
+opacity: 1;
+animation: rotateGradient 10s linear infinite;
+}
+
+@keyframes rotateGradient {
+from { transform: rotate(0deg); }
+to { transform: rotate(360deg); }
+}
+
+.app-card:hover {
+transform: translateY(-15px) scale(1.02);
+box-shadow: 0 20px 60px rgba(56, 189, 248, 0.3);
+border-color: #38bdf8;
+}
+
+/* Icon rotation on hover */
+.app-icon {
+transition: all 0.5s ease;
+transform-style: preserve-3d;
+}
+
+.app-card:hover .app-icon {
+transform: rotateY(360deg) scale(1.1);
+}
+
+/* ========================
+2. FEATURE CARD HOVER EFFECTS
+======================== */
+
+.feature-card {
+position: relative;
+overflow: hidden;
+transition: all 0.4s ease;
+border: 1px solid rgba(56, 189, 248, 0.1);
+}
+
+/* Shine effect */
+.feature-card::after {
+content: ‘’;
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.3), transparent);
+transition: left 0.6s;
+}
+
+.feature-card:hover::after {
+left: 100%;
+}
+
+.feature-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 15px 40px rgba(56, 189, 248, 0.25);
+border-color: #38bdf8;
+}
+
+/* Feature icon animation */
+.feature-icon span {
+transition: all 0.4s ease;
+display: inline-block;
+}
+
+.feature-card:hover .feature-icon span {
+transform: rotateZ(360deg) scale(1.2);
+color: #38bdf8;
+}
+
+/* ========================
+3. BUTTON RIPPLE EFFECT
+======================== */
+
+.btn {
+position: relative;
+overflow: hidden;
+}
+
+.btn::before {
+content: ‘’;
+position: absolute;
+top: 50%;
+left: 50%;
+width: 0;
+height: 0;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.3);
+transform: translate(-50%, -50%);
+transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+width: 300px;
+height: 300px;
+}
+
+.btn:active {
+transform: scale(0.95);
+}
+
+/* ========================
+4. SCROLL REVEAL ANIMATIONS - STAGGER
+======================== */
+
+/* Fade up from bottom */
+.scroll-fade-up {
+opacity: 0;
+transform: translateY(50px);
+transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-fade-up.reveal {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* Fade from left */
+.scroll-fade-left {
+opacity: 0;
+transform: translateX(-50px);
+transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-fade-left.reveal {
+opacity: 1;
+transform: translateX(0);
+}
+
+/* Fade from right */
+.scroll-fade-right {
+opacity: 0;
+transform: translateX(50px);
+transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-fade-right.reveal {
+opacity: 1;
+transform: translateX(0);
+}
+
+/* Stagger delays for multiple cards */
+.app-card:nth-child(1) { transition-delay: 0s; }
+.app-card:nth-child(2) { transition-delay: 0.1s; }
+.app-card:nth-child(3) { transition-delay: 0.2s; }
+.app-card:nth-child(4) { transition-delay: 0.3s; }
+
+.feature-card:nth-child(1) { transition-delay: 0s; }
+.feature-card:nth-child(2) { transition-delay: 0.15s; }
+.feature-card:nth-child(3) { transition-delay: 0.3s; }
+
+/* ========================
+5. HEADER ANIMATION ON SCROLL
+======================== */
+
+header {
+transition: all 0.3s ease;
+}
+
+header.scrolled {
+background-color: rgba(30, 41, 59, 0.95);
+backdrop-filter: blur(10px);
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================
+6. SMOOTH SCROLL BEHAVIOR
+======================== */
+
+html {
+scroll-behavior: smooth;
+}
+
+/* ========================
+7. LOADING SCREEN ENHANCEMENT
+======================== */
+
+#loading-screen {
+backdrop-filter: blur(10px);
+}
+
+.loader-text {
+text-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
+}
+
+/* ========================
+8. PRIVACY SECTION ANIMATIONS
+======================== */
+
+.privacy-container {
+transition: all 0.3s ease;
+}
+
+.privacy-container:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
+}
+
+/* ========================
+9. FOOTER LINKS ANIMATION
+======================== */
+
+.footer-links a {
+transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+transform: translateX(8px);
+color: #38bdf8;
+}
+
+/* ========================
+10. LANGUAGE BUTTON PULSE
+======================== */
+
+.lang-btn.active {
+animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+0%, 100% {
+box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+}
+50% {
+box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+}
+}
+
+/* ========================
+11. MODAL ENTER ANIMATION
+======================== */
+
+.modal-overlay {
+animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+from {
+opacity: 0;
+}
+to {
+opacity: 1;
+}
+}
+
+.modal-card {
+animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUp {
+from {
+transform: translateY(50px);
+opacity: 0;
+}
+to {
+transform: translateY(0);
+opacity: 1;
+}
+}
+
+/* ========================
+12. FORM INPUT FOCUS EFFECTS
+======================== */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+outline: none;
+border-color: #38bdf8;
+box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+transform: translateY(-2px);
+transition: all 0.3s ease;
+}
+
+/* ========================
+13. LOGO ANIMATION
+======================== */
+
+.logo {
+transition: all 0.3s ease;
+}
+
+.logo:hover {
+transform: scale(1.05);
+}
+
+.logo-icon {
+transition: transform 0.5s ease;
+}
+
+.logo:hover .logo-icon {
+transform: rotate(180deg);
+}
+
+/* ========================
+14. NAV LINK UNDERLINE EFFECT
+======================== */
+
+nav a {
+position: relative;
+}
+
+nav a::after {
+content: ‘’;
+position: absolute;
+bottom: -5px;
+left: 50%;
+width: 0;
+height: 2px;
+background: #38bdf8;
+transition: all 0.3s ease;
+transform: translateX(-50%);
+}
+
+nav a:hover::after {
+width: 80%;
+}
+
+/* ========================
+15. BUTTON PRESS EFFECT
+======================== */
+
+.btn:active {
+transform: scale(0.95);
+}
+
+.btn-primary:active {
+box-shadow: 0 2px 10px rgba(56, 189, 248, 0.5);
+}
+
+/* ========================
+16. HERO SECTION TEXT ANIMATIONS
+======================== */
+
+.hero-content h1 {
+animation: fadeInUp 1s ease;
+}
+
+.hero-content p {
+animation: fadeInUp 1s ease 0.2s both;
+}
+
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(30px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+/* ========================
+17. FLOATING ANIMATION
+======================== */
+
+.orb-core {
+animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+0%, 100% {
+transform: translateY(0);
+}
+50% {
+transform: translateY(-20px);
+}
+}
+
+/* ========================
+18. USER CHIP ANIMATION
+======================== */
+
+.user-chip {
+transition: all 0.3s ease;
+}
+
+.user-chip:hover {
+transform: scale(1.05);
+border-color: #38bdf8;
+box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+/* ========================
+19. COPYRIGHT HOVER EFFECT
+======================== */
+
+.copyright {
+transition: all 0.3s ease;
+}
+
+.copyright:hover {
+color: #38bdf8;
+}
+
+/* ========================
+20. PRIVACY BUTTON ENHANCEMENT
+======================== */
+
+.privacy-toggle {
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+background: rgba(14, 165, 233, 0.15);
+color: #0ea5e9;
+padding: 0.8rem 1.5rem;
+border-radius: 0.5rem;
+border: 1px solid rgba(14, 165, 233, 0.3);
+cursor: pointer;
+transition: all 0.3s ease;
+margin-top: 1rem;
+}
+
+.privacy-toggle:hover {
+background: rgba(14, 165, 233, 0.25);
+transform: translateY(-3px);
+box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
+}
+
+/* ========================
+21. RESPONSIVE ENHANCEMENTS
+======================== */
+
+@media (max-width: 640px) {
+.app-card:hover {
+transform: translateY(-10px) scale(1.01);
+}
+
+```
+.feature-card:hover {
+    transform: translateY(-8px);
+}
+```
+
+}
