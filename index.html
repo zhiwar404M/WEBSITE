@@ -1,79 +1,45 @@
 <!DOCTYPE html>
+
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
   <meta name="google-site-verification" content="https://zhiwaryt.vercel.app/">
   <title data-translate="welcome_title">Welcome to ZHIWAR YT | Official Website</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
-<!-- لە ناو <head> -->
-<script src="translation.js"></script>
-<script src="app.js"></script>
-<!-- لە کۆتایی <body> -->
-<script>
-    // AOS initialization
-    AOS.init({
-        duration: 1000,
-        once: true,
-        offset: 100
-    });
-</script>
+  <!-- JavaScript ـەکان -->
 
+  <script src="translation.js"></script>
 
-  <script>
-  setTimeout(function() {
-    const loading = document.getElementById('loading-screen');
-    if (loading) {
-      loading.style.opacity = '0';
-      setTimeout(function() {
-        loading.style.display = 'none';
-      }, 500);
-    }
-  }, 2000);
-</script>
+  <script src="app.js"></script>
 
+</head>
 
-  
-<!-- لە سەرەوەی <body> -->
-<div id="loading-screen">
-  <div class="loader">
-    <div class="loader-ring"></div>
-    <div class="loader-ring"></div>
-    <div class="loader-ring"></div>
+<body>
+
+  <!-- ✅✅✅ LOADING SCREEN - لە سەرەوەی body -->
+
+  <div id="loading-screen">
+    <div class="loader">
+      <div class="loader-ring"></div>
+      <div class="loader-ring"></div>
+      <div class="loader-ring"></div>
+    </div>
+    <div class="loader-text">Loading ZHIWAR...</div>
   </div>
-  <div class="loader-text">Loading ZHIWAR...</div>
-</div>
 
-<!-- class زیاد بکە بۆ sections -->
-<section id="apps" class="apps-section scroll-animate">
-<section id="features" class="features scroll-animate">
-<footer id="contact" class="scroll-animate">
+  <!-- Ad containers -->
 
+  <div id="pre-access-overlay" style="display: none;"></div>
+  <div id="adsterra-ad-1"></div>
+  <div id="adsterra-ad-2"></div>
 
-  
-  
-  <!-- پێویستە ئەم div-انە بوونیان هەبێت -->
-<div id="pre-access-overlay" style="display: none;">
-  <!-- ناوەڕۆکی ڕیکلام -->
-</div>
+  <!-- Header -->
 
-<div id="adsterra-ad-1"></div>
-<div id="adsterra-ad-2"></div>
-
-
-
-<div id="adsterra-ad-1"></div>
-<script>
-  var s = document.createElement('script');
-  s.src = 'https://oblivionplaysaltered.com/50/c1/0a/50c10a5810034923515743695968da04.js';
-  document.getElementById('adsterra-ad-1').appendChild(s);
-</script>
-
-  
-  
   <header>
     <div class="header-container">
       <a href="#" class="logo">
@@ -84,35 +50,34 @@
         <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
         <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
         <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
-
         <a href="#Minecraft.html"><span class="material-icons">blocks</span> <span data-translate="nav_apps">Minecraft download</span></a>
+        <a href="#login" id="loginNavLink" onclick="var o=document.getElementById('loginModalOverlay'); if(o){o.style.display='flex'; document.body.style.overflow='hidden';} return false;">
+          <span class="material-icons">login</span> 
+          <span data-translate="nav_login">Login</span>
+        </a>
 
-                  <a href="#login" id="loginNavLink" onclick="var o=document.getElementById('loginModalOverlay'); if(o){o.style.display='flex'; document.body.style.overflow='hidden';} return false;"><span class="material-icons">login</span> <span data-translate="nav_login">Login</span></a>
-        <div id="userChip" class="user-chip" style="display:none;">
-          <img id="userAvatar" class="user-avatar" alt="" />
-          <span id="userEmail" class="user-email"></span>
-          <button id="logoutBtn" class="logout-btn" type="button">
-            <span class="material-icons">logout</span>
-          </button>
-        </div>
-        
-    <!-- دوگمەی زمان -->
-    <div class="language-switcher">
-        <button class="lang-btn" data-lang="ku">کوردی</button>
-        <button class="lang-btn" data-lang="ar">العربية</button>
-        <button class="lang-btn active" data-lang="en">English</button>
+```
+    <div id="userChip" class="user-chip" style="display:none;">
+      <img id="userAvatar" class="user-avatar" alt="" />
+      <span id="userEmail" class="user-email"></span>
+      <button id="logoutBtn" class="logout-btn" type="button">
+        <span class="material-icons">logout</span>
+      </button>
     </div>
+    
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+      <button class="lang-btn" data-lang="ku">کوردی</button>
+      <button class="lang-btn" data-lang="ar">العربية</button>
+      <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+  </nav>
+</div>
+```
 
-    <!-- AOS لە کۆتاییدا -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 100
-        });
-    </script>
   </header>
+
+  <!-- Hero Section -->
 
   <section class="hero">
     <div class="hero-3d" aria-hidden="true">
@@ -122,55 +87,69 @@
     <div class="hero-content">
       <h1 data-translate="hero_title">ZHIWAR Apps</h1>
       <p data-translate="hero_subtitle">Apps fully programmed in Kurdish language for Android and iOS</p>
-      <div style="display: flex; gap: 1rem; justify-content: center;">
-        <a href="#apps" class="btn btn-primary"><span class="material-icons">download</span> <span data-translate="hero_download">Download</span></a>
-        <a href="#features" class="btn btn-outline"><span class="material-icons">info</span> <span data-translate="hero_more">More Info</span></a>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="#apps" class="btn btn-primary">
+          <span class="material-icons">download</span> 
+          <span data-translate="hero_download">Download</span>
+        </a>
+        <a href="#features" class="btn btn-outline">
+          <span class="material-icons">info</span> 
+          <span data-translate="hero_more">More Info</span>
+        </a>
       </div>
     </div>
   </section>
-  
-  
-  
-  <!-- Features Section -->
-<section id="features" class="features">
-  <!-- ... existing features content ... -->
-</section>
 
-<!-- Login Section -->
-<section id="login" class="login-section">
-  <!-- ... login form ... -->
-</section>
+  <!-- Apps Section -->
 
-<!-- Feedback Section -->
-<section id="feedback" class="feedback-section">
-  <!-- ... feedback form ... -->
-</section>
-
-<!-- Privacy Policy Section -->
-<section class="privacy-section">
-  <!-- ... privacy policy ... -->
-</section>
-
-  <section id="apps" class="apps-section">
+  <section id="apps" class="apps-section scroll-animate">
     <h2 class="section-title" data-translate="apps_section_title">Applications</h2>
     <p class="section-subtitle" data-translate="apps_section_subtitle">These are the apps for both Android and iPhone</p>
 
-    <div class="apps-grid">
-      <div class="app-card">
-        <div class="app-icon"><span class="material-icons">android</span></div>
-        <h3 class="app-title" data-translate="app1_title">Minefo Kr</h3>
-        <span class="app-version" data-translate="app1_version">وەشانی 1.0</span>
-        <p class="app-description" data-translate="app1_description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
-        <button class="btn btn-primary" onclick="startDownloadWithAds('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk')">
-          <span class="material-icons">download</span> <span data-translate="app1_button">داگرتن بۆ ئەندرۆید</span>
-        </button>
+```
+<div class="apps-grid">
+  <div class="app-card">
+    <div class="app-icon"><span class="material-icons">android</span></div>
+    <h3 class="app-title" data-translate="app1_title">Minefo Kr</h3>
+    <span class="app-version" data-translate="app1_version">وەشانی 1.0</span>
+    <p class="app-description" data-translate="app1_description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
+    <button class="btn btn-primary" onclick="startDownloadWithAds('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk')">
+      <span class="material-icons">download</span> 
+      <span data-translate="app1_button">داگرتن بۆ ئەندرۆید</span>
+    </button>
+  </div>
+</div>
+```
+
+  </section>
+
+  <!-- Features Section -->
+
+  <section id="features" class="features scroll-animate">
+    <h2 class="section-title" data-translate="features_title">Features</h2>
+    <p class="section-subtitle" data-translate="features_subtitle">Some unique features of my app</p>
+    <div class="features-grid">
+      <div class="feature-card scroll-animate-left">
+        <div class="feature-icon"><span class="material-icons">language</span></div>
+        <h3 class="feature-title" data-translate="feature1_title">Kurdish Language</h3>
+        <p class="feature-description" data-translate="feature1_desc">The entire app in Kurdish with special design</p>
+      </div>
+      <div class="feature-card scroll-animate">
+        <div class="feature-icon"><span class="material-icons">speed</span></div>
+        <h3 class="feature-title" data-translate="feature2_title">Speed</h3>
+        <p class="feature-description" data-translate="feature2_desc">Very fast and lightweight for any mobile</p>
+      </div>
+      <div class="feature-card scroll-animate-right">
+        <div class="feature-icon"><span class="material-icons">update</span></div>
+        <h3 class="feature-title" data-translate="feature3_title">Updates</h3>
+        <p class="feature-description" data-translate="feature3_desc">Apps are constantly updated</p>
       </div>
     </div>
-    
-
+  </section>
 
   <!-- Privacy Policy Section -->
-  <section class="privacy-section">
+
+  <section class="privacy-section" style="display: none;">
     <div class="privacy-container">
       <div class="privacy-header">
         <h2 class="privacy-title">
@@ -179,112 +158,66 @@
         </h2>
         <p class="privacy-date" data-translate="privacy_date">Last updated: October 25, 2025</p>
       </div>
-      
       <div class="privacy-content">
-        <p data-translate="privacy_intro">At ZHIWAR , protecting your personal information is very important to us. This policy explains how we collect, use, and protect your personal information.</p>
-        
-        <h3>
-          <span class="material-icons">collections_bookmark</span>
-          <span data-translate="privacy_collect_title">What information do we collect?</span>
-        </h3>
-        <p data-translate="privacy_collect_list">We collect the following information:</p>
-        <ul>
-          <li data-translate="privacy_collect_item1">Personal information: name, email</li>
-          <li data-translate="privacy_collect_item2">Device information: device type, operating system</li>
-          <li data-translate="privacy_collect_item3">Usage information: downloads, user browser</li>
-          <li data-translate="privacy_collect_item4">Ad information: clicks on ads</li>
-        </ul>
-        
-        <h3>
-          <span class="material-icons">how_to_reg</span>
-          <span data-translate="privacy_use_title">How do we use your information?</span>
-        </h3>
-        <p data-translate="privacy_use_list">We use your information for the following purposes:</p>
-        <ul>
-          <li data-translate="privacy_use_item1">Providing our services</li>
-          <li data-translate="privacy_use_item2">Developing new applications</li>
-          <li data-translate="privacy_use_item3">Improving our website and applications</li>
-          <li data-translate="privacy_use_item4">Sending relevant information and ads</li>
-        </ul>
-        
-        <h3>
-          <span class="material-icons">lock</span>
-          <span data-translate="privacy_protect_title">How we protect your information</span>
-        </h3>
-        <p data-translate="privacy_protect_list">We make great efforts to protect your information:</p>
-        <ul>
-          <li data-translate="privacy_protect_item1">We use advanced protection technology</li>
-          <li data-translate="privacy_protect_item2">Continuous monitoring of protection systems</li>
-        </ul>
+        <p data-translate="privacy_intro">At ZHIWAR, protecting your personal information is very important to us.</p>
       </div>
     </div>
   </section>
-  
-  <!-- Features Section -->
-<section id="features" class="features">
-  <h2 class="section-title" data-translate="features_title">Features</h2>
-  <p class="section-subtitle" data-translate="features_subtitle">Some unique features of my app</p>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon"><span class="material-icons">language</span></div>
-      <h3 class="feature-title" data-translate="feature1_title">Kurdish Language</h3>
-      <p class="feature-description" data-translate="feature1_desc">The entire app in Kurdish with special design</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><span class="material-icons">speed</span></div>
-      <h3 class="feature-title" data-translate="feature2_title">Speed</h3>
-      <p class="feature-description" data-translate="feature2_desc">Very fast and lightweight for any mobile</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon"><span class="material-icons">update</span></div>
-      <h3 class="feature-title" data-translate="feature3_title">Updates</h3>
-      <p class="feature-description" data-translate="feature3_desc">Apps are constantly updated</p>
-    </div>
-  </div>
-</section>
 
+  <!-- Feedback Section -->
 
-    <!-- Ad point 1: Middle of page --> 
-  <div class="ad-container">
-    <span class="ad-label"></span>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2419305830519121"
-            crossorigin="anonymous"></script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-2419305830519121"
-         data-ad-slot="Forgotten ad point 1"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
+  <section id="feedback" class="feedback-section">
+    <div class="section-container">
+      <h2 class="section-title" data-translate="feedback_title">پێشنیار و رەخنە</h2>
+      <p class="section-subtitle" data-translate="feedback_subtitle">ئێمە گرنگی بە رای تۆ دەدەین</p>
+      <div class="feedback-form">
+        <div class="form-group">
+          <label for="feedback-type" data-translate="feedback_type">جۆری رەخنە</label>
+          <select id="feedback-type">
+            <option value="suggestion" data-translate="feedback_suggestion">پێشنیار</option>
+            <option value="bug" data-translate="feedback_bug">ڕاپۆرتی کێشە</option>
+            <option value="compliment" data-translate="feedback_compliment">پێزانین</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="feedback-message" data-translate="feedback_message">پەیامەکەت</label>
+          <textarea id="feedback-message" rows="5" placeholder="..."></textarea>
+        </div>
+        <button class="btn btn-primary" data-translate="feedback_button">ناردنی رەخنە</button>
+      </div>
+    </div>
+  </section>
 
-  <footer id="contact">
+  <!-- Footer -->
+
+  <footer id="contact" class="scroll-animate">
     <div class="footer-content">
       <div class="footer-column">
         <h3 data-translate="about_title">About Us</h3>
-        <p data-translate="about_text">My name is Zhiwar, developer of Kurdish apps, and I strive to provide the best for your service 💎❤️.</p>
+        <p data-translate="about_text">My name is Zhiwar, developer of Kurdish apps 💎❤️</p>
       </div>
       <div class="footer-column">
         <h3 data-translate="contact_title">Contact</h3>
         <ul class="footer-links">
-          <li><a href="mailto:zhiwarup@gmail.com"><span class="material-icons">email</span> <span data-translate="email_label">Email: zhiwarup@gmail.com</span></a></li>
+          <li>
+            <a href="mailto:zhiwarup@gmail.com">
+              <span class="material-icons">email</span> 
+              <span data-translate="email_label">zhiwarup@gmail.com</span>
+            </a>
+          </li>
         </ul>
       </div>
       <div class="footer-column">
         <h3 data-translate="channels_title">Channels</h3>
         <ul class="footer-links">
-          <li><a href="https://youtube.com/@zhiwarxyt"><span class="material-icons">play_circle</span> <span data-translate="youtube_label">YouTube</span></a></li>
-          <li><a href="#"><span class="material-icons">tiktok</span> <span data-translate="facebook_label">Facebook</span></a></li>
-          <li><a href="https://snapchat.com/t/HktxQxsY"><span class="material-icons">snapchat</span> <span data-translate="snapchat_label">Snapchat</span></a></li>
+          <li><a href="https://youtube.com/@zhiwarxyt"><span class="material-icons">play_circle</span> <span>YouTube</span></a></li>
+          <li><a href="#"><span class="material-icons">facebook</span> <span>Facebook</span></a></li>
+          <li><a href="https://snapchat.com/t/HktxQxsY"><span class="material-icons">camera</span> <span>Snapchat</span></a></li>
         </ul>
       </div>
     </div>
     <div class="copyright">
       <p data-translate="copyright_text">© 2021-2025 All rights reserved. Producer: ZHIWAR</p>
-      
-      <!-- New button for privacy policy -->
       <button class="privacy-toggle" id="privacyToggle">
         <span class="material-icons">privacy_tip</span>
         <span data-translate="privacy_toggle">Privacy Policy</span>
@@ -292,922 +225,116 @@
     </div>
   </footer>
 
+  <!-- Login Modal -->
 
-
-
-<!-- Feedback Section -->
-<section id="feedback" class="feedback-section">
-  <div class="section-container">
-    <h2 class="section-title" data-translate="feedback_title">پێشنیار و رەخنە</h2>
-    <p class="section-subtitle" data-translate="feedback_subtitle">ئێمە گرنگی  بە  رای تۆ دەدەین بۆ باشترکردنی بەرنامەکانمان</p>
-    
-    <div class="feedback-form">
-      <div class="form-group">
-        <label for="feedback-type" data-translate="feedback_type">جۆری رەخنە</label>
-        <select id="feedback-type">
-          <option value="suggestion" data-translate="feedback_suggestion">پێشنیار</option>
-          <option value="bug" data-translate="feedback_bug">ڕاپۆرتی کێشە</option>
-          <option value="compliment" data-translate="feedback_compliment">پێزانین</option>
-        </select>
+  <div id="loginModalOverlay" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <button class="modal-close" id="loginModalClose">
+        <span class="material-icons">close</span>
+      </button>
+      <div class="modal-header">
+        <h2 data-translate="login_title">Login to Your Account</h2>
+        <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
       </div>
-      <div class="form-group">
-        <label for="feedback-message" data-translate="feedback_message">پەیامەکەت</label>
-        <textarea id="feedback-message" rows="5" data-translate-placeholder="feedback_placeholder" placeholder="..."></textarea>
-      </div>
-      <button class="btn btn-primary" data-translate="feedback_button">ناردنی رەخنە</button>
-    </div>
-  </div>
-</section>
-
-<!-- Login Modal -->
-<div id="loginModalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
-  <div class="modal-card">
-    
-    <button class="modal-close" id="loginModalClose" aria-label="Close">
-      <span class="material-icons">close</span>
-    </button>
-    <div class="modal-header">
-      <h2 id="loginModalTitle" data-translate="login_title">Login to Your Account</h2>
-      <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
-    </div>
-    <div class="modal-body">
-      <div class="login-visual" aria-hidden="true">
-        <canvas id="loginCanvas"></canvas>
-      </div>
-      <div class="tilt-wrap">
-        <div class="auth-tabs" role="tablist">
-          <button id="tabSignIn" class="auth-tab active" type="button" role="tab" data-translate="tab_signin">Sign in</button>
-          <button id="tabRegister" class="auth-tab" type="button" role="tab" data-translate="tab_register">Register now</button>
+      <div class="modal-body">
+        <div class="login-visual">
+          <canvas id="loginCanvas"></canvas>
         </div>
-        <form id="loginForm" novalidate style="display: block;" aria-hidden="false">
-          <div id="authError" class="auth-error" role="alert" style="display:none;"></div>
-          <div class="form-group">
-            <label for="loginEmail" data-translate="login_email">Email</label>
-            <input id="loginEmail" type="email" required autocomplete="email">
+        <div class="tilt-wrap">
+          <div class="auth-tabs">
+            <button id="tabSignIn" class="auth-tab active" data-translate="tab_signin">Sign in</button>
+            <button id="tabRegister" class="auth-tab" data-translate="tab_register">Register</button>
           </div>
-          <div class="form-group">
-            <label for="loginPassword" data-translate="login_password">Password</label>
-            <input id="loginPassword" type="password" required autocomplete="current-password">
-          </div>
-          <button type="submit" class="btn btn-primary" data-translate="login_button">Login</button>
-          <div class="oauth-divider"><span data-translate="oauth_or">OR</span></div>
-          <button type="button" id="googleSignIn" class="btn btn-outline google-btn">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" width="20" height="20" style="filter: brightness(0) invert(1);"/>
-            <span data-translate="google">Google</span>
-          </button>
-          <div class="login-help">
-            <span data-translate="login_help">Don't have an account?</span>
-            <a href="#" id="linkToRegister" data-translate="login_register">Register here</a>
-          </div>
-        </form>
-        <form id="registerForm" novalidate style="display: none;" aria-hidden="true">
-          <div id="regError" class="auth-error" role="alert" style="display:none;"></div>
-          <div class="form-group">
-            <label for="regEmail" data-translate="reg_email_label">Email</label>
-            <input id="regEmail" type="email" required autocomplete="email">
-          </div>
-          <div class="form-group">
-            <label for="regPassword" data-translate="reg_password_label">Password</label>
-            <input id="regPassword" type="password" required autocomplete="new-password" minlength="6">
-          </div>
-          <div class="form-group">
-            <label for="regPassword2" data-translate="reg_confirm_label">Confirm Password</label>
-            <input id="regPassword2" type="password" required autocomplete="new-password" minlength="6">
-          </div>
-          <button type="submit" class="btn btn-primary" id="registerBtn" data-translate="register_button">Create account</button>
-          <div class="login-help">
-            <span data-translate="already_have">Already have an account?</span>
-            <a href="#" id="linkToSignIn" data-translate="signin_link">Sign in</a>
-          </div>
-        </form>
+          <form id="loginForm" style="display: block;">
+            <div id="authError" class="auth-error" style="display:none;"></div>
+            <div class="form-group">
+              <label for="loginEmail" data-translate="login_email">Email</label>
+              <input id="loginEmail" type="email" required>
+            </div>
+            <div class="form-group">
+              <label for="loginPassword" data-translate="login_password">Password</label>
+              <input id="loginPassword" type="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary" data-translate="login_button">Login</button>
+          </form>
+          <form id="registerForm" style="display: none;">
+            <div id="regError" class="auth-error" style="display:none;"></div>
+            <div class="form-group">
+              <label for="regEmail">Email</label>
+              <input id="regEmail" type="email" required>
+            </div>
+            <div class="form-group">
+              <label for="regPassword">Password</label>
+              <input id="regPassword" type="password" required>
+            </div>
+            <div class="form-group">
+              <label for="regPassword2">Confirm Password</label>
+              <input id="regPassword2" type="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create account</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- ORB Canvas Script -->
 
   <script>
-  // Language switching function
-  function changeLanguage(lang) {
-    // Change current selection
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === lang);
-    });
-    
-    // Change language in system
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : lang === 'ku' ? 'rtl' : 'ltr';
-    
-    // Change all text according to language
-    translatePage(lang);
-    
-    // Record selection in cookie
-    document.cookie = `user_lang=${lang}; path=/; max-age=${365 * 24 * 60 * 60}`;
-  }
-  
-  
-
-  // Page translation function
-  function translatePage(lang) {
-    // Translation information
-    const translations = {
-      "welcome_title": {
-        "ku": "بەخێرهاتی بۆ | وێبسایتی فەرمی ZHIWAR",
-        "ar": "مرحبًا بكم | الموقع الرسمي ZHIWAR",
-        "en": "Welcome | Official ZHIWAR Website"
-      },
-      "adblock_warning": {
-        "ku": "⚠️ تکایە AdBlock ـەکەت ناچالاک بکە بۆ بینینی ناوەرۆکەکە. سوپاس ❤️",
-        "ar": "⚠️ يرجى تعطيل AdBlock لعرض المحتوى. شكرًا ❤️",
-        "en": "⚠️ Please disable AdBlock to view the content. Thank you ❤️"
-      },
-      "nav_apps": {
-        "ku": "بەشی بەرنامەکان",
-        "ar": "قسم التطبيقات",
-        "en": "Apps Section"
-      },
-      "nav_features": {
-        "ku": "تایبەتمەندییەکان",
-        "ar": "الميزات",
-        "en": "Features"
-      },
-      "nav_contact": {
-        "ku": "پەیوەندی",
-        "ar": "اتصل بنا",
-        "en": "Contact"
-      },
-      "hero_title": {
-        "ku": "بەرنامەکانی ZHIWAR",
-        "ar": "تطبيقات ZHIWAR",
-        "en": "ZHIWAR Apps"
-      },
-      "hero_subtitle": {
-        "ku": "بەرنامەکان بە تەواوی دارێژراوە بە زمانی کوردی بۆ ئەندرۆید و iOS",
-        "ar": "تطبيقات مبرمجة بالكامل باللغة الكردية لنظامي Android و iOS",
-        "en": "Apps fully programmed in Kurdish language for Android and iOS"
-      },
-      "hero_download": {
-        "ku": "داگرتن",
-        "ar": "تحميل",
-        "en": "Download"
-      },
-      "hero_more": {
-        "ku": "زانیاری زیاتر",
-        "ar": "المزيد",
-        "en": "More Info"
-      },
-      "apps_section_title": {
-        "ku": "بەرنامەکان",
-        "ar": "التطبيقات",
-        "en": "Applications"
-      },
-      "apps_section_subtitle": {
-        "ku": "ئەمەش بەرنامەکانانە بۆ هەردوو سیستەمی ئەندرۆید و ئایفۆن",
-        "ar": "هذه هي التطبيقات لنظامي Android و iPhone",
-        "en": "These are the apps for both Android and iPhone"
-      },
-      "app1_title": {
-        "ku": "زانیاریەکانی مایکرافت",
-        "ar": "معلومات عن ماين كرافت",
-        "en": "Kurdish Information Mcpe"
-      },
-      "app1_version": {
-        "ku": "وەشانی 1.0",
-        "ar": "الإصدار 1.0",
-        "en": "Version 1.0"
-      },
-      "app1_description": {
-        "ku": "تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی",
-        "ar": "جميع معلومات ماينكرافت باللغة الكردية",
-        "en": "All Minecraft information in Kurdish"
-      },
-      "app1_button": {
-        "ku": "داگرتن بۆ ئەندرۆید",
-        "ar": "تحميل للأندرويد",
-        "en": "Download for Android"
-      },
-      "privacy_title": {
-        "ku": "سیاسەتی پاراستنی زانیاری",
-        "ar": "سياسة الخصوصية",
-        "en": "Privacy Policy"
-      },
-      "privacy_date": {
-        "ku": "دوایین نوێکردنەوە: ٢٥ی تشرینی یەکەمی ٢٠٢٥",
-        "ar": "آخر تحديث: ٢٥ أكتوبر ٢٠٢٥",
-        "en": "Last updated: October 25, 2025"
-      },
-      "privacy_intro": {
-        "ku": "لە وێبسایتی ZHIWAR ، پاراستنی زانیاریە کەسییەکانت بۆمان زۆر گرنگە. ئەم سیاسەتە ڕوونی دەکاتەوە کە چۆن زانیارییە کەسییەکانت کۆدەکەینەوە، بەکاریان دەهێنین.",
-        "ar": "في ZHIWAR، نولي أهمية بالغة لحماية معلوماتكم الشخصية. توضح هذه السياسة كيفية جمعنا واستخدامنا لمعلوماتكم الشخصية.",
-        "en": "At ZHIWAR , protecting your personal information is very important to us. This policy explains how we collect, use, and protect your personal information."
-      },
-      "privacy_collect_title": {
-        "ku": "چ جۆرە زانیارییەک کۆدەکەینەوە؟",
-        "ar": "ما نوع المعلومات التي نجمعها؟",
-        "en": "What information do we collect?"
-      },
-      "privacy_collect_list": {
-        "ku": "ئێمە زانیارییەکانی خوارەوە کۆدەکەینەوە:",
-        "ar": "نقوم بجمع المعلومات التالية:",
-        "en": "We collect the following information:"
-      },
-      "privacy_collect_item1": {
-        "ku": "زانیاری کەسی: ناو، ئیمەیڵ ",
-        "ar": "معلومات شخصية: الاسم، البريد الإلكتروني ",
-        "en": "Personal information: name, email"
-      },
-      "privacy_collect_item2": {
-        "ku": "زانیاری ئامێر: جۆری ئامێر، سیستەمی کارپێکەری",
-        "ar": "معلومات الجهاز: نوع الجهاز، نظام التشغيل",
-        "en": "Device information: device type, operating system"
-      },
-      "privacy_collect_item3": {
-        "ku": "زانیاری بەکارهێنان: داگرتنەکان، وێبگەڕی بەکارهێنەر",
-        "ar": "معلومات الاستخدام: التحميلات، متصفح المستخدم",
-        "en": "Usage information: downloads, user browser"
-      },
-      "privacy_collect_item4": {
-        "ku": "زانیاری ریکلام: کلیکەکان لەسەر ریکلام",
-        "ar": "معلومات الإعلانات: النقرات على الإعلانات",
-        "en": "Ad information: clicks on ads"
-      },
-      "privacy_use_title": {
-        "ku": "چۆن زانیاریەکانت بەکاردەهێنین؟",
-        "ar": "كيف نستخدم معلوماتك؟",
-        "en": "How do we use your information?"
-      },
-      "privacy_use_list": {
-        "ku": "زانیاریەکانت بۆ ئەم مەبەستانە بەکاردەهێنین:",
-        "ar": "نستخدم معلوماتك للأغراض التالية:",
-        "en": "We use your information for the following purposes:"
-      },
-      "privacy_use_item1": {
-        "ku": "پێشکەشکردنی خزمەتگوزارییەکانمان",
-        "ar": "تقديم خدماتنا",
-        "en": "Providing our services"
-      },
-      "privacy_use_item2": {
-        "ku": "پەرەپێدانی بەرنامە نوێیەکان",
-        "ar": "تطوير تطبيقات جديدة",
-        "en": "Developing new applications"
-      },
-      "privacy_use_item3": {
-        "ku": "باشترکردنی وێبسایت و بەرنامەکانمان",
-        "ar": "تحسين موقعنا وتطبيقاتنا",
-        "en": "Improving our website and applications"
-      },
-      "privacy_use_item4": {
-        "ku": "ناردنی زانیاری و ڕیکلامی پەیوەندیدار",
-        "ar": "إرسال معلومات وإعلانات ذات صلة",
-        "en": "Sending relevant information and ads"
-      },
-      "privacy_protect_title": {
-        "ku": "چۆن زانیاریەکانت دەپارێزین ئێمە",
-        "ar": "كيف نحمي معلوماتك",
-        "en": "How we protect your information"
-      },
-      "privacy_protect_list": {
-        "ku": "ئێمە هەوڵی زۆر دەدەین بۆ پاراستنی زانیاریەکانت:",
-        "ar": "نبذل جهدًا كبيرًا لحماية معلوماتك:",
-        "en": "We make great efforts to protect your information:"
-      },
-      "privacy_protect_item1": {
-        "ku": "تەکنەلۆژیای پاراستنی پێشکەوتوو بەکاردەهێنین",
-        "ar": "نستخدم تكنولوجيا حماية متقدمة",
-        "en": "We use advanced protection technology"
-      },
-      "privacy_protect_item2": {
-        "ku": "پشکنینی بەردەوام بۆ سیستەمەکانی پاراستن",
-        "ar": "مراقبة مستمرة لأنظمة الحماية",
-        "en": "Continuous monitoring of protection systems"
-      },
-        "features_title": {
-    "ku": "تایبەتمەندییەکان",
-    "ar": "الميزات",
-    "en": "Features"
-  },
-  "features_subtitle": {
-    "ku": "چەند تایبەتمەندییەکی ناوازەی بەرنامەکەم",
-    "ar": "بعض الميزات الفريدة لتطبيقي",
-    "en": "Some unique features of my app"
-  },
-  "feature1_title": {
-    "ku": "زمانی کوردی",
-    "ar": "اللغة الكردية",
-    "en": "Kurdish Language"
-  },
-  "feature1_desc": {
-    "ku": "هەموو بەرنامەکە بە زمانی کوردی و دیزاینێکی تایبەتی",
-    "ar": "التطبيق بالكامل باللغة الكردية بتصميم خاص",
-    "en": "The entire app in Kurdish with special design"
-  },
-  "feature2_title": {
-    "ku": "خێرایی",
-    "ar": "السرعة",
-    "en": "Speed"
-  },
-  "feature2_desc": {
-    "ku": "زۆر خێرا و سووکن بۆ هەموو مۆبایلێک",
-    "ar": "سريع جدًا وخفيف على أي هاتف",
-    "en": "Very fast and lightweight for any mobile"
-  },
-  "feature3_title": {
-    "ku": "نوێکردنەوە",
-    "ar": "التحديثات",
-    "en": "Updates"
-  },
-  "feature3_desc": {
-    "ku": "بەرنامەکان بەردەوام نوێ دەکرێنەوە",
-    "ar": "يتم تحديث التطبيقات باستمرار",
-    "en": "Apps are constantly updated"
-    },
-      "about_title": {
-        "ku": "دەربارەی ئێمە",
-        "ar": "معلومات عنا",
-        "en": "About Us"
-      },
-      "about_text": {
-        "ku": "من ناوم ژیوارە، پەرەپێدەری بەرنامە کوردییەکانم، وە هەوڵدەدەم باشترین پێشکەشبکەم بۆ خزمەت ئێوەی خۆشەویست 💎❤️.",
-        "ar": "اسمي جيفار، مطور تطبيقات كردية، وأسعى لتقديم الأفضل لخدمتكم 💎❤️.",
-        "en": "My name is Zhiwar, developer of Kurdish apps, and I strive to provide the best for your service 💎❤️."
-      },
-      "contact_title": {
-        "ku": "پەیوەندی",
-        "ar": "اتصل بنا",
-        "en": "Contact"
-      },
-      "email_label": {
-        "ku": "ئیمەیڵ: zhiwarup@gmail.com",
-        "ar": "البريد الإلكتروني: zhiwarup@gmail.com",
-        "en": "Email: zhiwarup@gmail.com"
-      },
-      "channels_title": {
-        "ku": "کەناڵەکان",
-        "ar": "القنوات",
-        "en": "Channels"
-      },
-      "youtube_label": {
-        "ku": "یوتیوب",
-        "ar": "يوتيوب",
-        "en": "YouTube"
-      },
-      "facebook_label": {
-        "ku": "فەیسبووک",
-        "ar": "فيسبوك",
-        "en": "Facebook"
-      },
-      "snapchat_label": {
-        "ku": "سناپچات",
-        "ar": "سناب شات",
-        "en": "Snapchat"
-      },
-      "copyright_text": {
-        "ku": "© 2021-2025 هەموو مافەکان پارێزراون. بەرهەمهێنەر: ZHIWAR",
-        "ar": "© 2021-2025 جميع الحقوق محفوظة. المنتج: ZHIWAR",
-        "en": "© 2021-2025 All rights reserved. Producer: ZHIWAR"
-      },
-      "privacy_toggle": {
-        "ku": "سیاسەتی پاراستنی زانیاری",
-        "ar": "سياسة الخصوصية",
-        "en": "Privacy Policy"
-      },
-      "tab_signin": {
-        "ku": "چوونەژوورەوە",
-        "ar": "تسجيل الدخول",
-        "en": "Sign in"
-      },
-      "tab_register": {
-        "ku": "تۆمارکردن",
-        "ar": "إنشاء حساب",
-        "en": "Register now"
-      },
-      "register_button": {
-        "ku": "درووستکردنی هەژمار",
-        "ar": "إنشاء حساب",
-        "en": "Create account"
-      },
-      "already_have": {
-        "ku": "پێشتر هەژمارت هەیە؟",
-        "ar": "هل لديك حساب؟",
-        "en": "Already have an account?"
-      },
-      "signin_link": {
-        "ku": "چوونەژوورەوە",
-        "ar": "تسجيل الدخول",
-        "en": "Sign in"
-      },
-      "google": {
-        "ku": "گووگڵ",
-        "ar": "جوجل",
-        "en": "Google"
-      },
-      "nav_login": {
-        "ku": "چوونەژوورەوە",
-        "ar": "تسجيل الدخول",
-        "en": "Login"
-      },
-      "oauth_or": {
-        "ku": "یان",
-        "ar": "أو",
-        "en": "OR"
-      },
-      "login_title": {
-        "ku": "چوونەژوورەوە بۆ هەژمارەکەت",
-        "ar": "تسجيل الدخول إلى حسابك",
-        "en": "Login to Your Account"
-      },
-      "login_subtitle": {
-        "ku": "دەستکاری بەرنامەکان و ڕێکخستنەکانت بکە",
-        "ar": "الوصول إلى تطبيقاتك وإعداداتك",
-        "en": "Access your apps and settings"
-      },
-      "login_email": {
-        "ku": "ئیمەیڵ",
-        "ar": "البريد الإلكتروني",
-        "en": "Email"
-      },
-      "login_password": {
-        "ku": "وشەی نهێنی",
-        "ar": "كلمة المرور",
-        "en": "Password"
-      },
-      "login_button": {
-        "ku": "چوونەژوورەوە",
-        "ar": "تسجيل الدخول",
-        "en": "Login"
-      },
-      "login_help": {
-        "ku": "هەژمارت نییە؟",
-        "ar": "ليس لديك حساب؟",
-        "en": "Don't have an account?"
-      },
-      "login_register": {
-        "ku": "خۆت تۆمار بکە",
-        "ar": "سجل هنا",
-        "en": "Register here"
-      },
-      "feedback_title": {
-        "ku": "پێشنیار و رەخنە",
-        "ar": "الاقتراحات والملاحظات",
-        "en": "Feedback & Suggestions"
-      },
-      "feedback_subtitle": {
-        "ku": "ئێمە بەهای رای تۆ دەدەین بۆ باشترکردنی بەرنامەکانمان",
-        "ar": "نقدر رأيك لتحسين تطبيقاتنا",
-        "en": "We value your opinion to improve our apps"
-      },
-      "feedback_type": {
-        "ku": "جۆری رەخنە",
-        "ar": "نوع الملاحظة",
-        "en": "Feedback Type"
-      },
-      "feedback_suggestion": {
-        "ku": "پێشنیار",
-        "ar": "اقتراح",
-        "en": "Suggestion"
-      },
-      "feedback_bug": {
-        "ku": "ڕاپۆرتی کێشە",
-        "ar": "تقرير عن خطأ",
-        "en": "Bug Report"
-      },
-      "feedback_compliment": {
-        "ku": "پێزانین",
-        "ar": "إطراء",
-        "en": "Compliment"
-      },
-      "feedback_message": {
-        "ku": "پەیامەکەت",
-        "ar": "رسالتك",
-        "en": "Your Message"
-      },
-      "feedback_button": {
-        "ku": "ناردنی رەخنە",
-        "ar": "إرسال الملاحظات",
-        "en": "Submit Feedback"
-      },
-      "reg_email_label": {
-        "ku": "ئیمەیڵ",
-        "ar": "البريد الإلكتروني",
-        "en": "Email"
-      },
-      "reg_password_label": {
-        "ku": "وشەی نهێنی",
-        "ar": "كلمة المرور",
-        "en": "Password"
-      },
-      "reg_confirm_label": {
-        "ku": "دڵنیاکردنەوەی وشەی نهێنی",
-        "ar": "تأكيد كلمة المرور",
-        "en": "Confirm Password"
-      },
-      "feedback_placeholder": {
-        "ku": "پێشنیارەکەت لێرە بنووسە...",
-        "ar": "اكتب اقتراحك هنا...",
-        "en": "Write your suggestion here..."
-      }
-    };
-
-    // Change all texts
-    Object.keys(translations).forEach(key => {
-      const elements = document.querySelectorAll(`[data-translate="${key}"]`);
-      if (elements.length > 0 && translations[key] && translations[key][lang]) {
-        elements.forEach(el => {
-          el.textContent = translations[key][lang];
-        });
-      }
-    });
-
-    // Change placeholders
-    document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
-      const phKey = el.getAttribute('data-translate-placeholder');
-      if (translations[phKey] && translations[phKey][lang]) {
-        el.setAttribute('placeholder', translations[phKey][lang]);
-      }
-    });
-  }
-
-  // Handle clicks on language buttons
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      changeLanguage(btn.dataset.lang);
-    });
-  });
-
-  // New function to show/hide privacy policy
-  document.getElementById('privacyToggle').addEventListener('click', function() {
-    const privacySection = document.querySelector('.privacy-section');
-    if (privacySection.style.display === 'none' || !privacySection.style.display) {
-      privacySection.style.display = 'block';
-      privacySection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      privacySection.style.display = 'none';
-    }
-  });
-
-  // Get language from cookie on page load and wire login modal
-  document.addEventListener('DOMContentLoaded', () => {
-    const langFromCookie = document.cookie.match(/user_lang=([^;]+)/)?.[1];
-    const userLang = langFromCookie || 'en';
-    changeLanguage(userLang);
-
-    // Login modal
-    const loginLink = document.getElementById('loginNavLink');
-    const overlay = document.getElementById('loginModalOverlay');
-    const closeBtn = document.getElementById('loginModalClose');
-    const loginForm = document.getElementById('loginForm');
-    const emailInput = document.getElementById('loginEmail');
-
-    function openLoginModal() {
-      overlay.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => emailInput && emailInput.focus(), 0);
-    }
-
-    function closeLoginModal() {
-      overlay.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-
-    // expose for fallback bindings
-    window._openLoginModal = openLoginModal;
-    window._closeLoginModal = closeLoginModal;
-
-    if (loginLink) {
-      loginLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        openLoginModal();
-      });
-    }
-
-    if (closeBtn) closeBtn.addEventListener('click', closeLoginModal);
-
-    if (overlay) {
-      overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) closeLoginModal();
-      });
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && overlay && overlay.style.display === 'flex') {
-        closeLoginModal();
-      }
-    });
-
-    // Login canvas visual
     (function(){
-      const c = document.getElementById('loginCanvas');
-      if (!c) return;
-      const ctx = c.getContext('2d');
-      function resize(){ c.width = c.clientWidth; c.height = c.clientHeight; }
+      const canvas = document.getElementById('orbCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      function resize(){ canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; }
       resize();
       window.addEventListener('resize', resize);
-      let t=0; const dots = Array.from({length: 80}, (_,i)=>({a: Math.random()*Math.PI*2, r: 20+Math.random()*120, s: 0.01+Math.random()*0.02}));
+
+      const center = () => ({ x: canvas.width/2, y: canvas.height/2 });
+      const particles = Array.from({length: 140}, ()=>({
+        angle: Math.random()*Math.PI*2,
+        radius: 80 + Math.random()*220,
+        speed: 0.002 + Math.random()*0.006,
+        hue: 185 + Math.random()*40
+      }));
+
+      let t = 0;
       function draw(){
-        t+=0.01; ctx.clearRect(0,0,c.width,c.height);
-        const cx=c.width/2, cy=c.height/2;
-        for(const d of dots){
-          d.a += d.s; const x=cx + Math.cos(d.a)*d.r + Math.sin(d.a*3)*5; const y=cy + Math.sin(d.a)*d.r + Math.cos(d.a*2)*5;
-          const g=ctx.createRadialGradient(x,y,0,x,y,10); g.addColorStop(0,'rgba(56,189,248,0.9)'); g.addColorStop(1,'rgba(56,189,248,0)');
-          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2); ctx.fill();
+        t += 0.003;
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        const c = center();
+        for (const p of particles){
+          p.angle += p.speed;
+          const wobble = Math.sin(t*6 + p.radius)*4;
+          const x = c.x + Math.cos(p.angle)*p.radius + Math.sin(p.angle*3)*wobble;
+          const y = c.y + Math.sin(p.angle)*p.radius + Math.cos(p.angle*2)*wobble;
+          const grad = ctx.createRadialGradient(x,y,0,x,y,14);
+          grad.addColorStop(0, `hsla(${p.hue}, 95%, 62%, 0.9)`);
+          grad.addColorStop(1, `hsla(${p.hue}, 95%, 62%, 0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(x,y, 14, 0, Math.PI*2);
+          ctx.fill();
         }
         requestAnimationFrame(draw);
       }
       draw();
     })();
-
-         // Remove old creeper interactions
-     (function(){})();
-
-     // Toggle forms (Sign in / Register)
-const tabSignIn = document.getElementById('tabSignIn');
-    const tabRegister = document.getElementById('tabRegister');
-    const formSignIn = document.getElementById('loginForm');
-    const formRegister = document.getElementById('registerForm');
-    const linkToRegister = document.getElementById('linkToRegister');
-    const linkToSignIn = document.getElementById('linkToSignIn');
-    function showSignIn(){
-      tabSignIn.classList.add('active');
-      tabRegister.classList.remove('active');
-      formSignIn.style.display = 'block';
-      formSignIn.setAttribute('aria-hidden', 'false');
-      formRegister.style.display = 'none';
-      formRegister.setAttribute('aria-hidden', 'true');
-    }
-    function showRegister(){
-      tabRegister.classList.add('active');
-      tabSignIn.classList.remove('active');
-      formRegister.style.display = 'block';
-      formRegister.setAttribute('aria-hidden', 'false');
-      formSignIn.style.display = 'none';
-      formSignIn.setAttribute('aria-hidden', 'true');
-    }
-    if (tabSignIn) tabSignIn.addEventListener('click', showSignIn);
-    if (tabRegister) tabRegister.addEventListener('click', showRegister);
-    if (linkToRegister) linkToRegister.addEventListener('click', (e)=>{ e.preventDefault(); showRegister(); });
-    if (linkToSignIn) linkToSignIn.addEventListener('click', (e)=>{ e.preventDefault(); showSignIn(); });
-
-    // Firebase auth init
-    if (window.firebase && window.firebaseAppsReady) {
-      window.firebaseAppsReady();
-    }
-
-         /* removed creeper explosion */
-     function triggerCreeperExplosion() {
-      const container = document.getElementById('creeperExplosion');
-      if (!container) return;
-      container.innerHTML = '';
-      container.style.display = 'flex';
-      const rect = container.getBoundingClientRect();
-      const particles = 60;
-      for (let i = 0; i < particles; i++) {
-        const p = document.createElement('div');
-        p.className = 'creeper-particle';
-        p.style.left = (rect.width / 2) + 'px';
-        p.style.top = (rect.height / 2) + 'px';
-        container.appendChild(p);
-        const angle = (Math.PI * 2) * (i / particles);
-        const speed = 3 + Math.random() * 4;
-        const vx = Math.cos(angle) * speed;
-        const vy = Math.sin(angle) * speed;
-        let x = rect.width / 2;
-        let y = rect.height / 2;
-        let life = 0;
-        const maxLife = 28 + Math.random() * 12;
-        const tick = () => {
-          life++;
-          x += vx * 2;
-          y += vy * 2;
-          p.style.transform = `translate(${x - rect.width/2}px, ${y - rect.height/2}px) rotate(${life*20}deg)`;
-          p.style.opacity = String(1 - life / (maxLife + 5));
-          if (life < maxLife) requestAnimationFrame(tick);
-          else p.remove();
-        };
-        requestAnimationFrame(tick);
-      }
-      setTimeout(() => {
-        container.style.display = 'none';
-      }, 1000);
-    }
-
-    if (loginForm) {
-      loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
-        const errorEl = document.getElementById('authError');
-        errorEl.style.display = 'none';
-        try {
-          const { signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } = window.firebaseAuth;
-          const { auth } = window.firebaseExports;
-          try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
-          await signInWithEmailAndPassword(auth, email, password);
-          closeLoginModal();
-        } catch (err) {
-          errorEl.textContent = err?.message || 'Login failed';
-          errorEl.style.display = 'block';
-        }
-      });
-    }
-
-    const googleBtn = document.getElementById('googleSignIn');
-    if (googleBtn) {
-      googleBtn.addEventListener('click', async () => {
-        const errorEl = document.getElementById('authError');
-        errorEl.style.display = 'none';
-        try {
-          const { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, setPersistence, browserLocalPersistence } = window.firebaseAuth;
-          const { auth } = window.firebaseExports;
-          const provider = new GoogleAuthProvider();
-          try { await setPersistence(auth, browserLocalPersistence); } catch {_=>{}};
-          try {
-            await signInWithPopup(auth, provider);
-          } catch (e) {
-            await signInWithRedirect(auth, provider);
-            await getRedirectResult(auth);
-          }
-          closeLoginModal();
-        } catch (err) {
-          errorEl.textContent = err?.message || 'Google sign-in failed';
-          errorEl.style.display = 'block';
-        }
-      });
-    }
-
-    // Register flow
-    const registerForm = document.getElementById('registerForm');
-    if (registerForm) {
-      registerForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('regEmail').value.trim();
-        const p1 = document.getElementById('regPassword').value;
-        const p2 = document.getElementById('regPassword2').value;
-        const errorEl = document.getElementById('regError');
-        errorEl.style.display = 'none';
-        if (p1 !== p2) { errorEl.textContent = 'Passwords do not match'; errorEl.style.display='block'; return; }
-        try {
-          const { createUserWithEmailAndPassword, sendEmailVerification } = window.firebaseAuth;
-          const { auth } = window.firebaseExports;
-          const userCred = await createUserWithEmailAndPassword(auth, email, p1);
-          try { await sendEmailVerification(userCred.user); } catch {_=>{}};
-          closeLoginModal();
-        } catch (err) {
-          errorEl.textContent = err?.message || 'Registration failed';
-          errorEl.style.display = 'block';
-        }
-      });
-    }
-  });
-  
-     // Simple tilt effect for the modal form wrapper
-    const tiltWrap = document.querySelector('.tilt-wrap');
-    if (tiltWrap) {
-      tiltWrap.addEventListener('mousemove', (e) => {
-        const rect = tiltWrap.getBoundingClientRect();
-        const relX = e.clientX - rect.left;
-        const relY = e.clientY - rect.top;
-        const rotateY = ((relX / rect.width) - 0.5) * 8;
-        const rotateX = ((relY / rect.height) - 0.5) * -8;
-        tiltWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      });
-      tiltWrap.addEventListener('mouseleave', () => {
-        tiltWrap.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      });
-    }
-  });
-     </script>
- 
-   <script>
-   // Dynamic neon particle orb in hero
-   (function(){
-     const canvas = document.getElementById('orbCanvas');
-     if (!canvas) return;
-     const ctx = canvas.getContext('2d');
-     function resize(){ canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; }
-     resize();
-     window.addEventListener('resize', resize);
-
-     const center = () => ({ x: canvas.width/2, y: canvas.height/2 });
-     const particles = Array.from({length: 140}, ()=>({
-       angle: Math.random()*Math.PI*2,
-       radius: 80 + Math.random()*220,
-       speed: 0.002 + Math.random()*0.006,
-       size: 1 + Math.random()*2,
-       hue: 185 + Math.random()*40
-     }));
-
-     let t = 0;
-     function draw(){
-       t += 0.003;
-       ctx.clearRect(0,0,canvas.width,canvas.height);
-       const c = center();
-       for (const p of particles){
-         p.angle += p.speed;
-         const wobble = Math.sin(t*6 + p.radius)*4;
-         const x = c.x + Math.cos(p.angle)*p.radius + Math.sin(p.angle*3)*wobble;
-         const y = c.y + Math.sin(p.angle)*p.radius + Math.cos(p.angle*2)*wobble;
-         const grad = ctx.createRadialGradient(x,y,0,x,y,14);
-         grad.addColorStop(0, `hsla(${p.hue}, 95%, 62%, 0.9)`);
-         grad.addColorStop(1, `hsla(${p.hue}, 95%, 62%, 0)`);
-         ctx.fillStyle = grad;
-         ctx.beginPath();
-         ctx.arc(x,y, 14, 0, Math.PI*2);
-         ctx.fill();
-       }
-       requestAnimationFrame(draw);
-     }
-     draw();
-   })();
-   </script>
-
-<!-- باقی بەشەکان... -->
-
-  <!-- 🔥 گرنگە: JavaScript لە کۆتایی <body> پێش </body> -->
-  <script>
-    // Loading Screen Script
-    window.addEventListener('load', function() {
-      console.log('✅ Page loaded!');
-      const loadingScreen = document.getElementById('loading-screen');
-      
-      if (loadingScreen) {
-        // وەستە 1.5 چرکە پێش شاردنەوە
-        setTimeout(function() {
-          loadingScreen.classList.add('hidden');
-          console.log('✅ Loading screen hidden!');
-          
-          // لە DOM ـەوە لابەرە دوای 500ms
-          setTimeout(function() {
-            loadingScreen.style.display = 'none';
-          }, 500);
-        }, 1500);
-      } else {
-        console.error('❌ Loading screen not found!');
-      }
-    });
-    
-    // تاقیکردنەوە: ئەگەر نەکاری کرد، بە دەستی بیشارەوە دوای 3 چرکە
-    setTimeout(function() {
-      const ls = document.getElementById('loading-screen');
-      if (ls && ls.style.display !== 'none') {
-        console.log('⚠️ Forcing loading screen to hide...');
-        ls.classList.add('hidden');
-        setTimeout(function() { ls.style.display = 'none'; }, 500);
-      }
-    }, 3000);
   </script>
 
+  <!-- Firebase SDK -->
 
-
-
-
-    
- 
-   <!-- Firebase SDK and app config -->
-   <script type="module">
+  <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
-         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
     import config from './firebase-config.js';
 
     const app = initializeApp(config);
     const auth = getAuth(app);
 
-    // Expose to window for non-module script usage
-         window.firebaseAuth = { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, sendEmailVerification };
-     window.firebaseExports = { app, auth };
+    window.firebaseAuth = { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut };
+    window.firebaseExports = { app, auth };
     window.firebase = true;
-    window.firebaseAppsReady = function() {
-      const userChip = document.getElementById('userChip');
-      const loginLink = document.getElementById('loginNavLink');
-      const userEmail = document.getElementById('userEmail');
-      const userAvatar = document.getElementById('userAvatar');
-      const logoutBtn = document.getElementById('logoutBtn');
-
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          loginLink.style.display = 'none';
-          userChip.style.display = 'inline-flex';
-          userEmail.textContent = user.email || user.displayName || '';
-          userAvatar.src = user.photoURL || 'https://api.dicebear.com/7.x/identicon/svg?seed=' + encodeURIComponent(user.email || 'user');
-        } else {
-          loginLink.style.display = '';
-          userChip.style.display = 'none';
-          userEmail.textContent = '';
-          userAvatar.removeAttribute('src');
-        }
-      });
-
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', async () => {
-          try {
-            await window.firebaseAuth.signOut(auth);
-          } catch (e) {
-            console.error(e);
-          }
-        });
-      }
-    };
-
-    // ensure UI sync on first load
-    if (window.firebaseAppsReady) window.firebaseAppsReady();
   </script>
- </body>
- </html>
+
+</body>
+</html>
