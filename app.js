@@ -339,105 +339,119 @@ window.AppManager = {
 
 
 // ===============================================
-// animations.js - زیاد بکە بە script تازە یان لە app.js
+// Loading Screen Handler - زیادی بکە بۆ app.js
 // ===============================================
 
-// ========================
-// 1. LOADING SCREEN
-// ========================
-window.addEventListener(‘load’, () => {
-const loadingScreen = document.getElementById(‘loading-screen’);
-if (loadingScreen) {
-setTimeout(() => {
-loadingScreen.classList.add(‘hidden’);
-// Remove from DOM after animation
-setTimeout(() => {
-loadingScreen.style.display = ‘none’;
-}, 500);
-}, 1500); // Show for 1.5 seconds
-}
-});
+console.log('🚀 App.js loaded');
 
 // ========================
-// 2. SCROLL REVEAL ANIMATIONS
+// 1. LOADING SCREEN - Simple & Working
 // ========================
-const scrollReveal = () => {
-const elements = document.querySelectorAll(’.scroll-animate, .scroll-animate-left, .scroll-animate-right’);
-
-```
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            // Optional: unobserve after animation
-            observer.unobserve(entry.target);
-        }
-    });
-}, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -100px 0px'
-});
-
-elements.forEach(el => observer.observe(el));
-```
-
-};
-
-// Initialize on DOM ready
-if (document.readyState === ‘loading’) {
-document.addEventListener(‘DOMContentLoaded’, scrollReveal);
-} else {
-scrollReveal();
-}
-
-// ========================
-// 3. HEADER SCROLL EFFECT
-// ========================
-let lastScroll = 0;
-const header = document.querySelector(‘header’);
-
-window.addEventListener(‘scroll’, () => {
-const currentScroll = window.pageYOffset;
-
-```
-if (currentScroll > 100) {
-    header?.classList.add('scrolled');
-} else {
-    header?.classList.remove('scrolled');
-}
-
-lastScroll = currentScroll;
-```
-
-});
-
-// ========================
-// 4. SMOOTH SCROLL FOR ANCHOR LINKS
-// ========================
-document.querySelectorAll(‘a[href^=”#”]’).forEach(anchor => {
-anchor.addEventListener(‘click’, function (e) {
-const href = this.getAttribute(‘href’);
-
-```
-    // Skip if it's just "#" or modal triggers
-    if (href === '#' || href === '#login') return;
+function hideLoadingScreen() {
+    console.log('⏳ Attempting to hide loading screen...');
+    const loadingScreen = document.getElementById('loading-screen');
     
-    e.preventDefault();
-    const target = document.querySelector(href);
-    
-    if (target) {
-        const headerHeight = header?.offsetHeight || 0;
-        const targetPosition = target.offsetTop - headerHeight - 20;
+    if (loadingScreen) {
+        console.log('✅ Loading screen found!');
+        loadingScreen.classList.add('hidden');
         
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+            console.log('✅ Loading screen hidden!');
+        }, 500);
+    } else {
+        console.error('❌ Loading screen element not found!');
     }
-});
-```
+}
 
+// Try multiple methods to hide loading
+// Method 1: After 1.5 seconds
+setTimeout(hideLoadingScreen, 1500);
+
+// Method 2: On window load
+window.addEventListener('load', function() {
+    console.log('✅ Window loaded');
+    setTimeout(hideLoadingScreen, 500);
 });
+
+// Method 3: On DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('✅ DOM ready');
+        setTimeout(hideLoadingScreen, 500);
+    });
+} else {
+    // DOM already loaded
+    setTimeout(hideLoadingScreen, 500);
+}
+
+// Emergency: Force hide after 3 seconds
+setTimeout(function() {
+    const ls = document.getElementById('loading-screen');
+    if (ls && ls.style.display !== 'none') {
+        console.log('⚠️ Emergency: Forcing hide!');
+        ls.classList.add('hidden');
+        setTimeout(() => ls.style.display = 'none', 500);
+    }
+}, 3000);
+
+// ========================
+// 2. SCROLL ANIMATIONS
+// ========================
+function initScrollAnimations() {
+    const elements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right');
+    
+    if (elements.length === 0) {
+        console.log('⚠️ No scroll-animate elements found');
+        return;
+    }
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -100px 0px'
+    });
+
+    elements.forEach(el => observer.observe(el));
+    console.log(`✅ Observing ${elements.length} elements for scroll animations`);
+}
+
+// Initialize scroll animations when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollAnimations);
+} else {
+    initScrollAnimations();
+}
+
+// ========================
+// 3. SMOOTH SCROLL
+// ========================
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href === '#login') return;
+            
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+});
+
+// ========================
+// Rest of your app.js code...
+// ========================
+
+console.log('✅ All loading handlers initialized!');
 
 // ========================
 // 5. BUTTON RIPPLE EFFECT
