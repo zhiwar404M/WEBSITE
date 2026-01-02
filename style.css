@@ -19,7 +19,7 @@
   font-family: ‘Noto Sans Arabic’, sans-serif;
   }
 
-body {
+:body {
 background-color: #0f172a;
 color: #f1f5f9;
 line-height: 1.7;
