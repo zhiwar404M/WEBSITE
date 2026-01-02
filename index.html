@@ -17,6 +17,63 @@
 
   <script src="app.js"></script>
 
+
+-->
+  <script>
+    console.log('🚀 Script started in HEAD');
+    
+    // Function to hide loading
+    function hideLoading() {
+      console.log('💡 hideLoading called');
+      var loading = document.getElementById('loading-screen');
+      
+      if (loading) {
+        console.log('✅ Loading element found!');
+        loading.classList.add('hidden');
+        
+        setTimeout(function() {
+          loading.style.display = 'none';
+          console.log('✅ Loading hidden completely!');
+        }, 500);
+      } else {
+        console.error('❌ Loading element NOT found!');
+      }
+    }
+
+    // Try immediately after 1 second
+    setTimeout(function() {
+      console.log('⏰ 1 second timer fired');
+      hideLoading();
+    }, 1000);
+
+    // Try when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ DOMContentLoaded fired');
+      setTimeout(hideLoading, 500);
+    });
+
+    // Try when page fully loads
+    window.addEventListener('load', function() {
+      console.log('✅ Window load fired');
+      setTimeout(hideLoading, 500);
+    });
+
+    // Emergency: Force hide after 2.5 seconds
+    setTimeout(function() {
+      console.log('⚠️ Emergency timeout fired');
+      var ls = document.getElementById('loading-screen');
+      if (ls) {
+        ls.style.opacity = '0';
+        ls.style.visibility = 'hidden';
+        setTimeout(function() {
+          ls.style.display = 'none';
+        }, 500);
+      }
+    }, 2500);
+  </script>  
+
+  
+
 </head>
 
 <body>
