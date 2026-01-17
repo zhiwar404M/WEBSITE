@@ -1268,3 +1268,457 @@ transform: translateY(-10px) scale(1.01);
 ```
 
 }
+
+
+/* ===============================================
+زیادکراو بۆ style.css ـەکەت
+تکایە لە کۆتایی style.css زیاد بکە
+=============================================== */
+
+/* ====================
+
+1. RESPONSIVE FIXES - بۆ Mobile, iPad, Desktop
+   ==================== */
+
+/* Mobile First - Base Styles */
+body {
+font-size: 16px;
+}
+
+/* Header Responsive */
+header {
+padding: 1rem;
+}
+
+.header-container {
+flex-direction: column;
+gap: 1rem;
+}
+
+.logo {
+font-size: 1.2rem;
+}
+
+nav {
+width: 100%;
+flex-direction: column;
+gap: 0.5rem;
+}
+
+nav a {
+margin-left: 0;
+padding: 0.8rem;
+justify-content: center;
+border-radius: 8px;
+background: rgba(56, 189, 248, 0.05);
+}
+
+.language-switcher {
+margin-left: 0;
+justify-content: center;
+width: 100%;
+}
+
+/* Hero Section Responsive */
+.hero {
+padding: 3rem 1rem;
+}
+
+.hero-content h1 {
+font-size: 2rem;
+}
+
+.hero-content p {
+font-size: 1rem;
+}
+
+/* Apps Grid Responsive */
+.apps-grid {
+grid-template-columns: 1fr;
+gap: 1.5rem;
+padding: 1.5rem 1rem;
+}
+
+.app-card {
+padding: 1.5rem;
+}
+
+/* Features Grid Responsive */
+.features-grid {
+grid-template-columns: 1fr;
+gap: 1.5rem;
+}
+
+/* Footer Responsive */
+.footer-content {
+grid-template-columns: 1fr;
+text-align: center;
+gap: 2rem;
+}
+
+.footer-links a {
+justify-content: center;
+}
+
+/* ====================
+2. SABEEL ISLAM CARD - دیزاینی تایبەت
+==================== */
+
+/* Sabeel Islam Card - Special Design */
+.app-card.sabeel-card {
+position: relative;
+background: linear-gradient(135deg,
+rgba(16, 185, 129, 0.1) 0%,
+rgba(5, 150, 105, 0.05) 100%);
+border: 2px solid rgba(16, 185, 129, 0.3);
+overflow: hidden;
+transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Islamic Pattern Background */
+.sabeel-card::before {
+content: ‘’;
+position: absolute;
+top: -50%;
+right: -50%;
+width: 200%;
+height: 200%;
+background-image:
+repeating-linear-gradient(
+45deg,
+transparent,
+transparent 20px,
+rgba(16, 185, 129, 0.03) 20px,
+rgba(16, 185, 129, 0.03) 40px
+);
+animation: islamic-pattern 20s linear infinite;
+pointer-events: none;
+}
+
+@keyframes islamic-pattern {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+/* Mosque Glow Effect */
+.sabeel-card::after {
+content: ‘☪’;
+position: absolute;
+top: 10px;
+left: 10px;
+font-size: 4rem;
+color: rgba(16, 185, 129, 0.1);
+z-index: 0;
+animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+0%, 100% {
+opacity: 0.3;
+transform: scale(1);
+text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+50% {
+opacity: 0.6;
+transform: scale(1.1);
+text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+}
+}
+
+.sabeel-card:hover {
+transform: translateY(-12px) scale(1.02);
+box-shadow:
+0 20px 60px rgba(16, 185, 129, 0.3),
+0 0 0 1px rgba(16, 185, 129, 0.5);
+border-color: rgba(16, 185, 129, 0.6);
+}
+
+.sabeel-card:hover::before {
+animation-duration: 10s;
+}
+
+/* Sabeel Icon Styling */
+.sabeel-card .app-icon {
+background: linear-gradient(135deg, #10b981, #059669);
+box-shadow:
+0 8px 25px rgba(16, 185, 129, 0.4),
+inset 0 -2px 10px rgba(0, 0, 0, 0.2);
+position: relative;
+z-index: 1;
+}
+
+.sabeel-card:hover .app-icon {
+transform: rotateY(360deg) scale(1.15);
+box-shadow:
+0 12px 35px rgba(16, 185, 129, 0.6),
+inset 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Sabeel Title Styling */
+.sabeel-card .app-title {
+color: #10b981;
+font-weight: 800;
+text-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+position: relative;
+z-index: 1;
+}
+
+/* Sabeel Version Badge */
+.sabeel-card .app-version {
+background: linear-gradient(135deg,
+rgba(16, 185, 129, 0.2),
+rgba(5, 150, 105, 0.2));
+border: 1px solid rgba(16, 185, 129, 0.4);
+color: #10b981;
+font-weight: 700;
+box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+/* Sabeel Description */
+.sabeel-card .app-description {
+color: #d1fae5;
+position: relative;
+z-index: 1;
+}
+
+/* Sabeel Download Button */
+.sabeel-card .btn-primary {
+background: linear-gradient(135deg, #10b981, #059669);
+border: none;
+box-shadow:
+0 8px 25px rgba(16, 185, 129, 0.4),
+inset 0 1px 0 rgba(255, 255, 255, 0.2);
+font-weight: 700;
+position: relative;
+overflow: hidden;
+}
+
+.sabeel-card .btn-primary::before {
+content: ‘’;
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(
+90deg,
+transparent,
+rgba(255, 255, 255, 0.3),
+transparent
+);
+transition: left 0.5s;
+}
+
+.sabeel-card .btn-primary:hover::before {
+left: 100%;
+}
+
+.sabeel-card .btn-primary:hover {
+background: linear-gradient(135deg, #059669, #047857);
+box-shadow:
+0 12px 35px rgba(16, 185, 129, 0.6),
+inset 0 1px 0 rgba(255, 255, 255, 0.3);
+transform: translateY(-3px);
+}
+
+/* Special Badge for Islamic App */
+.islamic-badge {
+position: absolute;
+top: 1rem;
+right: 1rem;
+background: linear-gradient(135deg, #10b981, #059669);
+color: white;
+padding: 0.4rem 0.8rem;
+border-radius: 20px;
+font-size: 0.8rem;
+font-weight: 700;
+display: flex;
+align-items: center;
+gap: 0.3rem;
+box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+z-index: 2;
+animation: badge-float 3s ease-in-out infinite;
+}
+
+@keyframes badge-float {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-5px); }
+}
+
+/* ====================
+3. TABLET / iPad (768px - 1024px)
+==================== */
+
+@media (min-width: 768px) {
+/* Header */
+.header-container {
+flex-direction: row;
+align-items: center;
+}
+
+
+nav {
+    flex-direction: row;
+    width: auto;
+    gap: 1rem;
+}
+
+nav a {
+    margin-left: 0;
+    padding: 0.6rem 1rem;
+}
+
+.language-switcher {
+    margin-left: 1rem;
+    width: auto;
+}
+
+/* Hero */
+.hero {
+    padding: 4rem 2rem;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+}
+
+/* Apps Grid - 2 columns for tablet */
+.apps-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* Features Grid - 2 columns */
+.features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+/* Footer */
+.footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    text-align: right;
+}
+
+
+}
+
+/* ====================
+4. DESKTOP (1024px+)
+==================== */
+
+@media (min-width: 1024px) {
+/* Header */
+header {
+padding: 1.2rem 2rem;
+}
+
+
+.logo {
+    font-size: 1.4rem;
+}
+
+nav a {
+    font-size: 1.1rem;
+    padding: 0.7rem 1.2rem;
+}
+
+/* Hero */
+.hero {
+    padding: 5rem 2rem;
+}
+
+.hero-content h1 {
+    font-size: 2.8rem;
+}
+
+.hero-content p {
+    font-size: 1.4rem;
+}
+
+/* Apps Grid - 3 columns for desktop */
+.apps-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    max-width: 1400px;
+    padding: 3rem 2rem;
+}
+
+/* Features Grid - 3 columns */
+.features-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+}
+
+/* Footer */
+.footer-content {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+
+}
+
+/* ====================
+5. LARGE DESKTOP (1440px+)
+==================== */
+
+@media (min-width: 1440px) {
+.hero-content h1 {
+font-size: 3.2rem;
+}
+
+
+.apps-grid,
+.features-grid {
+    max-width: 1600px;
+}
+
+
+}
+
+/* ====================
+6. EXTRA TOUCHES
+==================== */
+
+/* Smooth transitions for all breakpoints */
+
+- {
+  transition: padding 0.3s ease,
+  margin 0.3s ease,
+  font-size 0.3s ease;
+  }
+
+/* Ensure content doesn’t overflow on small screens */
+.container {
+max-width: 100%;
+overflow-x: hidden;
+}
+
+/* Better touch targets for mobile */
+@media (max-width: 767px) {
+.btn,
+nav a,
+.lang-btn {
+min-height: 44px;
+min-width: 44px;
+}
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 767px) and (orientation: landscape) {
+.hero {
+padding: 2rem 1rem;
+}
+
+
+.hero-content h1 {
+    font-size: 1.8rem;
+}
+
+
+}
