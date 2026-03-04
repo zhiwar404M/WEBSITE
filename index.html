@@ -11,8 +11,6 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
- 
-
   <!-- JavaScript ـەکان -->
 
   <script src="translation.js"></script>
@@ -78,7 +76,7 @@
 
 <body>
 
-    <!-- Loading -->
+  <!-- ✅✅✅ LOADING SCREEN - لە سەرەوەی body -->
 
   <div id="loading-screen">
     <div class="loader">
@@ -88,7 +86,7 @@
     </div>
     <div class="loader-text">Loading ZHIWAR...</div>
   </div>
-  
+
   <!-- Ad containers -->
 
   <div id="pre-access-overlay" style="display: none;"></div>
@@ -113,6 +111,7 @@
           <span data-translate="nav_login">Login</span>
         </a>
 
+
     <div id="userChip" class="user-chip" style="display:none;">
       <img id="userAvatar" class="user-avatar" alt="" />
       <span id="userEmail" class="user-email"></span>
@@ -129,6 +128,7 @@
     </div>
   </nav>
 </div>
+```
 
   </header>
 
@@ -155,24 +155,28 @@
     </div>
   </section>
 
-  
-  <div class="app-card sabeel-special">
-    <div class="card-badge">New Design</div>
-    <div class="card-content">
-        <div class="app-icon-container">
-            <img src="path-to-sabeel-logo.png" alt="Sabeel Logo" class="app-icon">
-        </div>
-        <h3>Sabeel Islam</h3>
-        <p>ڕێگای ڕاست بۆ فێربوونی ئاینی پیرۆزی ئیسلام بە شێوازێکی سەردەمی.</p>
-        
-        <div class="card-actions">
-            <a href="#" class="btn-shine">داگرتن <i class="material-icons">download</i></a>
-            <a href="#" class="btn-ghost">زیاتر...</a>
-        </div>
-    </div>
-    <div class="card-bg-glow"></div>
-</div>
+  <!-- Apps Section -->
 
+  <section id="apps" class="apps-section scroll-animate">
+    <h2 class="section-title" data-translate="apps_section_title">Applications</h2>
+    <p class="section-subtitle" data-translate="apps_section_subtitle">These are the apps for both Android and iPhone</p>
+
+```
+<div class="apps-grid">
+  <div class="app-card">
+    <div class="app-icon"><span class="material-icons">android</span></div>
+    <h3 class="app-title" data-translate="app1_title">Minefo Kr</h3>
+    <span class="app-version" data-translate="app1_version">وەشانی 1.0</span>
+    <p class="app-description" data-translate="app1_description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
+    <button class="btn btn-primary" onclick="startDownloadWithAds('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk')">
+      <span class="material-icons">download</span> 
+      <span data-translate="app1_button">داگرتن بۆ ئەندرۆید</span>
+    </button>
+  </div>
+</div>
+```
+
+  </section>
 
   <!-- Features Section -->
 
@@ -215,6 +219,29 @@
     </div>
   </section>
 
+  <!-- Feedback Section -->
+
+  <section id="feedback" class="feedback-section">
+    <div class="section-container">
+      <h2 class="section-title" data-translate="feedback_title">پێشنیار و رەخنە</h2>
+      <p class="section-subtitle" data-translate="feedback_subtitle">ئێمە گرنگی بە رای تۆ دەدەین</p>
+      <div class="feedback-form">
+        <div class="form-group">
+          <label for="feedback-type" data-translate="feedback_type">جۆری رەخنە</label>
+          <select id="feedback-type">
+            <option value="suggestion" data-translate="feedback_suggestion">پێشنیار</option>
+            <option value="bug" data-translate="feedback_bug">ڕاپۆرتی کێشە</option>
+            <option value="compliment" data-translate="feedback_compliment">پێزانین</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="feedback-message" data-translate="feedback_message">پەیامەکەت</label>
+          <textarea id="feedback-message" rows="5" placeholder="..."></textarea>
+        </div>
+        <button class="btn btn-primary" data-translate="feedback_button">ناردنی رەخنە</button>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
 
@@ -348,6 +375,76 @@
       draw();
     })();
   </script>
+
+// HTML
+const overlay = document.createElement('div');
+overlay.id = 'mnt-overlay';
+const cfg = MAINTENANCE_CONFIG;
+overlay.innerHTML = `
+    <div class="mnt-bg">
+        <div class="mnt-grid"></div>
+        <div class="mnt-orb mnt-orb-1"></div>
+        <div class="mnt-orb mnt-orb-2"></div>
+        <div class="mnt-orb mnt-orb-3"></div>
+        <div id="mntParts"></div>
+    </div>
+    <div class="mnt-content">
+
+        <div class="mnt-icon-wrap">
+            <div class="mnt-ring mnt-ring-1"></div>
+            <div class="mnt-ring mnt-ring-2"></div>
+            <div class="mnt-ring mnt-ring-3"></div>
+            <svg class="mnt-icon-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="24" fill="rgba(56,189,248,0.08)" stroke="rgba(56,189,248,0.5)" stroke-width="1.5"/>
+                <path d="M44 20l-4 4-8-8-4 4 8 8-4 4 8 4 4-8 4-4-4-4z" fill="rgba(56,189,248,0.85)"/>
+                <circle cx="24" cy="40" r="4" fill="rgba(168,85,247,0.85)"/>
+                <path d="M20 36l8 8M28 36l-8 8" stroke="rgba(168,85,247,0.6)" stroke-width="1.5"/>
+                <circle cx="32" cy="32" r="3" fill="white" opacity="0.9"/>
+            </svg>
+        </div>
+
+        <div>
+            <div class="mnt-badge">🔧 چاکردن</div>
+            <h1 class="mnt-title">${cfg.message}</h1>
+            <p class="mnt-sub">${cfg.submessage} 💙</p>
+        </div>
+
+        ${cfg.countdown.enabled ? `
+        <div class="mnt-timer-wrap">
+            <div class="mnt-timer-label">⏱ کاتی مانەوە</div>
+            <div class="mnt-timer">
+                <div class="mnt-time-box"><div class="mnt-num" id="mD">00</div><div class="mnt-lbl">ڕۆژ</div></div>
+                <div class="mnt-sep">:</div>
+                <div class="mnt-time-box"><div class="mnt-num" id="mH">00</div><div class="mnt-lbl">کاتژمێر</div></div>
+                <div class="mnt-sep">:</div>
+                <div class="mnt-time-box"><div class="mnt-num" id="mM">00</div><div class="mnt-lbl">خولەک</div></div>
+                <div class="mnt-sep">:</div>
+                <div class="mnt-time-box"><div class="mnt-num" id="mS">00</div><div class="mnt-lbl">چرکە</div></div>
+            </div>
+        </div>` : ''}
+
+        <div class="mnt-contact-wrap">
+            <p class="mnt-contact-lbl">📬 پەیوەندیمان پێوە بکە</p>
+            <div class="mnt-links">
+                <a href="mailto:${cfg.contact.email}" class="mnt-link lk-email"><span class="material-icons">email</span>${cfg.contact.email}</a>
+                <a href="${cfg.contact.youtube}" target="_blank" class="mnt-link lk-yt"><span class="material-icons">play_circle</span>YouTube</a>
+                <a href="${cfg.contact.facebook}" target="_blank" class="mnt-link lk-fb"><span class="material-icons">facebook</span>Facebook</a>
+                <a href="${cfg.contact.snapchat}" target="_blank" class="mnt-link lk-sc"><span class="material-icons">camera</span>Snapchat</a>
+            </div>
+        </div>
+
+        <div class="mnt-prog-wrap">
+            <div class="mnt-prog-bar">
+                <div class="mnt-prog-fill"></div>
+                <div class="mnt-prog-glow"></div>
+            </div>
+            <p class="mnt-prog-text">چاکردن بەردەوامە...</p>
+        </div>
+
+    </div>
+`;
+document.body.insertBefore(overlay, document.body.firstChild);
+
 
   <!-- Firebase SDK -->
 
