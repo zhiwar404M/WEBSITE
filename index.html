@@ -1,82 +1,35 @@
 <!DOCTYPE html>
 
-<html lang="en" dir="ltr">
+<html lang="ku" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
-  <meta name="google-site-verification" content="https://zhiwaryt.vercel.app/">
-  <title data-translate="welcome_title">Welcome to ZHIWAR YT | Official Website</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"/>
+  <title>بەخێربێیت بۆ ZHIWAR YT | ماڵپەڕی فەرمی</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <!-- Fonts -->
 
-  <!-- JavaScript ـەکان -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 
-  <script src="translation.js"></script>
+  <!-- Styles -->
 
-  <script src="app.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="maintenance.css"/>
 
   <script>
-    console.log('🚀 Script started in HEAD');
-    
-    // Function to hide loading
-    function hideLoading() {
-      console.log('💡 hideLoading called');
-      var loading = document.getElementById('loading-screen');
-      
-      if (loading) {
-        console.log('✅ Loading element found!');
-        loading.classList.add('hidden');
-        
-        setTimeout(function() {
-          loading.style.display = 'none';
-          console.log('✅ Loading hidden completely!');
-        }, 500);
-      } else {
-        console.error('❌ Loading element NOT found!');
-      }
-    }
-
-    // Try immediately after 1 second
-    setTimeout(function() {
-      console.log('⏰ 1 second timer fired');
-      hideLoading();
-    }, 1000);
-
-    // Try when DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('✅ DOMContentLoaded fired');
-      setTimeout(hideLoading, 500);
-    });
-
-    // Try when page fully loads
-    window.addEventListener('load', function() {
-      console.log('✅ Window load fired');
-      setTimeout(hideLoading, 500);
-    });
-
-    // Emergency: Force hide after 2.5 seconds
-    setTimeout(function() {
-      console.log('⚠️ Emergency timeout fired');
+    // Emergency loading hide
+    setTimeout(function(){
       var ls = document.getElementById('loading-screen');
-      if (ls) {
-        ls.style.opacity = '0';
-        ls.style.visibility = 'hidden';
-        setTimeout(function() {
-          ls.style.display = 'none';
-        }, 500);
-      }
+      if(ls){ ls.style.opacity='0'; ls.style.visibility='hidden'; setTimeout(function(){ ls.style.display='none'; },500); }
     }, 2500);
-  </script>  
-
-  
+  </script>
 
 </head>
-
 <body>
 
-  <!-- ✅✅✅ LOADING SCREEN - لە سەرەوەی body -->
+  <!-- ═══════════════════════════════════
+       LOADING SCREEN
+  ═══════════════════════════════════ -->
 
   <div id="loading-screen">
     <div class="loader">
@@ -89,50 +42,45 @@
 
   <!-- Ad containers -->
 
-  <div id="pre-access-overlay" style="display: none;"></div>
+  <div id="pre-access-overlay" style="display:none;"></div>
   <div id="adsterra-ad-1"></div>
   <div id="adsterra-ad-2"></div>
 
-  <!-- Header -->
+  <!-- ═══════════════════════════════════
+       HEADER
+  ═══════════════════════════════════ -->
 
   <header>
     <div class="header-container">
       <a href="#" class="logo">
         <span class="material-icons logo-icon">apps</span>
-        <span data-translate="welcome_title">Welcome to ZHIWAR | Official Website</span>
+        <span>ZHIWAR YT</span>
       </a>
       <nav>
-        <a href="#apps"><span class="material-icons">download</span> <span data-translate="nav_apps">Apps Section</span></a>
-        <a href="#features"><span class="material-icons">star</span> <span data-translate="nav_features">Features</span></a>
-        <a href="#contact"><span class="material-icons">contact_support</span> <span data-translate="nav_contact">Contact</span></a>
-        <a href="#Minecraft.html"><span class="material-icons">blocks</span> <span data-translate="nav_apps">Minecraft download</span></a>
-        <a href="#login" id="loginNavLink" onclick="var o=document.getElementById('loginModalOverlay'); if(o){o.style.display='flex'; document.body.style.overflow='hidden';} return false;">
-          <span class="material-icons">login</span> 
-          <span data-translate="nav_login">Login</span>
+        <a href="#apps"><span class="material-icons">download</span> <span>بەرنامەکان</span></a>
+        <a href="#features"><span class="material-icons">star</span> <span>تایبەتمەندییەکان</span></a>
+        <a href="#about-dev"><span class="material-icons">person</span> <span>دەربارەی گەشەپێدەر</span></a>
+        <a href="#contact"><span class="material-icons">contact_support</span> <span>پەیوەندی</span></a>
+        <a href="#" id="loginNavLink" onclick="var o=document.getElementById('loginModalOverlay');if(o){o.style.display='flex';document.body.style.overflow='hidden';}return false;">
+          <span class="material-icons">login</span> <span>چوونەژوورەوە</span>
         </a>
-
-
-    <div id="userChip" class="user-chip" style="display:none;">
-      <img id="userAvatar" class="user-avatar" alt="" />
-      <span id="userEmail" class="user-email"></span>
-      <button id="logoutBtn" class="logout-btn" type="button">
-        <span class="material-icons">logout</span>
-      </button>
+        <div id="userChip" class="user-chip" style="display:none;">
+          <img id="userAvatar" class="user-avatar" alt=""/>
+          <span id="userEmail" class="user-email"></span>
+          <button id="logoutBtn" class="logout-btn" type="button"><span class="material-icons">logout</span></button>
+        </div>
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="ku">کوردی</button>
+          <button class="lang-btn" data-lang="ar">العربية</button>
+          <button class="lang-btn" data-lang="en">English</button>
+        </div>
+      </nav>
     </div>
-    
-    <!-- Language Switcher -->
-    <div class="language-switcher">
-      <button class="lang-btn" data-lang="ku">کوردی</button>
-      <button class="lang-btn" data-lang="ar">العربية</button>
-      <button class="lang-btn active" data-lang="en">English</button>
-    </div>
-  </nav>
-</div>
-```
-
   </header>
 
-  <!-- Hero Section -->
+  <!-- ═══════════════════════════════════
+       HERO
+  ═══════════════════════════════════ -->
 
   <section class="hero">
     <div class="hero-3d" aria-hidden="true">
@@ -140,219 +88,429 @@
       <div class="orb-core"></div>
     </div>
     <div class="hero-content">
-      <h1 data-translate="hero_title">ZHIWAR Apps</h1>
-      <p data-translate="hero_subtitle">Apps fully programmed in Kurdish language for Android and iOS</p>
-      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="#apps" class="btn btn-primary">
-          <span class="material-icons">download</span> 
-          <span data-translate="hero_download">Download</span>
-        </a>
-        <a href="#features" class="btn btn-outline">
-          <span class="material-icons">info</span> 
-          <span data-translate="hero_more">More Info</span>
-        </a>
+      <h1>بەرنامەکانی ZHIWAR</h1>
+      <p>بەرنامەکان بە تەواوی بە زمانی کوردی بۆ ئەندرۆید و iOS بەرنامەسازی کراون</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="#apps" class="btn btn-primary"><span class="material-icons">download</span> داگرتن</a>
+        <a href="#features" class="btn btn-outline"><span class="material-icons">info</span> زیاتر بزانە</a>
       </div>
     </div>
   </section>
 
-  <!-- Apps Section -->
+  <!-- ═══════════════════════════════════
+       APPS SECTION
+  ═══════════════════════════════════ -->
 
-  <section id="apps" class="apps-section scroll-animate">
-    <h2 class="section-title" data-translate="apps_section_title">Applications</h2>
-    <p class="section-subtitle" data-translate="apps_section_subtitle">These are the apps for both Android and iPhone</p>
+  <section id="apps" style="padding:4rem 2rem 2rem;">
+    <h2 class="section-title">بەرنامەکان</h2>
+    <p class="section-subtitle">بەرنامەکانی تایبەتی ZHIWAR بۆ ئەندرۆید و iOS</p>
+    <div class="apps-grid">
 
 ```
-<div class="apps-grid">
-  <div class="app-card">
-    <div class="app-icon"><span class="material-icons">android</span></div>
-    <h3 class="app-title" data-translate="app1_title">Minefo Kr</h3>
-    <span class="app-version" data-translate="app1_version">وەشانی 1.0</span>
-    <p class="app-description" data-translate="app1_description">تەواوی زانیاریەکانی مایکرافت بە زمانی کوردی</p>
-    <button class="btn btn-primary" onclick="startDownloadWithAds('https://github.com/zhiwar404M/Kurdish-Information-MCPE/raw/refs/heads/main/1.0/Kurdish%20Information%20MCPE_1.0%20V.apk')">
-      <span class="material-icons">download</span> 
-      <span data-translate="app1_button">داگرتن بۆ ئەندرۆید</span>
-    </button>
+  <!-- Sabeel Card -->
+  <div class="app-card sabeel-special scroll-animate">
+    <div class="card-badge">نوێ</div>
+    <div class="card-bg-glow"></div>
+    <div class="card-content">
+      <div class="app-icon-container">
+        <img src="path-to-sabeel-logo.png" alt="Sabeel Logo" class="app-icon" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'material-icons\' style=\'font-size:2.5rem;color:#38bdf8\'>mosque</span>'"/>
+      </div>
+      <h3>سەبیل ئیسلام</h3>
+      <p>ڕێگای ڕاست بۆ فێربوونی ئاینی پیرۆزی ئیسلام بە شێوازێکی سەردەمی.</p>
+      <div class="card-actions">
+        <a href="#" class="btn-shine" onclick="window.AppManager&&AppManager.showComingSoon();return false;">داگرتن <span class="material-icons" style="font-size:1rem">download</span></a>
+        <a href="#" class="btn-ghost">زیاتر...</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Placeholder cards -->
+  <div class="app-card scroll-animate">
+    <div class="app-icon"><span class="material-icons" style="font-size:3.5rem;color:#0ea5e9;">book</span></div>
+    <h3 class="app-title">بەرنامەی کتێب</h3>
+    <p class="app-description">کتێبی کوردی بە سەرهەڵدانی تازە — بەم زووانە دێت.</p>
+    <a href="#" class="btn btn-primary" onclick="window.AppManager&&AppManager.showComingSoon();return false;">بەزووانە دێت</a>
+  </div>
+
+  <div class="app-card scroll-animate">
+    <div class="app-icon"><span class="material-icons" style="font-size:3.5rem;color:#0ea5e9;">music_note</span></div>
+    <h3 class="app-title">بەرنامەی موزیک</h3>
+    <p class="app-description">موزیکی کوردی لە شوێنێکدا — بەم زووانە دێت.</p>
+    <a href="#" class="btn btn-primary" onclick="window.AppManager&&AppManager.showComingSoon();return false;">بەزووانە دێت</a>
+  </div>
+
+</div>
+```
+
+  </section>
+
+  <!-- ═══════════════════════════════════
+       FEATURES
+  ═══════════════════════════════════ -->
+
+  <section id="features" class="features scroll-animate" style="padding:3rem 2rem;">
+    <h2 class="section-title">تایبەتمەندییەکان</h2>
+    <p class="section-subtitle">هەندێک تایبەتمەندیی بێهاوتای بەرنامەکەم</p>
+    <div class="features-grid">
+      <div class="feature-card scroll-animate-left">
+        <div class="feature-icon"><span class="material-icons">language</span></div>
+        <h3 class="feature-title">زمانی کوردی</h3>
+        <p class="feature-description">تەواوی بەرنامە بە کوردی لەگەڵ دیزاینی تایبەت</p>
+      </div>
+      <div class="feature-card scroll-animate">
+        <div class="feature-icon"><span class="material-icons">speed</span></div>
+        <h3 class="feature-title">خێرایی</h3>
+        <p class="feature-description">زۆر خێرا و سووکە بۆ هەر موبایلێک</p>
+      </div>
+      <div class="feature-card scroll-animate-right">
+        <div class="feature-icon"><span class="material-icons">update</span></div>
+        <h3 class="feature-title">نوێکردنەوە</h3>
+        <p class="feature-description">بەرنامەکان بەردەوام نوێ دەکرێنەوە</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       ABOUT DEVELOPER  ←  NEW SECTION
+  ═══════════════════════════════════ -->
+
+  <section id="about-dev" class="about-dev-section">
+
+```
+<!-- Noise texture overlay -->
+<div class="adev-noise"></div>
+
+<!-- Animated grid -->
+<div class="adev-grid-bg"></div>
+
+<!-- Glowing orbs -->
+<div class="adev-orb adev-orb-a"></div>
+<div class="adev-orb adev-orb-b"></div>
+<div class="adev-orb adev-orb-c"></div>
+
+<div class="adev-inner">
+
+  <!-- ---- LEFT: Avatar + status ---- -->
+  <div class="adev-left scroll-animate-left">
+
+    <div class="adev-avatar-frame">
+      <!-- Rotating border rings -->
+      <svg class="adev-svg-ring adev-ring-outer" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="url(#ringGrad1)" stroke-width="1.5" stroke-dasharray="8 6"/>
+      </svg>
+      <svg class="adev-svg-ring adev-ring-inner" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+            <stop offset="50%" stop-color="#a855f7" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.9"/>
+          </linearGradient>
+        </defs>
+        <circle cx="100" cy="100" r="80" fill="none" stroke="url(#ringGrad1)" stroke-width="1" stroke-dasharray="4 8" opacity="0.6"/>
+      </svg>
+
+      <!-- GIF Avatar -->
+      <div class="adev-avatar-wrap">
+        <img
+          src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif"
+          alt="ZHIWAR Developer"
+          class="adev-avatar-gif"
+          onerror="this.src='https://media.giphy.com/media/L1R1tvI9svkIWwpVYr/giphy.gif'"
+        />
+        <div class="adev-avatar-glare"></div>
+      </div>
+
+      <!-- Status badge -->
+      <div class="adev-status">
+        <span class="adev-status-dot"></span>
+        <span>ئازادانە کاردەکات</span>
+      </div>
+    </div>
+
+    <!-- Skill bars -->
+    <div class="adev-skills">
+      <div class="adev-skill-item">
+        <span class="adev-skill-name">Android Dev</span>
+        <div class="adev-skill-bar"><div class="adev-skill-fill" style="--w:88%"></div></div>
+        <span class="adev-skill-pct">88%</span>
+      </div>
+      <div class="adev-skill-item">
+        <span class="adev-skill-name">Web Dev</span>
+        <div class="adev-skill-bar"><div class="adev-skill-fill" style="--w:82%"></div></div>
+        <span class="adev-skill-pct">82%</span>
+      </div>
+      <div class="adev-skill-item">
+        <span class="adev-skill-name">UI / UX</span>
+        <div class="adev-skill-bar"><div class="adev-skill-fill" style="--w:75%"></div></div>
+        <span class="adev-skill-pct">75%</span>
+      </div>
+      <div class="adev-skill-item">
+        <span class="adev-skill-name">Kurdish Content</span>
+        <div class="adev-skill-bar"><div class="adev-skill-fill" style="--w:95%"></div></div>
+        <span class="adev-skill-pct">95%</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ---- RIGHT: Bio + stats + tech ---- -->
+  <div class="adev-right scroll-animate-right">
+
+    <!-- Header -->
+    <div class="adev-tag-row">
+      <span class="adev-chip adev-chip-blue">&lt; گەشەپێدەر /&gt;</span>
+      <span class="adev-chip adev-chip-purple">کوردستان 🇮🇶</span>
+    </div>
+
+    <h2 class="adev-name">
+      <span class="adev-name-hi">مرحبا، ناوم</span>
+      <span class="adev-name-main">ژیوار</span>
+      <span class="adev-cursor">_</span>
+    </h2>
+
+    <p class="adev-bio">
+      گەشەپێدەرێکم لە هەرێمی کوردستان — تایبەتم بە دروستکردنی بەرنامە و ماڵپەڕی کوردی.
+      ئامانجم ئەوەیە کە تەکنەلۆژیا بە زمانی کوردی بەردەست بکەم بۆ هەموو کوردێک لە جیهاندا.
+    </p>
+
+    <!-- Terminal block -->
+    <div class="adev-terminal">
+      <div class="adev-term-bar">
+        <span class="adev-term-dot" style="background:#ff5f56"></span>
+        <span class="adev-term-dot" style="background:#ffbd2e"></span>
+        <span class="adev-term-dot" style="background:#27c93f"></span>
+        <span class="adev-term-title">zhiwar@dev ~ terminal</span>
+      </div>
+      <div class="adev-term-body">
+        <div class="adev-term-line"><span class="adev-term-prompt">❯</span> <span class="adev-term-cmd">whoami</span></div>
+        <div class="adev-term-line adev-term-out">ZHIWAR — Kurdish App Developer</div>
+        <div class="adev-term-line"><span class="adev-term-prompt">❯</span> <span class="adev-term-cmd">cat skills.txt</span></div>
+        <div class="adev-term-line adev-term-out"><span class="adev-term-key">languages:</span> Java · Kotlin · JavaScript · PHP</div>
+        <div class="adev-term-line adev-term-out"><span class="adev-term-key">tools:</span> Android Studio · VS Code · Firebase</div>
+        <div class="adev-term-line adev-term-out"><span class="adev-term-key">passion:</span> Kurdish Tech 💙</div>
+        <div class="adev-term-line"><span class="adev-term-prompt">❯</span> <span class="adev-term-cmd adev-blink">█</span></div>
+      </div>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="adev-stats">
+      <div class="adev-stat">
+        <div class="adev-stat-num" data-count="4">0</div>
+        <div class="adev-stat-label">ساڵی ئەزموون</div>
+      </div>
+      <div class="adev-stat">
+        <div class="adev-stat-num" data-count="12">0</div>
+        <div class="adev-stat-label">پرۆژە</div>
+      </div>
+      <div class="adev-stat">
+        <div class="adev-stat-num" data-count="5000" data-suffix="+">0</div>
+        <div class="adev-stat-label">بەکارهێنەر</div>
+      </div>
+      <div class="adev-stat">
+        <div class="adev-stat-num" data-count="3">0</div>
+        <div class="adev-stat-label">بەرنامەی ئازاد</div>
+      </div>
+    </div>
+
+    <!-- Tech stack pills -->
+    <div class="adev-tech-row">
+      <span class="adev-tech">⚡ Kotlin</span>
+      <span class="adev-tech">🌐 JavaScript</span>
+      <span class="adev-tech">🔥 Firebase</span>
+      <span class="adev-tech">🎨 CSS3</span>
+      <span class="adev-tech">🤖 Android</span>
+      <span class="adev-tech">🐘 PHP</span>
+    </div>
+
+    <!-- CTA buttons -->
+    <div class="adev-cta">
+      <a href="mailto:zhiwarup@gmail.com" class="adev-btn-primary">
+        <span class="material-icons">email</span> پەیوەندی بکە
+      </a>
+      <a href="https://youtube.com/@zhiwarxyt" target="_blank" class="adev-btn-outline">
+        <span class="material-icons">play_circle</span> یوتیوب
+      </a>
+    </div>
+
   </div>
 </div>
 ```
 
   </section>
 
-  <!-- Features Section -->
+  <!-- ═══════════════════════════════════
+       PRIVACY POLICY (hidden)
+  ═══════════════════════════════════ -->
 
-  <section id="features" class="features scroll-animate">
-    <h2 class="section-title" data-translate="features_title">Features</h2>
-    <p class="section-subtitle" data-translate="features_subtitle">Some unique features of my app</p>
-    <div class="features-grid">
-      <div class="feature-card scroll-animate-left">
-        <div class="feature-icon"><span class="material-icons">language</span></div>
-        <h3 class="feature-title" data-translate="feature1_title">Kurdish Language</h3>
-        <p class="feature-description" data-translate="feature1_desc">The entire app in Kurdish with special design</p>
-      </div>
-      <div class="feature-card scroll-animate">
-        <div class="feature-icon"><span class="material-icons">speed</span></div>
-        <h3 class="feature-title" data-translate="feature2_title">Speed</h3>
-        <p class="feature-description" data-translate="feature2_desc">Very fast and lightweight for any mobile</p>
-      </div>
-      <div class="feature-card scroll-animate-right">
-        <div class="feature-icon"><span class="material-icons">update</span></div>
-        <h3 class="feature-title" data-translate="feature3_title">Updates</h3>
-        <p class="feature-description" data-translate="feature3_desc">Apps are constantly updated</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Privacy Policy Section -->
-
-  <section class="privacy-section" style="display: none;">
+  <section class="privacy-section" style="display:none;">
     <div class="privacy-container">
       <div class="privacy-header">
-        <h2 class="privacy-title">
-          <span class="material-icons">privacy_tip</span>
-          <span data-translate="privacy_title">Privacy Policy</span>
-        </h2>
-        <p class="privacy-date" data-translate="privacy_date">Last updated: October 25, 2025</p>
+        <h2 class="privacy-title"><span class="material-icons">privacy_tip</span> سیاسەتی تایبەتمەندی</h2>
+        <p class="privacy-date">دوایین نوێکردنەوە: ئۆکتۆبەر ٢٥، ٢٠٢٥</p>
       </div>
       <div class="privacy-content">
-        <p data-translate="privacy_intro">At ZHIWAR, protecting your personal information is very important to us.</p>
+        <p>لە ZHIWAR، پاراستنی زانیاری کەسیت زۆر گرنگە بۆمان.</p>
       </div>
     </div>
   </section>
 
-  <!-- Feedback Section -->
-
-  <section id="feedback" class="feedback-section">
-    <div class="section-container">
-      <h2 class="section-title" data-translate="feedback_title">پێشنیار و رەخنە</h2>
-      <p class="section-subtitle" data-translate="feedback_subtitle">ئێمە گرنگی بە رای تۆ دەدەین</p>
-      <div class="feedback-form">
-        <div class="form-group">
-          <label for="feedback-type" data-translate="feedback_type">جۆری رەخنە</label>
-          <select id="feedback-type">
-            <option value="suggestion" data-translate="feedback_suggestion">پێشنیار</option>
-            <option value="bug" data-translate="feedback_bug">ڕاپۆرتی کێشە</option>
-            <option value="compliment" data-translate="feedback_compliment">پێزانین</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="feedback-message" data-translate="feedback_message">پەیامەکەت</label>
-          <textarea id="feedback-message" rows="5" placeholder="..."></textarea>
-        </div>
-        <button class="btn btn-primary" data-translate="feedback_button">ناردنی رەخنە</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════ -->
 
   <footer id="contact" class="scroll-animate">
     <div class="footer-content">
       <div class="footer-column">
-        <h3 data-translate="about_title">About Us</h3>
-        <p data-translate="about_text">My name is Zhiwar, developer of Kurdish apps 💎❤️</p>
+        <h3>دەربارەمان</h3>
+        <p>ناوم ژیوارە، گەشەپێدەری بەرنامەکانی کوردی 💎❤️</p>
       </div>
       <div class="footer-column">
-        <h3 data-translate="contact_title">Contact</h3>
+        <h3>پەیوەندی</h3>
         <ul class="footer-links">
-          <li>
-            <a href="mailto:zhiwarup@gmail.com">
-              <span class="material-icons">email</span> 
-              <span data-translate="email_label">zhiwarup@gmail.com</span>
-            </a>
-          </li>
+          <li><a href="mailto:zhiwarup@gmail.com"><span class="material-icons">email</span> zhiwarup@gmail.com</a></li>
         </ul>
       </div>
       <div class="footer-column">
-        <h3 data-translate="channels_title">Channels</h3>
+        <h3>کەناڵەکان</h3>
         <ul class="footer-links">
-          <li><a href="https://youtube.com/@zhiwarxyt"><span class="material-icons">play_circle</span> <span>YouTube</span></a></li>
-          <li><a href="#"><span class="material-icons">facebook</span> <span>Facebook</span></a></li>
-          <li><a href="https://snapchat.com/t/HktxQxsY"><span class="material-icons">camera</span> <span>Snapchat</span></a></li>
+          <li><a href="https://youtube.com/@zhiwarxyt"><span class="material-icons">play_circle</span> YouTube</a></li>
+          <li><a href="#"><span class="material-icons">facebook</span> Facebook</a></li>
+          <li><a href="https://snapchat.com/t/HktxQxsY"><span class="material-icons">camera</span> Snapchat</a></li>
         </ul>
       </div>
     </div>
     <div class="copyright">
-      <p data-translate="copyright_text">© 2021-2025 All rights reserved. Producer: ZHIWAR</p>
+      <p>© 2021-2025 هەموو مافەکان پارێزراون. دروستکار: ZHIWAR</p>
       <button class="privacy-toggle" id="privacyToggle">
-        <span class="material-icons">privacy_tip</span>
-        <span data-translate="privacy_toggle">Privacy Policy</span>
+        <span class="material-icons">privacy_tip</span> سیاسەتی تایبەتمەندی
       </button>
     </div>
   </footer>
 
-  <!-- Login Modal -->
+  <!-- ═══════════════════════════════════
+       LOGIN MODAL
+  ═══════════════════════════════════ -->
 
-  <div id="loginModalOverlay" class="modal-overlay" style="display: none;">
+  <div id="loginModalOverlay" class="modal-overlay" style="display:none;">
     <div class="modal-card">
-      <button class="modal-close" id="loginModalClose">
-        <span class="material-icons">close</span>
-      </button>
+      <button class="modal-close" id="loginModalClose"><span class="material-icons">close</span></button>
       <div class="modal-header">
-        <h2 data-translate="login_title">Login to Your Account</h2>
-        <p class="modal-subtitle" data-translate="login_subtitle">Access your apps and settings</p>
+        <h2>چوونەژوورەوە</h2>
+        <p class="modal-subtitle">دەستبەجێی بەرنامەکانت بکە</p>
       </div>
       <div class="modal-body">
-        <div class="login-visual">
-          <canvas id="loginCanvas"></canvas>
-        </div>
+        <div class="login-visual"><canvas id="loginCanvas"></canvas></div>
         <div class="tilt-wrap">
           <div class="auth-tabs">
-            <button id="tabSignIn" class="auth-tab active" data-translate="tab_signin">Sign in</button>
-            <button id="tabRegister" class="auth-tab" data-translate="tab_register">Register</button>
+            <button id="tabSignIn" class="auth-tab active">چوونەژوورەوە</button>
+            <button id="tabRegister" class="auth-tab">تۆمارکردن</button>
           </div>
-          <form id="loginForm" style="display: block;">
+          <form id="loginForm">
             <div id="authError" class="auth-error" style="display:none;"></div>
             <div class="form-group">
-              <label for="loginEmail" data-translate="login_email">Email</label>
-              <input id="loginEmail" type="email" required>
+              <label for="loginEmail">ئیمەیڵ</label>
+              <input id="loginEmail" type="email" required/>
             </div>
             <div class="form-group">
-              <label for="loginPassword" data-translate="login_password">Password</label>
-              <input id="loginPassword" type="password" required>
+              <label for="loginPassword">وشەی نهێنی</label>
+              <input id="loginPassword" type="password" required/>
             </div>
-            <button type="submit" class="btn btn-primary" data-translate="login_button">Login</button>
+            <button type="submit" class="btn btn-primary">چوونەژوورەوە</button>
           </form>
-          <form id="registerForm" style="display: none;">
+          <form id="registerForm" style="display:none;">
             <div id="regError" class="auth-error" style="display:none;"></div>
             <div class="form-group">
-              <label for="regEmail">Email</label>
-              <input id="regEmail" type="email" required>
+              <label for="regEmail">ئیمەیڵ</label>
+              <input id="regEmail" type="email" required/>
             </div>
             <div class="form-group">
-              <label for="regPassword">Password</label>
-              <input id="regPassword" type="password" required>
+              <label for="regPassword">وشەی نهێنی</label>
+              <input id="regPassword" type="password" required/>
             </div>
             <div class="form-group">
-              <label for="regPassword2">Confirm Password</label>
-              <input id="regPassword2" type="password" required>
+              <label for="regPassword2">پشتڕاستکردنەوەی وشەی نهێنی</label>
+              <input id="regPassword2" type="password" required/>
             </div>
-            <button type="submit" class="btn btn-primary">Create account</button>
+            <button type="submit" class="btn btn-primary">دروستکردنی هەژمار</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 
-  
+  <!-- ═══════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════ -->
 
+  <!-- Orb Canvas -->
 
-document.body.insertBefore(overlay, document.body.firstChild);
-
-
-  <!-- Firebase SDK -->
-
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js';
-    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js';
-    import config from './firebase-config.js';
-
-    const app = initializeApp(config);
-    const auth = getAuth(app);
-
-    window.firebaseAuth = { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut };
-    window.firebaseExports = { app, auth };
-    window.firebase = true;
+  <script>
+    (function(){
+      const canvas = document.getElementById('orbCanvas');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      function resize(){ canvas.width=canvas.clientWidth; canvas.height=canvas.clientHeight; }
+      resize(); window.addEventListener('resize',resize);
+      const particles = Array.from({length:140},()=>({ angle:Math.random()*Math.PI*2, radius:80+Math.random()*220, speed:0.002+Math.random()*0.006, hue:185+Math.random()*40 }));
+      let t=0;
+      function draw(){
+        t+=0.003; ctx.clearRect(0,0,canvas.width,canvas.height);
+        const cx=canvas.width/2, cy=canvas.height/2;
+        for(const p of particles){
+          p.angle+=p.speed;
+          const wb=Math.sin(t*6+p.radius)*4;
+          const x=cx+Math.cos(p.angle)*p.radius+Math.sin(p.angle*3)*wb;
+          const y=cy+Math.sin(p.angle)*p.radius+Math.cos(p.angle*2)*wb;
+          const g=ctx.createRadialGradient(x,y,0,x,y,14);
+          g.addColorStop(0,`hsla(${p.hue},95%,62%,0.9)`);
+          g.addColorStop(1,`hsla(${p.hue},95%,62%,0)`);
+          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,14,0,Math.PI*2); ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
   </script>
+
+  <!-- About Dev: count-up + skill bars -->
+
+  <script>
+    function animateCountUp(el){
+      const target = parseInt(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const step = target / (duration / 16);
+      let current = 0;
+      const timer = setInterval(()=>{
+        current = Math.min(current + step, target);
+        el.textContent = (current >= 1000 ? Math.floor(current).toLocaleString() : Math.floor(current)) + suffix;
+        if(current >= target) clearInterval(timer);
+      }, 16);
+    }
+
+    const statsObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.querySelectorAll('.adev-stat-num').forEach(animateCountUp);
+          e.target.querySelectorAll('.adev-skill-fill').forEach(el=>{
+            setTimeout(()=>{ el.style.width = el.style.getPropertyValue('--w') || el.getAttribute('style').match(/--w:([^;]+)/)?.[1]; },200);
+          });
+          statsObserver.unobserve(e.target);
+        }
+      });
+    },{threshold:0.3});
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      const sec = document.getElementById('about-dev');
+      if(sec) statsObserver.observe(sec);
+    });
+  </script>
+
+  <script src="app.js"></script>
+
+  <script src="maintenance.js"></script>
+
+  <script src="Ads.js"></script>
 
 </body>
 </html>
