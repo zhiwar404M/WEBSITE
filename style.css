@@ -1152,4 +1152,46 @@ font-size: 0.9rem; font-weight: 500; transition: all 0.3s; border: 1px solid tra
 .mnt-time-box { min-width: 58px; padding: 0.7rem 0.8rem; }
 .mnt-link     { padding: 0.5rem 0.9rem; font-size: 0.82rem; }
 .mnt-links    { gap: 0.5rem; }
+
+
+<!-- ORB Canvas Script -->
+
+    (function(){
+      const canvas = document.getElementById('orbCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      function resize(){ canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const center = () => ({ x: canvas.width/2, y: canvas.height/2 });
+      const particles = Array.from({length: 140}, ()=>({
+        angle: Math.random()*Math.PI*2,
+        radius: 80 + Math.random()*220,
+        speed: 0.002 + Math.random()*0.006,
+        hue: 185 + Math.random()*40
+      }));
+
+      let t = 0;
+      function draw(){
+        t += 0.003;
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        const c = center();
+        for (const p of particles){
+          p.angle += p.speed;
+          const wobble = Math.sin(t*6 + p.radius)*4;
+          const x = c.x + Math.cos(p.angle)*p.radius + Math.sin(p.angle*3)*wobble;
+          const y = c.y + Math.sin(p.angle)*p.radius + Math.cos(p.angle*2)*wobble;
+          const grad = ctx.createRadialGradient(x,y,0,x,y,14);
+          grad.addColorStop(0, `hsla(${p.hue}, 95%, 62%, 0.9)`);
+          grad.addColorStop(1, `hsla(${p.hue}, 95%, 62%, 0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(x,y, 14, 0, Math.PI*2);
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
 }
