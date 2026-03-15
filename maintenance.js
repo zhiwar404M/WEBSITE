@@ -5,7 +5,6 @@
 
 const MAINTENANCE_CONFIG = {
 
-```
 // ============================================
 //  true  = بینەران پەیجی چاکردن دەبینن
 //  false = وێبسایت بە ئاساییەوەیە
@@ -26,7 +25,7 @@ contact: {
     facebook: "#",
     snapchat: "https://snapchat.com/t/HktxQxsY"
 }
-```
+
 
 };
 
@@ -44,7 +43,7 @@ function showMaintenancePage() {
 document.body.style.overflow = ‘hidden’;
 const cfg = MAINTENANCE_CONFIG;
 
-```
+
 const overlay = document.createElement('div');
 overlay.id = 'mnt-overlay';
 overlay.innerHTML = `
@@ -129,6 +128,6 @@ if (cfg.countdown.enabled) {
     tick();
     setInterval(tick, 1000);
 }
-```
+
 
 }
