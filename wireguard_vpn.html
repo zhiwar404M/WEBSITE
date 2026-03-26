@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WireGuard Gaming Config</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="particles"></canvas>
+  <div class="scan"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="badge">
+        <span class="badge-dot"></span>
+        WireGuard Gaming Config Center
+      </div>
+      <h1>⚡ GAMING<br>BOOST CONFIG</h1>
+      <p class="subtitle">کۆنفیگی پرۆفیشناڵ بۆ خێرا کردنی ئینتەرنێت و زیاد کردنی هێدشۆت لە یاریەکان</p>
+    </header>
+
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-val">50+</div>
+        <div class="stat-label">وڵات</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">2</div>
+        <div class="stat-label">کۆنفیگی تایبەت</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">↓ms</div>
+        <div class="stat-label">کەمکردنی پینگ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">🎯</div>
+        <div class="stat-label">هێدشۆت بووستەر</div>
+      </div>
+    </div>
+
+    <p class="section-title">هەڵبژاردنی یاری</p>
+    <div class="tabs-wrapper">
+      <button class="tab-btn active" onclick="setGame('pubg', this)">
+        <span class="icon">🔫</span> PUBG Mobile
+      </button>
+      <button class="tab-btn" onclick="setGame('codm', this)">
+        <span class="icon">💥</span> COD Mobile
+      </button>
+      <button class="tab-btn" onclick="setGame('freefire', this)">
+        <span class="icon">🔥</span> Free Fire
+      </button>
+      <button class="tab-btn" onclick="setGame('fortnite', this)">
+        <span class="icon">🏗️</span> Fortnite
+      </button>
+      <button class="tab-btn" onclick="setGame('all', this)">
+        <span class="icon">🌐</span> هەموو یاریەکان
+      </button>
+    </div>
+
+    <p class="section-title">هەڵبژاردنی وڵات / سێرڤەر</p>
+    <div class="countries-grid" id="countries-grid"></div>
+
+    <p class="section-title">کۆنفیگەکان — دیرەکت لە وێنەکانەوە</p>
+    <div class="configs-grid">
+      <div class="config-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">🎯 TDM FULL HEADSHOT</div>
+            <div style="font-size:0.68rem;color:var(--muted);margin-top:3px">بۆ زیادکردنی هێدشۆت</div>
+          </div>
+          <span class="card-badge badge-headshot">HEADSHOT</span>
+        </div>
+        <div class="card-body">
+          <div class="config-row"><span class="config-key">Address</span><span class="config-val cyan">255.255.255.0/32</span></div>
+          <div class="config-row"><span class="config-key">Listen Port</span><span class="config-val">25677</span></div>
+          <div class="config-row"><span class="config-key">MTU</span><span class="config-val">25677</span></div>
+          <div class="config-row"><span class="config-key">DNS</span><span class="config-val green">8.8.8.8</span></div>
+          <div class="config-row"><span class="config-key">On-Demand</span><span class="config-val">Wi-Fi Only</span></div>
+        </div>
+        <div class="card-footer" style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="showConfig('tdm')">👁 بینینی Config</button>
+          <button class="btn btn-green btn-sm" onclick="downloadConfig('tdm')">⬇ داونلۆد .conf</button>
+          <button class="btn btn-outline btn-sm" onclick="copyConfig('tdm')">📋 کۆپی</button>
+        </div>
+      </div>
+
+      <div class="config-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">⚡ PUBG FULL SPEED</div>
+            <div style="font-size:0.68rem;color:var(--muted);margin-top:3px">خێرا + هێدشۆت</div>
+          </div>
+          <span class="card-badge badge-all">SPEED + HS</span>
+        </div>
+        <div class="card-body">
+          <div class="config-row"><span class="config-key">Address</span><span class="config-val cyan">9.9.9.9/24</span></div>
+          <div class="config-row"><span class="config-key">Listen Port</span><span class="config-val">8254</span></div>
+          <div class="config-row"><span class="config-key">MTU</span><span class="config-val">8687</span></div>
+          <div class="config-row"><span class="config-key">DNS</span><span class="config-val green">1.1.1.1</span></div>
+          <div class="config-row"><span class="config-key">On-Demand</span><span class="config-val">Wi-Fi Only</span></div>
+        </div>
+        <div class="card-footer" style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="showConfig('pubg')">👁 بینینی Config</button>
+          <button class="btn btn-green btn-sm" onclick="downloadConfig('pubg')">⬇ داونلۆد .conf</button>
+          <button class="btn btn-outline btn-sm" onclick="copyConfig('pubg')">📋 کۆپی</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-section" id="code-viewer" style="display:none">
+      <p class="section-title">فایلی کۆنفیگ</p>
+      <div class="code-box">
+        <div class="code-topbar">
+          <span class="code-filename" id="code-title">config.conf</span>
+          <div class="code-actions">
+            <button class="btn btn-outline btn-sm" onclick="copyCurrentConfig()">📋 کۆپی</button>
+            <button class="btn btn-green btn-sm" onclick="downloadCurrentConfig()">⬇ داونلۆد</button>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('code-viewer').style.display='none'">✕</button>
+          </div>
+        </div>
+        <pre id="code-content"></pre>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="section-title">دروستکردنی کۆنفیگی تایبەت بۆ وڵاتی دیاریکراو</p>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:30px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:20px">
+        <div>
+          <label style="display:block;font-size:0.7rem;color:var(--muted);margin-bottom:6px;letter-spacing:0.1em">وڵات</label>
+          <div class="select-wrap">
+            <select class="sel" id="gen-country"></select>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:0.7rem;color:var(--muted);margin-bottom:6px;letter-spacing:0.1em">جۆری کۆنفیگ</label>
+          <div class="select-wrap">
+            <select class="sel" id="gen-type">
+              <option value="speed">خێرا (Speed)</option>
+              <option value="headshot">هێدشۆت (Headshot)</option>
+              <option value="balanced">هاوسەنگ (Balanced)</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:0.7rem;color:var(--muted);margin-bottom:6px;letter-spacing:0.1em">DNS</label>
+          <div class="select-wrap">
+            <select class="sel" id="gen-dns">
+              <option value="1.1.1.1">1.1.1.1 (Cloudflare)</option>
+              <option value="8.8.8.8">8.8.8.8 (Google)</option>
+              <option value="9.9.9.9">9.9.9.9 (Quad9)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="generateCustomConfig()" style="width:100%;justify-content:center;font-size:0.9rem;padding:12px">
+        ⚡ کۆنفیگ دروست بکە و داونلۆد بکە
+      </button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✓ کۆپی کرا!</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
