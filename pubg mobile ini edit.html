@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUBG Mobile INI Tool — by Zhiwar</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+
+  :root {
+    --orange: #ff6b00;
+    --cyan: #00e5ff;
+    --green: #6bff6b;
+    --red: #ff4444;
+    --gold: #ffd600;
+    --bg: #08080f;
+    --bg2: #0d0d18;
+    --bg3: #12121f;
+    --border: #1e1e35;
+    --text: #c8c8d8;
+    --mono: 'Share Tech Mono', monospace;
+    --sans: 'Rajdhani', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 50%, rgba(13,26,46,0.8) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 20%, rgba(26,13,46,0.8) 0%, transparent 55%);
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(90deg, #0a1020, #12082a);
+    border-bottom: 2px solid var(--orange);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 40px rgba(255,107,0,0.15);
+  }
+
+  .logo-icon { font-size: 32px; }
+
+  .logo-text h1 {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--orange);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .logo-text p {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 1px;
+    margin-top: 3px;
+  }
+
+  .header-badge {
+    margin-left: auto;
+    background: rgba(255,107,0,0.1);
+    border: 1px solid rgba(255,107,0,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--orange);
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 0;
+    padding: 20px 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #444;
+    padding: 10px 24px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn:hover { color: #888; }
+  .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* MAIN */
+  main { padding: 28px; max-width: 1200px; margin: 0 auto; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  @media(max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* LABELS */
+  .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .label.orange { color: var(--orange); }
+  .label.cyan { color: var(--cyan); }
+  .label.green { color: var(--green); }
+  .label.gold { color: var(--gold); }
+
+  /* TEXTAREA */
+  textarea, input[type=text] {
+    width: 100%;
+    background: #06060e;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--cyan);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 12px;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s;
+    line-height: 1.7;
+  }
+  textarea:focus, input[type=text]:focus {
+    border-color: rgba(0,229,255,0.3);
+    box-shadow: 0 0 0 2px rgba(0,229,255,0.05);
+  }
+  input[type=text] { resize: none; }
+
+  /* BUTTONS */
+  .btn {
+    border: none;
+    border-radius: 6px;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: all 0.2s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-orange {
+    background: linear-gradient(90deg, var(--orange), #ff3d00);
+    color: #000;
+    box-shadow: 0 4px 20px rgba(255,107,0,0.3);
+  }
+  .btn-orange:hover { box-shadow: 0 4px 30px rgba(255,107,0,0.5); transform: translateY(-1px); }
+  .btn-cyan {
+    background: linear-gradient(90deg, var(--cyan), #0096aa);
+    color: #000;
+    box-shadow: 0 4px 20px rgba(0,229,255,0.2);
+  }
+  .btn-cyan:hover { box-shadow: 0 4px 30px rgba(0,229,255,0.4); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid #333;
+    color: #666;
+  }
+  .btn-outline:hover { border-color: var(--green); color: var(--green); }
+  .btn-outline.copied { border-color: var(--green); color: var(--green); background: rgba(107,255,107,0.05); }
+
+  /* CARD */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  /* RESULT LIST */
+  .result-box {
+    height: 420px;
+    overflow-y: auto;
+    background: #06060e;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: #222 transparent;
+  }
+
+  .result-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
+    border-bottom: 1px solid #0e0e1a;
+  }
+  .result-item:last-child { border-bottom: none; }
+
+  .result-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #333;
+    min-width: 22px;
+    text-align: right;
+  }
+
+  .result-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    flex: 1;
+    word-break: break-all;
+    line-height: 1.5;
+  }
+  .pill-val0 { background: rgba(255,68,68,0.08); border: 1px solid rgba(255,68,68,0.15); color: #ff8888; }
+  .pill-val1 { background: rgba(107,255,107,0.08); border: 1px solid rgba(107,255,107,0.15); color: var(--green); }
+  .pill-other { background: rgba(0,229,255,0.05); border: 1px solid rgba(0,229,255,0.12); color: var(--cyan); }
+  .pill-plain { background: rgba(255,214,0,0.05); border: 1px solid rgba(255,214,0,0.12); color: var(--gold); }
+
+  /* EDITOR */
+  .editor-row {
+    display: grid;
+    grid-template-columns: 1fr 120px 200px;
+    gap: 10px;
+    align-items: center;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    transition: border-color 0.2s;
+  }
+  .editor-row:hover { border-color: rgba(0,229,255,0.2); }
+  .editor-row:focus-within { border-color: rgba(0,229,255,0.35); }
+
+  .editor-key {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #777;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .editor-val {
+    background: rgba(107,255,107,0.05);
+    border: 1px solid rgba(107,255,107,0.2);
+    border-radius: 4px;
+    color: var(--green);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 5px 10px;
+    outline: none;
+    text-align: center;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+  .editor-val:focus { border-color: var(--green); box-shadow: 0 0 0 2px rgba(107,255,107,0.1); }
+
+  .editor-encoded {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* TOOLS */
+  .tool-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+  }
+
+  .tool-result {
+    margin-top: 14px;
+    background: #06060e;
+    border-radius: 6px;
+    padding: 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    word-break: break-all;
+    min-height: 60px;
+    border: 1px solid var(--border);
+  }
+
+  /* INFO GRID */
+  .info-pill {
+    background: #06060e;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .info-pill .key { font-family: var(--mono); font-size: 9px; color: #444; letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase; }
+  .info-pill .val { font-family: var(--mono); font-size: 14px; font-weight: 700; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  /* EMPTY STATE */
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #333;
+    font-family: var(--mono);
+    font-size: 12px;
+    gap: 10px;
+  }
+  .empty span { font-size: 36px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
+
+  /* GLOW */
+  .glow-orange { text-shadow: 0 0 20px rgba(255,107,0,0.5); }
+  .glow-cyan { text-shadow: 0 0 20px rgba(0,229,255,0.5); }
+
+  /* OUTPUT */
+  #output-area { height: 280px; }
+
+  mt { margin-top: 14px; display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-icon">⚔️</div>
+  <div class="logo-text">
+    <h1>PUBG Mobile INI Tool</h1>
+    <p>XOR Decoder / Encoder · Key: 0x79 · دروستکراوی زیوار</p>
+  </div>
+  <div class="header-badge">v2.0 · 2025</div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('decode')">🔓 Decode</button>
+  <button class="tab-btn" onclick="switchTab('editor')">✏️ Editor</button>
+  <button class="tab-btn" onclick="switchTab('tools')">⚡ Tools</button>
+  <button class="tab-btn" onclick="switchTab('info')">📚 زانیاری</button>
+</div>
+
+<main>
+
+  <!-- ===== DECODE TAB ===== -->
+  <div id="tab-decode" class="tab-content active">
+    <div class="grid-2">
+      <div>
+        <div class="label orange">📂 INI فایلەکەت لێرە بخرە</div>
+        <textarea id="ini-input" rows="18" placeholder="[UserCustom DeviceProfile]&#10;+CVars=0B572C0A1C0B280C...&#10;&#10;فایلەکەت لێرە paste بکە"></textarea>
+        <br><br>
+        <button class="btn btn-orange" onclick="doDecode()">🔓 DECODE کردن</button>
+      </div>
+      <div>
+        <div class="label cyan">✅ نتیجەی Decode کراو</div>
+        <div class="result-box" id="decode-result">
+          <div class="empty"><span>🔐</span>فایلی INI بخرە و Decode بکە</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== EDITOR TAB ===== -->
+  <div id="tab-editor" class="tab-content">
+    <div id="editor-empty" class="empty" style="height:160px">
+      <span>✏️</span>
+      <div>پێشتر بچۆ بۆ Decode و فایلەکەت Parse بکە</div>
+    </div>
+    <div id="editor-rows" style="display:none">
+      <div class="section-header">
+        <div class="label green" style="margin:0">⚡ نرخەکان دەسکاری بکە</div>
+        <button class="btn btn-outline" id="copy-btn" onclick="copyOutput()" style="width:auto;padding:7px 18px">📋 COPY OUTPUT</button>
+      </div>
+      <div id="editor-list"></div>
+      <br>
+      <div class="label cyan">📤 فایلی Encode کراوی نوێ</div>
+      <textarea id="output-area" readonly></textarea>
+    </div>
+  </div>
+
+  <!-- ===== TOOLS TAB ===== -->
+  <div id="tab-tools" class="tab-content">
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="tool-card">
+        <div class="label orange" style="margin-bottom:14px">🔒 Plain → Encrypted</div>
+        <div style="color:#555;font-family:var(--mono);font-size:10px;margin-bottom:8px">نووسینی ئەصلی (وەک: r.ShadowQuality=0)</div>
+        <input type="text" id="enc-input" placeholder="r.ShadowQuality=0" style="margin-bottom:12px;color:#e0e0e0">
+        <button class="btn btn-orange" onclick="doEncode()">🔒 ENCODE</button>
+        <div class="tool-result" id="enc-output" style="color:var(--orange)">—</div>
+      </div>
+      <div class="tool-card">
+        <div class="label cyan" style="margin-bottom:14px">🔓 Encrypted → Plain</div>
+        <div style="color:#555;font-family:var(--mono);font-size:10px;margin-bottom:8px">کۆدی Hex Encrypted</div>
+        <input type="text" id="dec-input" placeholder="0B572C0A1C0B280C1815..." style="margin-bottom:12px;color:#e0e0e0">
+        <button class="btn btn-cyan" onclick="doDecodeOne()">🔓 DECODE</button>
+        <div class="tool-result" id="dec-output" style="color:var(--cyan)">—</div>
+      </div>
+    </div>
+
+    <!-- Batch encoder -->
+    <div class="card">
+      <div class="label gold" style="margin-bottom:14px">📦 Batch Encoder — چەند لاین لەک Encode بکە</div>
+      <div class="grid-2">
+        <div>
+          <div style="color:#555;font-family:var(--mono);font-size:10px;margin-bottom:8px">هەر لاینێک یەک CVar</div>
+          <textarea id="batch-input" rows="8" placeholder="r.ShadowQuality=0&#10;r.MotionBlur=0&#10;r.UserQualitySetting=2&#10;r.MobileContentScaleFactor=1.0"></textarea>
+          <br><br>
+          <button class="btn btn-orange" onclick="doBatch()">⚡ BATCH ENCODE</button>
+        </div>
+        <div>
+          <div class="label orange" style="margin-bottom:8px">نتیجە — ئامادە بۆ INI</div>
+          <textarea id="batch-output" rows="10" readonly style="color:var(--orange)"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== INFO TAB ===== -->
+  <div id="tab-info" class="tab-content">
+    <div class="grid-3" style="margin-bottom:20px">
+      <div class="info-pill">
+        <div class="key">XOR Key</div>
+        <div class="val" style="color:var(--orange)">0x79</div>
+      </div>
+      <div class="info-pill">
+        <div class="key">Encoding</div>
+        <div class="val" style="color:var(--cyan)">Single-byte XOR</div>
+      </div>
+      <div class="info-pill">
+        <div class="key">Format</div>
+        <div class="val" style="color:var(--green)">HEX Uppercase</div>
+      </div>
+      <div class="info-pill">
+        <div class="key">44 49 = </div>
+        <div class="val" style="color:var(--red)">= 0</div>
+      </div>
+      <div class="info-pill">
+        <div class="key">44 48 = </div>
+        <div class="val" style="color:var(--green)">= 1</div>
+      </div>
+      <div class="info-pill">
+        <div class="key">0B 57 prefix</div>
+        <div class="val" style="color:var(--gold)">r. (CVar)</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px">
+      <div class="label gold" style="margin-bottom:16px">⚡ گرنگترین CVarەکان</div>
+      <div id="cvar-table"></div>
+    </div>
+
+    <div class="card">
+      <div class="label orange" style="margin-bottom:14px">🧠 چۆن XOR کار دەکات</div>
+      <div style="font-family:var(--mono);font-size:12px;line-height:2.2;color:#777">
+        <span style="color:var(--cyan)">r</span> = 0x72 &nbsp;&nbsp;
+        <span style="color:var(--orange)">XOR</span> &nbsp;&nbsp;
+        <span style="color:var(--green)">0x79</span> &nbsp;&nbsp;=&nbsp;&nbsp;
+        <span style="color:var(--gold)">0x0B</span> &nbsp;&nbsp;✓
+        <br>
+        <span style="color:var(--cyan)">.</span> = 0x2E &nbsp;&nbsp;
+        <span style="color:var(--orange)">XOR</span> &nbsp;&nbsp;
+        <span style="color:var(--green)">0x79</span> &nbsp;&nbsp;=&nbsp;&nbsp;
+        <span style="color:var(--gold)">0x57</span> &nbsp;&nbsp;✓
+        <br><br>
+        <span style="color:#555">// بۆچی 0B57 لە سەرەوەی هەموو CVarێکدا دەبینیت:</span>
+        <br>
+        <span style="color:var(--cyan)">هەموو CVarەکان لە "r." دەستپێدەکەن</span>
+        <br>
+        <span style="color:var(--orange)">r = 0x0B · . = 0x57 دوای XOR بە 0x79</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const XOR_KEY = 0x79;
+
+// ===== CORE FUNCTIONS =====
+function xorDecode(hex) {
+  try {
+    const bytes = hex.match(/.{1,2}/g).map(h => parseInt(h, 16));
+    return bytes.map(b => String.fromCharCode(b ^ XOR_KEY)).join('');
+  } catch { return null; }
+}
+
+function xorEncode(text) {
+  return Array.from(text)
+    .map(c => (c.charCodeAt(0) ^ XOR_KEY).toString(16).padStart(2,'0').toUpperCase())
+    .join('');
+}
+
+// ===== STATE =====
+let parsedSections = {};
+let editState = {};
+
+// ===== TABS =====
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'info') buildCvarTable();
+}
+
+// ===== DECODE =====
+function doDecode() {
+  const raw = document.getElementById('ini-input').value.trim();
+  if (!raw) return;
+
+  parsedSections = {};
+  editState = {};
+  let current = 'General';
+
+  raw.split(/\r?\n/).forEach(line => {
+    const sec = line.match(/^\[(.+)\]/);
+    if (sec) { current = sec[1]; if (!parsedSections[current]) parsedSections[current] = []; return; }
+    const cv = line.match(/^\+CVars=(.+)$/);
+    if (cv) {
+      if (!parsedSections[current]) parsedSections[current] = [];
+      const hex = cv[1].trim();
+      const decoded = xorDecode(hex);
+      const isEncrypted = decoded && /^[\x20-\x7E]+$/.test(decoded);
+      parsedSections[current].push({ hex, decoded: isEncrypted ? decoded : null, plain: !isEncrypted ? hex : null });
+    }
+  });
+
+  renderDecodeResult();
+  renderEditor();
+}
+
+function renderDecodeResult() {
+  const box = document.getElementById('decode-result');
+  let html = '';
+  let n = 1;
+
+  Object.entries(parsedSections).forEach(([sec, items]) => {
+    html += `<div style="color:#444;font-family:var(--mono);font-size:9px;letter-spacing:2px;padding:8px 0 4px;border-bottom:1px solid #111;margin-bottom:6px">[${sec}]</div>`;
+    items.forEach(item => {
+      if (item.decoded) {
+        const [k, v] = item.decoded.split('=');
+        let cls = v === '0' ? 'pill-val0' : v === '1' ? 'pill-val1' : 'pill-other';
+        html += `<div class="result-item">
+          <span class="result-num">${n++}</span>
+          <span class="result-pill ${cls}">${escHtml(item.decoded)}</span>
+        </div>`;
+      } else if (item.plain) {
+        html += `<div class="result-item">
+          <span class="result-num">${n++}</span>
+          <span class="result-pill pill-plain">${escHtml(item.plain)}</span>
+        </div>`;
+      }
+    });
+  });
+
+  box.innerHTML = html || '<div class="empty"><span>❌</span>هیچ دیتایەک نەدۆزرایەوە</div>';
+}
+
+// ===== EDITOR =====
+function renderEditor() {
+  const allItems = getAllItems();
+  if (allItems.length === 0) return;
+
+  document.getElementById('editor-empty').style.display = 'none';
+  document.getElementById('editor-rows').style.display = 'block';
+
+  let html = '';
+  allItems.forEach(({sec, idx, item}) => {
+    if (!item.decoded) return;
+    const [varName, varVal] = item.decoded.split('=');
+    const key = `${sec}_${idx}`;
+    editState[key] = item.decoded;
+    const encodedPreview = xorEncode(item.decoded).substring(0,24) + '...';
+    html += `<div class="editor-row">
+      <div class="editor-key" title="${escHtml(varName)}">${escHtml(varName)}</div>
+      <input class="editor-val" value="${escHtml(varVal)}" data-key="${key}" data-varname="${escHtml(varName)}" oninput="onEditChange(this)" />
+      <div class="editor-encoded" id="enc-${key}">${encodedPreview}</div>
+    </div>`;
+  });
+
+  document.getElementById('editor-list').innerHTML = html;
+  updateOutput();
+}
+
+function onEditChange(el) {
+  const key = el.dataset.key;
+  const varName = el.dataset.varname;
+  const newDecoded = `${varName}=${el.value}`;
+  editState[key] = newDecoded;
+  document.getElementById('enc-' + key).textContent = xorEncode(newDecoded).substring(0,24) + '...';
+  updateOutput();
+}
+
+function updateOutput() {
+  let out = '';
+  Object.entries(parsedSections).forEach(([sec, items]) => {
+    out += `[${sec}]\n`;
+    items.forEach((item, idx) => {
+      const key = `${sec}_${idx}`;
+      const current = editState[key] || item.decoded;
+      const encoded = current ? xorEncode(current) : item.hex;
+      out += `+CVars=${encoded}\n`;
+    });
+    out += '\n';
+  });
+  document.getElementById('output-area').value = out.trim();
+}
+
+function copyOutput() {
+  const txt = document.getElementById('output-area').value;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✅ COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 COPY OUTPUT'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ===== TOOLS =====
+function doEncode() {
+  const v = document.getElementById('enc-input').value.trim();
+  if (!v) return;
+  document.getElementById('enc-output').textContent = '+CVars=' + xorEncode(v);
+}
+
+function doDecodeOne() {
+  const v = document.getElementById('dec-input').value.replace(/\s+/g,'').replace(/\+CVars=/i,'');
+  if (!v) return;
+  const r = xorDecode(v);
+  const out = document.getElementById('dec-output');
+  if (r && /^[\x20-\x7E]+$/.test(r)) {
+    out.textContent = r;
+    out.style.color = 'var(--cyan)';
+  } else {
+    out.textContent = '❌ Decode هەڵەیە — hex درووست بنووسە';
+    out.style.color = 'var(--red)';
+  }
+}
+
+function doBatch() {
+  const lines = document.getElementById('batch-input').value.split(/\r?\n/);
+  let out = '[UserCustom DeviceProfile]\n';
+  lines.forEach(line => {
+    const t = line.trim();
+    if (t) out += `+CVars=${xorEncode(t)}\n`;
+  });
+  document.getElementById('batch-output').value = out;
+}
+
+// ===== INFO TABLE =====
+const KNOWN_CVARS = [
+  ['r.UserQualitySetting', '0,1,2,3', 'کوالیتی گشتی — 0=دا, 3=بەرز'],
+  ['r.ShadowQuality', '0,1,2,3', 'کوالیتی سێبەر — 0=بێ سێبەر'],
+  ['r.UserShadowSwitch', '0,1', 'چالاکی سێبەر — 0=کراوەتەوە'],
+  ['r.MobileContentScaleFactor', '0.5-1.0', 'ڕێژەی رووننایی — 0.75=باڵانس'],
+  ['r.UserVulkanSetting', '0,1', 'Vulkan API — 1=چالاک'],
+  ['r.MotionBlur', '0,1', 'Motion Blur — 0=گواستراوەتەوە'],
+  ['r.AntiAliasingQuality', '0,1,2', 'Anti-Aliasing کوالیتی'],
+  ['r.MobileHDR', '0,1', 'HDR چالاکی — 1=HDR'],
+  ['r.MaxAnisotropy', '0-16', 'Texture Quality — زیاتر=باشتر'],
+];
+
+function buildCvarTable() {
+  let html = `<div style="display:grid;grid-template-columns:1.5fr 1fr 2fr;gap:0">
+    <div style="font-family:var(--mono);font-size:10px;color:#444;padding:8px;border-bottom:1px solid #1a1a2e">CVar</div>
+    <div style="font-family:var(--mono);font-size:10px;color:#444;padding:8px;border-bottom:1px solid #1a1a2e">نرخ</div>
+    <div style="font-family:var(--mono);font-size:10px;color:#444;padding:8px;border-bottom:1px solid #1a1a2e">مانا</div>`;
+
+  KNOWN_CVARS.forEach(([name, vals, desc], i) => {
+    const bg = i%2===0 ? 'rgba(0,229,255,0.02)' : 'transparent';
+    html += `
+      <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);padding:9px 8px;background:${bg};border-bottom:1px solid #111">${name}</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--orange);padding:9px 8px;background:${bg};border-bottom:1px solid #111">${vals}</div>
+      <div style="font-family:var(--sans);font-size:12px;color:#888;padding:9px 8px;background:${bg};border-bottom:1px solid #111">${desc}</div>`;
+  });
+  html += '</div>';
+  document.getElementById('cvar-table').innerHTML = html;
+}
+
+// ===== HELPERS =====
+function getAllItems() {
+  const result = [];
+  Object.entries(parsedSections).forEach(([sec, items]) => {
+    items.forEach((item, idx) => result.push({sec, idx, item}));
+  });
+  return result;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// init info table
+buildCvarTable();
+</script>
+</body>
+</html>
