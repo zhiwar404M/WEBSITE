@@ -1,0 +1,157 @@
+<!--
+  ╔══════════════════════════════════════════════════════════╗
+  ║   AD GATING OVERLAY — PREMIUM UPGRADE                   ║
+  ║   DROP-IN REPLACEMENT for the #adGatingOverlay div      ║
+  ║   in your index.html file                               ║
+  ╚══════════════════════════════════════════════════════════╝
+
+  INSTRUCTIONS:
+  Find the existing block:
+    <div id="adGatingOverlay" class="ad-gating-overlay">
+      ...
+    </div>
+  ...and REPLACE it entirely with the block below.
+-->
+
+<div id="adGatingOverlay" class="ad-gating-overlay" dir="rtl">
+
+  <!-- Animated background particles -->
+  <div class="ag-particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- Scanline grid overlay -->
+  <div class="ag-grid-lines" aria-hidden="true"></div>
+
+  <!-- Main card -->
+  <div class="ag-card" role="dialog" aria-modal="true" aria-label="تکایە ڕیکلامەکە تەماشا بکە">
+
+    <!-- ── Top status bar ── -->
+    <div class="ag-statusbar">
+      <div class="ag-statusbar-dot pulse-dot"></div>
+      <span class="ag-statusbar-label">سیستەمی دەستپێگەیشتن</span>
+      <div class="ag-statusbar-right">
+        <span class="ag-statusbar-badge">SECURE</span>
+      </div>
+    </div>
+
+    <!-- ── Header ── -->
+    <header class="ag-header">
+      <div class="ag-logo-ring" aria-hidden="true">
+        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="28" cy="28" r="26" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="5 3"/>
+          <circle cx="28" cy="28" r="18" stroke="url(#ringGrad2)" stroke-width="1" opacity="0.5"/>
+          <circle cx="28" cy="28" r="8" fill="url(#centerFill)"/>
+          <defs>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="56" y2="56">
+              <stop offset="0%" stop-color="#38bdf8"/>
+              <stop offset="100%" stop-color="#a855f7"/>
+            </linearGradient>
+            <linearGradient id="ringGrad2" x1="56" y1="0" x2="0" y2="56">
+              <stop offset="0%" stop-color="#a855f7"/>
+              <stop offset="100%" stop-color="#38bdf8"/>
+            </linearGradient>
+            <radialGradient id="centerFill" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.3"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="ag-header-text">
+        <h2 class="ag-title">پێش دەستپێگەیشتن</h2>
+        <p class="ag-subtitle">تکایە چاوەڕوانی ئاگاهداری تەماشا بکە</p>
+      </div>
+    </header>
+
+    <!-- ── Video container ── -->
+    <div class="ag-video-wrapper">
+      <div id="adVideoFrame" class="ag-video-frame">
+        <!-- Loading state (shown before video fires) -->
+        <div class="ag-video-loading" id="agVideoLoading">
+          <div class="ag-loading-ring"></div>
+          <p class="ag-loading-text">بارکردنی ڤیدیۆ...</p>
+        </div>
+
+        <!--
+          ╔══════════════════════════════════════════════════════════╗
+          ║ PASTE YOUR AD NETWORK IFRAME / SCRIPT TAG HERE          ║
+          ║                                                          ║
+          ║ Example (Adsterra / your current src):                  ║
+          ║   <iframe                                                ║
+          ║     id="agAdIframe"                                      ║
+          ║     src="https://oblivionplaysaltered.com/video-ad?key=…"║
+          ║     style="width:100%;height:100%;border:none;"          ║
+          ║     allow="autoplay"                                     ║
+          ║     allowfullscreen>                                     ║
+          ║   </iframe>                                              ║
+          ║                                                          ║
+          ║ The JS (ad-gating-upgraded.js) listens for:             ║
+          ║   • The iframe load event                                ║
+          ║   • OR window.agNotifyVideoStart() if your ad SDK        ║
+          ║     calls it via postMessage / callback                  ║
+          ╚══════════════════════════════════════════════════════════╝
+        -->
+        <iframe
+          id="agAdIframe"
+          src="https://oblivionplaysaltered.com/video-ad?key=e41025d5f4aaac4dc160a8598cffd3f9"
+          style="width:100%;height:100%;border:none;display:none;"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+          title="ڕیکلامی ڤیدیۆ">
+        </iframe>
+
+        <!-- Corner decoration lines -->
+        <div class="ag-corner ag-corner--tl" aria-hidden="true"></div>
+        <div class="ag-corner ag-corner--tr" aria-hidden="true"></div>
+        <div class="ag-corner ag-corner--bl" aria-hidden="true"></div>
+        <div class="ag-corner ag-corner--br" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- ── Timer panel ── -->
+    <div class="ag-timer-panel" id="agTimerPanel">
+      <div class="ag-timer-label">
+        <span class="ag-lock-icon" id="agLockIcon" aria-hidden="true">🔒</span>
+        <span id="agTimerLabelText">ئەم پەڕەیە دەبێتە دەستپێڕس لە:</span>
+      </div>
+
+      <!-- Big countdown number -->
+      <div class="ag-countdown-display">
+        <div class="ag-countdown-glow" aria-hidden="true"></div>
+        <span id="countdownTimer" class="ag-countdown-number">15</span>
+        <span class="ag-countdown-unit">چرکە</span>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="ag-progress-track" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <div class="ag-progress-fill" id="agProgressFill"></div>
+        <div class="ag-progress-glow" id="agProgressGlow"></div>
+      </div>
+
+      <!-- Waiting state message (shown before countdown starts) -->
+      <p class="ag-wait-msg" id="agWaitMsg">⏳ &nbsp;چاوەڕوانی دەستپێکردنی ڤیدیۆ...</p>
+    </div>
+
+    <!-- ── Skip / Enter button (hidden until countdown ends) ── -->
+    <button id="adGatingSkipBtn" class="ag-enter-btn" style="display:none;" type="button" aria-label="چوونە ناوەوەی سایت">
+      <span class="ag-enter-btn__text">تێپەڕاندن &nbsp;/&nbsp; چوونە ناوەوە</span>
+      <span class="ag-enter-btn__icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </span>
+      <div class="ag-enter-btn__ripple" aria-hidden="true"></div>
+    </button>
+
+    <!-- ── Info notice ── -->
+    <div class="ag-notice">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <p>ڕیکلامەکان کۆمەکێکی گرینگن بۆ بەردەواميی ناوەڕۆکی خۆڕایی. سوپاس بۆ پشتیوانیت.</p>
+    </div>
+
+  </div><!-- /ag-card -->
+</div><!-- /adGatingOverlay -->
