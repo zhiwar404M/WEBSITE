@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تاقیکردنەوەی ژیوار</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a6b9a;
+  --primary-dark: #0d4d75;
+  --primary-light: #2196c8;
+  --accent: #f7c948;
+  --accent-dark: #e0a800;
+  --bg: #f0f6fb;
+  --surface: #ffffff;
+  --surface2: #e8f3fa;
+  --text: #0d2438;
+  --text-muted: #4a7a9b;
+  --correct: #22a55a;
+  --wrong: #e53935;
+  --border: #c2ddf0;
+  --shadow: 0 4px 24px rgba(26,107,154,0.13);
+  --radius: 18px;
+  --font: 'Noto Kufi Arabic', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  direction: rtl;
+}
+
+/* ══════════════════════════════════════ SCREENS */
+.screen { display: none; min-height: 100vh; flex-direction: column; }
+.screen.active { display: flex; }
+
+/* ══════════════════════════════════════ SPLASH */
+#splash {
+  background: linear-gradient(145deg, #0d4d75 0%, #1a6b9a 50%, #2196c8 100%);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#splash::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  top: -200px; left: -200px;
+}
+#splash::after {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: rgba(247,201,72,0.08);
+  bottom: -100px; right: -100px;
+}
+.splash-logo {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+  position: relative; z-index: 1;
+}
+.splash-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.5px;
+  position: relative; z-index: 1;
+  animation: slideUp 0.6s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.splash-subtitle {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.7);
+  margin-top: 8px;
+  position: relative; z-index: 1;
+  animation: slideUp 0.6s 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.splash-dots {
+  display: flex; gap: 10px; margin-top: 60px;
+  justify-content: center;
+  position: relative; z-index: 1;
+  animation: fadeIn 0.4s 0.5s both;
+}
+.splash-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.splash-dot:nth-child(2) { animation-delay: 0.2s; }
+.splash-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ══════════════════════════════════════ DIALECT SELECT */
+#dialect {
+  background: linear-gradient(145deg, #0d4d75 0%, #1a6b9a 100%);
+  align-items: center; justify-content: center; text-align: center; padding: 40px 20px;
+}
+.dialect-card {
+  background: white; border-radius: 28px; padding: 48px 36px;
+  width: 100%; max-width: 420px;
+  box-shadow: 0 20px 60px rgba(13,36,56,0.35);
+  animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.dialect-title { font-size: 1.6rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 8px; }
+.dialect-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 36px; }
+.dialect-btn {
+  width: 100%; padding: 20px; border: 2.5px solid var(--border);
+  border-radius: 16px; background: var(--surface2);
+  font-family: var(--font); font-size: 1.15rem; font-weight: 700;
+  color: var(--text); cursor: pointer; margin-bottom: 14px;
+  transition: all 0.2s; position: relative; overflow: hidden;
+  text-align: center;
+}
+.dialect-btn:hover { border-color: var(--primary); background: #e0f0fa; transform: translateY(-2px); }
+.dialect-btn.selected { border-color: var(--primary); background: var(--primary); color: white; }
+.dialect-badge { font-size: 0.75rem; font-weight: 500; opacity: 0.75; display: block; margin-top: 3px; }
+.dialect-confirm {
+  width: 100%; padding: 18px; background: var(--primary); color: white;
+  border: none; border-radius: 16px; font-family: var(--font);
+  font-size: 1.05rem; font-weight: 700; cursor: pointer; margin-top: 10px;
+  transition: all 0.2s; display: none;
+}
+.dialect-confirm:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.dialect-confirm.visible { display: block; animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+/* ══════════════════════════════════════ MAIN / HOME */
+#main { flex-direction: column; }
+.app-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  padding: 20px 24px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.app-title { font-size: 1.3rem; font-weight: 800; color: white; }
+.dialect-switch-btn {
+  background: rgba(255,255,255,0.2); border: none; border-radius: 12px;
+  color: white; font-family: var(--font); font-size: 0.8rem; font-weight: 600;
+  padding: 8px 14px; cursor: pointer; transition: background 0.2s;
+}
+.dialect-switch-btn:hover { background: rgba(255,255,255,0.3); }
+
+.tab-bar {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  display: flex; border-top: 1px solid rgba(255,255,255,0.15);
+}
+.tab-btn {
+  flex: 1; padding: 14px 8px; background: none; border: none;
+  font-family: var(--font); font-size: 0.8rem; font-weight: 600;
+  color: rgba(255,255,255,0.55); cursor: pointer; transition: all 0.2s;
+  position: relative; text-align: center;
+}
+.tab-btn.active { color: white; }
+.tab-btn.active::after {
+  content: ''; position: absolute; bottom: 0; left: 20%; right: 20%;
+  height: 3px; background: var(--accent); border-radius: 3px 3px 0 0;
+}
+.tab-icon { font-size: 1.2rem; display: block; margin-bottom: 3px; }
+
+.tab-content { display: none; flex: 1; overflow-y: auto; padding: 24px 20px; }
+.tab-content.active { display: block; }
+
+/* Subjects Grid */
+.section-title {
+  font-size: 1.15rem; font-weight: 800; color: var(--text);
+  margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+.subjects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.subject-card {
+  background: var(--surface); border-radius: 20px; padding: 22px 18px;
+  cursor: pointer; transition: all 0.25s;
+  box-shadow: 0 2px 12px rgba(26,107,154,0.08);
+  border: 2px solid transparent; text-align: center; position: relative;
+  overflow: hidden;
+}
+.subject-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 4px; background: var(--subject-color);
+}
+.subject-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--border); }
+.subject-card:active { transform: translateY(0); }
+.subject-icon { font-size: 2.4rem; margin-bottom: 10px; display: block; }
+.subject-name { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.subject-count { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
+.subject-color-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--subject-color); display: inline-block; margin-left: 5px; vertical-align: middle;
+}
+
+/* ══════════════════════════════════════ SUBJECT SELECT */
+#subject-select {
+  flex-direction: column;
+  background: var(--bg);
+}
+.page-header {
+  padding: 20px 24px;
+  display: flex; align-items: center; gap: 14px;
+}
+.back-btn {
+  background: var(--surface); border: 2px solid var(--border); border-radius: 12px;
+  width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1.1rem; transition: all 0.2s; flex-shrink: 0;
+}
+.back-btn:hover { background: var(--surface2); border-color: var(--primary); }
+.page-title { font-size: 1.3rem; font-weight: 800; color: var(--text); }
+
+.select-content { flex: 1; overflow-y: auto; padding: 0 20px 24px; }
+.subject-hero {
+  border-radius: 24px; padding: 28px 24px; margin-bottom: 28px;
+  text-align: center; color: white; position: relative; overflow: hidden;
+}
+.subject-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(0,0,0,0.15);
+}
+.subject-hero-icon { font-size: 3rem; position: relative; z-index: 1; margin-bottom: 10px; display: block; }
+.subject-hero-name { font-size: 1.6rem; font-weight: 800; position: relative; z-index: 1; }
+.subject-hero-count { font-size: 0.9rem; opacity: 0.85; position: relative; z-index: 1; margin-top: 4px; }
+
+.form-section { background: var(--surface); border-radius: 20px; padding: 24px; margin-bottom: 18px; box-shadow: 0 2px 12px rgba(26,107,154,0.07); }
+.form-label { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.mode-options { display: flex; gap: 10px; }
+.mode-btn {
+  flex: 1; padding: 14px 10px; border: 2.5px solid var(--border);
+  border-radius: 14px; background: var(--surface2); font-family: var(--font);
+  font-size: 0.9rem; font-weight: 700; color: var(--text-muted); cursor: pointer;
+  transition: all 0.2s; text-align: center;
+}
+.mode-btn.active { border-color: var(--primary); background: var(--primary); color: white; }
+
+.select-dropdown {
+  width: 100%; padding: 14px 18px; border: 2.5px solid var(--border);
+  border-radius: 14px; background: var(--surface2); font-family: var(--font);
+  font-size: 1rem; font-weight: 600; color: var(--text); cursor: pointer;
+  appearance: none; direction: rtl;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a7a9b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: left 14px center;
+}
+.select-dropdown:focus { outline: none; border-color: var(--primary); }
+
+.start-btn {
+  width: 100%; padding: 20px; border: none; border-radius: 18px;
+  font-family: var(--font); font-size: 1.15rem; font-weight: 800;
+  color: white; cursor: pointer; transition: all 0.25s;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  box-shadow: 0 6px 20px rgba(26,107,154,0.35); margin-top: 8px;
+}
+.start-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(26,107,154,0.45); }
+.start-btn:active { transform: translateY(0); }
+
+/* ══════════════════════════════════════ QUIZ */
+#quiz { flex-direction: column; background: var(--bg); }
+.quiz-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  padding: 16px 20px;
+}
+.quiz-header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.quiz-subject-label {
+  font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px;
+}
+.quiz-timer {
+  font-size: 1.05rem; font-weight: 800; color: white;
+  background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.quiz-timer.warning { background: rgba(229,57,53,0.4); color: #ffcdd2; animation: timerPulse 1s ease-in-out infinite; }
+.quiz-progress-bar-wrap { background: rgba(255,255,255,0.2); border-radius: 10px; height: 8px; }
+.quiz-progress-bar { height: 8px; border-radius: 10px; background: var(--accent); transition: width 0.4s ease; }
+.quiz-progress-label { font-size: 0.78rem; color: rgba(255,255,255,0.75); margin-top: 6px; text-align: center; }
+
+.quiz-body { flex: 1; overflow-y: auto; padding: 20px; }
+.question-card {
+  background: var(--surface); border-radius: 22px; padding: 24px;
+  box-shadow: var(--shadow); margin-bottom: 16px;
+  animation: slideRight 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.question-num { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; }
+.question-text { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.8; }
+
+.options-list { display: flex; flex-direction: column; gap: 10px; }
+.option-btn {
+  width: 100%; padding: 16px 20px; text-align: right;
+  border: 2.5px solid var(--border); border-radius: 16px;
+  background: var(--surface); font-family: var(--font);
+  font-size: 0.95rem; font-weight: 600; color: var(--text);
+  cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px;
+}
+.option-btn:hover:not(:disabled) { border-color: var(--primary); background: #e0f0fa; }
+.option-btn:disabled { cursor: default; }
+.option-btn.correct { border-color: var(--correct); background: #e8f8ee; color: var(--correct); }
+.option-btn.wrong { border-color: var(--wrong); background: #fdecea; color: var(--wrong); }
+.option-letter {
+  width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0;
+  background: var(--surface2); font-size: 0.85rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; color: var(--primary);
+  transition: all 0.2s;
+}
+.option-btn.correct .option-letter { background: var(--correct); color: white; }
+.option-btn.wrong .option-letter { background: var(--wrong); color: white; }
+
+.quiz-actions { display: flex; gap: 12px; padding: 0 20px 20px; }
+.btn-bookmark {
+  padding: 16px 20px; background: var(--surface); border: 2.5px solid var(--border);
+  border-radius: 16px; font-size: 1.3rem; cursor: pointer; transition: all 0.2s;
+  flex-shrink: 0; line-height: 1;
+}
+.btn-bookmark:hover { border-color: var(--accent); }
+.btn-next {
+  flex: 1; padding: 16px; background: var(--primary); color: white;
+  border: none; border-radius: 16px; font-family: var(--font);
+  font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+}
+.btn-next:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.btn-next:disabled { background: var(--border); color: var(--text-muted); transform: none; cursor: default; }
+
+/* Exit confirm overlay */
+.overlay {
+  position: fixed; inset: 0; background: rgba(13,36,56,0.6);
+  display: none; align-items: center; justify-content: center; z-index: 100;
+  backdrop-filter: blur(4px); padding: 20px;
+}
+.overlay.show { display: flex; }
+.modal {
+  background: var(--surface); border-radius: 24px; padding: 32px;
+  max-width: 360px; width: 100%; text-align: center;
+  animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+  box-shadow: 0 20px 60px rgba(13,36,56,0.3);
+}
+.modal-title { font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 10px; }
+.modal-msg { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 28px; line-height: 1.7; }
+.modal-actions { display: flex; gap: 10px; }
+.btn-modal-cancel {
+  flex: 1; padding: 15px; background: var(--surface2); border: none;
+  border-radius: 14px; font-family: var(--font); font-size: 0.95rem;
+  font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+}
+.btn-modal-cancel:hover { background: var(--border); }
+.btn-modal-confirm {
+  flex: 1; padding: 15px; background: var(--wrong); border: none;
+  border-radius: 14px; font-family: var(--font); font-size: 0.95rem;
+  font-weight: 700; color: white; cursor: pointer; transition: all 0.2s;
+}
+.btn-modal-confirm:hover { background: #c62828; }
+
+/* ══════════════════════════════════════ RESULT */
+#result { flex-direction: column; background: var(--bg); }
+.result-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  padding: 32px 24px; text-align: center;
+}
+.result-subject { font-size: 0.9rem; color: rgba(255,255,255,0.7); font-weight: 600; }
+.result-score-wrap { margin: 16px 0; position: relative; display: inline-block; }
+.score-circle {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); border: 4px solid rgba(255,255,255,0.3);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin: 0 auto;
+}
+.score-num { font-size: 2.2rem; font-weight: 900; color: white; line-height: 1; }
+.score-pct { font-size: 0.85rem; color: rgba(255,255,255,0.75); font-weight: 600; }
+.grade-badge {
+  display: inline-block; padding: 8px 20px; border-radius: 20px;
+  font-size: 1rem; font-weight: 800; margin-top: 12px; color: white;
+}
+
+.result-body { flex: 1; overflow-y: auto; padding: 20px; }
+.result-stats { background: var(--surface); border-radius: 20px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px; }
+.stat-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-label { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+.stat-val { font-size: 1.05rem; font-weight: 800; color: var(--text); }
+.stat-val.correct { color: var(--correct); }
+.stat-val.wrong { color: var(--wrong); }
+
+.result-actions { display: flex; flex-direction: column; gap: 12px; }
+.btn-home {
+  width: 100%; padding: 18px; background: var(--primary); color: white;
+  border: none; border-radius: 18px; font-family: var(--font);
+  font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(26,107,154,0.3);
+}
+.btn-home:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.btn-review-wrong {
+  width: 100%; padding: 18px; background: var(--surface); color: var(--wrong);
+  border: 2.5px solid var(--wrong); border-radius: 18px; font-family: var(--font);
+  font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+}
+.btn-review-wrong:hover { background: #fdecea; transform: translateY(-2px); }
+
+/* ══════════════════════════════════════ BOOKMARKS */
+.bookmarks-list { display: flex; flex-direction: column; gap: 14px; }
+.bookmark-card {
+  background: var(--surface); border-radius: 18px; padding: 18px;
+  box-shadow: 0 2px 10px rgba(26,107,154,0.07); border: 2px solid var(--border);
+}
+.bookmark-subject-badge {
+  display: inline-block; padding: 4px 12px; border-radius: 20px;
+  font-size: 0.75rem; font-weight: 700; color: white; margin-bottom: 10px;
+}
+.bookmark-question { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 12px; line-height: 1.7; }
+.bookmark-options { display: flex; flex-direction: column; gap: 6px; }
+.bookmark-option {
+  padding: 10px 14px; border-radius: 10px;
+  font-size: 0.85rem; font-weight: 600; color: var(--text-muted);
+  background: var(--surface2); display: flex; gap: 8px;
+}
+.bookmark-option.correct { background: #e8f8ee; color: var(--correct); }
+.bookmark-option.wrong { background: #fdecea; color: var(--wrong); }
+.bookmark-letter { font-weight: 800; }
+.bookmark-remove {
+  float: left; background: none; border: none; color: var(--text-muted);
+  font-size: 1.1rem; cursor: pointer; padding: 4px; transition: color 0.2s;
+}
+.bookmark-remove:hover { color: var(--wrong); }
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.empty-icon { font-size: 3.5rem; display: block; margin-bottom: 16px; }
+.empty-text { font-size: 1rem; font-weight: 600; }
+
+/* ══════════════════════════════════════ ABOUT */
+.about-card { background: var(--surface); border-radius: 20px; padding: 24px; box-shadow: var(--shadow); margin-bottom: 18px; }
+.about-app-name { font-size: 1.5rem; font-weight: 900; color: var(--primary); text-align: center; }
+.about-version { font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 6px; }
+.about-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.9; margin-top: 14px; text-align: center; }
+.about-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+.about-stat {
+  background: var(--surface2); border-radius: 16px; padding: 18px; text-align: center;
+}
+.about-stat-num { font-size: 1.8rem; font-weight: 900; color: var(--primary); }
+.about-stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; margin-top: 4px; }
+
+/* ══════════════════════════════════════ ANIMATIONS */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); background: rgba(247,201,72,0.9); }
+}
+@keyframes timerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--text); color: white; padding: 12px 24px;
+  border-radius: 30px; font-size: 0.9rem; font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+  opacity: 0; z-index: 1000; white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash" class="screen active">
+  <div class="splash-logo">📚</div>
+  <div class="splash-title" id="splash-title">تاقیکردنەوەی ژیوار</div>
+  <div class="splash-subtitle" id="splash-sub">تاقیکردنەوەی وەزارەتی — قۆناغی ئامادەیی</div>
+  <div class="splash-dots">
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+  </div>
+</div>
+
+<!-- DIALECT SELECT -->
+<div id="dialect" class="screen">
+  <div class="dialect-card">
+    <div class="dialect-title">زمانت هەڵبژێرە</div>
+    <div class="dialect-subtitle">زارەکا خۆ ھەڵبژیرە</div>
+    <button class="dialect-btn" id="btn-sorani" onclick="selectDialect('sorani')">
+      کوردی سۆرانی
+      <span class="dialect-badge">Sorani Kurdish</span>
+    </button>
+    <button class="dialect-btn" id="btn-badini" onclick="selectDialect('badini')">
+      کوردی بادینی
+      <span class="dialect-badge">Badini Kurdish</span>
+    </button>
+    <button class="dialect-confirm" id="dialect-confirm" onclick="confirmDialect()">دادەنێم ✓</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main" class="screen">
+  <div class="app-header">
+    <div class="app-title" id="header-title">تاقیکردنەوەی ژیوار</div>
+    <button class="dialect-switch-btn" onclick="switchDialect()" id="dialect-switch-label">زمان</button>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('home',this)" id="tab-home">
+      <span class="tab-icon">🏠</span>
+      <span id="tab-home-label">ماڵەوە</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('bookmarks',this)" id="tab-bookmarks">
+      <span class="tab-icon">⭐</span>
+      <span id="tab-bookmarks-label">بوکمارک</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('about',this)" id="tab-about">
+      <span class="tab-icon">ℹ️</span>
+      <span id="tab-about-label">دەربارە</span>
+    </button>
+  </div>
+  <!-- HOME TAB -->
+  <div id="tab-home-content" class="tab-content active">
+    <div class="section-title" id="select-subject-title">بابەت هەڵبژێرە</div>
+    <div class="subjects-grid" id="subjects-grid"></div>
+  </div>
+  <!-- BOOKMARKS TAB -->
+  <div id="tab-bookmarks-content" class="tab-content">
+    <div class="section-title" id="bookmarks-title">بوکمارکەکان</div>
+    <div id="bookmarks-container"></div>
+  </div>
+  <!-- ABOUT TAB -->
+  <div id="tab-about-content" class="tab-content">
+    <div class="about-card">
+      <div class="about-app-name" id="about-app-name">تاقیکردنەوەی ژیوار</div>
+      <div class="about-version">Version 1.0 — وێبسایت</div>
+      <div class="about-desc" id="about-desc">
+        ئەپی تاقیکردنەوەی ژیوار بۆ خوێندکارانی قۆناغی ئامادەیی دروست کراوە، 
+        بە پرسیارەکانی تاقیکردنەوەی وەزارەتی بۆ هەموو بابەتەکان.
+      </div>
+      <div class="about-stats-grid" id="about-stats"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBJECT SELECT -->
+<div id="subject-select" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="showScreen('main')">←</button>
+    <div class="page-title" id="ss-page-title">هەڵبژاردنی شێوازی تاقیکردنەوە</div>
+  </div>
+  <div class="select-content">
+    <div class="subject-hero" id="ss-hero">
+      <span class="subject-hero-icon" id="ss-icon">📖</span>
+      <div class="subject-hero-name" id="ss-name"></div>
+      <div class="subject-hero-count" id="ss-count"></div>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label" id="ss-mode-label">شێوازی تاقیکردنەوە</label>
+      <div class="mode-options">
+        <button class="mode-btn active" id="mode-random" onclick="setMode('random')">بەراستەوخۆ</button>
+        <button class="mode-btn" id="mode-year" onclick="setMode('year')">بەپێی ساڵ</button>
+      </div>
+    </div>
+
+    <div class="form-section" id="random-options">
+      <label class="form-label" id="ss-count-label">ژمارەی پرسیار</label>
+      <select class="select-dropdown" id="count-select">
+        <option value="10">١٠ پرسیار</option>
+        <option value="20" selected>٢٠ پرسیار</option>
+        <option value="30">٣٠ پرسیار</option>
+        <option value="-1">هەموو پرسیارەکان</option>
+      </select>
+    </div>
+
+    <div class="form-section" id="year-options" style="display:none">
+      <label class="form-label" id="ss-year-label">ساڵ هەڵبژێرە</label>
+      <select class="select-dropdown" id="year-select"></select>
+    </div>
+
+    <button class="start-btn" id="ss-start-btn" onclick="startQuiz()">دەستپێکردنی تاقیکردنەوە ▶</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="screen">
+  <div class="quiz-header">
+    <div class="quiz-header-top">
+      <span class="quiz-subject-label" id="quiz-subject-label"></span>
+      <span class="quiz-timer" id="quiz-timer">٣٠:٠٠</span>
+    </div>
+    <div class="quiz-progress-bar-wrap">
+      <div class="quiz-progress-bar" id="quiz-progress-bar" style="width:0%"></div>
+    </div>
+    <div class="quiz-progress-label" id="quiz-progress-label"></div>
+  </div>
+  <div class="quiz-body">
+    <div class="question-card" id="question-card">
+      <div class="question-num" id="question-num"></div>
+      <div class="question-text" id="question-text"></div>
+    </div>
+    <div class="options-list" id="options-list"></div>
+  </div>
+  <div class="quiz-actions">
+    <button class="btn-bookmark" id="btn-bookmark" onclick="toggleBookmark()">☆</button>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()"></button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="result" class="screen">
+  <div class="result-header">
+    <div class="result-subject" id="result-subject"></div>
+    <div class="result-score-wrap">
+      <div class="score-circle">
+        <div class="score-num" id="result-score-num"></div>
+        <div class="score-pct">%</div>
+      </div>
+    </div>
+    <div class="grade-badge" id="grade-badge"></div>
+  </div>
+  <div class="result-body">
+    <div class="result-stats" id="result-stats"></div>
+    <div class="result-actions">
+      <button class="btn-review-wrong" id="btn-review-wrong" onclick="reviewWrong()" style="display:none"></button>
+      <button class="btn-home" id="btn-home" onclick="goHome()"></button>
+    </div>
+  </div>
+</div>
+
+<!-- EXIT OVERLAY -->
+<div class="overlay" id="exit-overlay">
+  <div class="modal">
+    <div class="modal-title" id="exit-title">دەربچیت؟</div>
+    <div class="modal-msg" id="exit-msg">دەرچون تاقیکردنەوەکە کۆتایی دەهێنێت</div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="exit-cancel" onclick="closeExitModal()">نەخێر</button>
+      <button class="btn-modal-confirm" id="exit-confirm" onclick="confirmExit()">بەڵێ</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════ DATA
+const QUESTIONS_DATA = null; // will be loaded
+
+let appData = null;
+let dialect = localStorage.getItem('dialect') || null;
+let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
+
+// Quiz state
+let quizState = {
+  questions: [],
+  currentIdx: 0,
+  answers: [],
+  answered: [],
+  subject: '',
+  subjectDisplay: '',
+  subjectColor: '#1a6b9a',
+  timer: null,
+  timeRemaining: 30 * 60,
+  finished: false,
+  wrongIds: [],
+  correctCount: 0
+};
+
+// ══════════════════════════════════════ LOAD DATA
+async function loadData() {
+  if (typeof __EMBEDDED_DATA__ !== 'undefined') {
+    appData = __EMBEDDED_DATA__;
+  } else {
+    try {
+      const resp = await fetch('questions.json');
+      appData = await resp.json();
+    } catch(e) {
+      appData = { questions: [], subjects: [], ui_strings: {} };
+    }
+  }
+}
+
+function str(key) {
+  if (!appData) return key;
+  const ui = appData.ui_strings || {};
+  const d = dialect || 'sorani';
+  const entry = ui[key];
+  if (!entry) return key;
+  return entry[d] || entry['sorani'] || key;
+}
+
+function toKurdishNum(n) {
+  const k = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return String(n).split('').map(c => k[parseInt(c)] || c).join('');
+}
+
+// Subject icons
+const SUBJECT_ICONS = {
+  biology: '🧬', physics: '⚛️', math: '🔢', chemistry: '🧪',
+  kurdish: '📜', arabic: '🌙', english: '🔤'
+};
+
+// ══════════════════════════════════════ SCREEN MANAGER
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ══════════════════════════════════════ SPLASH → DIALECT or MAIN
+async function init() {
+  await loadData();
+  
+  setTimeout(() => {
+    if (!dialect) {
+      showScreen('dialect');
+    } else {
+      buildMainScreen();
+      showScreen('main');
+    }
+  }, 2200);
+}
+
+// ══════════════════════════════════════ DIALECT
+let selectedDialect = null;
+
+function selectDialect(d) {
+  selectedDialect = d;
+  document.getElementById('btn-sorani').classList.toggle('selected', d === 'sorani');
+  document.getElementById('btn-badini').classList.toggle('selected', d === 'badini');
+  const btn = document.getElementById('dialect-confirm');
+  btn.classList.add('visible');
+  btn.textContent = d === 'sorani' ? 'دادەنێم ✓' : 'داگرتم ✓';
+}
+
+function confirmDialect() {
+  if (!selectedDialect) return;
+  dialect = selectedDialect;
+  localStorage.setItem('dialect', dialect);
+  buildMainScreen();
+  showScreen('main');
+}
+
+function switchDialect() {
+  // Toggle
+  dialect = dialect === 'sorani' ? 'badini' : 'sorani';
+  localStorage.setItem('dialect', dialect);
+  buildMainScreen();
+  renderBookmarks();
+}
+
+// ══════════════════════════════════════ MAIN SCREEN
+function buildMainScreen() {
+  // Header
+  document.getElementById('header-title').textContent = str('app_name');
+  document.getElementById('dialect-switch-label').textContent = dialect === 'sorani' ? 'بادینی' : 'سۆرانی';
+  
+  // Tabs
+  document.getElementById('tab-home-label').textContent = str('home');
+  document.getElementById('tab-bookmarks-label').textContent = str('bookmarks');
+  document.getElementById('tab-about-label').textContent = str('about');
+  document.getElementById('select-subject-title').textContent = str('select_subject');
+  document.getElementById('bookmarks-title').textContent = str('bookmarks');
+
+  buildSubjectsGrid();
+  buildAboutSection();
+  renderBookmarks();
+}
+
+function buildSubjectsGrid() {
+  if (!appData) return;
+  const grid = document.getElementById('subjects-grid');
+  grid.innerHTML = '';
+  const subjects = appData.subjects || [];
+  
+  subjects.forEach(sub => {
+    const icon = SUBJECT_ICONS[sub.id] || '📖';
+    const name = dialect === 'badini' ? (sub.nameBadini || sub.nameSorani) : sub.nameSorani;
+    const card = document.createElement('div');
+    card.className = 'subject-card';
+    card.style.setProperty('--subject-color', sub.color || '#1a6b9a');
+    card.innerHTML = `
+      <span class="subject-icon">${icon}</span>
+      <div class="subject-name">${name}</div>
+      <div class="subject-count">${toKurdishNum(sub.totalQuestions)} پرسیار</div>
+    `;
+    card.onclick = () => openSubjectSelect(sub);
+    grid.appendChild(card);
+  });
+}
+
+function buildAboutSection() {
+  if (!appData) return;
+  document.getElementById('about-app-name').textContent = str('app_name');
+  
+  const qs = appData.questions || [];
+  const subs = appData.subjects || [];
+  const years = [...new Set(qs.map(q => q.year))];
+  
+  const grid = document.getElementById('about-stats');
+  grid.innerHTML = `
+    <div class="about-stat">
+      <div class="about-stat-num">${toKurdishNum(qs.length)}</div>
+      <div class="about-stat-label">${dialect === 'badini' ? 'پرسیار' : 'پرسیار'}</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-num">${toKurdishNum(subs.length)}</div>
+      <div class="about-stat-label">${dialect === 'badini' ? 'بابەت' : 'بابەت'}</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-num">${toKurdishNum(years.length)}</div>
+      <div class="about-stat-label">${dialect === 'badini' ? 'ساڵ' : 'ساڵ'}</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-num">٢</div>
+      <div class="about-stat-label">${dialect === 'badini' ? 'زمان' : 'زمان'}</div>
+    </div>
+  `;
+}
+
+function showTab(tabId, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + tabId + '-content').classList.add('active');
+  if (tabId === 'bookmarks') renderBookmarks();
+}
+
+// ══════════════════════════════════════ SUBJECT SELECT
+let currentSubject = null;
+let currentMode = 'random';
+
+function openSubjectSelect(sub) {
+  currentSubject = sub;
+  currentMode = 'random';
+  
+  const icon = SUBJECT_ICONS[sub.id] || '📖';
+  const name = dialect === 'badini' ? (sub.nameBadini || sub.nameSorani) : sub.nameSorani;
+  
+  document.getElementById('ss-hero').style.background = sub.color || '#1a6b9a';
+  document.getElementById('ss-icon').textContent = icon;
+  document.getElementById('ss-name').textContent = name;
+  document.getElementById('ss-count').textContent = toKurdishNum(sub.totalQuestions) + ' پرسیار';
+  document.getElementById('ss-start-btn').textContent = str('start_quiz') + ' ▶';
+  
+  // Mode btns
+  document.getElementById('mode-random').textContent = str('random_mode');
+  document.getElementById('mode-year').textContent = str('year_mode');
+  setMode('random');
+  
+  // Count options
+  const cs = document.getElementById('count-select');
+  cs.innerHTML = `
+    <option value="10">${toKurdishNum(10)} ${str('question_count')}</option>
+    <option value="20" selected>${toKurdishNum(20)} ${str('question_count')}</option>
+    <option value="30">${toKurdishNum(30)} ${str('question_count')}</option>
+    <option value="-1">${str('all_years')}</option>
+  `;
+  
+  // Year options
+  const ys = document.getElementById('year-select');
+  const qs = (appData.questions || []).filter(q => q.subject === sub.id);
+  const years = [...new Set(qs.map(q => q.year))].sort().reverse();
+  ys.innerHTML = `<option value="all">${str('all_years')}</option>` +
+    years.map(y => `<option value="${y}">${y}</option>`).join('');
+  
+  showScreen('subject-select');
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('mode-random').classList.toggle('active', mode === 'random');
+  document.getElementById('mode-year').classList.toggle('active', mode === 'year');
+  document.getElementById('random-options').style.display = mode === 'random' ? '' : 'none';
+  document.getElementById('year-options').style.display = mode === 'year' ? '' : 'none';
+}
+
+// ══════════════════════════════════════ QUIZ
+function startQuiz() {
+  if (!currentSubject || !appData) return;
+  
+  let questions = (appData.questions || []).filter(q => q.subject === currentSubject.id);
+  
+  if (currentMode === 'year') {
+    const year = document.getElementById('year-select').value;
+    if (year !== 'all') questions = questions.filter(q => q.year === year);
+  } else {
+    const count = parseInt(document.getElementById('count-select').value);
+    // Shuffle
+    questions = [...questions].sort(() => Math.random() - 0.5);
+    if (count > 0) questions = questions.slice(0, count);
+  }
+  
+  if (questions.length === 0) {
+    showToast(str('no_questions'));
+    return;
+  }
+  
+  const name = dialect === 'badini' ? (currentSubject.nameBadini || currentSubject.nameSorani) : currentSubject.nameSorani;
+  
+  quizState = {
+    questions,
+    currentIdx: 0,
+    answers: new Array(questions.length).fill(null),
+    answered: new Array(questions.length).fill(false),
+    subject: currentSubject.id,
+    subjectDisplay: name,
+    subjectColor: currentSubject.color || '#1a6b9a',
+    timer: null,
+    timeRemaining: 30 * 60,
+    finished: false,
+    wrongIds: [],
+    correctCount: 0
+  };
+  
+  document.getElementById('quiz-subject-label').textContent = name;
+  startTimer();
+  showScreen('quiz');
+  renderQuestion(0);
+  
+  // Back button via overlay
+  window.onpopstate = null;
+}
+
+function renderQuestion(idx) {
+  const q = quizState.questions[idx];
+  const total = quizState.questions.length;
+  
+  // Progress
+  const pct = ((idx + 1) / total) * 100;
+  document.getElementById('quiz-progress-bar').style.width = pct + '%';
+  document.getElementById('quiz-progress-label').textContent = 
+    toKurdishNum(idx + 1) + ' / ' + toKurdishNum(total);
+  document.getElementById('question-num').textContent = 
+    str('question_count') + ' ' + toKurdishNum(idx + 1);
+  
+  // Question text
+  const qText = (dialect === 'badini' && q.question_badini) ? q.question_badini : q.question_sorani;
+  document.getElementById('question-text').textContent = qText || '';
+  
+  // Animate card
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'slideRight 0.3s cubic-bezier(0.34,1.56,0.64,1) both';
+  
+  // Options
+  const letters = ['A', 'B', 'C', 'D'];
+  const optList = document.getElementById('options-list');
+  optList.innerHTML = '';
+  
+  letters.forEach(letter => {
+    let optText;
+    if (dialect === 'badini') {
+      optText = q['option' + letter + '_badini'] || q['option' + letter + '_sorani'] || '';
+    } else {
+      optText = q['option' + letter + '_sorani'] || '';
+    }
+    
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.id = 'opt-' + letter;
+    btn.innerHTML = `<span class="option-letter">${letter}</span><span>${optText}</span>`;
+    btn.onclick = () => selectAnswer(letter, q, idx);
+    
+    // Restore if already answered
+    if (quizState.answered[idx]) {
+      btn.disabled = true;
+      if (letter === q.correctAnswer) btn.classList.add('correct');
+      else if (letter === quizState.answers[idx]) btn.classList.add('wrong');
+    }
+    
+    optList.appendChild(btn);
+  });
+  
+  // Bookmark btn
+  const bm = bookmarks[q.id];
+  document.getElementById('btn-bookmark').textContent = bm ? '★' : '☆';
+  
+  // Next btn
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.textContent = (idx === total - 1) ? str('finish_quiz') : str('next_question');
+  nextBtn.disabled = false;
+}
+
+function selectAnswer(letter, q, idx) {
+  if (quizState.answered[idx]) return;
+  quizState.answered[idx] = true;
+  quizState.answers[idx] = letter;
+  
+  const correct = letter === q.correctAnswer;
+  if (correct) quizState.correctCount++;
+  else quizState.wrongIds.push(q.id);
+  
+  // Disable all options
+  ['A','B','C','D'].forEach(l => {
+    const btn = document.getElementById('opt-' + l);
+    if (!btn) return;
+    btn.disabled = true;
+    if (l === q.correctAnswer) btn.classList.add('correct');
+    else if (l === letter && !correct) btn.classList.add('wrong');
+  });
+  
+  // Auto-advance if correct
+  if (correct) {
+    setTimeout(() => {
+      if (!quizState.finished) nextQuestion();
+    }, 1100);
+  }
+}
+
+function nextQuestion() {
+  const idx = quizState.currentIdx;
+  if (!quizState.answered[idx]) {
+    quizState.answered[idx] = true;
+    quizState.answers[idx] = null;
+  }
+  
+  if (idx + 1 >= quizState.questions.length) {
+    finishQuiz();
+  } else {
+    quizState.currentIdx = idx + 1;
+    renderQuestion(quizState.currentIdx);
+  }
+}
+
+function startTimer() {
+  updateTimerDisplay();
+  quizState.timer = setInterval(() => {
+    quizState.timeRemaining--;
+    updateTimerDisplay();
+    if (quizState.timeRemaining <= 0) {
+      clearInterval(quizState.timer);
+      finishQuiz();
+    }
+    if (quizState.timeRemaining === 5 * 60) {
+      showToast(str('timer_warning') || '٥ خولەک ماوە!');
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const mins = Math.floor(quizState.timeRemaining / 60);
+  const secs = quizState.timeRemaining % 60;
+  const el = document.getElementById('quiz-timer');
+  el.textContent = toKurdishNum(mins).padStart(2, toKurdishNum(0)) + ':' +
+    String(secs).padStart(2, '0').split('').map(c => toKurdishNum(parseInt(c))).join('');
+  el.classList.toggle('warning', quizState.timeRemaining < 5 * 60);
+}
+
+function finishQuiz() {
+  if (quizState.finished) return;
+  quizState.finished = true;
+  clearInterval(quizState.timer);
+  showResult();
+}
+
+// Exit modal
+function handleQuizBack() {
+  document.getElementById('exit-overlay').classList.add('show');
+  document.getElementById('exit-title').textContent = str('exit_quiz_title');
+  document.getElementById('exit-msg').textContent = str('exit_quiz_msg');
+  document.getElementById('exit-cancel').textContent = str('no_stay');
+  document.getElementById('exit-confirm').textContent = str('yes_exit');
+}
+function closeExitModal() {
+  document.getElementById('exit-overlay').classList.remove('show');
+}
+function confirmExit() {
+  clearInterval(quizState.timer);
+  closeExitModal();
+  showScreen('main');
+}
+
+// ══════════════════════════════════════ BOOKMARK
+function toggleBookmark() {
+  const idx = quizState.currentIdx;
+  const q = quizState.questions[idx];
+  if (!q) return;
+  
+  if (bookmarks[q.id]) {
+    delete bookmarks[q.id];
+    document.getElementById('btn-bookmark').textContent = '☆';
+    showToast(str('bookmark_removed'));
+  } else {
+    const name = dialect === 'badini' ? (currentSubject?.nameBadini || currentSubject?.nameSorani || q.subject) : (currentSubject?.nameSorani || q.subject);
+    bookmarks[q.id] = {
+      id: q.id,
+      subject: q.subject,
+      subjectName: name,
+      subjectColor: quizState.subjectColor,
+      year: q.year,
+      question_sorani: q.question_sorani,
+      question_badini: q.question_badini,
+      optionA_sorani: q.optionA_sorani, optionB_sorani: q.optionB_sorani,
+      optionC_sorani: q.optionC_sorani, optionD_sorani: q.optionD_sorani,
+      optionA_badini: q.optionA_badini, optionB_badini: q.optionB_badini,
+      optionC_badini: q.optionC_badini, optionD_badini: q.optionD_badini,
+      correctAnswer: q.correctAnswer,
+      userAnswer: quizState.answers[idx] || ''
+    };
+    document.getElementById('btn-bookmark').textContent = '★';
+    showToast(str('bookmark_saved'));
+  }
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+}
+
+function renderBookmarks() {
+  const container = document.getElementById('bookmarks-container');
+  const keys = Object.keys(bookmarks);
+  
+  if (keys.length === 0) {
+    container.innerHTML = `<div class="empty-state">
+      <span class="empty-icon">⭐</span>
+      <div class="empty-text">${dialect === 'badini' ? 'هیچ بووکمارکێک نییە' : 'هیچ بوکمارکێک نییە'}</div>
+    </div>`;
+    return;
+  }
+  
+  container.innerHTML = '';
+  const list = document.createElement('div');
+  list.className = 'bookmarks-list';
+  
+  keys.forEach(id => {
+    const bm = bookmarks[id];
+    const qText = (dialect === 'badini' && bm.question_badini) ? bm.question_badini : bm.question_sorani;
+    const letters = ['A','B','C','D'];
+    
+    const card = document.createElement('div');
+    card.className = 'bookmark-card';
+    
+    const optHtml = letters.map(l => {
+      let txt;
+      if (dialect === 'badini') {
+        txt = bm['option' + l + '_badini'] || bm['option' + l + '_sorani'] || '';
+      } else {
+        txt = bm['option' + l + '_sorani'] || '';
+      }
+      let cls = '';
+      if (l === bm.correctAnswer) cls = ' correct';
+      else if (l === bm.userAnswer) cls = ' wrong';
+      return `<div class="bookmark-option${cls}"><span class="bookmark-letter">${l}.</span> ${txt}</div>`;
+    }).join('');
+    
+    card.innerHTML = `
+      <button class="bookmark-remove" onclick="removeBookmark('${id}')">🗑️</button>
+      <span class="bookmark-subject-badge" style="background:${bm.subjectColor||'#1a6b9a'}">${bm.subjectName || bm.subject}</span>
+      <div class="bookmark-question">${qText || ''}</div>
+      <div class="bookmark-options">${optHtml}</div>
+    `;
+    list.appendChild(card);
+  });
+  
+  container.appendChild(list);
+}
+
+function removeBookmark(id) {
+  delete bookmarks[id];
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  renderBookmarks();
+  showToast(str('bookmark_removed'));
+}
+
+// ══════════════════════════════════════ RESULT
+function showResult() {
+  const total = quizState.questions.length;
+  const correct = quizState.correctCount;
+  const wrong = quizState.wrongIds.length;
+  const skipped = total - correct - wrong;
+  const score = total > 0 ? Math.round((correct / total) * 100) : 0;
+  const timeTaken = 30 * 60 - quizState.timeRemaining;
+  const mins = Math.floor(timeTaken / 60);
+  const secs = timeTaken % 60;
+  
+  document.getElementById('result-subject').textContent = quizState.subjectDisplay;
+  document.getElementById('result-score-num').textContent = toKurdishNum(score);
+  
+  const grade = getGrade(score);
+  const gradeBadge = document.getElementById('grade-badge');
+  gradeBadge.textContent = grade.text;
+  gradeBadge.style.background = grade.color;
+  
+  // Stats
+  const statsEl = document.getElementById('result-stats');
+  statsEl.innerHTML = `
+    <div class="stat-row">
+      <span class="stat-label">✓ ${str('correct_answers')}</span>
+      <span class="stat-val correct">${toKurdishNum(correct)}</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">✗ ${str('wrong_answers')}</span>
+      <span class="stat-val wrong">${toKurdishNum(wrong)}</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">— ${str('skipped')}</span>
+      <span class="stat-val">${toKurdishNum(skipped)}</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">⏱ ${str('time')}</span>
+      <span class="stat-val">${toKurdishNum(mins)}:${String(secs).padStart(2,'0')}</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">📊 ${str('total')}</span>
+      <span class="stat-val">${toKurdishNum(total)}</span>
+    </div>
+  `;
+  
+  document.getElementById('btn-home').textContent = str('go_home');
+  
+  const reviewBtn = document.getElementById('btn-review-wrong');
+  if (quizState.wrongIds.length > 0) {
+    reviewBtn.style.display = '';
+    reviewBtn.textContent = str('review_wrong') + ' (' + toKurdishNum(quizState.wrongIds.length) + ')';
+  } else {
+    reviewBtn.style.display = 'none';
+  }
+  
+  showScreen('result');
+}
+
+function getGrade(score) {
+  if (score >= 90) return { text: 'A+ — ' + str('excellent'), color: '#22a55a' };
+  if (score >= 80) return { text: 'A — ' + str('very_good'), color: '#43a047' };
+  if (score >= 70) return { text: 'B — ' + str('good'), color: '#fb8c00' };
+  if (score >= 60) return { text: 'C — ' + str('average'), color: '#f57c00' };
+  if (score >= 50) return { text: 'D — ' + str('weak'), color: '#e53935' };
+  return { text: 'F — ' + str('fail'), color: '#b71c1c' };
+}
+
+function goHome() {
+  showScreen('main');
+  buildMainScreen();
+}
+
+function reviewWrong() {
+  // Show wrong questions as bookmarks temporarily
+  const wrongQs = (appData.questions || []).filter(q => quizState.wrongIds.includes(q.id));
+  const name = quizState.subjectDisplay;
+  
+  wrongQs.forEach(q => {
+    bookmarks[q.id] = {
+      id: q.id, subject: q.subject, subjectName: name,
+      subjectColor: quizState.subjectColor,
+      question_sorani: q.question_sorani, question_badini: q.question_badini,
+      optionA_sorani: q.optionA_sorani, optionB_sorani: q.optionB_sorani,
+      optionC_sorani: q.optionC_sorani, optionD_sorani: q.optionD_sorani,
+      optionA_badini: q.optionA_badini, optionB_badini: q.optionB_badini,
+      optionC_badini: q.optionC_badini, optionD_badini: q.optionD_badini,
+      correctAnswer: q.correctAnswer, userAnswer: ''
+    };
+  });
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  
+  goHome();
+  // Switch to bookmarks tab
+  setTimeout(() => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-bookmarks').classList.add('active');
+    document.getElementById('tab-bookmarks-content').classList.add('active');
+    renderBookmarks();
+  }, 100);
+}
+
+// ══════════════════════════════════════ TOAST
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ══════════════════════════════════════ BACK BUTTON HANDLING
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const currentScreen = document.querySelector('.screen.active')?.id;
+    if (currentScreen === 'quiz' && !quizState.finished) handleQuizBack();
+    else if (currentScreen === 'subject-select') showScreen('main');
+    else if (currentScreen === 'result') goHome();
+  }
+});
+
+// ══════════════════════════════════════ BOOT
+init();
+</script>
+
+<!-- Inline questions.json data -->
+<script>
+// Load questions data inline after page loads
+window.addEventListener('load', async () => {
+  if (!appData || !appData.questions || appData.questions.length === 0) {
+    // Data wasn't loaded via fetch, app will work with empty data
+    console.log('Note: Place questions.json in the same folder as this HTML file');
+  }
+});
+</script>
+<script>
+const __EMBEDDED_DATA__ = {"version":"2.0","lastUpdated":"2026-05-21","ui_strings":{"app_name":{"sorani":"تاقیکردنەوەی ژیوار","badini":"تاقیکردنەوەی ژیوار"},"home":{"sorani":"ماڵەوە","badini":"ماڵەوە"},"teachers":{"sorani":"مامۆستایان","badini":"مامۆستایان"},"bookmarks":{"sorani":"بوکمارک","badini":"بووکمارک"},"about":{"sorani":"دەربارە","badini":"دەربارەی"},"start_quiz":{"sorani":"دەستپێکردنی تاقیکردنەوە","badini":"دەستپێکی تاقیکردنەوە"},"select_subject":{"sorani":"بابەت هەڵبژێرە","badini":"بابەتێک ھەڵبژیرە"},"select_year":{"sorani":"ساڵ هەڵبژێرە","badini":"ساڵێک ھەڵبژیرە"},"all_years":{"sorani":"هەموو ساڵەکان","badini":"ھەموو ساڵان"},"year_mode":{"sorani":"بەپێی ساڵ","badini":"بەپێی ساڵ"},"random_mode":{"sorani":"بەراستەوخۆ","badini":"بەڕستەوخۆ"},"question_count":{"sorani":"ژمارەی پرسیار","badini":"ژمارەی پرسیار"},"next_question":{"sorani":"پرسیاری داهاتوو","badini":"پرسیارا داهاتووی"},"skip":{"sorani":"تێپەڕکردن","badini":"تیپەڕاندن"},"finish_quiz":{"sorani":"کۆتایی هاتن","badini":"کونجاندن"},"correct":{"sorani":"راست ✓","badini":"ڕاست ✓"},"wrong":{"sorani":"هەڵە ✗","badini":"ھەڵە ✗"},"score":{"sorani":"نمرە","badini":"نومرە"},"time":{"sorani":"کات","badini":"کات"},"result":{"sorani":"ئەنجام","badini":"ئینجام"},"total":{"sorani":"کۆی گشتی","badini":"کۆی گشتی"},"correct_answers":{"sorani":"وەڵامە راستەکان","badini":"وەڵامێن ڕاست"},"wrong_answers":{"sorani":"وەڵامە هەڵەکان","badini":"وەڵامێن ھەڵە"},"skipped":{"sorani":"تێپەڕاوەکان","badini":"تیپەڕاوان"},"go_home":{"sorani":"گەڕانەوە بۆ ماڵەوە","badini":"گەڕانا بۆ ماڵەوە"},"review_wrong":{"sorani":"پشکنینی هەڵەکان","badini":"پشکنینا ھەڵەیان"},"bookmark_saved":{"sorani":"بوکمارک کرا ★","badini":"بووکمارک بوو ★"},"bookmark_removed":{"sorani":"بوکمارک لابرا","badini":"بووکمارک ڕاکشا"},"exit_quiz_title":{"sorani":"دەربچیت؟","badini":"دەربکەوی؟"},"exit_quiz_msg":{"sorani":"دەرچون تاقیکردنەوەکە کۆتایی دەهێنێت","badini":"دەرکەوتن تاقیکردنەوە کونجاندنا"},"yes_exit":{"sorani":"بەڵێ، دەربچم","badini":"بەڵێ، دەربکەوم"},"no_stay":{"sorani":"نەخێر، بمێنمەوە","badini":"نا، بمێنم"},"update_required":{"sorani":"نوێکردنەوە پێویستە","badini":"نوکردنەوە پێویستە"},"update_now":{"sorani":"نوێ بکەوە","badini":"نوبکەوە"},"loading":{"sorani":"چاوەڕوان بە...","badini":"چاوەڕوانبە..."},"no_questions":{"sorani":"پرسیار نەدۆزرایەوە","badini":"پرسیار نەدۆزرایەوە"},"no_teachers":{"sorani":"هیچ مامۆستایەک نییە","badini":"ھیچ مامۆستایێک نینە"},"donate":{"sorani":"پشتگیری پڕۆژەکە","badini":"پشتگیریا پرۆژەیی"},"language_select_title":{"sorani":"زمانی بەکارهێنان هەڵبژێرە","badini":"زمان ھەڵبژیرە"},"sorani_dialect":{"sorani":"کوردی سۆرانی","badini":"کوردی سۆرانی"},"badini_dialect":{"sorani":"کوردی بادینی","badini":"کوردی بادینی"},"choose_dialect":{"sorani":"زارەکت هەڵبژێرە","badini":"زارەکا خۆ ھەڵبژیرە"},"ministry_exam":{"sorani":"ئیمتحانی وەزارەتی","badini":"ئیمتحانا وەزارەتی"},"preparatory_stage":{"sorani":"قۆناغی ئامادەیی","badini":"قۆناغا ئامادەیی"},"timer_warning":{"sorani":"⚠️ کەمتر لە ٥ خولەک ماوە","badini":"⚠️ کەمتر لە ٥ خولەک ماوە"},"excellent":{"sorani":"ممتاز","badini":"ممتاز"},"very_good":{"sorani":"زۆر باش","badini":"زۆر باش"},"good":{"sorani":"باش","badini":"باش"},"average":{"sorani":"مامناوەند","badini":"مامناوەند"},"weak":{"sorani":"بچووک","badini":"کەم"},"fail":{"sorani":"شکست","badini":"شکست"},"no_bookmarks":{"sorani":"هیچ بوکمارکێک نییە. پرسیار هەڵبژێرە تاقی بکەوە","badini":"ھیچ بووکمارکێک نینە"},"about_developer":{"sorani":"دەربارەی دروستکەر","badini":"دەربارەی دروستکار"},"follow_youtube":{"sorani":"کەنالەکەم لە یوتیوب","badini":"کەناڵا من لە یوتیوب"},"follow_telegram":{"sorani":"کەناڵی تێلەگرام","badini":"کەناڵا تێلەگرام"},"visit_website":{"sorani":"مالپەڕەکەم سەردان بکە","badini":"مالپەڕا من سەردان بکە"},"donation_title":{"sorani":"پشتگیری بکە 💛","badini":"پشتگیری بکە 💛"},"10_questions":{"sorani":"١٠ پرسیار","badini":"١٠ پرسیار"},"20_questions":{"sorani":"٢٠ پرسیار","badini":"٢٠ پرسیار"},"30_questions":{"sorani":"٣٠ پرسیار","badini":"٣٠ پرسیار"},"all_questions":{"sorani":"هەموو پرسیارەکان","badini":"ھەموو پرسیاران"},"saved_bookmarks":{"sorani":"پرسیارە پاراستراوەکان","badini":"پرسیارێن پاراستی"},"wrong_review_title":{"sorani":"پرسیارە هەڵەکان بە دووبارە","badini":"پرسیارێن ھەڵەیان دووبارە"},"subject_questions_count":{"sorani":" پرسیار","badini":" پرسیار"},"quiz_questions_label":{"sorani":"وەڵامی ڕاست هەڵبژێرە","badini":"وەڵاما ڕاست ھەڵبژیرە"}},"subjects":[{"id":"biology","nameSorani":"زیندەزانی","nameBadini":"ژیندەزانی","nameEn":"Biology","icon":"ic_biology","color":"#4CAF50","totalQuestions":39},{"id":"physics","nameSorani":"فیزیا","nameBadini":"فیزیا","nameEn":"Physics","icon":"ic_physics","color":"#2196F3","totalQuestions":12},{"id":"math","nameSorani":"بیرکاری","nameBadini":"ژمیریاری","nameEn":"Mathematics","icon":"ic_math","color":"#FF5722","totalQuestions":60},{"id":"chemistry","nameSorani":"کیمیا","nameBadini":"کیمیا","nameEn":"Chemistry","icon":"ic_chemistry","color":"#9C27B0","totalQuestions":12},{"id":"kurdish","nameSorani":"کوردی سۆرانی","nameBadini":"کوردی","nameEn":"Kurdish","icon":"ic_kurdish","color":"#FF9800","totalQuestions":30},{"id":"arabic","nameSorani":"عەرەبی","nameBadini":"عەرەبی","nameEn":"Arabic","icon":"ic_arabic","color":"#00BCD4","totalQuestions":12},{"id":"english","nameSorani":"ئینگلیزی","nameBadini":"ئینگلیزی","nameEn":"English","icon":"ic_english","color":"#607D8B","totalQuestions":12}],"questions":[{"id":"bio_2021_01","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"هةستةوةرطر-","optionA_sorani":"دةمارة خانةية، ورياكةرةوةكان دةناسيَتةوة","optionB_sorani":"دةمارة راطةياندنةكان بة ثشتةرِةطدا دةطوازيَتةوة لة درِكةثةتكةوة بؤ ماسولكةكان","optionC_sorani":"دةمارة راطةياندنةكان بة سكةرِةطدا دةطوازيَتةوة لة شويَني وري","optionD_sorani":"دةمارة خانةية، ورياكةرةوةكان دةناسيَتةوة","question_badini":"هیسکارێ-","optionA_badini":"دەمارێ خانەیية، هوشیاریكان دەناسێتەوە","optionB_badini":"دەمارێ راگةياندنةكان بة پشتیرەکدا دةگوازیتووە لة دریکەپیتکووە بۆ مازوڵکەكان","optionC_badini":"دەمارێ راگةياندنةكان بة سکەریکدا دةگوازیتووە لة شوینی وري","optionD_badini":"دەمارێ خانەیية، هوشیاریكان دەناسێتەوە","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_05","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"كام لةمانةثةيوةندي لة نيَوان ثيَكهاتةي موولوولةكاني خويَن و فرمانةكةي رووندةكاتةوة؟","optionA_sorani":"ديوارةكةيان لة سيَ ضين ثيَكهاتووة.","optionB_sorani":"زمانةيان تيَداية.","optionC_sorani":"ئةستوري ديوارةكةيانيةك ضين خانةية","optionD_sorani":"هةمووياننارِاستن","question_badini":"كام لةمانةپةيوةندي لة نیوان پیكهاتةي موولوولةكاني خوین و فرمانةكةي رووندةكاتووە؟","optionA_badini":"ديوارةكةيان لة سی ضين پیكهاتووة.","optionB_badini":"زمانةيان تیداية.","optionC_badini":"ئةستوري ديوارةكةيانيةك ضين خانەیية","optionD_badini":"هةموويانناراستن","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_06","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"نيشانةكاني دابرِان لة دةرماني كاريطةري دةرووني ئةمانة دةطريَتةوة-","optionA_sorani":"رشانةوةو سةر ئيَشةو خةوزرِان و طراني هةناسةدان و خةمؤكي و تيَكضووني بيرو هؤشي و نؤرة دةمار","optionB_sorani":"زيادبووني زيندةضاكي و كةمبوونةوةي كيَش و بةرزبوونةوةي ثةستان","optionC_sorani":"لةكةي ثيَستي دةم و ضاو، ئازاري جومطةكان، تاليَهاتن ، ماندووب","optionD_sorani":"هيَلَنجدان و هةناسةداني خيَراو شيَواني دلَ و بورانةوة.","question_badini":"نيشانةكاني دابران لة دةرماني کارکردن دةرووني ئةمانة دةگریتووە-","optionA_badini":"رشانووەو سةر ئیشةو خةوزران و گراني هةناسةدان و خةمۆكي و تیكضووني بيرو هۆشي و نۆرة دةمار","optionB_badini":"زيادبووني زيندةضاكي و كةمبوونووەي كیش و بةرزبوونووەي پةستان","optionC_badini":"لةكةي پیستي دةم و ضاو، ئازاري جومگةكان، تالیهاتن ، ماندووب","optionD_badini":"هیلَنجدان و هةناسةداني خیراو شیواني دلَ و بورانووە.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_09","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"زانايةك ليَكدانيَكي بةجيَهيَنا لة نيَوان دوو رووةكي ثؤلكة كة يةكيَكيان طولَ ئةرخةواني و تؤو لووس لةطةلَ يةكيَكي ديكةي طولَ سثي و","optionA_sorani":"20","optionB_sorani":"60","optionC_sorani":"180","optionD_sorani":"220","question_badini":"زانايةك لیكدانیكي بةجیهینا لة نیوان دوو رووةكي پۆلكة كة يةكیكيان گولَ ئةرخةواني و تۆو لووس لةگةلَ يةكیكي ديكةي گولَ سپي و","optionA_badini":"20","optionB_badini":"60","optionC_badini":"180","optionD_badini":"220","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_11","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"طريَي رانظيَر ناوضةكاني ثضرِاني بةرطي مايلينة-","optionA_sorani":"لة لةشيدةمارةخانةدا","optionB_sorani":"لة هةر سيَ بةشة سةرةكييةكةي دةمارة خانةدا","optionC_sorani":"بة دريَذايي تةوةرةي مايلي","optionD_sorani":"لة لق و ثؤثةكاندا","question_badini":"گریي رانظیر ناوضةكاني پضراني بةرگي مايلينة-","optionA_badini":"لة لةشيدەمارێخانەیدا","optionB_badini":"لة هةر سی بةشة سةرةكييةكةي دەمارێ خانەیدا","optionC_badini":"بة دریژايي تووەرةي مايلي","optionD_badini":"لة لق و پۆپةكاندا","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_14","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"كام لة مانة دةربارةيهةردوو نيوة طؤي ميَشك هةلَةية؟","optionA_sorani":"فرماني هةموو بةشةكاني (ناوةندةكاني) هةردوو نيوة طؤي ميَشك لة يةكدةضن","optionB_sorani":"هةرنيوة طؤيةكيان دابةش دةبيَت بؤ دووثل","optionC_sorani":"لة رِيَطةي طورزةيةك لةلق و ثؤثي دةمارة خانة ثيَكةوة دةبةستريَن","optionD_sorani":"هةموويانهةلَةن","question_badini":"كام لة مانة دةربارةيهةردوو نيوة گۆي میشك هةلَةية؟","optionA_badini":"فرماني هةموو بةشةكاني (ناوةندةكاني) هةردوو نيوة گۆي میشك لة يةكدةضن","optionB_badini":"هةرنيوة گۆيةكيان دابةش دةبیت بۆ دووپل","optionC_badini":"لة ریگةي گورزةيةك لةلق و پۆپي دەمارێ خانەی پیكووە دةبةسترین","optionD_badini":"هةموويانهةلَةن","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_16","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"خانةكانيTي ذةهراوي و خانةكانيTي سةركوتكةر هةردووكيان:-","optionA_sorani":"خرؤكةي سثي خويَنن.","optionB_sorani":"بةشداريدةكةنرؤلَيان هةية) لة وةلاَمدانةوة بةرطرييةكاني دةرداني.","optionC_sorani":"بةشداريدةكةنرؤلَيان هةية) لة وةلاَمدانةوة بةرطرييةكاني خانةي","optionD_sorani":"خرؤكةي سثي خويَنن.","question_badini":"خانەیكانيTي ژةهراوي و خانەیكانيTي سةركوتكةر هةردووكيان:-","optionA_badini":"خرۆكةي سپي خوینن.","optionB_badini":"بةشداريدةكةنرۆلَيان هةية) لة وةلامدانووە بةرگرييةكاني دةرداني.","optionC_badini":"بةشداريدةكةنرۆلَيان هةية) لة وةلامدانووە بةرگرييةكاني خانەیي","optionD_badini":"خرۆكةي سپي خوینن.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_17","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئةطةر ثةستاني خويَن لة كةسيَكي ثيَطةيشتووي ميَية يةكسان بيَت بة𝟏𝟏𝟎","optionA_sorani":"زمانةي دووثةرِةيي دلَ بة تةنها.","optionB_sorani":"زمانةي سيَ ثةرِةيي دلَبة تةنها","optionC_sorani":"شاخويَنبةرة زمانة و سيية زمانة.","optionD_sorani":"زمانةي دووثةرِةيي دلَ و سيَ ثةرِةيي دلَ","question_badini":"ئةگةر پةستاني خوین لة كةسیكي پیگةيشتووي میية يةكسان بیت بة𝟏𝟏𝟎","optionA_badini":"زمانةي دووپةرةيي دلَ بة تةنها.","optionB_badini":"زمانةي سی پةرةيي دلَبة تةنها","optionC_badini":"شاخوینبةرة زمانة و سيية زمانة.","optionD_badini":"زمانةي دووپةرةيي دلَ و سی پةرةيي دلَ","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_18","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"هةموو ئةمانة لة تايبةتمةندييةكاني خرؤكة سثييةكاني خويَنن جطة لة:-","optionA_sorani":"بةشداري دةكةن لة بةرطريكردن لة لةش دذ بة نةخؤشي.","optionB_sorani":"قةبارةيانلة خرؤكةسوورةكاني خويَن طةورةترة.","optionC_sorani":"ذمارةيان لة خرؤكة سوورةكاني خويَن زياترة.","optionD_sorani":"دةتوانن لة ريَي كونةكاني ديواري لوولةكاني خويَن بضن بؤ شلةي نيَوان خانةكان","question_badini":"هةموو ئةمانة لة تايبةتمةندييةكاني خرۆكة سپييةكاني خوینن جگة لة:-","optionA_badini":"بةشداري دةكةن لة بةرگريكردن لة لةش دژ بة نةخۆشي.","optionB_badini":"قةبارةيانلة خرۆكةسوورةكاني خوین گةورةترة.","optionC_badini":"ژمارەيان لة خرۆكة سوورةكاني خوین زياترة.","optionD_badini":"دةتوانن لة ریي كونةكاني ديواري لوولةكاني خوین بضن بۆ شلةي نیوان خانەیكان","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_21","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"لة ثةرضة ثيَدانةوةي نةريَنيدا:-","optionA_sorani":"بةرهةمي كؤتايي لة زنجيرةكةدا هةنطاوي يةكةم وريا دةكاتةوة.","optionB_sorani":"بةرهةمي كؤتايي لة زنجيرةكةدا هةنطاوي يةكةم رادةطريَت.","optionC_sorani":"هةنطاوي يةكةم لة زنجيرةكةدا هيض كاريطةري لةسةر بةرهةمي كؤتايي نابيَت.","optionD_sorani":"بةرهةمي كؤتاييلة زنجيرةكةدا هيض كاريطةري لةسةر هةنطاوي يةكةم نابيَت.","question_badini":"لة پةرضة پیدانووەي نةرینيدا:-","optionA_badini":"بةرهةمي كۆتايي لة زنجيرةكةدا هةنگاوي يةكةم وريا دةكاتووە.","optionB_badini":"بةرهةمي كۆتايي لة زنجيرةكةدا هةنگاوي يةكةم رادةگریت.","optionC_badini":"هةنگاوي يةكةم لة زنجيرةكةدا هيض کارکردن لةسةر بةرهةمي كۆتايي نابیت.","optionD_badini":"بةرهةمي كۆتاييلة زنجيرةكةدا هيض کارکردن لةسةر هةنگاوي يةكةم نابیت.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_22","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"لة وةلاَمدانةوة بةرطريية سةرةتاييةكاندا- A-بيرخةرةوة خانةكان دروست دةبن وئةطةر رووبةرِووي دذة ثةيداكةر بوونةوة وةلاَميان دةدةنةوة.","optionA_sorani":"","optionB_sorani":"بيرخةرةوة خانةكان دروست دةبن بةلاَمئةطةر رووبةرِووي دذة ثةيداكةر بوونةوة وةلاَميان نادةنةوة.","optionC_sorani":"ذمارةيةكي زؤرتر لة دذةتةنةكاندروست دةكريَن بة بةراورد لةطةلَ وةلاَمدانةوة بةرطريية دووةمييةكان","optionD_sorani":"هةموويان ناراس","question_badini":"لة وةلامدانووە بةرگريية سةرةتاييةكاندا- A-بيرخةرووە خانەیكان دروست دةبن وئةگةر رووبةرووي دژة پةيداكةر بوونووە وەڵامیان دةدةنووە.","optionA_badini":"","optionB_badini":"بيرخةرووە خانەیكان دروست دةبن بةلامئةگةر رووبةرووي دژة پةيداكةر بوونووە وەڵامیان نادةنووە.","optionC_badini":"ژمارەيةكي زۆرتر لة دژةتةنةكاندروست دةكرین بة بةراورد لةگةلَ وةلامدانووە بةرگريية دووةمييةكان","optionD_badini":"هةموويان ناراس","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_25","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"تايبةتي يان جؤريةتي وةلاَمدانةوةبةرطرييةكان ثةيدادةبيَت لة تايبةتي يان جؤريةتي وةرطرةكاني دذة ثةيداكةر لة سةر رووي ..............","optionA_sorani":"ظايرؤسةكان","optionB_sorani":"ليمفةخانةكان","optionC_sorani":"خانةتووشبووةكاني لةش","optionD_sorani":"هةموو جؤرة خرؤكة سثييةكان","question_badini":"تايبةتي يان جۆريةتي وةلامدانووەبةرگرييةكان پةيدادةبیت لة تايبةتي يان جۆريةتي وةرگرةكاني دژة پةيداكةر لة سةر رووي ..............","optionA_badini":"ظايرۆسةكان","optionB_badini":"ليمفةخانەیكان","optionC_badini":"خانەیتووشبووةكاني لةش","optionD_badini":"هةموو جۆرة خرۆكة سپييةكان","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_26","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"بة دريَذاييماوةي سكثرِي هيَلكة لة هيَلكةدانةكان دةرناثةرِيَت لةبةرئةوةي دةرداني برِيَكي زؤري:-","optionA_sorani":"ئيسترؤجين و ثرؤجيسترؤن ريَطة لة دةرثةرِاندني هؤرمؤني هاندةري","optionB_sorani":"هؤرمؤني هاندةريضيكلَدانة و هؤرمؤني هاندةري تةني زةرد ريَطة ل","optionC_sorani":"هؤرمؤني هاندةريضيكلَدانة و ثرؤجيسترؤن ريَطة لة دةرثةرِاندني","optionD_sorani":"هؤرمؤني هاندةري تةني زةرد و ئيسترؤجين ريَطة لة دةرثةرِاندني","question_badini":"بة دریژاييماوةي سكپري هیلكة لة هیلكةدانةكان دةرناپةریت لةبةرئووەي دةرداني بریكي زۆري:-","optionA_badini":"ئيسترۆجين و پرۆجيسترۆن ریگة لة دةرپةراندني هۆرمۆني هاندةري","optionB_badini":"هۆرمۆني هاندةريضيكلَدانة و هۆرمۆني هاندةري تةني زةرد ریگة ل","optionC_badini":"هۆرمۆني هاندةريضيكلَدانة و پرۆجيسترۆن ریگة لة دةرپةراندني","optionD_badini":"هۆرمۆني هاندةري تةني زةرد و ئيسترۆجين ریگة لة دةرپةراندني","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_27","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"روويليَكضوون لة نيَوان سييةخويَنهيَنةرةكان و كلؤرة خويَنهيَنةري سةروو ئةوةيةكة هةردووكيان:-","optionA_sorani":"بةشداريدةكةن لة طةرِاندنةوةي ليمف بةرةوة دلَ","optionB_sorani":"خويَني كةم ئؤكسجين بؤ دلَ دةطةرِيَننةوة","optionC_sorani":"خويَنى تيَر ئؤكسجين بؤ دلَ دةطوازنةوة","optionD_sorani":"ثةستاني خويَنيان تيَدا نزمة بة بةراورد لةطةلَ خويَنبةرةكان","question_badini":"روويلیكضوون لة نیوان سييةخوینهینةرةكان و كلۆرة خوینهینةري سةروو ئووەيةكة هةردووكيان:-","optionA_badini":"بةشداريدةكةن لة گةراندنووەي ليمف بةرووە دلَ","optionB_badini":"خویني كةم ئۆكسجين بۆ دلَ دةگةریننووە","optionC_badini":"خوینى تیر ئۆكسجين بۆ دلَ دةگوازنووە","optionD_badini":"پةستاني خوینيان تیدا نزمة بة بةراورد لةگةلَ خوینبةرةكان","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_35","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"نيكؤت:-","optionA_sorani":"دةمارة طويَزةرةوةكان لة طةييَنكة قليشهةلَدةوةشيَنيَت","optionB_sorani":"ثيَداني ئؤكسجين بة شانةكاني لةش زياددةكات","optionC_sorani":"ثةستاني خويَن وتيَكرِايي ليَداني دلَ نزم دةكاتةوة","optionD_sorani":"دةمارة طويَزةرةوةكان لة طةييَنكة قليشهةلَدةوةشيَنيَت","question_badini":"نيكۆت:-","optionA_badini":"دەمارێ گویزةرووەكان لة گةيینكة قليشهةلَدووەشینیت","optionB_badini":"پیداني ئۆكسجين بة شانةكاني لةش زياددةكات","optionC_badini":"پةستاني خوین وتیكرايي لیداني دلَ نزم دةكاتووە","optionD_badini":"دەمارێ گویزةرووەكان لة گةيینكة قليشهةلَدووەشینیت","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_36","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"سيَيةكي سيَيةم كؤرثةلة دةتوانيَت وةلاَمدانةوةي بؤدةنطة بةرزةكان هةبيَت.","optionA_sorani":"سيَيةكي دووةم هةردوو بالَةكان دةست بة دروستبوون دةكةن","optionB_sorani":"سيَيةكي يةكةم : ئيَسكة ثةيكةريكؤرثةلة دةست بة دروست بوون دةكات","optionC_sorani":"سيَيةكي سيَيةمضينيَك لة طةندة موو لةسةر ثيَستي كؤرثةلة دةست","optionD_sorani":"سيَيةكي دووةم هةردوو بالَةكان دةست بة دروستبوون دةكةن","question_badini":"سیيةكي سیيةم كۆرپةلة دةتوانیت وةلامدانووەي بۆدةنگة بةرزةكان هةبیت.","optionA_badini":"سیيةكي دووةم هةردوو بالَةكان دةست بة دروستبوون دةكةن","optionB_badini":"سیيةكي يةكةم : ئیسكة پةيكةريكۆرپةلة دةست بة دروست بوون دةكات","optionC_badini":"سیيةكي سیيةمضينیك لة گةندة موو لةسةر پیستي كۆرپةلة دةست","optionD_badini":"سیيةكي دووةم هةردوو بالَةكان دةست بة دروستبوون دةكةن","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_39","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"خانةكاني T ي يارمةتيدةر ئينتةر لوكي2 دةردةدةن كاتيَك:-","optionA_sorani":"ئينتةر لوكي1 خانةكاني T ي يارمةتيدةر ضالاك دةكات","optionB_sorani":"خانةكاني T ي يارمةتيدةر هيَرِش دةكاتة سةر هؤكاري نةخؤشي","optionC_sorani":"خانةكاني T ي يارمةتيدةر دةبةستريَن بة هةلَلوشيَنةرة طةورةكان","optionD_sorani":"خانةكاني T ي ذةهراوي دةبةستريَن بة خانةي لةشي تووشبوو","question_badini":"خانەیكاني T ي يارمةتيدةر ئينتةر لوكي2 دةردةدةن كاتیك:-","optionA_badini":"ئينتةر لوكي1 خانەیكاني T ي يارمةتيدةر ضالاك دةكات","optionB_badini":"خانەیكاني T ي يارمةتيدةر هیرش دةكاتة سةر هۆكاري نةخۆشي","optionC_badini":"خانەیكاني T ي يارمةتيدةر دةبةسترین بة هةلَلوشینةرة گةورةكان","optionD_badini":"خانەیكاني T ي ژةهراوي دةبةسترین بة خانەیي لةشي تووشبوو","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2021_40","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"تويَكلَي ئةدرينالَ جياوازة لة كرؤكي ئةدرينالَ لةوةي كة تويَكلَي ئةدرينالَ-","optionA_sorani":"سيكريت: هةنديَك لة خانةكاني ديواري طةدةدا.","optionB_sorani":"لة كرِكرِاطة خانةكان ثيَكديَت كة تواناي دابةشبوونيان هةية","optionC_sorani":"تيَستيَستيرؤن: ئةوخانانةي دةكةونة نيَوان تؤوة بؤريضكةكانةوة لة هةردووطوندا.","optionD_sorani":"هؤرمؤني دةرثةرِاندني هاندةري ثايرؤيدة رذيَن(TRH): ثلي ثيَشةوةي ذيَر ميَشكة رذيَن.","question_badini":"تویكلَي ئةدرينالَ جياوازة لة كرۆكي ئةدرينالَ لووەي كة تویكلَي ئةدرينالَ-","optionA_badini":"سيكريت: هةندیك لة خانەیكاني ديواري گةدةدا.","optionB_badini":"لة كركراگة خانەیكان پیكدیت كة تواناي دابةشبوونيان هةية","optionC_badini":"تیستیستيرۆن: ئةوخانانةي دةكةونة نیوان تۆوة بۆريضكةكانووە لة هةردووگوندا.","optionD_badini":"هۆرمۆني دةرپةراندني هاندةري پايرۆيدة رژین(TRH): پلي پیشووەي ژیر میشكة رژین.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_01","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"هةر طةرديَك لةهيمؤطلؤبين لة توانايداية…...........طةرد ئؤكسجين بطوازيَتةوة ضونكة هةر طةرديلةيةكي ئاسن بة يةك طةردي","optionA_sorani":"يةك","optionB_sorani":"دوو","optionC_sorani":"ضوار","optionD_sorani":"يةك","question_badini":"هةر گةردیك لةهيمۆگلۆبين لة توانايداية…...........گةرد ئۆكسجين بگوازیتووە ضونكة هةر گةرديلةيةكي ئاسن بة يةك گةردي","optionA_badini":"يةك","optionB_badini":"دوو","optionC_badini":"ضوار","optionD_badini":"يةك","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_02","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"ستيرؤيدو ثايرؤيدة هؤرمؤنةكان بة ثةردةي خانةكاني ئامانجدا بلاَودةبنةوة ضونكة:-","optionA_sorani":"تواناي توانةوةيان هةية لةضةوريدا","optionB_sorani":"لةوانةيةوةرطرةكانيان لة سةر ثةردةي خانة يان لة سايتؤثلازم يان لة ناووكي خانةدا هةبن","optionC_sorani":"هؤرمؤنيضةورين لةش لةكؤليسترؤل بةرهةميان ديَنيت","optionD_sorani":"تواناي توانةوةيان هةية لةضةوريدا","question_badini":"ستيرۆيدو پايرۆيدة هۆرمۆنةكان بة پةردةي خانەیكاني ئامانجدا بلاودةبنووە ضونكة:-","optionA_badini":"تواناي توانووەيان هةية لةضةوريدا","optionB_badini":"لةوانةيووەرگرةكانيان لة سةر پةردةي خانەی يان لة سايتۆپلازم يان لة ناووكي خانەیدا هةبن","optionC_badini":"هۆرمۆنيضةورين لةش لةكۆليسترۆل بةرهةميان دینيت","optionD_badini":"تواناي توانووەيان هةية لةضةوريدا","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_04","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"بة ثشت بةستن بةو شيَوةيةي بةرامبةر، كام ثيَكهاتة","optionA_sorani":"1 ، 2 ،3 ،4","optionB_sorani":"تةنها1","optionC_sorani":"1 ، 2","optionD_sorani":"تةنها2","question_badini":"بة پشت بةستن بةو شیوةيةي بەرامبەر، كام پیكهاتة","optionA_badini":"1 ، 2 ،3 ،4","optionB_badini":"تةنها1","optionC_badini":"1 ، 2","optionD_badini":"تةنها2","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_06","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"كام لةمانة دةربارةي ميكانيزمي ثةرضةثيَدانةوةي نةريَني و ميكانيزمي ثةرضة ثيَدانةوةي ئةريَني راستة؟","optionA_sorani":"لة هةردووميكانيزمةكةدا دوا هةنطاو كؤنترؤلَي زنجيرة رووداوةكاني هةنطاوي يةكةم دةكات","optionB_sorani":"لة هةردووميكانيزمةكةداهةنطاوي يةكةم كؤنترؤلَي زنجيرة رووداوةكاني هةنطاوي كؤتايي دةكات","optionC_sorani":"هةردووكيان راس","optionD_sorani":"لة هةردووميكانيزمةكةدا دوا هةنطاو كؤنترؤلَي زنجيرة رووداوةكاني هةنطاوي يةكةم دةكات","question_badini":"كام لةمانة دةربارةي ميكانيزمي پةرضةپیدانووەي نةریني و ميكانيزمي پةرضة پیدانووەي ئةریني ڕاستة؟","optionA_badini":"لة هةردووميكانيزمةكةدا دوا هةنگاو كۆنترۆلَي زنجيرة رووداوةكاني هةنگاوي يةكةم دةكات","optionB_badini":"لة هةردووميكانيزمةكةداهةنگاوي يةكةم كۆنترۆلَي زنجيرة رووداوةكاني هةنگاوي كۆتايي دةكات","optionC_badini":"هةردووكيان راس","optionD_badini":"لة هةردووميكانيزمةكةدا دوا هةنگاو كۆنترۆلَي زنجيرة رووداوةكاني هةنگاوي يةكةم دةكات","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_08","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِووةكي ثؤلكةدا روخساري تؤو لووسR) زالَة لةسةر روخساري تؤو ضرضr) ،لة كاملةو ليَكدانانةي خوارةوة رووةكي ثؤلكةي تؤو","optionA_sorani":"rr × Rr","optionB_sorani":"rr × rr","optionC_sorani":"Rr × RR","optionD_sorani":"Rr × Rr","question_badini":"لة رووةكي پۆلكةدا روخساري تۆو لووسR) زالَة لةسةر روخساري تۆو ضرضr) ،لة كاملةو لیكدانانةي خوارووە رووةكي پۆلكةي تۆو","optionA_badini":"rr × Rr","optionB_badini":"rr × rr","optionC_badini":"Rr × RR","optionD_badini":"Rr × Rr","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_10","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"هةردوو ..................... بةرطرى طةرِانةوةى خويَن دةكةن بؤ هةردوو سكؤلَةكان لة ماوةى .................. دا.","optionA_sorani":"زمانةىدوو ثةرِةيي و سيَ ثةرِةيي, طرذبوونى دلَ","optionB_sorani":"","optionC_sorani":"زمانةى دوو ثةرِةيي و سيَ ثةرِةيي, خاوبوونةوةى دلَ","optionD_sorani":"زمانة كةوانةييةكان , طرذبوونى دلَ","question_badini":"هةردوو ..................... بةرگرى گةرانووەى خوین دةكةن بۆ هةردوو سكۆلَةكان لة ماوةى .................. دا.","optionA_badini":"زمانةىدوو پةرةيي و سی پةرةيي, گرژبوونى دلَ","optionB_badini":"","optionC_badini":"زمانةى دوو پةرةيي و سی پةرةيي, خاوبوونووەى دلَ","optionD_badini":"زمانة كةوانةييةكان , گرژبوونى دلَ","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_11","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"كاتيَك ماسولكةي سيَ سةر خاودةبيَتةوة ، ماسولكةي دووسةر............... و .......................","optionA_sorani":"طرذ دةبيَت ، بالَ راستدةبيَتةوة","optionB_sorani":"خاودةبيَتةوة ، ئانيشك دةضةميَتةوة","optionC_sorani":"طرذ دةبيَت ، ئانيشك دةضةميَتةوة","optionD_sorani":"خاودةبيَتةوة ، بالَ راستدةبيَتةوة","question_badini":"كاتیك مازوڵکەي سی سةر خاودةبیتووە ، مازوڵکەي دووسةر............... و .......................","optionA_badini":"گرژ دةبیت ، بالَ ڕاستدةبیتووە","optionB_badini":"خاودةبیتووە ، ئانيشك دةضةمیتووە","optionC_badini":"گرژ دةبیت ، ئانيشك دةضةمیتووە","optionD_badini":"خاودةبیتووە ، بالَ ڕاستدةبیتووە","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_13","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"ئةو لوونةي خويَن كة بة ذمارة 1 ،2 ئاماذةيان","optionA_sorani":"تورةكةي زةرديَنة","optionB_sorani":"ئةلةنتؤيس","optionC_sorani":"كؤريؤن","optionD_sorani":"تورةكةي سةراو","question_badini":"ئةو لوونةي خوین كة بة ژمارە 1 ،2 ئاماژةيان","optionA_badini":"تورةكةي زةردینة","optionB_badini":"ئةلةنتۆيس","optionC_badini":"كۆريۆن","optionD_badini":"تورةكةي سةراو","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_16","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"خشتةي بةرامبةر جؤري دذةتةنةكان رووةندةكاتةوة كة لة ناو ثلازماي خويَني سيَ منالَيX , Y , Z) خيَزانيَك دا هةن،كام لةمانةي","optionA_sorani":"يةكيَك لةباوان","optionB_sorani":"يةكيَك لةباوانi","optionC_sorani":"يةكيَك لةباوان","optionD_sorani":"هةردووباوان","question_badini":"خشتةي بەرامبەر جۆري دژةتةنةكان رووةندةكاتووە كة لة ناو پلازماي خویني سی منالَيX , Y , Z) خیزانیك دا هةن،كام لةمانةي","optionA_badini":"يةكیك لةباوان","optionB_badini":"يةكیك لةباوانi","optionC_badini":"يةكیك لةباوان","optionD_badini":"هةردووباوان","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_18","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"بة ثشت بةستن بةو شيَوةيةي بةرامبةر، كاتي مندالَبوون","optionA_sorani":"1 ،2 ،6","optionB_sorani":"3 ،4 ،6","optionC_sorani":"3 ،5","optionD_sorani":"4 ،6","question_badini":"بة پشت بةستن بةو شیوةيةي بەرامبەر، كاتي مندالَبوون","optionA_badini":"1 ،2 ،6","optionB_badini":"3 ،4 ،6","optionC_badini":"3 ،5","optionD_badini":"4 ،6","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_19","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة ليَكداني تاكة دوورِةطبووندا(Aa × Aa)،بنضينةي كام لةم ئةنجامانة دةكريَت (1800) تاك بيَت؟","optionA_sorani":"ثةيدا بوو","optionB_sorani":"ئةطةر450) تاكي بؤ ماوة بابةتيaa) ثةيدا بوو","optionC_sorani":"","optionD_sorani":"هةموو وةلاَمةكان رِاس","question_badini":"لة لیكداني تاكة دوورةگبووندا(Aa × Aa)،بنضينةي كام لةم ئةنجامانة دةكریت (1800) تاك بیت؟","optionA_badini":"پةيدا بوو","optionB_badini":"ئةگةر450) تاكي بۆ ماوة بابةتيaa) پةيدا بوو","optionC_badini":"","optionD_badini":"هةموو وةلامةكان راس","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_22","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"X ،Y دووهؤكاري نةخؤشي جياوازن ،كةسيَك بؤ يةكةم جار تووشي هؤكاري نةخؤشيX ) بوو ئينجا ليَي ضاكبووةوة ثاش","optionA_sorani":"تةنهاثةلاماري هؤكاري نةخؤشي (X ) دةدةن","optionB_sorani":"تةنهاثةلاماري هؤكاري نةخؤشي (Y ) دةدةن","optionC_sorani":"ثةلاماري هةردوو هؤكاري نةخؤشي (X ،Y )دةدةن","optionD_sorani":"ثةلاماري هةردوو هؤكاري نةخؤشي (X ،Y )نادةن","question_badini":"X ،Y دووهۆكاري نةخۆشي جياوازن ،كةسیك بۆ يةكةم جار تووشي هۆكاري نةخۆشيX ) بوو ئينجا لیي ضاكبووووە پاش","optionA_badini":"تةنهاپةلاماري هۆكاري نةخۆشي (X ) دةدةن","optionB_badini":"تةنهاپةلاماري هۆكاري نةخۆشي (Y ) دةدةن","optionC_badini":"پةلاماري هةردوو هۆكاري نةخۆشي (X ،Y )دةدةن","optionD_badini":"پةلاماري هةردوو هۆكاري نةخۆشي (X ،Y )نادةن","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_24","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"كام لةمانة لة كاريطةرييةكانينيكؤتين نيية؟","optionA_sorani":"ورذمي خويَن بؤ ئةندامةكاني ناوةوة كةمدةكاتةوة","optionB_sorani":"ثيَداني ئؤكسجين بة شانةكاني لةش كةمدةكاتةوة","optionC_sorani":"ثيَداني خويَن بة دةست و ثيَيةكان كةمدةكاتةوة","optionD_sorani":"ثةستاني خويَن وتيَكرِايي ليَداني دلَ بةرزدةكاتةوة","question_badini":"كام لةمانة لة کارکردنيةكانينيكۆتين نيية؟","optionA_badini":"ورژمي خوین بۆ ئةندامةكاني ناوووە كةمدةكاتووە","optionB_badini":"پیداني ئۆكسجين بة شانةكاني لةش كةمدةكاتووە","optionC_badini":"پیداني خوین بة دةست و پیيةكان كةمدةكاتووە","optionD_badini":"پةستاني خوین وتیكرايي لیداني دلَ بةرزدةكاتووە","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_26","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"كؤمةلَةي فؤسفاتي.لة ثيَكهاتةي DNA دا لةطةرديلةيةك فوسفؤر كة بةستراوة بة............طةرديلة ئؤكسجين ثيَكديَت.و لة ثيَكهاتةي","optionA_sorani":"","optionB_sorani":"ثيَنج ، ثيَنج","optionC_sorani":"ضوار ، ثيَنج","optionD_sorani":"ثيَنج ، ضوار","question_badini":"كۆمةلَةي فۆسفاتي.لة پیكهاتةي DNA دا لةگةرديلةيةك فوسفۆر كة بةستراوة بة............گةرديلة ئۆكسجين پیكدیت.و لة پیكهاتةي","optionA_badini":"","optionB_badini":"پینج ، پینج","optionC_badini":"ضوار ، پینج","optionD_badini":"پینج ، ضوار","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_27","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"بة ثشت بةستن بةو شيَوةيةي بةرامبةر ئةو ثيَكهاتةيةي كة كة رِيَرِةويَكي","optionA_sorani":"تةنها2","optionB_sorani":"3 ,4","optionC_sorani":"تةنها4","optionD_sorani":"1 ،2","question_badini":"بة پشت بةستن بةو شیوةيةي بەرامبەر ئةو پیكهاتةيةي كة كة ریرةویكي","optionA_badini":"تةنها2","optionB_badini":"3 ,4","optionC_badini":"تةنها4","optionD_badini":"1 ،2","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_30","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"بة ثشتبةستن بةو تؤماري رةضةلَةكي بةرامبةر كة بؤمانةوةي نةخؤشي هانتنطتؤن لة خيَزانيَكي","optionA_sorani":"1 ،2 ،3 ،4","optionB_sorani":"2 ،3","optionC_sorani":"1 ،4","optionD_sorani":"هيض يةكيَكيان ثيَويست نيية دوورِةطبيَت","question_badini":"بة پشتبةستن بةو تۆماري رةضةلَةكي بەرامبەر كة بۆمانووەي نةخۆشي هانتنگتۆن لة خیزانیكي","optionA_badini":"1 ،2 ،3 ،4","optionB_badini":"2 ،3","optionC_badini":"1 ،4","optionD_badini":"هيض يةكیكيان پیويست نيية دوورةگبیت","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_31","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"كام لةمانة لةفرمانةكاني ئةو مؤخة نية كة لة ئيَسكي دريَذدا هةية؟","optionA_sorani":"خرؤكةي سووري خويَن و خرؤكة سثييةكاني خويَن و ثةرِةكاني خويَن","optionB_sorani":"هةردووكيان راس","optionC_sorani":"وةكو كؤطة بؤ وزةي يةدةك كاردةكات","optionD_sorani":"خرؤكةي سووري خويَن و خرؤكة سثييةكاني خويَن و ثةرِةكاني خويَن","question_badini":"كام لةمانة لةفرمانةكاني ئةو مۆخة نية كة لة ئیسكي دریژدا هةية؟","optionA_badini":"خرۆكةي سووري خوین و خرۆكة سپييةكاني خوین و پةرةكاني خوین","optionB_badini":"هةردووكيان راس","optionC_badini":"وةكو كۆگة بۆ وزةي يةدةك كاردةكات","optionD_badini":"خرۆكةي سووري خوین و خرۆكة سپييةكاني خوین و پةرةكاني خوین","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_32","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"كام لةمانة لة جومطةي ئةذنؤدا شلةيةكي لينجي خلسكيَنةر دةردةدات:-","optionA_sorani":"كرِكرِاطة","optionB_sorani":"بةستةر","optionC_sorani":"ئةو شانةيةي رووي جومطةكة دادةثؤشيَت","optionD_sorani":"كرِكرِاطة","question_badini":"كام لةمانة لة جومگةي ئةژنۆدا شلةيةكي لينجي خلسكینةر دةردةدات:-","optionA_badini":"كركراگة","optionB_badini":"گرێدان","optionC_badini":"ئةو شانةيةي رووي جومگةكة دادةپۆشیت","optionD_badini":"كركراگة","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_34","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"قؤناغي دووةمي تووشبوون بة ظايرؤسيHIV: ليمفة رذيَنةكان هةلَدةئاوسيَن","optionA_sorani":"قؤناغي يةكةمي تووشبوون بة ظايرؤسيHIV : سةرةتاي دةركةوتني نيشانة خراثةكانة","optionB_sorani":"قؤناغي سيَيةمي تووشبوون بة ظايرؤسيHIV :دةتوانريَتدةستنيشاني نةخؤشي ئايدز بكريَت","optionC_sorani":"قؤناغي يةكةمي تووشبوون بة ظايرؤسيHIV : نةبووني دذةتةنةكان دذي ظايرؤسي HIV بة دريَذايي ئةم قؤناغة","optionD_sorani":"قؤناغي سيَيةمي تووشبوون بة ظايرؤسيHIV : برِي دذةتةنةكان بؤ دذةثةيداكةرةكانيHIV زؤردةبيَت","question_badini":"قۆناغي دووةمي تووشبوون بة ظايرۆسيHIV: ليمفة رژینةكان هةلَدةئاوسین","optionA_badini":"قۆناغي يةكةمي تووشبوون بة ظايرۆسيHIV : سةرةتاي دةركةوتني نيشانة خراپةكانة","optionB_badini":"قۆناغي سیيةمي تووشبوون بة ظايرۆسيHIV :دةتوانریتدةستنيشاني نةخۆشي ئايدز بكریت","optionC_badini":"قۆناغي يةكةمي تووشبوون بة ظايرۆسيHIV : نةبووني دژةتةنةكان دژي ظايرۆسي HIV بة دریژايي ئةم قۆناغة","optionD_badini":"قۆناغي سیيةمي تووشبوون بة ظايرۆسيHIV : بري دژةتةنةكان بۆ دژةپةيداكةرةكانيHIV زۆردةبیت","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2022_37","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"هةموو ئةمانة دةربارةي دةمارة طويَزةرةوةكان رِاستن جطة لةوةي:-","optionA_sorani":"بة شيَوةيةكي هيَواشتر و كاريطةرييةكي دريَذتر لة هؤرمؤنةكان كاردةكةن","optionB_sorani":"لةو ضيكلَدانانةي كة لة دةمارة كؤتاييةكاندا هةن كؤدةكريَنةوة","optionC_sorani":"دةبنة هؤي رووداني يان وةستاندني ضالاكي كارةبايي لة دةمارة خانةي داديَت","optionD_sorani":"دواي جيَبةجيَكردني كارةكةي دةكريَتبة هؤي ئةنزيمةكانةوة هةلَبووةشيَن","question_badini":"هةموو ئةمانة دةربارةي دەمارێ گویزةرووەكان راستن جگة لووەي:-","optionA_badini":"بة شیوةيةكي هیواشتر و کارکردنيةكي دریژتر لة هۆرمۆنةكان كاردةكةن","optionB_badini":"لةو ضيكلَدانانةي كة لة دەمارێ كۆتاييةكاندا هةن كۆدةكرینووە","optionC_badini":"دةبنة هۆي رووداني يان وةستاندني ضالاكي كارةبايي لة دەمارێ خانەیي دادیت","optionD_badini":"دواي جیبةجیكردني كارةكةي دةكریتبة هۆي ئةنزيمةكانووە هةلَبووةشین","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"bio_2023_01","subject":"biology","subjectSorani":"زیندەزانی","subjectBadini":"ژیندەزانی","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"كام لةمانة نموونةنيية بؤ رووكةشة شانة؟","optionA_sorani":"ئةو شانةيةي لوولةكاني خويَن ناوثؤش دةكات","optionB_sorani":"ئةو شانةيةي ناوثؤشي بؤري هةوا دةكات","optionC_sorani":"ضيني دةرةوةي خويَنهيَنةرةكان","optionD_sorani":"ضينةشانة دةرةكييةكةي ثيَست","question_badini":"كام لةمانة نموونةنيية بۆ رووكةشة شانة؟","optionA_badini":"ئةو شانةيةي لوولةكاني خوین ناوپۆش دةكات","optionB_badini":"ئةو شانةيةي ناوپۆشي بۆري هةوا دةكات","optionC_badini":"ضيني دةرووەي خوینهینةرةكان","optionD_badini":"ضينةشانة دةرةكييةكةي پیست","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_01","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"نةخشةى ويَنةى روونكردنةوةى بةرامبةر دياريبكة .","optionA_sorani":"—","optionB_sorani":"𝑓(𝑥) = −(𝑥 + 1)2 + 2","optionC_sorani":"𝑓(𝑥) = −(𝑥 − 1)2 + 2","optionD_sorani":"𝑓(𝑥) = −(𝑥 − 1)2 − 2","question_badini":"نەخشەى وینةى ڕووکردنەوەى بەرامبەر دياريبكة .","optionA_badini":"—","optionB_badini":"𝑓(𝑥) = −(𝑥 + 1)2 + 2","optionC_badini":"𝑓(𝑥) = −(𝑥 − 1)2 + 2","optionD_badini":"𝑓(𝑥) = −(𝑥 − 1)2 − 2","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_02","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"كام لةم نةخشانةى ديَنمةوداكةى بريتية لة ] − ∞, −2 ] ؟","optionA_sorani":"—","optionB_sorani":"𝑓(𝑥) = √𝑥 − 2","optionC_sorani":"𝑓(𝑥) = − √𝑥 + 2 𝑓(𝑥) = √𝑥 + 2","optionD_sorani":"","question_badini":"كام لةم نةخشانةى دینمةوداكةى بريتية لة ] − ∞, −2 ] ؟","optionA_badini":"—","optionB_badini":"𝑓(𝑥) = √𝑥 − 2","optionC_badini":"𝑓(𝑥) = − √𝑥 + 2 𝑓(𝑥) = √𝑥 + 2","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_03","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"يةكتربرِينى ستوونى راستةهيَلَي 𝑦 = −3𝑥 − 4 بدؤزةوة","optionA_sorani":"—","optionB_sorani":"(0 , 4 )","optionC_sorani":"(0 , 3 ) (0 , −4 )","optionD_sorani":"","question_badini":"يةكتربرينى ستوونى ڕاستةهیلَي 𝑦 = −3𝑥 − 4 بدۆزووە","optionA_badini":"—","optionB_badini":"(0 , 4 )","optionC_badini":"(0 , 3 ) (0 , −4 )","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_04","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"بوارى نةخشةى𝑓(𝑥) = − √ 𝑥2 − 3𝑥 − 10 بدؤزةوة.","optionA_sorani":"—","optionB_sorani":"[−2 , 5 ]","optionC_sorani":"[−5 , 2 ] ] − ∞, −2 ] ∪ [5 , +∞[","optionD_sorani":"","question_badini":"بوارى نەخشەى𝑓(𝑥) = − √ 𝑥2 − 3𝑥 − 10 بدۆزووە.","optionA_badini":"—","optionB_badini":"[−2 , 5 ]","optionC_badini":"[−5 , 2 ] ] − ∞, −2 ] ∪ [5 , +∞[","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_05","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"بةهاى 𝑏 ضةندة تاوةكو خالَةكانى (3 , −4 ) و (2 , 𝑏 ) و (1 , 2 ) بكةونة سةر يةك راستةهيَلَ ؟","optionA_sorani":"—","optionB_sorani":"1 −1","optionC_sorani":"−2","optionD_sorani":"","question_badini":"بةهاى 𝑏 ضةندة تاوةكو خالَةكانى (3 , −4 ) و (2 , 𝑏 ) و (1 , 2 ) بكةونة سةر يةك ڕاستةهیلَ ؟","optionA_badini":"—","optionB_badini":"1 −1","optionC_badini":"−2","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_06","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئةطةر(𝑓𝑜𝑔)(𝑥) = −4𝑥(𝑥 + 1) ،نةخشةى 𝑓(𝑥) و نةخشةى 𝑔(𝑥) دياريبكة","optionA_sorani":"𝑓(𝑥) = 𝑥2 − 1 و 𝑔(𝑥) = 2𝑥 − 1","optionB_sorani":"","optionC_sorani":"𝑓(𝑥) = 1 − 𝑥 و 𝑔(𝑥) = 2𝑥2 + 1","optionD_sorani":"","question_badini":"ئةگةر(𝑓𝑜𝑔)(𝑥) = −4𝑥(𝑥 + 1) ،نەخشەى 𝑓(𝑥) و نەخشەى 𝑔(𝑥) دياريبكة","optionA_badini":"𝑓(𝑥) = 𝑥2 − 1 و 𝑔(𝑥) = 2𝑥 − 1","optionB_badini":"","optionC_badini":"𝑓(𝑥) = 1 − 𝑥 و 𝑔(𝑥) = 2𝑥2 + 1","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_08","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئةطةر 𝑓(𝑥) = 𝑥2 − 3𝑥 + 4 ، ئةنجامى 𝑓(𝑥 + 2) − 𝑓(2) بدؤزةوة .","optionA_sorani":"—","optionB_sorani":"𝑥2 − 3𝑥 + 4","optionC_sorani":"𝑥2 + 𝑥 𝑥2 + 𝑥 − 8","optionD_sorani":"2𝑥 − 3","question_badini":"ئةگةر 𝑓(𝑥) = 𝑥2 − 3𝑥 + 4 ، ئةنجامى 𝑓(𝑥 + 2) − 𝑓(2) بدۆزووە .","optionA_badini":"—","optionB_badini":"𝑥2 − 3𝑥 + 4","optionC_badini":"𝑥2 + 𝑥 𝑥2 + 𝑥 − 8","optionD_badini":"2𝑥 − 3","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_09","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ويَنةى روونكردنةوةى بةرامبةر بةكاربهيَنة بؤ دؤزينةوةى","optionA_sorani":"—","optionB_sorani":"1","optionC_sorani":"2 0","optionD_sorani":"—","question_badini":"وینةى ڕووکردنەوەى بەرامبەر بةكاربهینة بۆ دۆزينووەى","optionA_badini":"—","optionB_badini":"1","optionC_badini":"2 0","optionD_badini":"—","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_10","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"هةموو دةركةنارة ستوونييةكانى نةخشةى 𝑓(𝑥) = −1","optionA_sorani":"—","optionB_sorani":"𝑥 = 1","optionC_sorani":"𝑥 = 𝑛𝜋 𝑥 = 𝜋","optionD_sorani":"","question_badini":"هةموو دةركةنارة ستوونييةكانى نەخشەى 𝑓(𝑥) = −1","optionA_badini":"—","optionB_badini":"𝑥 = 1","optionC_badini":"𝑥 = 𝑛𝜋 𝑥 = 𝜋","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_11","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"بةهاى𝑎 بدؤزةوةبؤ ئةوةى نةخشةى 𝑓(𝑥) = {𝑥3 + 1","optionA_sorani":"—","optionB_sorani":"1","optionC_sorani":"8 2","optionD_sorani":"","question_badini":"بةهاى𝑎 بدۆزووەبۆ ئووەى نەخشەى 𝑓(𝑥) = {𝑥3 + 1","optionA_badini":"—","optionB_badini":"1","optionC_badini":"8 2","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_12","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئةنجامى 𝑙𝑖𝑚 𝑥→2","optionA_sorani":"—","optionB_sorani":"−1","optionC_sorani":"1","optionD_sorani":"4","question_badini":"ئةنجامى 𝑙𝑖𝑚 𝑥→2","optionA_badini":"—","optionB_badini":"−1","optionC_badini":"1","optionD_badini":"4","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_13","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئةنجامى𝑙𝑖𝑚 𝑥→3","optionA_sorani":"—","optionB_sorani":"27","optionC_sorani":"54 −27","optionD_sorani":"","question_badini":"ئةنجامى𝑙𝑖𝑚 𝑥→3","optionA_badini":"—","optionB_badini":"27","optionC_badini":"54 −27","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_14","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئةنجامى lim𝑥→4","optionA_sorani":"—","optionB_sorani":"− 1","optionC_sorani":"0 1","optionD_sorani":"","question_badini":"ئةنجامى lim𝑥→4","optionA_badini":"—","optionB_badini":"− 1","optionC_badini":"0 1","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_15","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"نةخشةى 𝑓(𝑥) = {","optionA_sorani":"—","optionB_sorani":"ثيَناسة نةكراوة 𝑓(1)","optionC_sorani":"𝑙𝑖𝑚 𝑥→1","optionD_sorani":"𝑙𝑖𝑚 𝑥→1","question_badini":"نەخشەى 𝑓(𝑥) = {","optionA_badini":"—","optionB_badini":"پیناسة نةكراوة 𝑓(1)","optionC_badini":"𝑙𝑖𝑚 𝑥→1","optionD_badini":"𝑙𝑖𝑚 𝑥→1","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_16","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"كام لةمانةىديَن راستة ؟","optionA_sorani":"—","optionB_sorani":"𝑙𝑖𝑚 𝑥→1+","optionC_sorani":"𝑙𝑖𝑚 𝑥→0","optionD_sorani":"𝑙𝑖𝑚 𝑥→0","question_badini":"كام لةمانةىدین ڕاستة ؟","optionA_badini":"—","optionB_badini":"𝑙𝑖𝑚 𝑥→1+","optionC_badini":"𝑙𝑖𝑚 𝑥→0","optionD_badini":"𝑙𝑖𝑚 𝑥→0","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_17","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"بةثيَي سةلميَنراوى نيَوانة بةهايةكان , لة كام نةخشةدا هاوكيَشةى 𝑓(𝑥) = 0 رةطيَكى دةبيَت لة نيَوان −2 و0 دا.","optionA_sorani":"—","optionB_sorani":"𝑓(𝑥) = 𝑥2 − 3𝑥 + 2 𝑓(𝑥) = 𝑥−1","optionC_sorani":"𝑓(𝑥) = 2𝑥2 + 3𝑥 − 3","optionD_sorani":"","question_badini":"بةپیي سةلمینراوى نیوانة بةهايةكان , لة كام نەخشەدا هاوکیشەى 𝑓(𝑥) = 0 رةگیكى دةبیت لة نیوان −2 و0 دا.","optionA_badini":"—","optionB_badini":"𝑓(𝑥) = 𝑥2 − 3𝑥 + 2 𝑓(𝑥) = 𝑥−1","optionC_badini":"𝑓(𝑥) = 2𝑥2 + 3𝑥 − 3","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_18","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"داتاشراوى نةخشةى𝑓(𝑥) = 𝑥","optionA_sorani":"𝑓′(𝑥) = 1−𝑥4","optionB_sorani":"𝑓′(𝑥) = 𝑥4−1","optionC_sorani":"—","optionD_sorani":"𝑓′(𝑥) = 𝑥4−2𝑥","question_badini":"داتاشراوى نەخشەى𝑓(𝑥) = 𝑥","optionA_badini":"𝑓′(𝑥) = 1−𝑥4","optionB_badini":"𝑓′(𝑥) = 𝑥4−1","optionC_badini":"—","optionD_badini":"𝑓′(𝑥) = 𝑥4−2𝑥","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_19","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"لة كام بةهاى𝑥 ليَكةوتى نةخشةى 𝑓(𝑥) = −2(𝑥 + 2)3 ئاسؤيى دةبيَت؟","optionA_sorani":"—","optionB_sorani":"𝑥 = 2","optionC_sorani":"𝑥 = 6 𝑥 = −2","optionD_sorani":"","question_badini":"لة كام بةهاى𝑥 لیكةوتى نەخشەى 𝑓(𝑥) = −2(𝑥 + 2)3 ئاسۆيى دةبیت؟","optionA_badini":"—","optionB_badini":"𝑥 = 2","optionC_badini":"𝑥 = 6 𝑥 = −2","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_20","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"داتاشراوى نةخشةى𝑓(𝑥) = ln 𝑥2 بدؤزةوة.","optionA_sorani":"—","optionB_sorani":"𝑓′(𝑥) = 2","optionC_sorani":"𝑓′(𝑥) = 1","optionD_sorani":"","question_badini":"داتاشراوى نەخشەى𝑓(𝑥) = ln 𝑥2 بدۆزووە.","optionA_badini":"—","optionB_badini":"𝑓′(𝑥) = 2","optionC_badini":"𝑓′(𝑥) = 1","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_21","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"لارىليَكةوتى ضةماوةى 𝑦4 = 𝑦2 − 𝑥2 لةخالَى( √3","optionA_sorani":"√3","optionB_sorani":"−√3","optionC_sorani":"1","optionD_sorani":"−1","question_badini":"لارىلیكةوتى ضةماوةى 𝑦4 = 𝑦2 − 𝑥2 لةخالَى( √3","optionA_badini":"√3","optionB_badini":"−√3","optionC_badini":"1","optionD_badini":"−1","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_22","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئةنجامى 𝑙𝑖𝑚 𝑥→0","optionA_sorani":"—","optionB_sorani":"𝜋","optionC_sorani":"1","optionD_sorani":"—","question_badini":"ئةنجامى 𝑙𝑖𝑚 𝑥→0","optionA_badini":"—","optionB_badini":"𝜋","optionC_badini":"1","optionD_badini":"—","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_23","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"تيَكرِاى طؤرِانى دوورى نيَوان خالَيَك لةسةر ضةماوةى برِطة هاوتاى 𝑦 = 𝑥2 + 1 دةجولَيَت و خالَى بنةرِةت بدؤزةوة لة 𝑥 = 1 ,","optionA_sorani":"—","optionB_sorani":"10 √ 5","optionC_sorani":"2 √ 5 5 √ 5","optionD_sorani":"","question_badini":"تیكراى گۆرانى دوورى نیوان خالَیك لةسةر ضةماوةى برگة هاوتاى 𝑦 = 𝑥2 + 1 دةجولَیت و خالَى بنةرةت بدۆزووە لة 𝑥 = 1 ,","optionA_badini":"—","optionB_badini":"10 √ 5","optionC_badini":"2 √ 5 5 √ 5","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_24","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"هاوكيَشةى ليَكةوتىنةخشةى 𝑓(𝑥) = 𝑥 + 4","optionA_sorani":"—","optionB_sorani":"𝑦 = −3","optionC_sorani":"𝑦 = 3","optionD_sorani":"","question_badini":"هاوکیشەى لیكةوتىنەخشەى 𝑓(𝑥) = 𝑥 + 4","optionA_badini":"—","optionB_badini":"𝑦 = −3","optionC_badini":"𝑦 = 3","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_25","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئةطةر𝑓(𝑥) = −4","optionA_sorani":"—","optionB_sorani":"4","optionC_sorani":"4","optionD_sorani":"—","question_badini":"ئةگةر𝑓(𝑥) = −4","optionA_badini":"—","optionB_badini":"4","optionC_badini":"4","optionD_badini":"—","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_26","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"خالَيَك لةسةر تةوةرى 𝑥 بةثيَى نةخشةى لادانى 𝑠(𝑡) = 12𝑡 − 𝑡3 دةجولَيَت , كات 𝑡 بة ضركةو لادان 𝑠 بة مةتر دةثيَوريَت","optionA_sorani":"(","optionB_sorani":"−5","optionC_sorani":"−3 5","optionD_sorani":"3 )","question_badini":"خالَیك لةسةر تووەرى 𝑥 بةپیى نەخشەى لادانى 𝑠(𝑡) = 12𝑡 − 𝑡3 دةجولَیت , كات 𝑡 بة ضركةو لادان 𝑠 بة مةتر دةپیوریت","optionA_badini":"(","optionB_badini":"−5","optionC_badini":"−3 5","optionD_badini":"3 )","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_27","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"داتاشراوىدووةمى نةخشةى 𝑓(𝑥) = 𝑥 𝑠𝑖𝑛𝑥 + 𝑐𝑜𝑠𝑥 بدؤزةوة .","optionA_sorani":"—","optionB_sorani":"𝑓′′(𝑥) = −𝑥 𝑠𝑖𝑛𝑥 + 𝑐𝑜𝑠𝑥","optionC_sorani":"𝑓′′(𝑥) = −𝑥 𝑐𝑜𝑠𝑥 + 𝑠𝑖𝑛𝑥","optionD_sorani":"𝑓′′(𝑥) = 𝑥 𝑠𝑖𝑛𝑥 − 2𝑐𝑜𝑠𝑥","question_badini":"داتاشراوىدووةمى نەخشەى 𝑓(𝑥) = 𝑥 𝑠𝑖𝑛𝑥 + 𝑐𝑜𝑠𝑥 بدۆزووە .","optionA_badini":"—","optionB_badini":"𝑓′′(𝑥) = −𝑥 𝑠𝑖𝑛𝑥 + 𝑐𝑜𝑠𝑥","optionC_badini":"𝑓′′(𝑥) = −𝑥 𝑐𝑜𝑠𝑥 + 𝑠𝑖𝑛𝑥","optionD_badini":"𝑓′′(𝑥) = 𝑥 𝑠𝑖𝑛𝑥 − 2𝑐𝑜𝑠𝑥","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_28","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ماوةىروو لة زيادبوونى روونكردنةوةى نةخشةى 𝑓(𝑥) = 𝑒 𝑥3−6 𝑥2+8 بدؤزةوة","optionA_sorani":"—","optionB_sorani":"] − ∞ , 4[","optionC_sorani":"]0 ,4[ ]2 , 4[","optionD_sorani":"","question_badini":"ماوةىروو لة زيادبوونى ڕووکردنەوەى نەخشەى 𝑓(𝑥) = 𝑒 𝑥3−6 𝑥2+8 بدۆزووە","optionA_badini":"—","optionB_badini":"] − ∞ , 4[","optionC_badini":"]0 ,4[ ]2 , 4[","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_30","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"خالَى وةرطةرِانى روونكردنةوةى نةخشةى𝑓(𝑥) = 𝑥3 − 𝑥 + 2 بدؤزةوة .","optionA_sorani":"—","optionB_sorani":"(0 , 0)","optionC_sorani":"(0 , 2) (1 , 2)","optionD_sorani":"","question_badini":"خالَى وةرگةرانى ڕووکردنەوەى نەخشەى𝑓(𝑥) = 𝑥3 − 𝑥 + 2 بدۆزووە .","optionA_badini":"—","optionB_badini":"(0 , 0)","optionC_badini":"(0 , 2) (1 , 2)","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_31","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئةنجامى 𝑙𝑖𝑚 𝑥→−∞","optionA_sorani":"—","optionB_sorani":"−∞","optionC_sorani":"3","optionD_sorani":"","question_badini":"ئةنجامى 𝑙𝑖𝑚 𝑥→−∞","optionA_badini":"—","optionB_badini":"−∞","optionC_badini":"3","optionD_badini":"","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2021_32","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"هاوكيَشةى دةركةنارىلار بؤ روونكردنةوةى نةخشةى 𝑓(𝑥) = 3𝑥2+2𝑥−1","optionA_sorani":"—","optionB_sorani":"𝑦 = 3𝑥 + 8","optionC_sorani":"𝑦 = 𝑥 + 3 𝑦 = 3𝑥 − 8","optionD_sorani":"𝑦 = 𝑥 − 3","question_badini":"هاوکیشەى دةركةنارىلار بۆ ڕووکردنەوەى نەخشەى 𝑓(𝑥) = 3𝑥2+2𝑥−1","optionA_badini":"—","optionB_badini":"𝑦 = 3𝑥 + 8","optionC_badini":"𝑦 = 𝑥 + 3 𝑦 = 3𝑥 − 8","optionD_badini":"𝑦 = 𝑥 − 3","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_02","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"“]›:÷Ì›:ﬁÌ| ç]ﬁÌÔ:ÄËˇ‡:ÑÊÊﬁ”ÖÄﬁÌÊÏ“Ì Ô:‚]ÊpÓˇ:ËÌ:÷Ì ö ÌŸˇ:hÌÊÏÑÏÔ:𝑦𝑦::Z:","optionA_sorani":"—","optionB_sorani":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥","optionC_sorani":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥","optionD_sorani":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥","question_badini":"“]›:÷Ì›:ﬁÌ| ç]ﬁÌÔ:ÄËˇ‡:ÑÊÊﬁ”ÖÄﬁÌÊÏ“Ì Ô:‚]ÊpÓˇ:ËÌ:÷Ì ö ÌŸˇ:hÌÊÏÑÏÔ:𝑦𝑦::Z:","optionA_badini":"—","optionB_badini":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥","optionC_badini":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥","optionD_badini":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_03","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"dÁ\\ÑÔ:“]›:÷Ì›:ﬁÌ| ç]ﬁÌÔ:ÄËˇ‡:ÄÏ“]hÌ:] −∞, 4[ ::H","optionA_sorani":"—","optionB_sorani":"𝑓𝑓(𝑥𝑥) = −1","optionC_sorani":"𝑓𝑓(𝑥𝑥) = − √ 4 −𝑥𝑥","optionD_sorani":"𝑓𝑓(𝑥𝑥) = −|4 −𝑥𝑥| 𝑓𝑓(𝑥𝑥) = 𝑙𝑙𝑙𝑙(4 −𝑥𝑥)","question_badini":"dÁ\\ÑÔ:“]›:÷Ì›:ﬁÌ| ç]ﬁÌÔ:ÄËˇ‡:ÄÏ“]hÌ:] −∞, 4[ ::H","optionA_badini":"—","optionB_badini":"𝑓𝑓(𝑥𝑥) = −1","optionC_badini":"𝑓𝑓(𝑥𝑥) = − √ 4 −𝑥𝑥","optionD_badini":"𝑓𝑓(𝑥𝑥) = −|4 −𝑥𝑥| 𝑓𝑓(𝑥𝑥) = 𝑙𝑙𝑙𝑙(4 −𝑥𝑥)","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_04","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"⁄ÌÊÄ\\Ô:ﬁÌ| çÌÔ:𝑓𝑓(𝑥𝑥) = { 3 −𝑥𝑥 𝑥𝑥 < 3","optionA_sorani":"—","optionB_sorani":"] −∞, 0 ]","optionC_sorani":"[ 0 , +∞[","optionD_sorani":"[ −3 , +∞[","question_badini":"⁄ÌÊÄ\\Ô:ﬁÌ| çÌÔ:𝑓𝑓(𝑥𝑥) = { 3 −𝑥𝑥 𝑥𝑥 < 3","optionA_badini":"—","optionB_badini":"] −∞, 0 ]","optionC_badini":"[ 0 , +∞[","optionD_badini":"[ −3 , +∞[","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_05","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"‚]Ê“ÈˇçÌÔ:ÒÌÊ:Ñ\\àiÌ‚Èˇ◊Ì:Ò]àˆËÓ:ËÌ:dÅıÜÏÊÏ:“Ì:ËÌ“ 1dÖ�Ëﬂ Ó:àiÁÊﬁÓ:÷Ì :6 :Ä\\:‚ ÌËÌ:H","optionA_sorani":"—","optionB_sorani":"𝑥𝑥 = 6","optionC_sorani":"𝑦𝑦 = 6","optionD_sorani":"𝑥𝑥 = 0","question_badini":"‚]Ê“ÈˇçÌÔ:ÒÌÊ:Ñ\\àiÌ‚Èˇ◊Ì:Ò]àˆËÓ:ËÌ:dÅıÜÏÊÏ:“Ì:ËÌ“ 1dÖ�Ëﬂ Ó:àiÁÊﬁÓ:÷Ì :6 :Ä\\:‚ ÌËÌ:H","optionA_badini":"—","optionB_badini":"𝑥𝑥 = 6","optionC_badini":"𝑦𝑦 = 6","optionD_badini":"𝑥𝑥 = 0","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_07","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÒÌöÌÑ :𝑓𝑓(𝑥𝑥) = −3𝑥𝑥2−𝑏𝑏𝑥𝑥+5","optionA_sorani":"—","optionB_sorani":"𝑏𝑏 = 1","optionC_sorani":"𝑏𝑏 = 2","optionD_sorani":"𝑏𝑏 = 4 𝑏𝑏 = 3","question_badini":"ÒÌöÌÑ :𝑓𝑓(𝑥𝑥) = −3𝑥𝑥2−𝑏𝑏𝑥𝑥+5","optionA_badini":"—","optionB_badini":"𝑏𝑏 = 1","optionC_badini":"𝑏𝑏 = 2","optionD_badini":"𝑏𝑏 = 4 𝑏𝑏 = 3","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_08","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ﬁÌ⁄]⁄�ÌËÌ ’:pˆÑËˇ‘: ÷Ì: ﬁÌ⁄]⁄Í: “ÁÑk: ÄÏ ÖÊåÈˇj:ÄÊ\\Î:C6B:à]Ÿˇ:÷Ì:î ]ﬁ Å ﬁ Í :F:ﬁÌ | ç Ì Î:ℎ′(𝑡𝑡) = 1.8𝑡𝑡+ 4 :dÌ:Ñ�Ëˇâ]ËÌ’: Ä \\ ÄÏ ﬁÖËˇj::","optionA_sorani":"—","optionB_sorani":"56.5 cm cm 69","optionC_sorani":"—","optionD_sorani":"75.5 cm 53 cm","question_badini":"ﬁÌ⁄]⁄�ÌËÌ ’:pˆÑËˇ‘: ÷Ì: ﬁÌ⁄]⁄Í: “ÁÑk: ÄÏ ÖÊåÈˇj:ÄÊ\\Î:C6B:à]Ÿˇ:÷Ì:î ]ﬁ Å ﬁ Í :F:ﬁÌ | ç Ì Î:ℎ′(𝑡𝑡) = 1.8𝑡𝑡+ 4 :dÌ:Ñ�Ëˇâ]ËÌ’: Ä \\ ÄÏ ﬁÖËˇj::","optionA_badini":"—","optionB_badini":"56.5 cm cm 69","optionC_badini":"—","optionD_badini":"75.5 cm 53 cm","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_09","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÒÌöÌÑ:𝑓𝑓(𝑥𝑥) = −|2𝑥𝑥 + 3| + 6 :::ÊÏ:𝑔𝑔(𝑥𝑥) = 6 −𝑥𝑥 : ÒÌÊ\\ :dÌ‚]Î: :𝑥𝑥::dÅıÜÏÊÏ: :“]hÈˇ‘: :𝑓𝑓(𝑥𝑥) = 𝑔𝑔(𝑥𝑥) ::H","optionA_sorani":"—","optionB_sorani":"𝑥𝑥 = −3","optionC_sorani":"𝑥𝑥 = −1","optionD_sorani":"𝑥𝑥 = −3","question_badini":"ÒÌöÌÑ:𝑓𝑓(𝑥𝑥) = −|2𝑥𝑥 + 3| + 6 :::ÊÏ:𝑔𝑔(𝑥𝑥) = 6 −𝑥𝑥 : ÒÌÊ\\ :dÌ‚]Î: :𝑥𝑥::dÅıÜÏÊÏ: :“]hÈˇ‘: :𝑓𝑓(𝑥𝑥) = 𝑔𝑔(𝑥𝑥) ::H","optionA_badini":"—","optionB_badini":"𝑥𝑥 = −3","optionC_badini":"𝑥𝑥 = −1","optionD_badini":"𝑥𝑥 = −3","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_10","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÒÌöÌÑ:Ñ\\à i Ì ‚Èˇ◊Èˇ‘:dÌ:ÄÊÊ:|]÷�Ó: : :( 3 , 𝑏𝑏 )::ÊÏ:( −4 , 7 ) :::Ä\\:dÖ�Ê\\k:Ê:ÒÌ àiÁÊ·:dÈˇj: ÷ÌàÌÑ:","optionA_sorani":"—","optionB_sorani":"7","optionC_sorani":"− 7","optionD_sorani":"35","question_badini":"ÒÌöÌÑ:Ñ\\à i Ì ‚Èˇ◊Èˇ‘:dÌ:ÄÊÊ:|]÷�Ó: : :( 3 , 𝑏𝑏 )::ÊÏ:( −4 , 7 ) :::Ä\\:dÖ�Ê\\k:Ê:ÒÌ àiÁÊ·:dÈˇj: ÷ÌàÌÑ:","optionA_badini":"—","optionB_badini":"7","optionC_badini":"− 7","optionD_badini":"35","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_11","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ﬁÖ| Ó:Ò]⁄ÈˇÖËˇ”Ó: ﬁ ÁÔˇ::22 850 000::ÄËﬂ]ÑÏ:F:à]˜�ﬁÌ:ﬁÖ|Ì“ÌÔ: : 900 000:ÄËﬂ]Ñ:dÌ:lÈˇÓ:dÌ“]ÑdÖÄﬁÓ:“Ì›:ÄÏ“]k:F: ﬁÖ|Ì“ÌÔ:ÄÊ\\Ô:","optionA_sorani":"—","optionB_sorani":"𝑡𝑡 = 5","optionC_sorani":"𝑡𝑡 = 8","optionD_sorani":"𝑡𝑡 = 9","question_badini":"ﬁÖ| Ó:Ò]⁄ÈˇÖËˇ”Ó: ﬁ ÁÔˇ::22 850 000::ÄËﬂ]ÑÏ:F:à]˜�ﬁÌ:ﬁÖ|Ì“ÌÔ: : 900 000:ÄËﬂ]Ñ:dÌ:lÈˇÓ:dÌ“]ÑdÖÄﬁÓ:“Ì›:ÄÏ“]k:F: ﬁÖ|Ì“ÌÔ:ÄÊ\\Ô:","optionA_badini":"—","optionB_badini":"𝑡𝑡 = 5","optionC_badini":"𝑡𝑡 = 8","optionD_badini":"𝑡𝑡 = 9","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_12","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÒÌ ß ]⁄Ó:𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→3","optionA_sorani":"—","optionB_sorani":"8","optionC_sorani":"2","optionD_sorani":"1","question_badini":"ÒÌ ß ]⁄Ó:𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→3","optionA_badini":"—","optionB_badini":"8","optionC_badini":"2","optionD_badini":"1","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_13","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÒÌ ß ]⁄Ó:𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→4","optionA_sorani":"—","optionB_sorani":"7","optionC_sorani":"− 7","optionD_sorani":"−9","question_badini":"ÒÌ ß ]⁄Ó:𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→4","optionA_badini":"—","optionB_badini":"7","optionC_badini":"− 7","optionD_badini":"−9","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_15","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÄÏÑ“Ìﬁ]ÑÏ:àiÁﬁÈÈÌ“]ﬁÓ:“]›:÷Ì›:ﬁÌ| ç]ﬁÌ Ô:ÄËˇ‡:ÄÏ“]hÌ: : :𝑥𝑥 = 1 + 2𝑙𝑙:::Z::::“Ì: :𝑙𝑙 ∈ 𝐼𝐼","optionA_sorani":"—","optionB_sorani":"𝑓𝑓(𝑥𝑥) = 1","optionC_sorani":"𝑓𝑓(𝑥𝑥) = tan 𝑠𝑠𝑥𝑥","optionD_sorani":"𝑓𝑓(𝑥𝑥) = 1","question_badini":"ÄÏÑ“Ìﬁ]ÑÏ:àiÁﬁÈÈÌ“]ﬁÓ:“]›:÷Ì›:ﬁÌ| ç]ﬁÌ Ô:ÄËˇ‡:ÄÏ“]hÌ: : :𝑥𝑥 = 1 + 2𝑙𝑙:::Z::::“Ì: :𝑙𝑙 ∈ 𝐼𝐼","optionA_badini":"—","optionB_badini":"𝑓𝑓(𝑥𝑥) = 1","optionC_badini":"𝑓𝑓(𝑥𝑥) = tan 𝑠𝑠𝑥𝑥","optionD_badini":"𝑓𝑓(𝑥𝑥) = 1","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_16","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":":“]›:÷Ì⁄]ﬁÌ Ô:ÄËˇ‡:dˆ:ÑÊÊﬁ”ÖÄﬁÌÊÏÔ: ﬁÌ|çÌÔ: dÌÑ \\ ⁄eÌÑ :Ñ�\\àiÌ:Z","optionA_sorani":"—","optionB_sorani":"𝑅𝑅 −{−1} ÄÏ“]hÌ ﬁÌ| çÌ“Ì dÁ\\ÑÔ","optionC_sorani":"—","optionD_sorani":"𝑅𝑅 −{2} ÄÏ“]hÌ ﬁÌ| çÌ“Ì ⁄ÌÊÄ\\Î","question_badini":":“]›:÷Ì⁄]ﬁÌ Ô:ÄËˇ‡:dˆ:ÑÊÊﬁ”ÖÄﬁÌÊÏÔ: ﬁÌ|çÌÔ: dÌÑ \\ ⁄eÌÑ :Ñ�\\àiÌ:Z","optionA_badini":"—","optionB_badini":"𝑅𝑅 −{−1} ÄÏ“]hÌ ﬁÌ| çÌ“Ì dÁ\\ÑÔ","optionC_badini":"—","optionD_badini":"𝑅𝑅 −{2} ÄÏ“]hÌ ﬁÌ| çÌ“Ì ⁄ÌÊÄ\\Î","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_17","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"“]›:÷Ì›:ﬁÌ| ç]ﬁÌ Ô:|Á\\ÑÏÊÏ:˜dÖÄﬁÓ:lïÖ�\\·:÷Ì:𝑥𝑥 = 3 :÷Ì:hÁ\\ﬁ]Ä\\ :‚ÌËÌ:F:ÊÏ:˜dÖÄﬁÓ:lïÖ�\\·:÷Ì:𝑥𝑥 = −3 ::÷Ì:hÁ\\ﬁ]Ä\\ :ﬁÈÈÌ:Z","optionA_sorani":"—","optionB_sorani":"𝑓𝑓(𝑥𝑥) = 2𝑥𝑥+6","optionC_sorani":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥2+3𝑥𝑥","optionD_sorani":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥2+8𝑥𝑥+15","question_badini":"“]›:÷Ì›:ﬁÌ| ç]ﬁÌ Ô:|Á\\ÑÏÊÏ:˜dÖÄﬁÓ:lïÖ�\\·:÷Ì:𝑥𝑥 = 3 :÷Ì:hÁ\\ﬁ]Ä\\ :‚ÌËÌ:F:ÊÏ:˜dÖÄﬁÓ:lïÖ�\\·:÷Ì:𝑥𝑥 = −3 ::÷Ì:hÁ\\ﬁ]Ä\\ :ﬁÈÈÌ:Z","optionA_badini":"—","optionB_badini":"𝑓𝑓(𝑥𝑥) = 2𝑥𝑥+6","optionC_badini":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥2+3𝑥𝑥","optionD_badini":"𝑓𝑓(𝑥𝑥) = 𝑥𝑥2+8𝑥𝑥+15","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_18","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"dÌ:lÈˇÓ:àÌ∏ÈˇﬂÖ\\ÊÔ:ﬁÈˇÁ\\ﬁÌ:dÌ‚]ËÌ“]·FÒÌÊ:ﬁÌ| çÌËÌ:ÄË]ÑËe”Ì:“Ì:‚]Ê“ÈˇçÌÔ :𝑓𝑓(𝑥𝑥) = 0:Ñ�ÏöÈˇ”Ó:ÄÏdÈˇj:÷Ì:ﬁÈˇÁ\\·:−1 Ê:: 2:Ä\\:Z","optionA_sorani":"—","optionB_sorani":"𝑓𝑓(𝑥𝑥) = 3 𝑥𝑥3 −6 𝑥𝑥 + 5","optionC_sorani":":‚ÌÑÄÊÊ“È]·","optionD_sorani":"𝑓𝑓(𝑥𝑥) = −𝑥𝑥3 + 7 𝑥𝑥 −2","question_badini":"dÌ:lÈˇÓ:àÌ∏ÈˇﬂÖ\\ÊÔ:ﬁÈˇÁ\\ﬁÌ:dÌ‚]ËÌ“]·FÒÌÊ:ﬁÌ| çÌËÌ:ÄË]ÑËe”Ì:“Ì:‚]Ê“ÈˇçÌÔ :𝑓𝑓(𝑥𝑥) = 0:Ñ�ÏöÈˇ”Ó:ÄÏdÈˇj:÷Ì:ﬁÈˇÁ\\·:−1 Ê:: 2:Ä\\:Z","optionA_badini":"—","optionB_badini":"𝑓𝑓(𝑥𝑥) = 3 𝑥𝑥3 −6 𝑥𝑥 + 5","optionC_badini":":‚ÌÑÄÊÊ“È]·","optionD_badini":"𝑓𝑓(𝑥𝑥) = −𝑥𝑥3 + 7 𝑥𝑥 −2","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_19","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"“]›:÷Ì⁄]ﬁÌ Ô:ÄËˇ‡:‚Ì÷�ÌËÌ:dˆ:ﬁÌ| çÌÔ:𝑓𝑓(𝑥𝑥) = {","optionA_sorani":"—","optionB_sorani":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→2","optionC_sorani":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→3− 𝑓𝑓(𝑥𝑥) = −3","optionD_sorani":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→3+ 𝑓𝑓(𝑥𝑥) = 0 𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→0− 𝑓𝑓(𝑥𝑥) = 6","question_badini":"“]›:÷Ì⁄]ﬁÌ Ô:ÄËˇ‡:‚Ì÷�ÌËÌ:dˆ:ﬁÌ| çÌÔ:𝑓𝑓(𝑥𝑥) = {","optionA_badini":"—","optionB_badini":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→2","optionC_badini":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→3− 𝑓𝑓(𝑥𝑥) = −3","optionD_badini":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→3+ 𝑓𝑓(𝑥𝑥) = 0 𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→0− 𝑓𝑓(𝑥𝑥) = 6","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_20","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"“]›:÷Ì⁄]ﬁÌ Ô:ÄËˇ‡:Ñ�\\àiÌ:Z 𝑑𝑑","optionA_sorani":"—","optionB_sorani":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→𝑠𝑠","optionC_sorani":"—","optionD_sorani":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→+∞","question_badini":"“]›:÷Ì⁄]ﬁÌ Ô:ÄËˇ‡:Ñ�\\àiÌ:Z 𝑑𝑑","optionA_badini":"—","optionB_badini":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→𝑠𝑠","optionC_badini":"—","optionD_badini":"𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→+∞","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_21","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÒÌöÌÑ:g : Ê::h::ÄÊÊ:ﬁÌ | ç Ìd‡:hÁ\\ﬁ]Î:Ä\\h]åÖ\\ﬁÈ]·:‚ÌdÈˇj:Ê :𝑓𝑓(𝑥𝑥) = g(𝑥𝑥)","optionA_sorani":"—","optionB_sorani":"7","optionC_sorani":"9","optionD_sorani":"− 7","question_badini":"ÒÌöÌÑ:g : Ê::h::ÄÊÊ:ﬁÌ | ç Ìd‡:hÁ\\ﬁ]Î:Ä\\h]åÖ\\ﬁÈ]·:‚ÌdÈˇj:Ê :𝑓𝑓(𝑥𝑥) = g(𝑥𝑥)","optionA_badini":"—","optionB_badini":"7","optionC_badini":"9","optionD_badini":"− 7","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_22","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"‚]Ê“ÈˇçÌÔ:÷Èˇ”ÌÊhÓ::ÑÊÊﬁ”ÖÄﬁÌÊÏÔ:ﬁÌ | ç Ì Ô:𝑓𝑓(𝑥𝑥) = √ 2 −𝑥𝑥 : ÷Ì:𝑥𝑥 = −2 ::ÄË]ÑËe”Ì::H","optionA_sorani":"—","optionB_sorani":"𝑥𝑥 + 4𝑦𝑦 = 6","optionC_sorani":"3𝑥𝑥 −2𝑦𝑦 = −10","optionD_sorani":"4𝑥𝑥 −𝑦𝑦 = 6","question_badini":"‚]Ê“ÈˇçÌÔ:÷Èˇ”ÌÊhÓ::ÑÊÊﬁ”ÖÄﬁÌÊÏÔ:ﬁÌ | ç Ì Ô:𝑓𝑓(𝑥𝑥) = √ 2 −𝑥𝑥 : ÷Ì:𝑥𝑥 = −2 ::ÄË]ÑËe”Ì::H","optionA_badini":"—","optionB_badini":"𝑥𝑥 + 4𝑦𝑦 = 6","optionC_badini":"3𝑥𝑥 −2𝑦𝑦 = −10","optionD_badini":"4𝑥𝑥 −𝑦𝑦 = 6","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_25","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"“]›:÷Ì⁄]ﬁÌ Ô:ÄËˇ‡:‚Ì÷�ÌËÌ:Z: 𝑑𝑑","optionA_sorani":"—","optionB_sorani":"𝑑𝑑","optionC_sorani":"—","optionD_sorani":"𝑑𝑑","question_badini":"“]›:÷Ì⁄]ﬁÌ Ô:ÄËˇ‡:‚Ì÷�ÌËÌ:Z: 𝑑𝑑","optionA_badini":"—","optionB_badini":"𝑑𝑑","optionC_badini":"—","optionD_badini":"𝑑𝑑","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_26","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÒÌ ß ]⁄Ó:𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→0","optionA_sorani":"—","optionB_sorani":"3","optionC_sorani":"16","optionD_sorani":"1","question_badini":"ÒÌ ß ]⁄Ó:𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→0","optionA_badini":"—","optionB_badini":"3","optionC_badini":"16","optionD_badini":"1","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_27","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÒÌöÌÑ: :𝑓𝑓(𝑥𝑥) = 5 −2 𝑥𝑥2 : ÊÏ:𝑔𝑔(𝑥𝑥) = 3 −𝑥𝑥 :ÒÌÊ\\ :˜ÑÔ:÷Èˇ”ÌÊhÓ:ﬁÌ| çÌÔ (𝑓𝑓 ∘𝑔𝑔)(𝑥𝑥) :÷Ì:𝑥𝑥 = 3 : dÅıÜÏÊÏ:H:","optionA_sorani":"0","optionB_sorani":"","optionC_sorani":"3","optionD_sorani":"8","question_badini":"ÒÌöÌÑ: :𝑓𝑓(𝑥𝑥) = 5 −2 𝑥𝑥2 : ÊÏ:𝑔𝑔(𝑥𝑥) = 3 −𝑥𝑥 :ÒÌÊ\\ :˜ÑÔ:÷Èˇ”ÌÊhÓ:ﬁÌ| çÌÔ (𝑓𝑓 ∘𝑔𝑔)(𝑥𝑥) :÷Ì:𝑥𝑥 = 3 : dÅıÜÏÊÏ:H:","optionA_badini":"0","optionB_badini":"","optionC_badini":"3","optionD_badini":"8","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_28","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"“]›:÷Ì›:ﬁÌ| ç]ﬁÌÔ:ÄËˇ‡:hÁ\\ﬁ]Ô:Ä\\h]åÖ\\ÊÔ:‚ÌËÌ:÷Ì 𝑥𝑥 = −2 Z","optionA_sorani":"—","optionB_sorani":"𝑓𝑓(𝑥𝑥) = {𝑥𝑥2 + 4𝑥𝑥 + 2 𝑥𝑥 < −2","optionC_sorani":"—","optionD_sorani":"𝑓𝑓(𝑥𝑥) = { (𝑥𝑥 + 2)3 𝑥𝑥 < −2","question_badini":"“]›:÷Ì›:ﬁÌ| ç]ﬁÌÔ:ÄËˇ‡:hÁ\\ﬁ]Ô:Ä\\h]åÖ\\ÊÔ:‚ÌËÌ:÷Ì 𝑥𝑥 = −2 Z","optionA_badini":"—","optionB_badini":"𝑓𝑓(𝑥𝑥) = {𝑥𝑥2 + 4𝑥𝑥 + 2 𝑥𝑥 < −2","optionC_badini":"—","optionD_badini":"𝑓𝑓(𝑥𝑥) = { (𝑥𝑥 + 2)3 𝑥𝑥 < −2","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_29","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"dÌ‚]ËÌ ’: :dˆ: :𝑥𝑥:dÅıÜÏÊÏ: ÷Ì⁄]ÊÏÔ:[ 0 , 𝜋𝜋 ] F“Ì:hÈ]ËÅ\\ :hÈˇ”Ö�\\Ô:öˆÑ�\\ﬁ Ó:‚ ÌÑËÌ ’ :÷Ì:ﬁÌ | ç Ì “]ﬁ Ó::𝑓𝑓(𝑥𝑥) = 1","optionA_sorani":"—","optionB_sorani":"𝑥𝑥 = 𝑠𝑠","optionC_sorani":"𝑥𝑥 = 3 𝑠𝑠","optionD_sorani":"𝑥𝑥 = 𝑠𝑠","question_badini":"dÌ‚]ËÌ ’: :dˆ: :𝑥𝑥:dÅıÜÏÊÏ: ÷Ì⁄]ÊÏÔ:[ 0 , 𝜋𝜋 ] F“Ì:hÈ]ËÅ\\ :hÈˇ”Ö�\\Ô:öˆÑ�\\ﬁ Ó:‚ ÌÑËÌ ’ :÷Ì:ﬁÌ | ç Ì “]ﬁ Ó::𝑓𝑓(𝑥𝑥) = 1","optionA_badini":"—","optionB_badini":"𝑥𝑥 = 𝑠𝑠","optionC_badini":"𝑥𝑥 = 3 𝑠𝑠","optionD_badini":"𝑥𝑥 = 𝑠𝑠","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_30","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÄË]ÑËe”Ì:“ÌÔ:˜ÑÔ:îÌ⁄]ÊÏÔ: : 𝑥𝑥2 + 𝑥𝑥 𝑦𝑦−𝑦𝑦2 = 1:lÈˇﬂ]àÌ“Ö\\Ê:ÄÏdÈˇj:Z","optionA_sorani":"—","optionB_sorani":"𝑥𝑥 ≠ −2 𝑦𝑦","optionC_sorani":"𝑥𝑥 ≠ 2 𝑦𝑦","optionD_sorani":"𝑥𝑥 ≠ 4 𝑦𝑦","question_badini":"ÄË]ÑËe”Ì:“ÌÔ:˜ÑÔ:îÌ⁄]ÊÏÔ: : 𝑥𝑥2 + 𝑥𝑥 𝑦𝑦−𝑦𝑦2 = 1:lÈˇﬂ]àÌ“Ö\\Ê:ÄÏdÈˇj:Z","optionA_badini":"—","optionB_badini":"𝑥𝑥 ≠ −2 𝑦𝑦","optionC_badini":"𝑥𝑥 ≠ 2 𝑦𝑦","optionD_badini":"𝑥𝑥 ≠ 4 𝑦𝑦","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_31","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"‚]Ê“ÈˇçÌÔ : Ä Ï Ñ “Ìﬁ ] ÑÔ : Ò ]àˆ ËÓ:ÑÊÊﬁ”ÖÄﬁÌÊÏÔ:ﬁÌ| çÌÔ: :𝑓𝑓(𝑥𝑥) = 2 𝑥𝑥2","optionA_sorani":"—","optionB_sorani":"𝑦𝑦 = 2","optionC_sorani":"𝑦𝑦 = −2","optionD_sorani":"𝑦𝑦 = −1 𝑦𝑦 = 1","question_badini":"‚]Ê“ÈˇçÌÔ : Ä Ï Ñ “Ìﬁ ] ÑÔ : Ò ]àˆ ËÓ:ÑÊÊﬁ”ÖÄﬁÌÊÏÔ:ﬁÌ| çÌÔ: :𝑓𝑓(𝑥𝑥) = 2 𝑥𝑥2","optionA_badini":"—","optionB_badini":"𝑦𝑦 = 2","optionC_badini":"𝑦𝑦 = −2","optionD_badini":"𝑦𝑦 = −1 𝑦𝑦 = 1","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_32","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"⁄]ÊÏÔ:ÑÊÊ:÷Ì:“Ì⁄eÁÊﬁÓ:ÑÊÊﬁ”ÖÄﬁÌÊÏÔ::ﬁÌ| çÌÔ:𝑓𝑓(𝑥𝑥) = 𝑥𝑥 −4 √ 𝑥𝑥 + 1 ::ÄË]ÑËe”Ì:H","optionA_sorani":"—","optionB_sorani":"] −1 , 3 [","optionC_sorani":"] 3 , +∞[","optionD_sorani":"] −∞ , 3 [","question_badini":"⁄]ÊÏÔ:ÑÊÊ:÷Ì:“Ì⁄eÁÊﬁÓ:ÑÊÊﬁ”ÖÄﬁÌÊÏÔ::ﬁÌ| çÌÔ:𝑓𝑓(𝑥𝑥) = 𝑥𝑥 −4 √ 𝑥𝑥 + 1 ::ÄË]ÑËe”Ì:H","optionA_badini":"—","optionB_badini":"] −1 , 3 [","optionC_badini":"] 3 , +∞[","optionD_badini":"] −∞ , 3 [","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_33","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"÷Ì:“]›:dÌ‚]Î:𝑥𝑥 ::ﬁÌ| çÌÔ:𝑓𝑓(𝑥𝑥) = cos ( 𝑠𝑠 𝑥𝑥","optionA_sorani":"—","optionB_sorani":"𝑥𝑥 = 1","optionC_sorani":"𝑥𝑥 = 2","optionD_sorani":"𝑥𝑥 = 3","question_badini":"÷Ì:“]›:dÌ‚]Î:𝑥𝑥 ::ﬁÌ| çÌÔ:𝑓𝑓(𝑥𝑥) = cos ( 𝑠𝑠 𝑥𝑥","optionA_badini":"—","optionB_badini":"𝑥𝑥 = 1","optionC_badini":"𝑥𝑥 = 2","optionD_badini":"𝑥𝑥 = 3","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_35","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"|]÷�Ó: dïÁÊ“1Ë‡:“ˆh]ËÓ:|ˆpÈˇÓ: ﬁÌ|çÌÔ :𝑓𝑓(𝑥𝑥) = 𝑥𝑥4 + 2𝑥𝑥2::dÅıÜÏÊÏ:.","optionA_sorani":"—","optionB_sorani":"( 1 , 3 )","optionC_sorani":"(−1 , 3 )","optionD_sorani":"( 0 , 0 )","question_badini":"|]÷�Ó: dïÁÊ“1Ë‡:“ˆh]ËÓ:|ˆpÈˇÓ: ﬁÌ|çÌÔ :𝑓𝑓(𝑥𝑥) = 𝑥𝑥4 + 2𝑥𝑥2::dÅıÜÏÊÏ:.","optionA_badini":"—","optionB_badini":"( 1 , 3 )","optionC_badini":"(−1 , 3 )","optionD_badini":"( 0 , 0 )","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"math_2023_36","subject":"math","subjectSorani":"بیرکاری","subjectBadini":"ژمیریاری","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ÒÌ ß ]⁄Ó::𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→+∞","optionA_sorani":"—","optionB_sorani":"3","optionC_sorani":"0","optionD_sorani":"2","question_badini":"ÒÌ ß ]⁄Ó::𝑙𝑙𝑙𝑙𝑙𝑙𝑥𝑥→+∞","optionA_badini":"—","optionB_badini":"3","optionC_badini":"0","optionD_badini":"2","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_01","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة كام لةم رِستانةدا بكةر جيَناوى لكاوة بؤ كةسى دووةمى تاك؟","optionA_sorani":"بؤيان ئاوةدان بكةنةوة.","optionB_sorani":"كتيَبةكةم بؤ بطةرِيَنةوة.","optionC_sorani":"نةخؤشةكة ببةنة نةخؤشخانة.","optionD_sorani":"هةموويان رِاس.","question_badini":"لة كام لةم رستانةدا بكةر جیناوى لكاوة بۆ كةسى دووةمى تاك؟","optionA_badini":"بۆيان ئاوةدان بكةنووە.","optionB_badini":"كتیبةكةم بۆ بگةرینووە.","optionC_badini":"نةخۆشةكة ببةنة نةخۆشخانەی.","optionD_badini":"هةموويان راس.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_02","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي (ئةم سةركةوتنة بة تيَكؤشانى ئةوانة.) وشةي ( تيَكؤشان ) ديارخراوة بة :","optionA_sorani":"—","optionB_sorani":"جيَناوى نيشانة بؤ كؤي نزيك","optionC_sorani":"—","optionD_sorani":"جيَناوى كةسيي سةربةخؤ","question_badini":"لة رستةي (ئةم سةركةوتنة بة تیكۆشانى ئةوانة.) وشةي ( تیكۆشان ) ديارخراوة بة :","optionA_badini":"—","optionB_badini":"جیناوى نيشانة بۆ كۆي نزيك","optionC_badini":"—","optionD_badini":"جیناوى كةسيي سةربةخۆ","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_03","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي (بؤ جةذني نةورؤز سيَ ضةثك لة طولَي نيَرطز دةكةم بةديارييةكي جوان بؤ هاورِيَكانم.) ضةند (ديارخةر) هةية؟","optionA_sorani":"سيَ","optionB_sorani":"ضوار","optionC_sorani":"ثيَنج","optionD_sorani":"شةش","question_badini":"لة رستةي (بۆ جةژني نةورۆز سی ضةپك لة گولَي نیرگز دةكةم بةديارييةكي جوان بۆ هاوریكانم.) ضةند (ديارخةر) هةية؟","optionA_badini":"سی","optionB_badini":"ضوار","optionC_badini":"پینج","optionD_badini":"شةش","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_04","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي ( ئيَوةيان ئاطادارنةكردووةتةوةئةطةر بةركار بطؤرِين بؤ جيَناوى لكاو ، و كارى رِستةكة بكةين بة رِانةبردوو ، دةبيَتة:","optionA_sorani":"ئاطاداريان ناكةنةوة","optionB_sorani":"ئاطادارتان ناكاتةوة","optionC_sorani":"ئاطادارتان ناكةنةوة.","optionD_sorani":"ئاطاداريانناكاتةوة","question_badini":"لة رستةي ( ئیوةيان ئاگادارنةكردووةتووەئةگةر بةركار بگۆرين بۆ جیناوى لكاو ، و كارى رستةكة بكةين بة رانةبردوو ، دةبیتة:","optionA_badini":"ئاگاداريان ناكةنووە","optionB_badini":"ئاگادارتان ناكاتووە","optionC_badini":"ئاگادارتان ناكةنووە.","optionD_badini":"ئاگاداريانناكاتووە","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_05","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة كام لةم رِستانةدا (كاري ناتةواو) بة شيَوةي (تةواوكةري رِاستةوخؤ) تةواوكراوة؟","optionA_sorani":"براكةم بووة بة ئةندازيار","optionB_sorani":"يارييةكة بةشةو بوو.","optionC_sorani":"قةلَةمةكةت بة من بوو","optionD_sorani":"هيضيان","question_badini":"لة كام لةم رستانةدا (كاري ناتةواو) بة شیوةي (تةواوكةري راستةوخۆ) تةواوكراوة؟","optionA_badini":"براكةم بووة بة ئةندازيار","optionB_badini":"يارييةكة بةشةو بوو.","optionC_badini":"قةلَةمةكةت بة من بوو","optionD_badini":"هيضيان","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_06","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"جيَناوة لكاوةكاني ( ت ، تان ) دةبن بةديارخةري ناو لةطةلَ كاري:","optionA_sorani":"رِابردووي تيَثةرِ","optionB_sorani":"—","optionC_sorani":"—","optionD_sorani":"هةموويان","question_badini":"جیناوة لكاوةكاني ( ت ، تان ) دةبن بةديارخةري ناو لةگةلَ كاري:","optionA_badini":"رابردووي تیپةر","optionB_badini":"—","optionC_badini":"—","optionD_badini":"هةموويان","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_07","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةيثرؤذةطةورةكان زؤر بةسودن.) ئةطةر ناوة ديارخراوةكة بكةين بة تاك، ضي دةردةكةويَت؟","optionA_sorani":"ئامرازي دانةثالَ(ة","optionB_sorani":"ئامرازي دانةثالأ (ي","optionC_sorani":"كار","optionD_sorani":"—","question_badini":"لة رستةيپرۆژةگةورةكان زۆر بةسودن.) ئةگةر ناوة ديارخراوةكة بكةين بة تاك، ضي دةردةكةویت؟","optionA_badini":"ئامرازي دانةپالَ(ة","optionB_badini":"ئامرازي دانةپالأ (ي","optionC_badini":"كار","optionD_badini":"—","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_08","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة بابةتي (رِادةي هاوةلَناو دا ، كام لةمانة هـةلَـةيـة؟","optionA_sorani":"رِادةي هاوةلَناو، ثيَويستي بةئامرازي دانةثالأ نيية بكةويَتة نيَوان رِادة و هاوةلَناوةكة.","optionB_sorani":"ئةو هاوةلَناوانةي كة رِادةيهاوةلَناوي ضؤنيةتي دةردةخةن، هاوةلَناوي ناديارن.","optionC_sorani":"رِادةي هاوةلَناوةكة هةميشة دةكةويَتة دواي هاوةلَناوة بنجييةكة.","optionD_sorani":"رِادة و هاوةلَناوةكة ثيَكةوة طريَيةكي هاوةلَناوي دروستدةكةن","question_badini":"لة بابةتي (رادةي هاوةلَناو دا ، كام لةمانة هـةلَـةيـة؟","optionA_badini":"رادةي هاوةلَناو، پیويستي بةئامرازي دانةپالأ نيية بكةویتة نیوان رادة و هاوةلَناوةكة.","optionB_badini":"ئةو هاوةلَناوانةي كة رادةيهاوةلَناوي ضۆنيةتي دةردةخةن، هاوةلَناوي ناديارن.","optionC_badini":"رادةي هاوةلَناوةكة هةميشة دةكةویتة دواي هاوةلَناوة بنجييةكة.","optionD_badini":"رادة و هاوةلَناوةكة پیكووە گریيةكي هاوةلَناوي دروستدةكةن","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_09","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي (فةرهةنطيَكي باشتر بةكاربهيَنة، (ديارخةر) ضيية؟","optionA_sorani":"هاوةلَناوي ناديارة","optionB_sorani":"هاوةلَناوي ضؤنيةتيي ثلةي باية","optionC_sorani":"ناوي تاكي نةناسراوة","optionD_sorani":"هاوةلَناوي ثلةي بةراوردة","question_badini":"لة رستةي (فةرهةنگیكي باشتر بةكاربهینة، (ديارخةر) ضيية؟","optionA_badini":"هاوةلَناوي ناديارة","optionB_badini":"هاوةلَناوي ضۆنيةتيي پلةي باية","optionC_badini":"ناوي تاكي نةناسراوة","optionD_badini":"هاوةلَناوي پلةي بةراوردة","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_10","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"كام لةم كارانةئةطةر بيطؤرِين بؤ رِيَذةي رِابردووي تةواوي رِاطةياندن جيَناوي لكاوي بكةر دةضيَتة دواي ئامرازي (نة)؟","optionA_sorani":"ناخويَنيَت","optionB_sorani":"وةرناطرين","optionC_sorani":"نارِوات","optionD_sorani":"دةرناض","question_badini":"كام لةم كارانةئةگةر بيگۆرين بۆ ریژةي رابردووي تةواوي راگةياندن جیناوي لكاوي بكةر دةضیتة دواي ئامرازي (نة)؟","optionA_badini":"ناخوینیت","optionB_badini":"وةرناگرين","optionC_badini":"ناروات","optionD_badini":"دةرناض","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_11","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي (طؤظارةكةي بؤ كرِيم.) ئةطةر (تةواوكةري بةياريدة) بطؤرِين بؤ جيَناوي لكاوي ( ت دةبيَتة:","optionA_sorani":"—","optionB_sorani":"طؤظارةكةي بؤ كرِيـيت.","optionC_sorani":"طؤظارةكةت بؤي كرِي","optionD_sorani":"طؤظارةكةي بؤت كرِي.","question_badini":"لة رستةي (گۆظارةكةي بۆ كريم.) ئةگةر (تةواوكةري بةياريدة) بگۆرين بۆ جیناوي لكاوي ( ت دةبیتة:","optionA_badini":"—","optionB_badini":"گۆظارةكةي بۆ كريـيت.","optionC_badini":"گۆظارةكةت بۆي كري","optionD_badini":"گۆظارةكةي بۆت كري.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_12","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي ( ئةطةر يارمةتيمان دابان ، كارةكةيان تةواودةكرد.) كام لةمانة دةبيَتة بةركاري رِستةى كارى مةرج ؟","optionA_sorani":"جيَناوى لكاو ( يان","optionB_sorani":"جيَناوى لكاو ( مان","optionC_sorani":"جيَناوى لكاو ( ن )","optionD_sorani":"وشةى ( كارةكة","question_badini":"لة رستةي ( ئةگةر يارمةتيمان دابان ، كارةكةيان تةواودةكرد.) كام لةمانة دةبیتة بةركاري رستةى كارى مةرج ؟","optionA_badini":"جیناوى لكاو ( يان","optionB_badini":"جیناوى لكاو ( مان","optionC_badini":"جیناوى لكاو ( ن )","optionD_badini":"وشةى ( كارةكة","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_13","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة كام لةم ضاوطانة ئةطةر رِيَذةي داخوازي بؤ كةسي دووةمي تاك دروستبكةين بكةر دةردةكةويَت :","optionA_sorani":"بوون","optionB_sorani":"رِؤيش","optionC_sorani":"رِاخس","optionD_sorani":"بردن","question_badini":"لة كام لةم ضاوگانة ئةگةر ریژةي داخوازي بۆ كةسي دووةمي تاك دروستبكةين بكةر دةردةكةویت :","optionA_badini":"بوون","optionB_badini":"رۆيش","optionC_badini":"راخس","optionD_badini":"بردن","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_14","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي (كةي خؤر ئاوابوو، دةضينة ذوورةوة، (كاري مةرج) لة ض رِيَذةيةكداية؟","optionA_sorani":"رِابردووي دووري رِاطةياندن","optionB_sorani":"رِابردووي نزيكي رِاطةياندن","optionC_sorani":"رِابردووي بةردةوامي رِاطةياندن","optionD_sorani":"رِانةبردووي رِاطةياندن","question_badini":"لة رستةي (كةي خۆر ئاوابوو، دةضينة ژوورووە، (كاري مةرج) لة ض ریژةيةكداية؟","optionA_badini":"رابردووي دووري راگةياندن","optionB_badini":"رابردووي نزيكي راگةياندن","optionC_badini":"رابردووي بةردةوامي راگةياندن","optionD_badini":"رانةبردووي راگةياندن","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_15","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي (رِيَوييةكي طةرِؤك لة شيَريَكي نووستوو ضاكترة.) هاوةلَناوي (طةرِؤك) بة ض دةستوريَك دروستبووة؟","optionA_sorani":"رِةطي كار + ثاشطر","optionB_sorani":"هاوةلَناو + ثاشطر","optionC_sorani":"قةدي ضاوط + ثاشطر","optionD_sorani":"ناو + ثاشطر","question_badini":"لة رستةي (ریوييةكي گةرۆك لة شیریكي نووستوو ضاكترة.) هاوةلَناوي (گةرۆك) بة ض دةستوریك دروستبووة؟","optionA_badini":"رةگي كار + پاشگر","optionB_badini":"هاوةلَناو + پاشگر","optionC_badini":"قةدي ضاوگ + پاشگر","optionD_badini":"ناو + پاشگر","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_16","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة كام لةم رِستانةدا وشةي (زؤر) رِادةي هاوةلَكاريية؟","optionA_sorani":"بةفريَكي زؤر باري","optionB_sorani":"—","optionC_sorani":"ئاوةكة زؤر سارد بوو","optionD_sorani":"هيضكام لةمانة","question_badini":"لة كام لةم رستانةدا وشةي (زۆر) رادةي هاوةلَكاريية؟","optionA_badini":"بةفریكي زۆر باري","optionB_badini":"—","optionC_badini":"ئاوةكة زۆر سارد بوو","optionD_badini":"هيضكام لةمانة","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_17","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة كام لةمرِستانةدا ئةطةر كارةكة بطؤرِين بؤ (رِابردوو)، جيَناوي لكاوي (بةركار) دةرنـاكةويَت؟","optionA_sorani":"—","optionB_sorani":"دةيهيَنيَت بؤ ئيَرة.","optionC_sorani":"بانطيان دةكات بؤ ئاهةنطةكة.","optionD_sorani":"رِزطارمان دةكات.","question_badini":"لة كام لةمرستانةدا ئةگةر كارةكة بگۆرين بۆ (رابردوو)، جیناوي لكاوي (بةركار) دةرنـاكةویت؟","optionA_badini":"—","optionB_badini":"دةيهینیت بۆ ئیرة.","optionC_badini":"بانگيان دةكات بۆ ئاهةنگةكة.","optionD_badini":"رزگارمان دةكات.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_18","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة كام لةمرِستانةدا (كارى مةرج) رِانةبردووى دانانيية ؟","optionA_sorani":"ئةطةر زوو رِويشتبايت ، كارةكةت ئةنجام دةدا","optionB_sorani":"كةى كارةكةتان تةواوكرد ، برِؤن بؤ مالَةوة.","optionC_sorani":"طةر باشتر بخويَنن ، دةردةضن.","optionD_sorani":"—","question_badini":"لة كام لةمرستانةدا (كارى مةرج) رانةبردووى دانانيية ؟","optionA_badini":"ئةگةر زوو رويشتبايت ، كارةكةت ئةنجام دةدا","optionB_badini":"كةى كارةكةتان تةواوكرد ، برۆن بۆ مالَووە.","optionC_badini":"گةر باشتر بخوینن ، دةردةضن.","optionD_badini":"—","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_19","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي(كورِة، يارمةتيي ئةوثياوة هةذارة بدة.) بزويني (ة) لة دواي وشةي (هةذار)ضيية؟","optionA_sorani":"ئامرازي ثةيوةنديية","optionB_sorani":"—","optionC_sorani":"—","optionD_sorani":"بةشيَكةلة هاوةلَناوي نيشانة","question_badini":"لة رستةي(كورة، يارمةتيي ئةوپياوة هةژارة بدة.) بزويني (ة) لة دواي وشةي (هةژار)ضيية؟","optionA_badini":"ئامرازي پةيوةنديية","optionB_badini":"—","optionC_badini":"—","optionD_badini":"بةشیكةلة هاوةلَناوي نيشانة","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_20","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي (رِاسثاردةكةبؤ نارد.) ئةطةر (بةركار) لابدةين، ثاشان كارةكة بطؤرِين بؤ (رِانةبردوو)، رِستةكة دةبيَت بة:","optionA_sorani":"بؤت دةنيَرم.","optionB_sorani":"بؤم دةنيَريَت.","optionC_sorani":"بؤي دةنيَرم.","optionD_sorani":"بؤي دةنارد","question_badini":"لة رستةي (راسپاردةكةبۆ نارد.) ئةگةر (بةركار) لابدةين، پاشان كارةكة بگۆرين بۆ (رانةبردوو)، رستةكة دةبیت بة:","optionA_badini":"بۆت دةنیرم.","optionB_badini":"بۆم دةنیریت.","optionC_badini":"بۆي دةنیرم.","optionD_badini":"بۆي دةنارد","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_21","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"كام لةم هاوةلَكارانة ثيَكهاتووة لة (ناو + ثاشطر)؟","optionA_sorani":"ئازادانة","optionB_sorani":"شةوانة","optionC_sorani":"—","optionD_sorani":"بيَباكانة","question_badini":"كام لةم هاوةلَكارانة پیكهاتووة لة (ناو + پاشگر)؟","optionA_badini":"ئازادانة","optionB_badini":"شةوانة","optionC_badini":"—","optionD_badini":"بیباكانة","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_22","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"جيَناوي كةسي لكاوي (ين) لةطةلَ كام لةمانة دةبيَتة بةركار:","optionA_sorani":"وةري دةطرت.","optionB_sorani":"وةرمان دةطرت.","optionC_sorani":"دةبوو وةرم طرتبا.","optionD_sorani":"وةردةطريَت.","question_badini":"جیناوي كةسي لكاوي (ين) لةگةلَ كام لةمانة دةبیتة بةركار:","optionA_badini":"وةري دةگرت.","optionB_badini":"وةرمان دةگرت.","optionC_badini":"دةبوو وةرم گرتبا.","optionD_badini":"وةردةگریت.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_23","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة رِستةي (مةهاباد ثايتةختي كؤماري كوردستان بوو.) ئةركي طريَي (كؤماري كوردستان) ضيية؟","optionA_sorani":"تةواوكةري بةياريدةي كاري ناتةواوة","optionB_sorani":"تةواوكةري رِاستةوخؤي كاري ناتةواوة","optionC_sorani":"ديارخةري ناوة","optionD_sorani":"نيهادة","question_badini":"لة رستةي (مةهاباد پايتةختي كۆماري كوردستان بوو.) ئةركي گریي (كۆماري كوردستان) ضيية؟","optionA_badini":"تةواوكةري بةياريدةي كاري ناتةواوة","optionB_badini":"تةواوكةري راستةوخۆي كاري ناتةواوة","optionC_badini":"ديارخةري ناوة","optionD_badini":"نيهادة","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_24","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة كام لةم رِستانةداكاري رِستةكة تةواوي تيَثةرِة ؟","optionA_sorani":"كةسيَكي دلَسؤزم هةبوو .","optionB_sorani":"بةفرةكةيان رِامالَيبوو.","optionC_sorani":"لة رِاثةرِينةكة بةشداربوو","optionD_sorani":"مندالَةكة لةدايكبوو","question_badini":"لة كام لةم رستانةداكاري رستةكة تةواوي تیپةرة ؟","optionA_badini":"كةسیكي دلَسۆزم هةبوو .","optionB_badini":"بةفرةكةيان رامالَيبوو.","optionC_badini":"لة راپةرينةكة بةشداربوو","optionD_badini":"مندالَةكة لةدايكبوو","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_25","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة كام لةم رِستانةدا جيَناوي لكاوي (بكةر) دةركةوتووة؟","optionA_sorani":"دةهات بؤ ثيَشانطاكة","optionB_sorani":"طةرِايةوة بؤ مالَةوة","optionC_sorani":"لة ذوورةكةي دانيشتووة","optionD_sorani":"باخضةكةي بؤ رِازاندةوة.","question_badini":"لة كام لةم رستانةدا جیناوي لكاوي (بكةر) دةركةوتووة؟","optionA_badini":"دةهات بۆ پیشانگاكة","optionB_badini":"گةرايووە بۆ مالَووە","optionC_badini":"لة ژوورةكةي دانيشتووة","optionD_badini":"باخضةكةي بۆ رازاندووە.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_26","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"وتاريَكي رِةخنةيي مارف خةزنةدارة لة طؤظاري شةفةق بلآوكرايةوة :","optionA_sorani":"كورد و ئسلوبي شيعر","optionB_sorani":"شيعرو نووسيني كوردي","optionC_sorani":"كورد و شيعر","optionD_sorani":"كؤن و تازة لةشيعردا","question_badini":"وتاریكي رةخنةيي مارف خةزنةدارة لة گۆظاري شةفةق بلآوكرايووە :","optionA_badini":"كورد و ئسلوبي شيعر","optionB_badini":"شيعرو نووسيني كوردي","optionC_badini":"كورد و شيعر","optionD_badini":"كۆن و تازة لةشيعردا","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_27","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"كام لةمانة لة ثيَوانة رِةخنةييةكاني (نالي) ية؟","optionA_sorani":"باشترين شيعر، ئةو شيعرةية كة وشةكانى جوان ء ضيَذبةخش و رِةوان بن ء واتاكانيشيان سودبةخش بن.","optionB_sorani":"شيعرى جوان و بةهادار ئةو شيعرةية كةبةكةمترين وشة، زؤرترين واتاى دةربرِيوة.","optionC_sorani":"رِاس","optionD_sorani":"—","question_badini":"كام لةمانة لة پیوانة رةخنةييةكاني (نالي) ية؟","optionA_badini":"باشترين شيعر، ئةو شيعرةية كة وشةكانى جوان ء ضیژبةخش و رةوان بن ء واتاكانيشيان سودبةخش بن.","optionB_badini":"شيعرى جوان و بةهادار ئةو شيعرةية كةبةكةمترين وشة، زۆرترين واتاى دةربريوة.","optionC_badini":"راس","optionD_badini":"—","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_28","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة بارةي (زماني شيعر)، لة قؤناغي1970 - 1975) ، كام لةمانة هـةلَـةيـة؟","optionA_sorani":"زمانى شيعر ئالَؤزة و خويَنةرى شيعر بةئاسانى لة واتاى وشةكان ناطات.","optionB_sorani":"لة ضوارضيَوةى كورديى ثةتيدا دةسوورِايةوة.","optionC_sorani":"بةرةو هةلَطرتني شةقلَي بةرةنطاربوونةوة و ضؤكدانةدان دةرِؤيشت.","optionD_sorani":"زمانيَكى خوازةيى ثانتايى دةقى شيعرى داطيردةكات.","question_badini":"لة بارةي (زماني شيعر)، لة قۆناغي1970 - 1975) ، كام لةمانة هـةلَـةيـة؟","optionA_badini":"زمانى شيعر ئالَۆزة و خوینةرى شيعر بةئاسانى لة واتاى وشةكان ناگات.","optionB_badini":"لة ضوارضیوةى كورديى پةتيدا دةسوورايووە.","optionC_badini":"بةرةو هةلَگرتني شةقلَي بةرةنگاربوونووە و ضۆكدانةدان دةرۆيشت.","optionD_badini":"زمانیكى خوازةيى پانتايى دةقى شيعرى داگيردةكات.","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_29","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"وتارة رِةخنةييةكاني ( جةميل بةندىرِؤذ بةيانى ) لة كام طؤظاردا بلآودةكرايةوة؟","optionA_sorani":"طةلاويَذ","optionB_sorani":"شةفةق","optionC_sorani":"هاوار","optionD_sorani":"دةنطى طيَتى تازة","question_badini":"وتارة رةخنةييةكاني ( جةميل بةندىرۆژ بةيانى ) لة كام گۆظاردا بلآودةكرايووە؟","optionA_badini":"گةلاویژ","optionB_badini":"شةفةق","optionC_badini":"هاوار","optionD_badini":"دةنگى گیتى تازة","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"kur_2022_30","subject":"kurdish","subjectSorani":"کوردی","subjectBadini":"کوردی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"لة بنةرِةتدا هونةريَكى ئةوروثيية،ثيَويستى ذيان وايكردووة وةك رِوخساريَكى هونةرى لةناو هةموو نةتةوةكانى جيهاندا بلآوببيَتةوة .","optionA_sorani":"رؤمان","optionB_sorani":"وتار","optionC_sorani":"شيعر","optionD_sorani":"ضيرؤكى هونةرى","question_badini":"لة بنةرةتدا هونةریكى ئةوروپيية،پیويستى ژيان وايكردووة وةك روخساریكى هونةرى لةناو هةموو نةتووەكانى جيهاندا بلآوببیتووە .","optionA_badini":"رۆمان","optionB_badini":"وتار","optionC_badini":"شيعر","optionD_badini":"ضيرۆكى هونةرى","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"phy_2021_01","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ئۆتۆمبێلێک لەسەر ڕووی ئاسۆیی دەڕوات بەخێراییەک بڕەکەی 65 km/h لادەداتە سەر بازنەیەک نیوەتیرەکەی 195m، کەمترین نرخی هاوکێشەی وەستاوە لێکخشاندنی نێوان تایەکان و زەوی بۆ ئەوەی ئۆتۆمبێلەکە نەسووڕێتەوە چەندە؟","optionA_sorani":"0.17","optionB_sorani":"0.35","optionC_sorani":"0.52","optionD_sorani":"0.61","question_badini":"ئۆتۆمبێلێک لەسەر ڕووی ئاسۆیی دەڕوات بەخێراییەک بڕەکەی 65 km/h لادەداتە سەر بازنەیەک نیوەتیرەکەی 195m، کەمترین نرخی هاوکێشەی وەستاوە لێکخشاندنی نێوان تایەکان و زەوی بۆ ئەوەی ئۆتۆمبێلەکە نەسووڕێتەوە چەندە؟","optionA_badini":"0.17","optionB_badini":"0.35","optionC_badini":"0.52","optionD_badini":"0.61","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"phy_2021_02","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"دەنگێک بەخێراییی 340 m/s لەناوی هەوادا دەڕوات، فریکانسی دەنگەکە 170 Hz ـە، پێی موجەکە چەندە؟","optionA_sorani":"0.5 m","optionB_sorani":"1 m","optionC_sorani":"2 m","optionD_sorani":"4 m","question_badini":"دەنگێک بەخێراییی 340 m/s لەناوی هەوادا دەڕوات، فریکانسی دەنگەکە 170 Hz ـە، پێی موجەکە چەندە؟","optionA_badini":"0.5 m","optionB_badini":"1 m","optionC_badini":"2 m","optionD_badini":"4 m","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"phy_2022_03","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"تووشەی بارکردنی کاریزا دان بەم گۆڕانکارییانەی خوارەوە: ئەگەر تیروتەمەن نیوە بێت و پلە دوو قات بێت، هێزی کاریزا چەند دەبێت؟","optionA_sorani":"2F","optionB_sorani":"4F","optionC_sorani":"F/2","optionD_sorani":"F/4","question_badini":"تووشەی بارکردنی کاریزا دان بەم گۆڕانکارییانەی خوارەوە: ئەگەر تیروتەمەن نیوە بێت و پلە دوو قات بێت، هێزی کاریزا چەند دەبێت؟","optionA_badini":"2F","optionB_badini":"4F","optionC_badini":"F/2","optionD_badini":"F/4","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"phy_2022_04","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"کوانتەی ڕووناکی کە فۆتۆنی پێکدێت بریتییە لە E=hf ، بریتییە لە:","optionA_sorani":"ئەنرژی","optionB_sorani":"فریکانس","optionC_sorani":"هاوکێشەی پلانک","optionD_sorani":"ئەنرژی فۆتۆن","question_badini":"کوانتەی ڕووناکی کە فۆتۆنی پێکدێت بریتییە لە E=hf ، بریتییە لە:","optionA_badini":"ئەنرژی","optionB_badini":"فریکانس","optionC_badini":"هاوکێشەی پلانک","optionD_badini":"ئەنرژی فۆتۆن","correctAnswer":"D","explanation_sorani":"","explanation_badini":""},{"id":"phy_2023_05","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ماددەیەک ئافرەتێ قووتی هەیە 100 N، بڕی بۆنەکەی 10 m، ئایا ئەگەر قووتەکە بە ئاراستەی جووڵانەوە بێت کارەکە چەندە؟","optionA_sorani":"500 J","optionB_sorani":"1000 J","optionC_sorani":"100 J","optionD_sorani":"200 J","question_badini":"ماددەیەک ئافرەتێ قووتی هەیە 100 N، بڕی بۆنەکەی 10 m، ئایا ئەگەر قووتەکە بە ئاڕاستەی جووڵانەوە بێت کارەکە چەندە؟","optionA_badini":"500 J","optionB_badini":"1000 J","optionC_badini":"100 J","optionD_badini":"200 J","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"phy_2023_06","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"لە سیستەمی دەنگی، ئەگەر فریکانس دووقات بێت، پێی موجەکە چی دەبێت؟","optionA_sorani":"دووقات دەبێت","optionB_sorani":"نیوە دەبێت","optionC_sorani":"نەگۆڕ دەمێنێتەوە","optionD_sorani":"چوارقات دەبێت","question_badini":"لە سیستەمی دەنگی، ئەگەر فریکانس دووقات بێت، پێی موجەکە چی دەبێت؟","optionA_badini":"دووقات دەبێت","optionB_badini":"نیوە دەبێت","optionC_badini":"نەگۆڕ دەمێنێتەوە","optionD_badini":"چوارقات دەبێت","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"phy_2024_07","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2024","examType":"وزارەتی","num":0,"question_sorani":"دوو شارژی یەکسان لە دووری r لەیەکتر، هێزی لێکتێپەڕاندن F ـە، ئەگەر دووری نیوە بێت هێزەکە چەند دەبێت؟","optionA_sorani":"F","optionB_sorani":"2F","optionC_sorani":"4F","optionD_sorani":"F/4","question_badini":"دوو شارژی یەکسان لە دووری r لەیەکتر، هێزی لێکتێپەڕاندن F ـە، ئەگەر دووری نیوە بێت هێزەکە چەند دەبێت؟","optionA_badini":"F","optionB_badini":"2F","optionC_badini":"4F","optionD_badini":"F/4","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"phy_2024_08","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2024","examType":"وزارەتی","num":0,"question_sorani":"ئەگەر پلانکەیەک بەرزایی 10 m لە زەوی هەبێت و گران بێت بۆ خوار، خێرایی دایکەوتنی کاتی هاوکێشەدا: (g=10 m/s²)","optionA_sorani":"10 m/s","optionB_sorani":"14 m/s","optionC_sorani":"20 m/s","optionD_sorani":"100 m/s","question_badini":"ئەگەر پلانکەیەک بەرزایی 10 m لە زەوی هەبێت و گران بێت بۆ خوار، خێرایی دایکەوتنی کاتی هاوکێشەدا: (g=10 m/s²)","optionA_badini":"10 m/s","optionB_badini":"14 m/s","optionC_badini":"20 m/s","optionD_badini":"100 m/s","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"phy_2025_09","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2025","examType":"وزارەتی","num":0,"question_sorani":"لە کانونی ئۆمی V=IR، ئەگەر بارکردن دوو قات بێت و بەرگری نەگۆڕ بێت، هەوا چەندیا بوون:","optionA_sorani":"دووقات دەبێت","optionB_sorani":"نیوە دەبێت","optionC_sorani":"نەگۆڕ دەمێنێتەوە","optionD_sorani":"چوارقات دەبێت","question_badini":"لە کانونی ئۆمی V=IR، ئەگەر بارکردن دوو قات بێت و بەرگری نەگۆڕ بێت، هەوا چەندیا بوون:","optionA_badini":"دووقات دەبێت","optionB_badini":"نیوە دەبێت","optionC_badini":"نەگۆڕ دەمێنێتەوە","optionD_badini":"چوارقات دەبێت","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"phy_2025_10","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2025","examType":"وزارەتی","num":0,"question_sorani":"موجەی ئەلیکترۆمانیاتی لە بۆشایی بەخێراییی نزیک 3×10⁸ m/s دەڕوات، ئایا ئەم جۆرەی موجایەکە کوام?","optionA_sorani":"دەنگ","optionB_sorani":"ڕووناکی","optionC_sorani":"گەرما","optionD_sorani":"هیچیان","question_badini":"موجەی ئەلیکترۆمانیاتی لە بۆشایی بەخێراییی نزیک 3×10⁸ m/s دەڕوات، ئایا ئەم جۆرەی موجایەکە کوام?","optionA_badini":"دەنگ","optionB_badini":"ڕووناکی","optionC_badini":"گەرما","optionD_badini":"هیچیان","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"phy_2020_11","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2020","examType":"وزارەتی","num":0,"question_sorani":"ئەگەر شتێک بەخێراییی سەرەتایی 20 m/s بەهۆی گران کاتی 3 چرکە بایستێت، دووریی ڕوانینی چەندە؟","optionA_sorani":"60 m","optionB_sorani":"30 m","optionC_sorani":"90 m","optionD_sorani":"45 m","question_badini":"ئەگەر شتێک بەخێراییی سەرەتایی 20 m/s بەهۆی گران کاتی 3 چرکە بایستێت، دووریی ڕوانینی چەندە؟","optionA_badini":"60 m","optionB_badini":"30 m","optionC_badini":"90 m","optionD_badini":"45 m","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"phy_2020_12","subject":"physics","subjectSorani":"فیزیا","subjectBadini":"فیزیا","year":"2020","examType":"وزارەتی","num":0,"question_sorani":"ئەنرژی کینیتیک بریتییە لە:","optionA_sorani":"½mv²","optionB_sorani":"mgh","optionC_sorani":"mv","optionD_sorani":"Ft","question_badini":"ئەنرژی کینیتیک بریتییە لە:","optionA_badini":"½mv²","optionB_badini":"mgh","optionC_badini":"mv","optionD_badini":"Ft","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"chem_2021_01","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ژمارەی ئاتۆمی کاربۆن چەندە؟","optionA_sorani":"4","optionB_sorani":"6","optionC_sorani":"8","optionD_sorani":"12","question_badini":"ژمارەی ئاتۆمی کاربۆن چەندە؟","optionA_badini":"4","optionB_badini":"6","optionC_badini":"8","optionD_badini":"12","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"chem_2021_02","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"کام لەم بەستەرانە بەستەرێکی کۆڤالێنتیی تووندە؟","optionA_sorani":"H-H","optionB_sorani":"Na-Cl","optionC_sorani":"O=O","optionD_sorani":"H-Cl","question_badini":"کام لەم بەستەرانە بەستەرێکی کۆڤالێنتیی تووندە؟","optionA_badini":"H-H","optionB_badini":"Na-Cl","optionC_badini":"O=O","optionD_badini":"H-Cl","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"chem_2022_03","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"PH ی ئاو پاک چەندە؟","optionA_sorani":"5","optionB_sorani":"6","optionC_sorani":"7","optionD_sorani":"8","question_badini":"PH ی ئاو پاک چەندە؟","optionA_badini":"5","optionB_badini":"6","optionC_badini":"7","optionD_badini":"8","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"chem_2022_04","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"ئیزۆتۆپەکانی بواخی یەکسان دەبن بەڵام جیاوازی لە:","optionA_sorani":"ژمارەی ئاتۆمی","optionB_sorani":"ژمارەی نیوترۆن","optionC_sorani":"ژمارەی ئیلیکترۆن","optionD_sorani":"هەموویان","question_badini":"ئیزۆتۆپەکانی بواخی یەکسان دەبن بەڵام جیاوازی لە:","optionA_badini":"ژمارەی ئاتۆمی","optionB_badini":"ژمارەی نیوترۆن","optionC_badini":"ژمارەی ئیلیکترۆن","optionD_badini":"هەموویان","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"chem_2023_05","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ماددەی کام جۆرە ئەگەر لە ئاودا تەرکیب بوو PH کەمتر لە 7 دەبێت؟","optionA_sorani":"ئاسیدی","optionB_sorani":"باز","optionC_sorani":"نێوتراڵ","optionD_sorani":"نمک","question_badini":"ماددەی کام جۆرە ئەگەر لە ئاودا تەرکیب بوو PH کەمتر لە 7 دەبێت؟","optionA_badini":"ئاسیدی","optionB_badini":"باز","optionC_badini":"نێوتراڵ","optionD_badini":"نمک","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"chem_2023_06","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"مۆڵی ئاو بچووک H₂O چەندە؟","optionA_sorani":"16","optionB_sorani":"17","optionC_sorani":"18","optionD_sorani":"20","question_badini":"مۆڵی ئاو بچووک H₂O چەندە؟","optionA_badini":"16","optionB_badini":"17","optionC_badini":"18","optionD_badini":"20","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"chem_2024_07","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2024","examType":"وزارەتی","num":0,"question_sorani":"کام لەم ئیلیمێنتانە لە گروپی 1ـدا دەبێتەوە؟","optionA_sorani":"سۆدیۆم","optionB_sorani":"کاڵسیۆم","optionC_sorani":"ئۆکسیجین","optionD_sorani":"نیترۆجین","question_badini":"کام لەم ئیلیمێنتانە لە گروپی 1ـدا دەبێتەوە؟","optionA_badini":"سۆدیۆم","optionB_badini":"کاڵسیۆم","optionC_badini":"ئۆکسیجین","optionD_badini":"نیترۆجین","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"chem_2024_08","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2024","examType":"وزارەتی","num":0,"question_sorani":"ئەگەر ئەتۆمێک 6 پرۆتۆن و 6 نیوترۆن هەبێت، ژمارەی بواخی چەندە؟","optionA_sorani":"6","optionB_sorani":"12","optionC_sorani":"8","optionD_sorani":"10","question_badini":"ئەگەر ئەتۆمێک 6 پرۆتۆن و 6 نیوترۆن هەبێت، ژمارەی بواخی چەندە؟","optionA_badini":"6","optionB_badini":"12","optionC_badini":"8","optionD_badini":"10","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"chem_2025_09","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2025","examType":"وزارەتی","num":0,"question_sorani":"کام لەم ئاوستانەی دڵنیایی بۆ تاقیگەی کیمیاکری پێویستترە؟","optionA_sorani":"دستکولی کارەبایی","optionB_sorani":"کولاو و دستکول و پێچاو","optionC_sorani":"بەلیستی","optionD_sorani":"هیچیان","question_badini":"کام لەم ئاوستانەی دڵنیایی بۆ تاقیگەی کیمیاکری پێویستترە؟","optionA_badini":"دستکولی کارەبایی","optionB_badini":"کولاو و دستکول و پێچاو","optionC_badini":"بەلیستی","optionD_badini":"هیچیان","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"chem_2025_10","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2025","examType":"وزارەتی","num":0,"question_sorani":"ئیلیکترۆنی ئازاد لە بەستەری:","optionA_sorani":"کۆڤالێنت","optionB_sorani":"ئیۆنیک","optionC_sorani":"مێتاڵیک","optionD_sorani":"ئایدرۆجین","question_badini":"ئیلیکترۆنی ئازاد لە بەستەری:","optionA_badini":"کۆڤالێنت","optionB_badini":"ئیۆنیک","optionC_badini":"مێتاڵیک","optionD_badini":"ئایدرۆجین","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"chem_2020_11","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2020","examType":"وزارەتی","num":0,"question_sorani":"هایدرۆجین یەکێکە لە ئیلیمێنتە:","optionA_sorani":"فلیزی","optionB_sorani":"نافلیزی","optionC_sorani":"نیمەفلیزی","optionD_sorani":"گازی ئەسیل","question_badini":"هایدرۆجین یەکێکە لە ئیلیمێنتە:","optionA_badini":"فلیزی","optionB_badini":"نافلیزی","optionC_badini":"نیمەفلیزی","optionD_badini":"گازی ئەسیل","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"chem_2020_12","subject":"chemistry","subjectSorani":"کیمیا","subjectBadini":"کیمیا","year":"2020","examType":"وزارەتی","num":0,"question_sorani":"PH باز بە چ ڕێژەیەک بالاتر لە 7ـە؟","optionA_sorani":"دروستە","optionB_sorani":"هەڵەیە","optionC_sorani":"شلێوە","optionD_sorani":"تەنها لە 8ـدایە","question_badini":"PH باز بە چ ڕێژەیەک بالاتر لە 7ـە؟","optionA_badini":"دروستە","optionB_badini":"هەڵەیە","optionC_badini":"شلێوە","optionD_badini":"تەنها لە 8ـدایە","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"ara_2021_01","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ما هو جمع كلمة (كتاب)؟","optionA_sorani":"كتب","optionB_sorani":"كاتب","optionC_sorani":"مكتوب","optionD_sorani":"كتابات","question_badini":"ما هو جمع كلمة (كتاب)؟","optionA_badini":"كتب","optionB_badini":"كاتب","optionC_badini":"مكتوب","optionD_badini":"كتابات","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"ara_2021_02","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"ما الفعل المضارع المرفوع في الجملة التالية: (الطالبُ يكتبُ الدرسَ)","optionA_sorani":"يكتبُ","optionB_sorani":"الطالبُ","optionC_sorani":"الدرسَ","optionD_sorani":"كتب","question_badini":"ما الفعل المضارع المرفوع في الجملة التالية: (الگالبُ يكتبُ الدرسَ)","optionA_badini":"يكتبُ","optionB_badini":"الگالبُ","optionC_badini":"الدرسَ","optionD_badini":"كتب","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"ara_2022_03","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"ما اسم الإشارة للمفرد المذكر البعيد؟","optionA_sorani":"هذا","optionB_sorani":"هذه","optionC_sorani":"ذلك","optionD_sorani":"تلك","question_badini":"ما اسم الإشارة للمفرد المژكر البعيد؟","optionA_badini":"هژا","optionB_badini":"هژه","optionC_badini":"ژلك","optionD_badini":"تلك","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"ara_2022_04","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"أي الجمل التالية يحتوي على مفعول به؟","optionA_sorani":"ذهب الطالبُ","optionB_sorani":"قرأ عليٌّ الكتابَ","optionC_sorani":"الجوُّ جميلٌ","optionD_sorani":"السماءُ صافيةٌ","question_badini":"أي الجمل التالية يحتوي على مفعول به؟","optionA_badini":"ژهب الگالبُ","optionB_badini":"قرأ عليٌّ الكتابَ","optionC_badini":"الجوُّ جميلٌ","optionD_badini":"السماءُ صافيةٌ","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"ara_2023_05","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ما علامة رفع الاسم المفرد؟","optionA_sorani":"الضمة","optionB_sorani":"الفتحة","optionC_sorani":"الكسرة","optionD_sorani":"السكون","question_badini":"ما علامة رفع الاسم المفرد؟","optionA_badini":"الضمة","optionB_badini":"الفتحة","optionC_badini":"الكسرة","optionD_badini":"السكون","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"ara_2023_06","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"ما وزن كلمة (مَفعول)؟","optionA_sorani":"فَعَلَ","optionB_sorani":"مَفعول","optionC_sorani":"فَعَّل","optionD_sorani":"أَفعل","question_badini":"ما وزن كلمة (مَفعول)؟","optionA_badini":"فَعَلَ","optionB_badini":"مَفعول","optionC_badini":"فَعَّل","optionD_badini":"أَفعل","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"ara_2024_07","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2024","examType":"وزارەتی","num":0,"question_sorani":"ما الضمير المنفصل للمتكلم المفرد؟","optionA_sorani":"أنا","optionB_sorani":"نحن","optionC_sorani":"هو","optionD_sorani":"هي","question_badini":"ما الضمير المنفصل للمتكلم المفرد؟","optionA_badini":"أنا","optionB_badini":"نحن","optionC_badini":"هو","optionD_badini":"هي","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"ara_2024_08","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2024","examType":"وزارەتی","num":0,"question_sorani":"ما جذر كلمة (مدرسة)؟","optionA_sorani":"د-ر-س","optionB_sorani":"م-د-ر","optionC_sorani":"ر-س-ة","optionD_sorani":"د-س-ر","question_badini":"ما جژر كلمة (مدرسة)؟","optionA_badini":"د-ر-س","optionB_badini":"م-د-ر","optionC_badini":"ر-س-ة","optionD_badini":"د-س-ر","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"ara_2025_09","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2025","examType":"وزارەتی","num":0,"question_sorani":"أي حروف الجر التالية يفيد الملكية؟","optionA_sorani":"في","optionB_sorani":"على","optionC_sorani":"لـ","optionD_sorani":"من","question_badini":"أي حروف الجر التالية يفيد الملكية؟","optionA_badini":"في","optionB_badini":"على","optionC_badini":"لـ","optionD_badini":"من","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"ara_2025_10","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2025","examType":"وزارەتی","num":0,"question_sorani":"ما جمع (مدينة)؟","optionA_sorani":"مدن","optionB_sorani":"مدائن","optionC_sorani":"مدينات","optionD_sorani":"هـ أ وب","question_badini":"ما جمع (مدينة)؟","optionA_badini":"مدن","optionB_badini":"مدائن","optionC_badini":"مدينات","optionD_badini":"هـ أ وب","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"ara_2020_11","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2020","examType":"وزارەتی","num":0,"question_sorani":"ما مقابل كلمة (جميل) في المعنى المضاد؟","optionA_sorani":"كبير","optionB_sorani":"قبيح","optionC_sorani":"صغير","optionD_sorani":"بعيد","question_badini":"ما مقابل كلمة (جميل) في المعنى المضاد؟","optionA_badini":"كبير","optionB_badini":"قبيح","optionC_badini":"صغير","optionD_badini":"بعيد","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"ara_2020_12","subject":"arabic","subjectSorani":"عەرەبی","subjectBadini":"عەرەبی","year":"2020","examType":"وزارەتی","num":0,"question_sorani":"ما الفاعل في الجملة (نجح الطالبُ المجتهدُ)؟","optionA_sorani":"الطالبُ","optionB_sorani":"نجح","optionC_sorani":"المجتهدُ","optionD_sorani":"لا فاعل","question_badini":"ما الفاعل في الجملة (نجح الگالبُ المجتهدُ)؟","optionA_badini":"الگالبُ","optionB_badini":"نجح","optionC_badini":"المجتهدُ","optionD_badini":"لا فاعل","correctAnswer":"A","explanation_sorani":"","explanation_badini":""},{"id":"eng_2021_01","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"Choose the correct form: She ___ to school every day.","optionA_sorani":"go","optionB_sorani":"goes","optionC_sorani":"going","optionD_sorani":"gone","question_badini":"Choose the correct form: She ___ to school every day.","optionA_badini":"go","optionB_badini":"goes","optionC_badini":"going","optionD_badini":"gone","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"eng_2021_02","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2021","examType":"وزارەتی","num":0,"question_sorani":"Which word is a noun?","optionA_sorani":"quickly","optionB_sorani":"beautiful","optionC_sorani":"teacher","optionD_sorani":"run","question_badini":"Which word is a noun?","optionA_badini":"quickly","optionB_badini":"beautiful","optionC_badini":"teacher","optionD_badini":"run","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"eng_2022_03","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"The plural of 'child' is:","optionA_sorani":"childs","optionB_sorani":"childen","optionC_sorani":"children","optionD_sorani":"childes","question_badini":"The plural of 'child' is:","optionA_badini":"childs","optionB_badini":"childen","optionC_badini":"children","optionD_badini":"childes","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"eng_2022_04","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2022","examType":"وزارەتی","num":0,"question_sorani":"Choose the correct tense: They ___ football yesterday.","optionA_sorani":"play","optionB_sorani":"played","optionC_sorani":"playing","optionD_sorani":"plays","question_badini":"Choose the correct tense: They ___ football yesterday.","optionA_badini":"play","optionB_badini":"played","optionC_badini":"playing","optionD_badini":"plays","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"eng_2023_05","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"Which sentence is correct?","optionA_sorani":"She don't like coffee","optionB_sorani":"She doesn't likes coffee","optionC_sorani":"She doesn't like coffee","optionD_sorani":"She not like coffee","question_badini":"Which sentence is correct?","optionA_badini":"She don't like coffee","optionB_badini":"She doesn't likes coffee","optionC_badini":"She doesn't like coffee","optionD_badini":"She not like coffee","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"eng_2023_06","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2023","examType":"وزارەتی","num":0,"question_sorani":"The opposite of 'ancient' is:","optionA_sorani":"old","optionB_sorani":"modern","optionC_sorani":"historical","optionD_sorani":"classic","question_badini":"The opposite of 'ancient' is:","optionA_badini":"old","optionB_badini":"modern","optionC_badini":"historical","optionD_badini":"classic","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"eng_2024_07","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2024","examType":"وزارەتی","num":0,"question_sorani":"Choose the correct article: ___ apple a day keeps the doctor away.","optionA_sorani":"A","optionB_sorani":"An","optionC_sorani":"The","optionD_sorani":"No article","question_badini":"Choose the correct article: ___ apple a day keeps the doctor away.","optionA_badini":"A","optionB_badini":"An","optionC_badini":"The","optionD_badini":"No article","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"eng_2024_08","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2024","examType":"وزارەتی","num":0,"question_sorani":"Which word means 'happy'?","optionA_sorani":"Sad","optionB_sorani":"Angry","optionC_sorani":"Joyful","optionD_sorani":"Tired","question_badini":"Which word means 'happy'?","optionA_badini":"Sad","optionB_badini":"Angry","optionC_badini":"Joyful","optionD_badini":"Tired","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"eng_2025_09","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2025","examType":"وزارەتی","num":0,"question_sorani":"The passive voice of 'They build the house' is:","optionA_sorani":"The house was built by them","optionB_sorani":"The house is built by them","optionC_sorani":"The house built by them","optionD_sorani":"The house has build by them","question_badini":"The passive voice of 'They build the house' is:","optionA_badini":"The house was built by them","optionB_badini":"The house is built by them","optionC_badini":"The house built by them","optionD_badini":"The house has build by them","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"eng_2025_10","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2025","examType":"وزارەتی","num":0,"question_sorani":"Choose the correct preposition: She is good ___ mathematics.","optionA_sorani":"in","optionB_sorani":"at","optionC_sorani":"on","optionD_sorani":"for","question_badini":"Choose the correct preposition: She is good ___ mathematics.","optionA_badini":"in","optionB_badini":"at","optionC_badini":"on","optionD_badini":"for","correctAnswer":"B","explanation_sorani":"","explanation_badini":""},{"id":"eng_2020_11","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2020","examType":"وزارەتی","num":0,"question_sorani":"Which is the correct comparative form of 'good'?","optionA_sorani":"gooder","optionB_sorani":"more good","optionC_sorani":"better","optionD_sorani":"best","question_badini":"Which is the correct comparative form of 'good'?","optionA_badini":"gooder","optionB_badini":"more good","optionC_badini":"better","optionD_badini":"best","correctAnswer":"C","explanation_sorani":"","explanation_badini":""},{"id":"eng_2020_12","subject":"english","subjectSorani":"ئینگلیزی","subjectBadini":"ئینگلیزی","year":"2020","examType":"وزارەتی","num":0,"question_sorani":"What is the meaning of 'benevolent'?","optionA_sorani":"cruel","optionB_sorani":"kind","optionC_sorani":"lazy","optionD_sorani":"brave","question_badini":"What is the meaning of 'benevolent'?","optionA_badini":"cruel","optionB_badini":"kind","optionC_badini":"lazy","optionD_badini":"brave","correctAnswer":"B","explanation_sorani":"","explanation_badini":""}]};
+</script>
+</body>
+</html>
