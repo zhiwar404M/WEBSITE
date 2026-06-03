@@ -371,6 +371,40 @@
             font-weight: 700;
         }
 
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            margin-top: 20px;
+            padding: 16px 20px;
+            border-radius: 10px;
+            background: #f0fdf4;
+            border-right: 5px solid var(--success);
+            text-align: right;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .explanation-box.wrong {
+            background: #fff7f7;
+            border-right-color: var(--danger);
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--success);
+            margin-bottom: 6px;
+        }
+
+        .explanation-box.wrong .explanation-title {
+            color: var(--danger);
+        }
+
+        .explanation-text {
+            font-size: 15px;
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
         /* Result Screen */
         .result-screen {
             text-align: center;
@@ -594,6 +628,10 @@
                 <div class="question-container">
                     <div class="question-text" id="questionText"></div>
                     <div class="options" id="optionsContainer"></div>
+                    <div class="explanation-box" id="explanationBox">
+                        <div class="explanation-title" id="explanationTitle"></div>
+                        <div class="explanation-text" id="explanationText"></div>
+                    </div>
                 </div>
 
                 <div class="btn-group">
@@ -775,6 +813,7 @@
             
             const container = document.getElementById('optionsContainer');
             container.innerHTML = '';
+            document.getElementById('explanationBox').style.display = 'none';
             
             question.options.forEach(option => {
                 const optionDiv = document.createElement('div');
@@ -795,11 +834,44 @@
         }
 
         function selectAnswer(optionId) {
+            // اگر پێشتر وەڵامێکی هەڵبژێردراوە، دیسان کلیک نەکرێت
+            if (selectedAnswers[currentQuestionIndex] !== undefined) return;
+
+            const question = quizQuestions[currentQuestionIndex];
+            const isCorrect = optionId === question.correctAnswer;
             selectedAnswers[currentQuestionIndex] = optionId;
+
+            // هەموو وەڵامەکان گۆڕدرێن بۆ پیشاندانی ڕاست و هەڵە
             document.querySelectorAll('.option').forEach((opt, idx) => {
-                const qoptions = quizQuestions[currentQuestionIndex].options;
-                opt.classList.toggle('selected', qoptions[idx]?.id === optionId);
+                const optionData = question.options[idx];
+                opt.style.pointerEvents = 'none'; // دیسان کلیک ناکرێت
+                if (optionData.id === question.correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (optionData.id === optionId) {
+                    opt.classList.add('wrong');
+                }
             });
+
+            // شیکاری پرسیارەکە پیشان بدرێت
+            const expBox = document.getElementById('explanationBox');
+            const expTitle = document.getElementById('explanationTitle');
+            const expText = document.getElementById('explanationText');
+
+            expBox.style.display = 'block';
+            expBox.classList.toggle('wrong', !isCorrect);
+
+            if (currentLanguage === 'en') {
+                expTitle.textContent = isCorrect ? '✓ وەڵامی ڕاست' : '✗ وەڵامی هەڵە';
+                expText.textContent = question.explanation_en || question.explanation_sorani || '';
+            } else if (currentLanguage === 'badini') {
+                expTitle.textContent = isCorrect ? '✓ وەڵامی ڕاست' : '✗ وەڵامی هەڵە';
+                expText.textContent = question.explanation_badini || question.explanation_sorani || '';
+            } else {
+                expTitle.textContent = isCorrect ? '✓ وەڵامی ڕاست' : '✗ وەڵامی هەڵە';
+                expText.textContent = question.explanation_sorani || '';
+            }
+
+            updateScore();
             document.getElementById('nextBtn').disabled = false;
         }
 
@@ -854,13 +926,13 @@
             const percentage = Math.round((correct / quizQuestions.length) * 100);
             let message = '';
             if (percentage >= 80) {
-                message = 'بێجگە! تۆ بووی بێ مام!';
+                message = 'تکایە بەردەوام بە، ئەنجامەکەت زۆر باشە!';
             } else if (percentage >= 60) {
-                message = 'باش بوو!';
+                message = 'ئەنجامەکەت باشە، تواناکانت باشتر بکە.';
             } else if (percentage >= 40) {
-                message = 'کاتێ هتد خولقان بکەیت!';
+                message = 'پێویستە زیاتر خوێندنەوە بکەیت.';
             } else {
-                message = 'دیساندا تاقیکردنەوە کردن پێویستە!';
+                message = 'دیسان تاقیکردنەوە بکە و باشتر ئامادە بە.';
             }
 
             document.getElementById('finalScore').textContent = `${correct}/${quizQuestions.length}`;
@@ -868,8 +940,8 @@
             document.getElementById('correctCount').textContent = correct;
             document.getElementById('wrongCount').textContent = wrong;
             document.getElementById('skippedCount').textContent = skipped;
-            document.getElementById('resultDetail').textContent = 
-                `فیزدانا (${percentage}%) - ${getTotalTime()}`;
+            document.getElementById('resultDetail').textContent =
+                `نمرەی کۆتایی: ${percentage}٪ — کاتی تاقیکردنەوە: ${getTotalTime()}`;
 
             showScreen('resultScreen');
         }
@@ -878,11 +950,11 @@
             const elapsed = Math.floor((Date.now() - quizStartTime) / 1000);
             const mins = Math.floor(elapsed / 60);
             const secs = elapsed % 60;
-            return `${mins} خولەم ${secs} چرکە`;
+            return `${mins} خولەک و ${secs} چرکە`;
         }
 
         function exitQuiz() {
-            if (confirm('دەتەوێت لە تاقیکردنەوە دەرچیت؟')) {
+            if (confirm('دەتەوێت لە تاقیکردنەوەکە دەرچیت؟ ئەنجامەکانت پاشەکەوت ناکرێن.')) {
                 clearInterval(quizTimer);
                 showScreen('startScreen');
                 currentSubject = null;
