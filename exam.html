@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تاقیکردنەوەی ژیوار - Zhiwar Jaff Exam Prep</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        'primary-dark': '#4f46e5',
+                        'primary-light': '#818cf8',
+                        secondary: '#10b981',
+                        'secondary-dark': '#059669',
+                        danger: '#ef4444',
+                        warning: '#f59e0b',
+                        success: '#10b981',
+                        dark: '#1f2937',
+                        'dark-light': '#374151',
+                        light: '#f9fafb',
+                        'light-dark': '#f3f4f6',
+                    },
+                    fontFamily: {
+                        'noto-kufi': ['Noto Kufi Arabic', 'system-ui', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'squircle': '20% 20% 16% 16% / 16% 16% 20% 20%',
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05)',
+                        'card-lg': '0 20px 25px rgba(0, 0, 0, 0.15)',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            font-family: 'Noto Kufi Arabic', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f9fafb;
+        }
+
+        /* Squircle Button Style */
+        .btn-squircle {
+            border-radius: 20% 20% 16% 16% / 16% 16% 20% 20%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-squircle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-squircle:active {
+            transform: translateY(0);
+        }
+
+        /* Card Squircle */
+        .card-squircle {
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .card-squircle:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Timer Progress */
+        .timer-circle {
+            background: conic-gradient(#10b981 var(--progress), #e5e7eb var(--progress));
+            border-radius: 50%;
+        }
+
+        /* Question card animation */
+        .question-fade {
+            animation: fadeIn 0.4s ease-in;
+        }
+
+        /* RTL optimizations */
+        [dir="rtl"] input::placeholder {
+            text-align: right;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Tab Animation */
+        .tab-active {
+            border-bottom-color: #6366f1;
+            color: #6366f1;
+        }
+
+        .tab-inactive {
+            border-bottom-color: transparent;
+            color: #6b7280;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 9999px;
+            transition: width 0.3s ease;
+        }
+
+        /* Badge styles */
+        .badge-primary {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Smooth transitions */
+        .transition-smooth {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Text ellipsis */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Focus ring */
+        .focus-ring {
+            outline: 2px solid #6366f1;
+            outline-offset: 2px;
+        }
+
+        input:focus-visible,
+        select:focus-visible,
+        button:focus-visible {
+            outline: 2px solid #6366f1;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="bg-light" dir="rtl">
+    <div id="app" class="min-h-screen bg-light">
+        <!-- Navigation -->
+        <nav id="navbar" class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary to-primary-dark rounded-squircle flex items-center justify-center text-white font-bold text-lg">
+                            ژ
+                        </div>
+                        <h1 class="text-xl font-bold text-dark hidden sm:block">تاقیکردنەوەی ژیوار</h1>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button id="langToggle" class="px-3 py-1 rounded-lg bg-light-dark text-dark text-sm font-medium hover:bg-gray-300 transition-smooth">
+                            EN
+                        </button>
+                        <button id="userMenu" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold hover:bg-primary-dark transition-smooth">
+                            ئ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="pt-20 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <!-- Dashboard Tab -->
+            <section id="dashboard-view" class="view-section">
+                <div class="space-y-6">
+                    <!-- Welcome Section -->
+                    <div class="bg-gradient-to-br from-primary to-primary-dark rounded-squircle p-6 sm:p-8 text-white card-squircle shadow-card">
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-2">بەخێربێیت!</h2>
+                        <p class="text-primary-light mb-4">فێرکاری جێبەجێ بکە و خۆت فراوانتر بکە</p>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button onclick="switchView('quiz-view')" class="btn-squircle bg-white text-primary px-6 py-2 font-semibold hover:bg-gray-100">
+                                تاقیکردنەوە دەست پێ بکە
+                            </button>
+                            <button onclick="switchView('archive-view')" class="btn-squircle bg-primary-light/30 text-white px-6 py-2 font-semibold hover:bg-primary-light/40">
+                                پرسیارە کۆنەکان
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-gray-600 text-sm">تاقیکردنەوەی کردراو</span>
+                                <span class="text-2xl">📊</span>
+                            </div>
+                            <p class="text-3xl font-bold text-primary" id="stat-quizzes">12</p>
+                            <p class="text-xs text-gray-500 mt-2">ئەم هێمایە</p>
+                        </div>
+
+                        <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-gray-600 text-sm">ڕاست جواب</span>
+                                <span class="text-2xl">✓</span>
+                            </div>
+                            <p class="text-3xl font-bold text-success" id="stat-correct">87%</p>
+                            <p class="text-xs text-gray-500 mt-2">نیش کردن</p>
+                        </div>
+
+                        <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-gray-600 text-sm">بابەت تەواو کردراو</span>
+                                <span class="text-2xl">📚</span>
+                            </div>
+                            <p class="text-3xl font-bold text-primary-light" id="stat-chapters">5</p>
+                            <p class="text-xs text-gray-500 mt-2">بە دوای داهاتوو</p>
+                        </div>
+
+                        <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-gray-600 text-sm">کاتێک فێربوو</span>
+                                <span class="text-2xl">⏱️</span>
+                            </div>
+                            <p class="text-3xl font-bold text-warning" id="stat-hours">48h</p>
+                            <p class="text-xs text-gray-500 mt-2">بە ڕاستی</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                        <h3 class="text-xl font-bold text-dark mb-4">چالاکی نوێ</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                                <div>
+                                    <p class="font-semibold text-dark">بیۆلۆژی - کاتری 2024</p>
+                                    <p class="text-xs text-gray-500">15 پرسیار، 89% - 12 دقیقە پێش</p>
+                                </div>
+                                <span class="text-green-500 text-lg">✓</span>
+                            </div>
+                            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                                <div>
+                                    <p class="font-semibold text-dark">کیمیا - کاتری 2023</p>
+                                    <p class="text-xs text-gray-500">20 پرسیار، 76% - 3 کاتژمێری پێش</p>
+                                </div>
+                                <span class="text-orange-500 text-lg">△</span>
+                            </div>
+                            <div class="flex items-center justify-between py-3">
+                                <div>
+                                    <p class="font-semibold text-dark">فیزیک - کاتری 2024</p>
+                                    <p class="text-xs text-gray-500">18 پرسیار، 92% - 1 ڕۆژ پێش</p>
+                                </div>
+                                <span class="text-green-500 text-lg">✓</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Study Plan -->
+                    <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                        <h3 class="text-xl font-bold text-dark mb-4">پلانی خوێندن</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-sm font-semibold text-dark">بیۆلۆژی</span>
+                                    <span class="text-sm text-gray-500">8 / 12</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 67%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-sm font-semibold text-dark">شیمیا</span>
+                                    <span class="text-sm text-gray-500">5 / 12</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 42%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-sm font-semibold text-dark">فیزیک</span>
+                                    <span class="text-sm text-gray-500">10 / 12</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 83%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-sm font-semibold text-dark">ریازمان</span>
+                                    <span class="text-sm text-gray-500">2 / 12</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 17%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz View -->
+            <section id="quiz-view" class="view-section hidden">
+                <div class="space-y-6">
+                    <!-- Quiz Setup -->
+                    <div id="quiz-setup" class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                        <h2 class="text-2xl font-bold text-dark mb-6">تاقیکردنەوە دەست پێ بکە</h2>
+                        
+                        <div class="space-y-4">
+                            <!-- Subject Selection -->
+                            <div>
+                                <label class="block text-sm font-semibold text-dark mb-2">بابەت</label>
+                                <select id="quizSubject" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus-ring">
+                                    <option value="">بابەتێک هەڵبژێرە</option>
+                                    <option value="biology">بیۆلۆژی</option>
+                                    <option value="chemistry">شیمیا</option>
+                                    <option value="physics">فیزیک</option>
+                                    <option value="mathematics">بیرکاری</option>
+                                </select>
+                            </div>
+
+                            <!-- Year Selection -->
+                            <div>
+                                <label class="block text-sm font-semibold text-dark mb-2">ساڵ</label>
+                                <select id="quizYear" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus-ring">
+                                    <option value="">هەموو ساڵەکان</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                </select>
+                            </div>
+
+                            <!-- Question Count -->
+                            <div>
+                                <label class="block text-sm font-semibold text-dark mb-2">ژمارەی پرسیار</label>
+                                <input type="number" id="quizCount" min="5" max="50" value="15" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus-ring">
+                            </div>
+
+                            <!-- Quiz Mode -->
+                            <div>
+                                <label class="block text-sm font-semibold text-dark mb-3">شێوە</label>
+                                <div class="flex gap-3">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="quizMode" value="timed" checked class="w-4 h-4">
+                                        <span class="text-sm">کاتدار (60 دقیقە)</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="quizMode" value="untimed" class="w-4 h-4">
+                                        <span class="text-sm">بێ کات</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button onclick="startQuiz()" class="w-full btn-squircle bg-gradient-to-r from-primary to-primary-dark text-white py-3 font-semibold mt-6">
+                                تاقیکردنەوە دەست پێ بکە →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz In Progress -->
+            <section id="quiz-progress" class="view-section hidden space-y-6">
+                <!-- Timer and Progress -->
+                <div class="bg-white rounded-squircle p-4 card-squircle shadow-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-xs text-gray-500">پرسیار</p>
+                            <p class="text-lg font-bold text-primary"><span id="current-question">1</span> / <span id="total-questions">15</span></p>
+                        </div>
+                        <div id="timer" class="text-center">
+                            <p class="text-xs text-gray-500">ماونده کات</p>
+                            <p class="text-2xl font-bold text-danger" id="timer-display">60:00</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">ڕاست</p>
+                            <p class="text-lg font-bold text-success" id="correct-count">0</p>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Question -->
+                <div id="question-container" class="bg-white rounded-squircle p-6 card-squircle shadow-card question-fade">
+                    <div class="mb-6">
+                        <h3 id="question-text" class="text-lg font-bold text-dark mb-6 leading-relaxed">
+                            پرسیار لێدەچێت...
+                        </h3>
+                        
+                        <!-- Options -->
+                        <div id="options-container" class="space-y-3">
+                            <!-- Options will be generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex gap-3 mt-8">
+                        <button onclick="previousQuestion()" class="flex-1 btn-squircle bg-light-dark text-dark py-2 font-semibold hover:bg-gray-400">
+                            ← پێشتر
+                        </button>
+                        <button id="submit-btn" onclick="nextQuestion()" class="flex-1 btn-squircle bg-primary text-white py-2 font-semibold hover:bg-primary-dark">
+                            دواتر →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Archive/Past Exams -->
+            <section id="archive-view" class="view-section hidden">
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-dark">پرسیارە کۆنەکان</h2>
+
+                    <!-- Filters -->
+                    <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                        <h3 class="font-semibold text-dark mb-4">گێڕان</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600 mb-2">بابەت</label>
+                                <select id="archive-subject" onchange="filterArchive()" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus-ring">
+                                    <option value="">هەموو بابەتەکان</option>
+                                    <option value="biology">بیۆلۆژی</option>
+                                    <option value="chemistry">شیمیا</option>
+                                    <option value="physics">فیزیک</option>
+                                    <option value="mathematics">بیرکاری</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600 mb-2">ساڵ</label>
+                                <select id="archive-year" onchange="filterArchive()" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus-ring">
+                                    <option value="">هەموو ساڵەکان</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600 mb-2">دۆخ</label>
+                                <select id="archive-type" onchange="filterArchive()" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus-ring">
+                                    <option value="">هەموو جۆرەکان</option>
+                                    <option value="ministry">وەزارەتی</option>
+                                    <option value="mock">مۆک تاقیکردنەوە</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exam List -->
+                    <div id="archive-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Archive items will be generated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Teacher Directory -->
+            <section id="teachers-view" class="view-section hidden">
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-dark">مامۆستایان</h2>
+
+                    <!-- Teacher Filter -->
+                    <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                        <label class="block text-sm font-semibold text-dark mb-3">بابەت هەڵبژێرە</label>
+                        <select id="teacher-subject" onchange="filterTeachers()" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus-ring">
+                            <option value="">هەموو مامۆستایان</option>
+                            <option value="biology">بیۆلۆژی</option>
+                            <option value="chemistry">شیمیا</option>
+                            <option value="physics">فیزیک</option>
+                            <option value="mathematics">بیرکاری</option>
+                        </select>
+                    </div>
+
+                    <!-- Teachers Grid -->
+                    <div id="teachers-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Teachers will be generated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics -->
+            <section id="analytics-view" class="view-section hidden">
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-dark">ئامار</h2>
+
+                    <!-- Overview Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                            <p class="text-gray-600 text-sm mb-2">خوێندن کاتی</p>
+                            <p class="text-3xl font-bold text-primary">48</p>
+                            <p class="text-xs text-gray-500 mt-2">کاتژمێر</p>
+                        </div>
+                        <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                            <p class="text-gray-600 text-sm mb-2">میانگین نیمەنیشانی</p>
+                            <p class="text-3xl font-bold text-success">82%</p>
+                            <p class="text-xs text-gray-500 mt-2">بە ڕاستی</p>
+                        </div>
+                        <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                            <p class="text-gray-600 text-sm mb-2">بابەتی بهترین</p>
+                            <p class="text-3xl font-bold text-primary-light">فیزیک</p>
+                            <p class="text-xs text-gray-500 mt-2">92%</p>
+                        </div>
+                        <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                            <p class="text-gray-600 text-sm mb-2">بابەتی لازم</p>
+                            <p class="text-3xl font-bold text-warning">شیمیا</p>
+                            <p class="text-xs text-gray-500 mt-2">65%</p>
+                        </div>
+                    </div>
+
+                    <!-- Performance Chart -->
+                    <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                        <h3 class="font-bold text-dark mb-4">کارایی پێباپە</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-sm font-semibold">بیۆلۆژی</span>
+                                    <span class="text-sm text-primary font-bold">87%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 87%; background: linear-gradient(90deg, #10b981, #6ee7b7);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-sm font-semibold">فیزیک</span>
+                                    <span class="text-sm text-primary font-bold">92%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 92%; background: linear-gradient(90deg, #3b82f6, #93c5fd);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-sm font-semibold">شیمیا</span>
+                                    <span class="text-sm text-primary font-bold">65%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-sm font-semibold">بیرکاری</span>
+                                    <span class="text-sm text-primary font-bold">79%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 79%; background: linear-gradient(90deg, #8b5cf6, #d8b4fe);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Performance -->
+                    <div class="bg-white rounded-squircle p-6 card-squircle shadow-card">
+                        <h3 class="font-bold text-dark mb-4">نوێترین تاقیکردنەوەکان</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-light rounded-lg">
+                                <div>
+                                    <p class="text-sm font-semibold">فیزیک - کاتری 2024</p>
+                                    <p class="text-xs text-gray-500">20 پرسیار</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-lg font-bold text-success">92%</p>
+                                    <p class="text-xs text-gray-500">امڕۆ</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-light rounded-lg">
+                                <div>
+                                    <p class="text-sm font-semibold">بیۆلۆژی - کاتری 2023</p>
+                                    <p class="text-xs text-gray-500">18 پرسیار</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-lg font-bold text-success">88%</p>
+                                    <p class="text-xs text-gray-500">رۆژی شهمە</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-around items-center h-16">
+                    <button onclick="switchView('dashboard-view')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-600 hover:text-primary transition-smooth" data-view="dashboard-view">
+                        <span class="text-xl mb-1">🏠</span>
+                        <span class="text-xs hidden sm:block">ماڵەوە</span>
+                    </button>
+                    <button onclick="switchView('quiz-view')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-600 hover:text-primary transition-smooth" data-view="quiz-view">
+                        <span class="text-xl mb-1">📝</span>
+                        <span class="text-xs hidden sm:block">تاقیکردنەوە</span>
+                    </button>
+                    <button onclick="switchView('archive-view')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-600 hover:text-primary transition-smooth" data-view="archive-view">
+                        <span class="text-xl mb-1">📚</span>
+                        <span class="text-xs hidden sm:block">پرسیارە کۆنەکان</span>
+                    </button>
+                    <button onclick="switchView('teachers-view')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-600 hover:text-primary transition-smooth" data-view="teachers-view">
+                        <span class="text-xl mb-1">👨‍🏫</span>
+                        <span class="text-xs hidden sm:block">مامۆستایان</span>
+                    </button>
+                    <button onclick="switchView('analytics-view')" class="nav-btn flex flex-col items-center justify-center w-full h-full text-gray-600 hover:text-primary transition-smooth" data-view="analytics-view">
+                        <span class="text-xl mb-1">📊</span>
+                        <span class="text-xs hidden sm:block">ئامار</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // ============================================
+        // APPLICATION STATE MANAGEMENT
+        // ============================================
+        
+        const appState = {
+            currentView: 'dashboard-view',
+            language: 'ku', // ku = Kurdish, en = English
+            user: {
+                name: 'ئیبراهیم',
+                email: 'student@example.com',
+                level: 'Grade 12',
+            },
+            quiz: {
+                active: false,
+                subject: '',
+                year: '',
+                count: 15,
+                mode: 'timed',
+                timeLeft: 3600,
+                currentQuestion: 0,
+                answers: [],
+                startTime: null,
+                endTime: null,
+            },
+            questions: [],
+            stats: {
+                totalQuizzes: 12,
+                correctAnswers: 87,
+                chaptersCompleted: 5,
+                studyHours: 48,
+            },
+            teachers: [
+                {
+                    id: 1,
+                    name: 'دکتۆر محەمەد علی',
+                    subject: 'biology',
+                    rating: 4.8,
+                    students: 1250,
+                    youtube: 'https://youtube.com/@doctormohammad',
+                    telegram: 'https://t.me/drmohammad',
+                    bio: 'بیۆلۆژی دۆزەر بە 15+ ساڵ تێکردن'
+                },
+                {
+                    id: 2,
+                    name: 'پیرۆز احمەد',
+                    subject: 'chemistry',
+                    rating: 4.7,
+                    students: 980,
+                    youtube: 'https://youtube.com/@profiraz',
+                    telegram: 'https://t.me/profiraz',
+                    bio: 'شیمیا - قسەکاری دیدی'
+                },
+                {
+                    id: 3,
+                    name: 'ڕاسم ئیسماعیل',
+                    subject: 'physics',
+                    rating: 4.9,
+                    students: 1450,
+                    youtube: 'https://youtube.com/@rasheismail',
+                    telegram: 'https://t.me/rasheismail',
+                    bio: 'فیزیک - ئەکسپەریمێنت و نموونە'
+                },
+                {
+                    id: 4,
+                    name: 'ئاسۆ حسین',
+                    subject: 'mathematics',
+                    rating: 4.6,
+                    students: 870,
+                    youtube: 'https://youtube.com/@asiohussein',
+                    telegram: 'https://t.me/asiohussein',
+                    bio: 'بیرکاری - تێچوون بە ساده'
+                }
+            ],
+            exams: [
+                { id: 1, subject: 'biology', year: 2024, type: 'ministry', questions: 30, passed: true, score: 89 },
+                { id: 2, subject: 'chemistry', year: 2024, type: 'ministry', questions: 30, passed: true, score: 76 },
+                { id: 3, subject: 'physics', year: 2024, type: 'ministry', questions: 30, passed: true, score: 92 },
+                { id: 4, subject: 'biology', year: 2023, type: 'ministry', questions: 30, passed: true, score: 85 },
+                { id: 5, subject: 'chemistry', year: 2023, type: 'mock', questions: 25, passed: false, score: 71 },
+                { id: 6, subject: 'mathematics', year: 2024, type: 'ministry', questions: 30, passed: true, score: 79 },
+            ],
+            quizQuestions: [
+                {
+                    id: 1,
+                    text: 'داتابیس چییە؟',
+                    options: ['سیستمی کۆکردنەوەی زانیاری', 'تاقیکردنەوە', 'سازێك', 'وتەدانێك'],
+                    correct: 0,
+                    explanation: 'داتابیس سیستمێکی سازاو بۆ کۆکردنەوە و بەڕێوە‌بردنی زانیاریە'
+                },
+                {
+                    id: 2,
+                    text: 'DNA چند بەشەی دەرئەنجام‌دەر بە خود دەگری؟',
+                    options: ['دوو بەش', 'سێ بەش', 'چوار بەش', 'پێنج بەش'],
+                    correct: 0,
+                    explanation: 'DNA دوو بەش (Double Helix) بە خود دەگری'
+                },
+                {
+                    id: 3,
+                    text: 'بووم کام دەگمەنە؟',
+                    options: ['ئەتۆم', 'بیۆتۆپ', 'ئیسۆتۆپ', 'هیچیان نیە'],
+                    correct: 2,
+                    explanation: 'ئیسۆتۆپ ئاتۆمی ئەم چینکە دەگمەنە'
+                },
+            ]
+        };
+
+        // ============================================
+        // VIEW MANAGEMENT
+        // ============================================
+
+        function switchView(viewName) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Show selected view
+            const selectedView = document.getElementById(viewName);
+            if (selectedView) {
+                selectedView.classList.remove('hidden');
+            }
+
+            // Update nav button states
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-primary', 'border-t-2', 'border-primary');
+                btn.classList.add('text-gray-600');
+            });
+
+            const activeBtn = document.querySelector(`[data-view="${viewName}"]`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-gray-600');
+                activeBtn.classList.add('text-primary');
+            }
+
+            appState.currentView = viewName;
+
+            // Load view-specific data
+            if (viewName === 'archive-view') {
+                renderArchive();
+            } else if (viewName === 'teachers-view') {
+                renderTeachers();
+            }
+        }
+
+        // ============================================
+        // QUIZ SYSTEM
+        // ============================================
+
+        function startQuiz() {
+            const subject = document.getElementById('quizSubject').value;
+            const year = document.getElementById('quizYear').value;
+            const count = parseInt(document.getElementById('quizCount').value);
+            const mode = document.querySelector('input[name="quizMode"]:checked').value;
+
+            if (!subject) {
+                alert('تکایە بابەتێک هەڵبژێرە');
+                return;
+            }
+
+            // Initialize quiz
+            appState.quiz = {
+                active: true,
+                subject,
+                year,
+                count,
+                mode,
+                timeLeft: mode === 'timed' ? 3600 : 999999,
+                currentQuestion: 0,
+                answers: new Array(count).fill(null),
+                startTime: Date.now(),
+            };
+
+            // Generate random questions
+            appState.questions = generateQuestions(count);
+
+            // Switch to quiz progress view
+            switchView('quiz-progress');
+            renderQuestion();
+            startTimer();
+        }
+
+        function generateQuestions(count) {
+            const questions = [];
+            for (let i = 0; i < Math.min(count, appState.quizQuestions.length); i++) {
+                questions.push({ ...appState.quizQuestions[i] });
+            }
+            return questions;
+        }
+
+        function renderQuestion() {
+            if (appState.quiz.currentQuestion >= appState.questions.length) {
+                finishQuiz();
+                return;
+            }
+
+            const question = appState.questions[appState.quiz.currentQuestion];
+            const currentNum = appState.quiz.currentQuestion + 1;
+            const totalNum = appState.questions.length;
+
+            // Update progress
+            document.getElementById('current-question').textContent = currentNum;
+            document.getElementById('total-questions').textContent = totalNum;
+            document.getElementById('progress-fill').style.width = (currentNum / totalNum * 100) + '%';
+
+            // Render question text
+            document.getElementById('question-text').textContent = question.text;
+
+            // Render options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const isSelected = appState.quiz.answers[appState.quiz.currentQuestion] === index;
+                const optionElement = document.createElement('div');
+                optionElement.className = `option-btn p-4 rounded-lg border-2 cursor-pointer transition-smooth ${
+                    isSelected 
+                        ? 'border-primary bg-primary/10' 
+                        : 'border-gray-300 bg-white hover:border-primary'
+                }`;
+                optionElement.innerHTML = `<p class="font-semibold">${option}</p>`;
+                optionElement.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionElement);
+            });
+
+            // Update button text
+            const submitBtn = document.getElementById('submit-btn');
+            if (currentNum === totalNum) {
+                submitBtn.textContent = 'ئەنجام تاقیکردنەوە ✓';
+            } else {
+                submitBtn.textContent = 'دواتر →';
+            }
+
+            // Update correct count
+            const correctCount = appState.quiz.answers.filter((ans, idx) => {
+                return ans !== null && ans === appState.questions[idx].correct;
+            }).length;
+            document.getElementById('correct-count').textContent = correctCount;
+        }
+
+        function selectOption(index) {
+            appState.quiz.answers[appState.quiz.currentQuestion] = index;
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            if (appState.quiz.currentQuestion < appState.questions.length - 1) {
+                appState.quiz.currentQuestion++;
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (appState.quiz.currentQuestion > 0) {
+                appState.quiz.currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer-display');
+            
+            const interval = setInterval(() => {
+                appState.quiz.timeLeft--;
+
+                if (appState.quiz.timeLeft <= 0) {
+                    clearInterval(interval);
+                    finishQuiz();
+                    return;
+                }
+
+                const minutes = Math.floor(appState.quiz.timeLeft / 60);
+                const seconds = appState.quiz.timeLeft % 60;
+                timerElement.textContent = 
+                    (minutes < 10 ? '0' : '') + minutes + ':' + 
+                    (seconds < 10 ? '0' : '') + seconds;
+
+                // Change color when time is running out
+                if (appState.quiz.timeLeft < 300) {
+                    timerElement.classList.add('text-danger');
+                } else if (appState.quiz.timeLeft < 600) {
+                    timerElement.classList.add('text-warning');
+                }
+            }, 1000);
+        }
+
+        function finishQuiz() {
+            appState.quiz.endTime = Date.now();
+            
+            // Calculate results
+            let correctAnswers = 0;
+            appState.questions.forEach((question, index) => {
+                if (appState.quiz.answers[index] === question.correct) {
+                    correctAnswers++;
+                }
+            });
+
+            const percentage = Math.round((correctAnswers / appState.questions.length) * 100);
+            const timeTaken = Math.round((appState.quiz.endTime - appState.quiz.startTime) / 1000);
+
+            // Show results
+            showResults(correctAnswers, appState.questions.length, percentage, timeTaken);
+        }
+
+        function showResults(correct, total, percentage, timeTaken) {
+            // Store results in state
+            appState.stats.totalQuizzes++;
+
+            // Create results modal
+            const resultsHTML = `
+                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div class="bg-white rounded-squircle p-8 max-w-md w-full card-squircle shadow-card-lg">
+                        <h2 class="text-2xl font-bold text-center text-dark mb-6">ئەنجام تاقیکردنەوە</h2>
+                        
+                        <div class="text-center mb-6">
+                            <div class="text-6xl font-bold text-primary mb-2">${percentage}%</div>
+                            <p class="text-gray-600">${correct} / ${total} ڕاست</p>
+                        </div>
+
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between p-3 bg-light rounded-lg">
+                                <span class="text-gray-600">کات</span>
+                                <span class="font-semibold">${Math.floor(timeTaken / 60)} دقیقە ${timeTaken % 60} چرکە</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-light rounded-lg">
+                                <span class="text-gray-600">بابەت</span>
+                                <span class="font-semibold">${appState.quiz.subject}</span>
+                            </div>
+                            <div class="flex justify-between p-3 bg-light rounded-lg">
+                                <span class="text-gray-600">درجە</span>
+                                <span class="font-semibold">${percentage >= 80 ? '✓ خێرا' : percentage >= 60 ? '△ باشتر' : '✗ دیسانێک ئەتوانی'}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button onclick="closeResultsModal()" class="flex-1 btn-squircle bg-light-dark text-dark py-2 font-semibold">
+                                بگرە
+                            </button>
+                            <button onclick="retakeQuiz()" class="flex-1 btn-squircle bg-primary text-white py-2 font-semibold">
+                                دیسا ئازمایش بکە
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Insert modal into DOM
+            const modalContainer = document.createElement('div');
+            modalContainer.id = 'results-modal';
+            modalContainer.innerHTML = resultsHTML;
+            document.body.appendChild(modalContainer);
+        }
+
+        function closeResultsModal() {
+            const modal = document.getElementById('results-modal');
+            if (modal) modal.remove();
+            appState.quiz.active = false;
+            switchView('dashboard-view');
+        }
+
+        function retakeQuiz() {
+            const modal = document.getElementById('results-modal');
+            if (modal) modal.remove();
+            switchView('quiz-view');
+        }
+
+        // ============================================
+        // ARCHIVE / PAST EXAMS
+        // ============================================
+
+        function renderArchive() {
+            const subject = document.getElementById('archive-subject').value;
+            const year = document.getElementById('archive-year').value;
+            const type = document.getElementById('archive-type').value;
+
+            let filtered = appState.exams;
+
+            if (subject) {
+                filtered = filtered.filter(exam => exam.subject === subject);
+            }
+            if (year) {
+                filtered = filtered.filter(exam => exam.year === parseInt(year));
+            }
+            if (type) {
+                filtered = filtered.filter(exam => exam.type === type);
+            }
+
+            const archiveList = document.getElementById('archive-list');
+            archiveList.innerHTML = '';
+
+            if (filtered.length === 0) {
+                archiveList.innerHTML = '<p class="col-span-3 text-center text-gray-500 py-8">هیچ پرسیاری نەدۆزراوە</p>';
+                return;
+            }
+
+            filtered.forEach(exam => {
+                const subjectNames = {
+                    biology: 'بیۆلۆژی',
+                    chemistry: 'شیمیا',
+                    physics: 'فیزیک',
+                    mathematics: 'بیرکاری'
+                };
+
+                const typeNames = {
+                    ministry: 'وەزارەتی',
+                    mock: 'مۆک تاقیکردنەوە'
+                };
+
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-squircle p-6 card-squircle shadow-card';
+                card.innerHTML = `
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="font-bold text-dark">${subjectNames[exam.subject]}</h3>
+                            <p class="text-xs text-gray-500">${exam.year} - ${typeNames[exam.type]}</p>
+                        </div>
+                        <span class="text-lg font-bold ${exam.passed ? 'text-success' : 'text-danger'}">
+                            ${exam.score}%
+                        </span>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                        <p class="text-sm text-gray-600">پرسیار: ${exam.questions}</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${exam.score}%; background: ${exam.passed ? '#10b981' : '#ef4444'};"></div>
+                        </div>
+                    </div>
+                    <button onclick="startArchiveQuiz(${exam.id})" class="w-full btn-squircle bg-primary text-white py-2 text-sm font-semibold">
+                        کردن
+                    </button>
+                `;
+                archiveList.appendChild(card);
+            });
+        }
+
+        function filterArchive() {
+            renderArchive();
+        }
+
+        function startArchiveQuiz(examId) {
+            alert('ئەم تاقیکردنەوەیە هیشتا فعال نیە - یاری ئەپیکەیشنی بهترتر دێت!');
+        }
+
+        // ============================================
+        // TEACHER DIRECTORY
+        // ============================================
+
+        function renderTeachers() {
+            const subject = document.getElementById('teacher-subject').value;
+            
+            let filtered = appState.teachers;
+            if (subject) {
+                filtered = filtered.filter(teacher => teacher.subject === subject);
+            }
+
+            const teachersList = document.getElementById('teachers-list');
+            teachersList.innerHTML = '';
+
+            filtered.forEach(teacher => {
+                const subjectNames = {
+                    biology: 'بیۆلۆژی',
+                    chemistry: 'شیمیا',
+                    physics: 'فیزیک',
+                    mathematics: 'بیرکاری'
+                };
+
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-squircle p-6 card-squircle shadow-card';
+                card.innerHTML = `
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white text-2xl font-bold">
+                            ${teacher.name.charAt(0)}
+                        </div>
+                        <h3 class="font-bold text-dark">${teacher.name}</h3>
+                        <p class="text-sm text-primary font-semibold">${subjectNames[teacher.subject]}</p>
+                    </div>
+
+                    <div class="space-y-2 mb-4 text-sm text-gray-600">
+                        <p>⭐ ${teacher.rating} / 5.0</p>
+                        <p>👥 ${teacher.students} قوتابی</p>
+                        <p class="text-xs leading-relaxed">${teacher.bio}</p>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <a href="${teacher.youtube}" target="_blank" class="flex-1 btn-squircle bg-red-500 text-white py-2 text-center text-sm font-semibold hover:bg-red-600">
+                            YouTube
+                        </a>
+                        <a href="${teacher.telegram}" target="_blank" class="flex-1 btn-squircle bg-blue-500 text-white py-2 text-center text-sm font-semibold hover:bg-blue-600">
+                            Telegram
+                        </a>
+                    </div>
+                `;
+                teachersList.appendChild(card);
+            });
+        }
+
+        function filterTeachers() {
+            renderTeachers();
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize views
+            switchView('dashboard-view');
+
+            // Language toggle
+            document.getElementById('langToggle').addEventListener('click', function() {
+                const newLang = appState.language === 'ku' ? 'en' : 'ku';
+                appState.language = newLang;
+                this.textContent = newLang === 'ku' ? 'EN' : 'کو';
+                alert('تێڤەرانی زمان هیشتا فعال نیە');
+            });
+
+            // Initialize teachers
+            renderTeachers();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (!appState.quiz.active) return;
+
+            if (e.key === 'ArrowRight') previousQuestion();
+            if (e.key === 'ArrowLeft') nextQuestion();
+            if (e.key >= '1' && e.key <= '4') {
+                selectOption(parseInt(e.key) - 1);
+            }
+        });
+    </script>
+</body>
+</html>
